@@ -64,10 +64,12 @@ spec:
   selector:
     matchLabels:
       app: server
+      component: backend
   template:
     metadata:
       labels:
         app: server
+        component: backend
     spec:
       containers:
       - name: server
