@@ -457,11 +457,13 @@ cat kubeconfig-ecosystem-production-github-deployer | base64 | tr -d '\n' \
 # IF YOU MUST USE SERVICE ACCOUNT TOKENS:
 #   1. Use short-lived tokens generated at workflow runtime:
 #      SA_TOKEN=$(kubectl create token github-deployer --duration=3600s)
-#   2. Inject the token into a minimal kubeconfig in the workflow
-#   3. Never persist the token to disk or GitHub Secrets
-#   4. Implement tight RBAC policies and explicit token rotation procedures
-#
-# This kubeconfig is restricted to the ecosystem-production namespace
+# IMPORTANT:
+# Do NOT store this long-lived, token-based kubeconfig as a GitHub secret.
+# Instead, prefer using GKE Workload Identity Federation / OIDC for GitHub Actions:
+#   https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity-github-actions
+# If you must use a service account token, generate a short-lived token at workflow runtime, e.g.:
+#   SA_TOKEN=$(kubectl create token github-deployer --duration=3600s)
+# and inject it into a minimal kubeconfig in the workflow without persisting it to disk or to GitHub Secrets.
 ```
 
 ### Network Policies
