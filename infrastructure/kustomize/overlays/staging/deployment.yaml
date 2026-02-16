@@ -8,10 +8,12 @@ spec:
   selector:
     matchLabels:
       app: client
+      component: frontend
   template:
     metadata:
       labels:
         app: client
+        component: frontend
     spec:
       containers:
       - name: client
@@ -26,7 +28,8 @@ spec:
             drop:
             - ALL
         ports:
-        - containerPort: 3000
+        - name: http
+          containerPort: 3000
         env:
         - name: NEXT_PUBLIC_API_URL
           value: "https://api.example.com"
@@ -91,7 +94,8 @@ spec:
             drop:
             - ALL
         ports:
-        - containerPort: 8080
+        - name: http
+          containerPort: 8080
         volumeMounts:
         - name: tmp
           mountPath: /tmp

@@ -28,7 +28,8 @@ spec:
             drop:
             - ALL
         ports:
-        - containerPort: 3000
+        - name: http
+          containerPort: 3000
         volumeMounts:
         - name: tmp
           mountPath: /tmp
@@ -86,7 +87,8 @@ spec:
             drop:
             - ALL
         ports:
-        - containerPort: 8080
+        - name: http
+          containerPort: 8080
         volumeMounts:
         - name: tmp
           mountPath: /tmp
@@ -94,15 +96,9 @@ spec:
         - name: PORT
           value: "8080"
         - name: NODE_ENV
-          valueFrom:
-            configMapKeyRef:
-              name: ecosystem-config
-              key: NODE_ENV
+          value: "production"
         - name: LOG_LEVEL
-          valueFrom:
-            configMapKeyRef:
-              name: ecosystem-config
-              key: LOG_LEVEL
+          value: "info"
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:

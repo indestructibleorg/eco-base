@@ -28,7 +28,7 @@ RUN addgroup --system --gid 1001 appuser
 RUN adduser --system --uid 1001 appuser
 
 # Install serve for secure static file serving
-RUN npm install -g serve
+RUN npm install -g serve@14.2.5
 
 COPY --from=builder /app/dist/public ./dist
 

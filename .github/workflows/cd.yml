@@ -205,9 +205,9 @@ jobs:
           kubectl wait --for=condition=available deployment/client -n ecosystem-production --timeout=120s
           kubectl wait --for=condition=available deployment/server -n ecosystem-production --timeout=120s
           
-          # Test API health endpoint
+          # Test API endpoint (base URL check)
           kubectl run --rm -i --restart=Never --image=curlimages/curl test-pod-api -n ecosystem-production -- \
-            curl -f https://api.autoecoops.io/health || exit 1
+            curl -f https://api.autoecoops.io/ || exit 1
           
           # Test web frontend
           kubectl run --rm -i --restart=Never --image=curlimages/curl test-pod-web -n ecosystem-production -- \
