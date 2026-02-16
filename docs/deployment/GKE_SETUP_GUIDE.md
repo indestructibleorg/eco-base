@@ -378,6 +378,14 @@ ENCODED_TOKEN=$(kubectl get secret github-deployer-token \
   -o jsonpath='{.data.token}')
 SA_TOKEN=$(echo "$ENCODED_TOKEN" | base64 -d 2>/dev/null || echo "$ENCODED_TOKEN" | base64 -D)
 
+# Validate that the token was decoded successfully
+if [ -z "$SA_TOKEN" ]; then
+  echo "Error: Failed to decode service account token. Please verify that:"
+  echo "  1. The github-deployer-token secret exists in the ecosystem-production namespace"
+  echo "  2. The base64 command is available on your system"
+  exit 1
+fi
+
 # Alternative: Use kubectl create token for short-lived tokens (valid for 1 hour by default)
 # For longer validity, adjust duration as needed (e.g., --duration=168h for 7 days)
 # SA_TOKEN=$(kubectl create token github-deployer -n ecosystem-production --duration=1h)
@@ -386,6 +394,18 @@ SA_TOKEN=$(echo "$ENCODED_TOKEN" | base64 -d 2>/dev/null || echo "$ENCODED_TOKEN
 # Note: The actual cluster name in kubeconfig is typically gke_<project-id>_asia-east1_eco-production
 # JSONPath doesn't support wildcards, so we list all clusters and grep for the match
 CLUSTER_NAME=$(kubectl config view --raw -o jsonpath='{.clusters[*].name}' | tr ' ' '\n' | grep eco-production | head -n1)
+
+# Validate that the cluster name was found
+if [ -z "$CLUSTER_NAME" ]; then
+  echo "Error: Could not find a cluster matching 'eco-production' in your kubeconfig."
+  echo "Available clusters:"
+  kubectl config view --raw -o jsonpath='{.clusters[*].name}' | tr ' ' '\n'
+  echo ""
+  echo "Please verify that:"
+  echo "  1. You have run 'gcloud container clusters get-credentials' for the eco-production cluster"
+  echo "  2. Your current kubeconfig contains the correct cluster configuration"
+  exit 1
+fi
 
 CLUSTER_SERVER=$(kubectl config view --raw \
   -o jsonpath="{.clusters[?(@.name==\"${CLUSTER_NAME}\")].cluster.server}")
