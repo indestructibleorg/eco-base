@@ -142,11 +142,9 @@ kubectl get nodes --context=gke_<project-id>_asia-east1_eco-production
 
 ### 4. Verify Namespaces
 ```bash
-# Staging
-kubectl create namespace ecosystem-staging --context=gke_<project-id>_asia-east1_eco-staging
-
-# Production
-kubectl create namespace ecosystem-production --context=gke_<project-id>_asia-east1_eco-production
+# Verify namespaces were created successfully
+kubectl get namespace ecosystem-staging --context=gke_<project-id>_asia-east1_eco-staging
+kubectl get namespace ecosystem-production --context=gke_<project-id>_asia-east1_eco-production
 ```
 
 ### 5. Deploy to Staging
@@ -204,6 +202,7 @@ Free, automatic certificate renewal using cert-manager:
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.0/cert-manager.yaml
 
 # Create ClusterIssuer for Let's Encrypt
+# Replace 'your-email@example.com' with your actual email address
 cat << 'EOF' | kubectl apply -f -
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -212,7 +211,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: admin@machops.io
+    email: your-email@example.com
     privateKeySecretRef:
       name: letsencrypt-prod
     solvers:
@@ -349,15 +348,28 @@ kubectl create rolebinding github-deployer-binding \
   --serviceaccount=ecosystem-production:github-deployer \
   --namespace=ecosystem-production
 
-# Get the service account secret name
-SA_SECRET_NAME=$(kubectl get serviceaccount github-deployer \
-  -n ecosystem-production \
-  -o jsonpath='{.secrets[0].name}')
+# For Kubernetes 1.24+, create a long-lived service account token manually
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-deployer-token
+  namespace: ecosystem-production
+  annotations:
+    kubernetes.io/service-account.name: github-deployer
+type: kubernetes.io/service-account-token
+EOF
 
-# Extract and decode the service account token
-SA_TOKEN=$(kubectl get secret "${SA_SECRET_NAME}" \
+# Wait a moment for the token to be populated
+sleep 5
+
+# Get the service account token
+SA_TOKEN=$(kubectl get secret github-deployer-token \
   -n ecosystem-production \
   -o jsonpath='{.data.token}' | base64 -d)
+
+# Alternative: Use kubectl create token for short-lived tokens (valid for 1 hour by default)
+# SA_TOKEN=$(kubectl create token github-deployer -n ecosystem-production --duration=87600h)
 
 # Get the API server URL and CA data for the eco-production cluster
 CLUSTER_SERVER=$(kubectl config view --raw \
