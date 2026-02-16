@@ -97,15 +97,9 @@ spec:
           mountPath: /tmp
         env:
         - name: NODE_ENV
-          valueFrom:
-            configMapKeyRef:
-              name: ecosystem-config
-              key: NODE_ENV
+          value: "production"
         - name: LOG_LEVEL
-          valueFrom:
-            configMapKeyRef:
-              name: ecosystem-config
-              key: LOG_LEVEL
+          value: "info"
         - name: DATABASE_URL
           valueFrom:
             secretKeyRef:
