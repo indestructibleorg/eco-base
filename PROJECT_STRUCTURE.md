@@ -5,8 +5,7 @@ ecosystem/
 ├── .github/
 │   └── workflows/
 │       ├── ci.yml
-│       ├── cd.yml
-│       └── build-and-deploy.yml
+│       └── cd.yml
 ├── client/
 │   ├── public/
 │   └── src/
