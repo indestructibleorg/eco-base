@@ -8,10 +8,12 @@ spec:
   selector:
     matchLabels:
       app: client
+      component: frontend
   template:
     metadata:
       labels:
         app: client
+        component: frontend
     spec:
       containers:
       - name: client
