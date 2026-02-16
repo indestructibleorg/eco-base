@@ -24,11 +24,15 @@ ecosystem/
 │   │   └── overlays/
 │   │       ├── staging/
 │   │       │   ├── kustomization.yaml
-│   │       │   ├── replicas-patch.yaml
+│   │       │   ├── deployment.yaml
+│   │       │   ├── configmap.yaml
+│   │       │   ├── secret.yaml
 │   │       │   └── ingress.yaml
 │   │       └── production/
 │   │           ├── kustomization.yaml
-│   │           ├── replicas-patch.yaml
+│   │           ├── deployment.yaml
+│   │           ├── configmap.yaml
+│   │           ├── secret.yaml
 │   │           └── ingress.yaml
 │   └── terraform/
 ├── ci-cd/
