@@ -12,7 +12,7 @@ When complete, all repository configuration, GitHub secrets, CI/CD workflows, an
 
 ### ✅ Repository Settings
 - Branch protection rules configured for `main` branch
-- Required status checks: ci/test, ci/lint, ci/security-scan
+- Required status checks: `CI Pipeline / Run Tests`, `CI Pipeline / Lint Code`, `CI Pipeline / Security Scan`
 - Required approving reviews: 1
 - Linear history enforced
 - Admins must follow rules
