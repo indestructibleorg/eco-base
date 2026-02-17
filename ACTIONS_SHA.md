@@ -14,6 +14,16 @@
 - 日期: 2025-04-02
 - 標籤: v4
 
+### actions/github-script@v7
+- Full SHA: `60a0d83039c74a4aee543508d2ffcb1c3799cdea`
+- 日期: 2024-01-18
+- 標籤: v7, v7.0.1
+
+### pozil/auto-assign-issue@v2
+- Full SHA: `39c06395cbac76e79afc4ad4e5c5c6db6ecfdd2e`
+- 日期: 2024-11-22
+- 標籤: v2, v2.2.0
+
 ### 其他 actions
 由於查詢困難，採用替代方案：
 1. 移除所有非 GitHub 官方的 actions (pnpm/action-setup, aquasecurity/trivy-action, returntocorp/semgrep-action, anchore/sbom-action)

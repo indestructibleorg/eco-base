@@ -1,0 +1,162 @@
+name: Auto Assign 2.0 · 自主演化決策版
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [opened]
+
+jobs:
+  intelligent-assign:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      # 步驟1：擷取 Issue/PR 的上下文（標題、內容、標籤、檔案變更等）
+      - name: 取得 Issue/PR 元資料
+        id: context
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const payload = context.payload;
+            let assignContext = {};
+            if (payload.issue) {
+              assignContext.type = 'issue';
+              assignContext.number = payload.issue.number;
+              assignContext.title = payload.issue.title;
+              assignContext.body = payload.issue.body;
+              assignContext.labels = payload.issue.labels.map(l => l.name);
+              assignContext.author = payload.issue.user.login;
+            } else if (payload.pull_request) {
+              assignContext.type = 'pull_request';
+              assignContext.number = payload.pull_request.number;
+              assignContext.title = payload.pull_request.title;
+              assignContext.body = payload.pull_request.body;
+              assignContext.labels = payload.pull_request.labels.map(l => l.name);
+              assignContext.author = payload.pull_request.user.login;
+              
+              // 特別為 PR 取得修改的檔案清單（利於 CODEOWNERS 指派）
+              const { data: files } = await github.rest.pulls.listFiles({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: assignContext.number
+              });
+              assignContext.files = files.map(f => f.filename);
+            }
+            core.setOutput('payload', JSON.stringify(assignContext));
+
+      # 步驟2：智能決策指派人選（基於規則的自動分配）
+      - name: 決定最佳指派人選
+        id: decision
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const payload = context.payload;
+            const assignContext = JSON.parse('${{ steps.context.outputs.payload }}');
+            
+            // 定義預設維護者
+            const defaultMaintainer = 'IndestructibleAutoOps';
+            
+            let assignee = '';
+            let reason = '';
+            
+            // 規則1: 基於標籤的指派
+            if (assignContext.labels && assignContext.labels.length > 0) {
+              const labelMap = {
+                'bug': defaultMaintainer,
+                'enhancement': defaultMaintainer,
+                'documentation': defaultMaintainer,
+                'question': defaultMaintainer
+              };
+              
+              for (const label of assignContext.labels) {
+                if (labelMap[label]) {
+                  assignee = labelMap[label];
+                  reason = `根據標籤「${label}」自動指派給專責成員`;
+                  break;
+                }
+              }
+            }
+            
+            // 規則2: 基於檔案變更的指派 (for PRs)
+            if (!assignee && assignContext.type === 'pull_request' && assignContext.files) {
+              const filePatterns = [
+                { pattern: /\.github\/workflows\//, reason: '此 PR 涉及工作流程變更，由維護者審核' },
+                { pattern: /\.(json|yml|yaml)$/i, reason: '此 PR 包含設定檔變更' },
+                { pattern: /\.(md|txt)$/i, reason: '此 PR 包含文件變更' },
+                { pattern: /\.(js|ts|py|java|go)$/i, reason: '此 PR 包含程式碼變更' }
+              ];
+              
+              for (const file of assignContext.files) {
+                for (const { pattern, reason: fileReason } of filePatterns) {
+                  if (pattern.test(file)) {
+                    assignee = defaultMaintainer;
+                    reason = fileReason;
+                    break;
+                  }
+                }
+                if (assignee) break;
+              }
+            }
+            
+            // 規則3: 基於關鍵字的指派
+            if (!assignee) {
+              const title = assignContext.title.toLowerCase();
+              const body = (assignContext.body || '').toLowerCase();
+              const content = title + ' ' + body;
+              
+              if (content.includes('urgent') || content.includes('緊急') || content.includes('critical')) {
+                assignee = defaultMaintainer;
+                reason = '緊急事項，優先指派給核心維護者';
+              } else if (content.includes('@indestructibleautoops')) {
+                assignee = defaultMaintainer;
+                reason = '明確提及維護者';
+              }
+            }
+            
+            // 預設規則：指派給預設維護者
+            if (!assignee) {
+              assignee = defaultMaintainer;
+              reason = '根據預設規則指派給核心維護者';
+            }
+            
+            core.setOutput('assignees', assignee);
+            core.setOutput('reason', reason);
+
+      # 步驟3：執行指派
+      - name: '自動指派 Issue/PR'
+        uses: pozil/auto-assign-issue@39c06395cbac76e79afc4ad4e5c5c6db6ecfdd2e # v2.2.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          assignees: ${{ steps.decision.outputs.assignees }}
+          numOfAssignee: 1
+
+      # 步驟4：留下決策註解（增加透明度）
+      - name: 留言說明指派原因
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const reason = '${{ steps.decision.outputs.reason }}';
+            const assignee = '${{ steps.decision.outputs.assignees }}';
+            
+            let commentBody = `🤖 **AutoEcoOps 自動指派**\n\n`;
+            commentBody += `根據本次 ${context.payload.issue ? 'Issue' : 'Pull Request'} 的分析，`;
+            commentBody += `最佳指派人為 **@${assignee}**。\n\n`;
+            commentBody += `**決策原因**：${reason}\n\n`;
+            commentBody += `> 若指派不正確，請留言 @IndestructibleAutoOps 重新評估。`;
+            
+            if (context.payload.issue) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.issue.number,
+                body: commentBody
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: commentBody
+              });
+            }
