@@ -1,7 +1,11 @@
-name: CI
+name: CI Pipeline
 on: [push]
 jobs:
-  test:
+  lint:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "test"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: echo "Node.js set up"
