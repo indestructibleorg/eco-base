@@ -241,7 +241,7 @@ kubectl get pods --all-namespaces
 ```bash
 # Check deployment status
 kubectl rollout status deployment/client -n ecosystem-staging
-kubectl rollout status deployment/server -n ecosystem-production
+kubectl rollout status deployment/server -n ecosystem-staging
 
 # View deployment history
 kubectl rollout history deployment/client -n ecosystem-staging
