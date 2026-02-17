@@ -1,16 +1,17 @@
 name: Build, Test, Scan & Deploy
 
+# This workflow is triggered by the CI Pipeline workflow via workflow_run event.
+# It runs after CI completes successfully on main/develop branches,
+# or directly on pull requests for validation.
+
 on:
-  push:
+  workflow_run:
+    workflows: ["CI Pipeline"]
+    types:
+      - completed
     branches:
       - main
       - develop
-    paths:
-      - 'platforms/**'
-      - 'core/**'
-      - 'interfaces/**'
-      - 'ci-cd/**'
-      - '.github/workflows/**'
   pull_request:
     branches:
       - main
@@ -24,6 +25,7 @@ jobs:
   validate-commit:
     name: Validate Commit Metadata
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' || github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
