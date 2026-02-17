@@ -26,7 +26,9 @@ GITHUB_TOKEN=your_github_token_here
 ```typescript
 // config/env.ts
 const env = {
+  // Client-side variables (VITE_*) use import.meta.env in Vite
   VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL || '',
+  // Server-side variables use process.env
   SUPABASE_SECRET_KEY: process.env.SUPABASE_SECRET_KEY || '',
 }
 
@@ -82,8 +84,10 @@ const envSchema = z.object({
 })
 
 export const env = envSchema.parse({
+  // Client-side Vite variables use import.meta.env
   VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL,
   VITE_SUPABASE_ANON_KEY: import.meta.env.VITE_SUPABASE_ANON_KEY,
+  // Server-side variables use process.env
   SUPABASE_SECRET_KEY: process.env.SUPABASE_SECRET_KEY,
   GITHUB_TOKEN: process.env.GITHUB_TOKEN,
 })
