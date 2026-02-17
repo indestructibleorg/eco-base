@@ -25,7 +25,7 @@ jobs:
   validate-commit:
     name: Validate Commit Metadata
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' || github.event.workflow_run.conclusion == 'success' }}
+    if: github.event_name == 'pull_request' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
