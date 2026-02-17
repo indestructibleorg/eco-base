@@ -1,9 +1,11 @@
-# 🚀 Ecosystem v1.0 - Ready for Deployment!
+# 🚀 Ecosystem v1.0 - Deployment Readiness (Target State)
 
-## ✅ Configuration Complete - 100%
+> Note: `DEPLOYMENT_STATUS.md` is the single source of truth for **current** deployment readiness (e.g., ~80% complete, awaiting kubeconfigs/secrets at last update).  
+> This document describes the **intended end state** once deployment is fully ready (100%).
 
-All repository configuration, GitHub secrets, CI/CD workflows, and infrastructure setup are complete and ready for production deployment!
+## ✅ Target Configuration When 100% Complete
 
+When complete, all repository configuration, GitHub secrets, CI/CD workflows, and infrastructure setup described below will be in place and ready for production deployment.
 ---
 
 ## 📋 Configuration Summary
