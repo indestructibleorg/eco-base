@@ -26,5 +26,5 @@
 - 部署到 Cloudflare Pages
 
 ### cd.yml
-- 簡化為僅執行部署驗證
+- 簡化為僅執行部署驗證：部署完成後對 Cloudflare Pages 產線網址執行 HTTP 200 健康檢查、針對關鍵頁面（例如首頁、/healthz）進行簡單 smoke test、並比對頁面上顯示的 commit SHA 是否與本次部署版本一致
 - 移除所有安全掃描（trivy, semgrep, sbom）
