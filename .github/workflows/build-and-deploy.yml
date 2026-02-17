@@ -149,7 +149,6 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          file: ./server/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
