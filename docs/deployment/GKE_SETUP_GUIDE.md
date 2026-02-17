@@ -111,6 +111,7 @@ Once clusters are Running and kubeconfigs are provided:
 
 **Recommended**: Create a dedicated service account and namespace-scoped Role with only the required permissions:
 ```bash
+# Prerequisite: ensure the 'ecosystem-staging' namespace exists (see "3. Create Namespaces" below)
 # Create a deployment service account with least-privilege permissions
 kubectl create serviceaccount github-deployer -n ecosystem-staging
 
