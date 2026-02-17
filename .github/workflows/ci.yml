@@ -4,6 +4,9 @@ on:
     branches: [main, develop]
   pull_request:
     branches: [main, develop]
+permissions:
+  contents: read
+  pull-requests: read
 env:
   NODE_VERSION: '20'
   PNPM_VERSION: 10.4.1
