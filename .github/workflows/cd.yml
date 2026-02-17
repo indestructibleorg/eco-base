@@ -118,4 +118,4 @@ jobs:
       - name: Notify deployment success
         if: success()
         run: |
-          echo "✅ Production deployment successful"
+          echo "SUCCESS Production deployment successful"

@@ -39,10 +39,10 @@ jobs:
           echo "$COMMITS"
           LATEST_MSG=$(git log -1 --pretty=%B)
           if echo "$LATEST_MSG" | grep -qvE '^(feat|fix|docs|style|refactor|test|chore|merge|revert|build|ci)(\(.+\))?:|Initial commit|Merge '; then
-            echo "❌ Commit message does not follow Conventional Commits format: $LATEST_MSG"
+            echo "FAILED Commit message does not follow Conventional Commits format: $LATEST_MSG"
             echo "::warning::Commit message format validation failed"
           else
-            echo "✅ Commit message format validated"
+            echo "SUCCESS Commit message format validated"
           fi
   build:
     name: Build & Test
@@ -144,7 +144,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "❌ AutoEcoOps CI/CD Pipeline Failed",
+              "text": "FAILED AutoEcoOps CI/CD Pipeline Failed",
               "blocks": [
                 {
                   "type": "section",
