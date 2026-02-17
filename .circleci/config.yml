@@ -1,0 +1,49 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.2.0
+
+workflows:
+  test-and-build:
+    jobs:
+      - lint-and-test
+      - build
+
+jobs:
+  lint-and-test:
+    executor:
+      name: node/default
+      tag: '22'
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: pnpm
+          override-ci-command: pnpm install --no-frozen-lockfile
+      - run:
+          name: Run linter
+          command: pnpm run lint
+      - run:
+          name: Run type check
+          command: pnpm run check
+      - run:
+          name: Run tests
+          command: pnpm run test
+
+  build:
+    executor:
+      name: node/default
+      tag: '22'
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: pnpm
+          override-ci-command: pnpm install --no-frozen-lockfile
+      - run:
+          name: Build application
+          command: pnpm run build
+      - run:
+          name: Build success
+          command: |
+            echo "✅ Build completed successfully"
+            echo "Commit: $(git rev-parse HEAD)"
+            echo "Branch: $CIRCLE_BRANCH"
