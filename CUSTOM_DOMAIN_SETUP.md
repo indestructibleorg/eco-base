@@ -12,12 +12,12 @@
 
 根據 AutoEcoOps 生態系統的架構，建議使用以下域名方案：
 
-| 用途 | 建議域名 | 說明 |
-|------|---------|------|
-| 主應用 | `app.autoecoops.io` | 前端應用主入口 |
-| API 端點 | `api.autoecoops.io` | 後端 API 服務 |
-| 文檔 | `docs.autoecoops.io` | 開發者文檔 |
-| 儀表板 | `dashboard.autoecoops.io` | 管理員儀表板 |
+| 用途     | 建議域名                  | 說明           |
+| -------- | ------------------------- | -------------- |
+| 主應用   | `app.autoecoops.io`       | 前端應用主入口 |
+| API 端點 | `api.autoecoops.io`       | 後端 API 服務  |
+| 文檔     | `docs.autoecoops.io`      | 開發者文檔     |
+| 儀表板   | `dashboard.autoecoops.io` | 管理員儀表板   |
 
 本指南以 `app.autoecoops.io` 為例進行配置。
 
@@ -88,6 +88,7 @@ curl -I https://app.autoecoops.io
 ```
 
 預期結果：
+
 - DNS 應解析至 Cloudflare Pages IP 地址
 - HTTPS 連接應返回 200 OK 狀態碼
 - SSL 證書應有效且由 Cloudflare 簽發
@@ -112,12 +113,15 @@ curl -I https://app.autoecoops.io
 export default {
   async fetch(request) {
     const url = new URL(request.url);
-    if (url.hostname === 'www.app.autoecoops.io') {
-      return Response.redirect('https://app.autoecoops.io' + url.pathname + url.search, 301);
+    if (url.hostname === "www.app.autoecoops.io") {
+      return Response.redirect(
+        "https://app.autoecoops.io" + url.pathname + url.search,
+        301,
+      );
     }
     return fetch(request);
-  }
-}
+  },
+};
 ```
 
 ### 配置多個自定義域名
@@ -137,6 +141,7 @@ export default {
 3. 注意：根域名通常需要 A 記錄而非 CNAME
 
 **A 記錄配置**：
+
 - **名稱**：@ （表示根域名）
 - **類型**：A
 - **值**：Cloudflare 提供的 IP 地址
@@ -150,6 +155,7 @@ export default {
 **症狀**：訪問自定義域名時顯示 DNS 解析失敗
 
 **解決方案**：
+
 1. 驗證 DNS 記錄是否正確添加至 DNS 提供商
 2. 使用 `nslookup` 或 `dig` 檢查 DNS 傳播狀態
 3. 等待 DNS 傳播完成（最多 48 小時，通常 5-30 分鐘）
@@ -160,6 +166,7 @@ export default {
 **症狀**：訪問自定義域名時顯示 SSL 證書錯誤
 
 **解決方案**：
+
 1. 確認 DNS 記錄已完全傳播
 2. 在 Cloudflare Dashboard 中檢查 SSL/TLS 證書狀態
 3. 如果證書仍未頒發，嘗試重新添加域名
@@ -170,6 +177,7 @@ export default {
 **症狀**：域名解析正常，但頁面空白或顯示錯誤
 
 **解決方案**：
+
 1. 檢查瀏覽器控制台是否有 JavaScript 錯誤
 2. 驗證應用環境變數是否正確配置
 3. 檢查 Cloudflare Pages 部署日誌
@@ -180,6 +188,7 @@ export default {
 **症狀**：訪問域名時陷入無限重定向
 
 **解決方案**：
+
 1. 檢查應用代碼中是否有強制重定向邏輯
 2. 驗證 Cloudflare Page Rules 中是否有衝突規則
 3. 清除瀏覽器緩存並重試

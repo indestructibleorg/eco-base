@@ -38,6 +38,7 @@ terraform apply tfplan
 ```
 
 This creates:
+
 - VPC with public and private subnets across 3 availability zones
 - NAT Gateways for private subnet egress
 - Security groups for Kubernetes and ALB

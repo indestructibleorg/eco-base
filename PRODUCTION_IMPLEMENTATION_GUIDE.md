@@ -13,13 +13,13 @@
 
 ### 驗證來源
 
-| 來源 | 驗證項 | 狀態 |
-|------|--------|------|
-| CNCF | Kubernetes 生產最佳實踐 | ✅ 已驗證 |
-| GitHub 官方 | SLSA 3 + Sigstore 實現 | ✅ 已驗證 |
-| Akuity | GitOps 工作流程 | ✅ 已驗證 |
-| Grafana | 可觀測性棧集成 | ✅ 已驗證 |
-| OpenSSF | 供應鏈安全 | ✅ 已驗證 |
+| 來源        | 驗證項                  | 狀態      |
+| ----------- | ----------------------- | --------- |
+| CNCF        | Kubernetes 生產最佳實踐 | ✅ 已驗證 |
+| GitHub 官方 | SLSA 3 + Sigstore 實現  | ✅ 已驗證 |
+| Akuity      | GitOps 工作流程         | ✅ 已驗證 |
+| Grafana     | 可觀測性棧集成          | ✅ 已驗證 |
+| OpenSSF     | 供應鏈安全              | ✅ 已驗證 |
 
 ---
 
@@ -37,12 +37,12 @@ kind: Deployment
 metadata:
   name: platform-01-api
 spec:
-  replicas: 3  # 最少 3 副本
+  replicas: 3 # 最少 3 副本
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
-      maxUnavailable: 0  # 零停機部署
+      maxUnavailable: 0 # 零停機部署
   selector:
     matchLabels:
       app: platform-01-api
@@ -55,57 +55,57 @@ spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - platform-01-api
-            topologyKey: kubernetes.io/hostname
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - platform-01-api
+              topologyKey: kubernetes.io/hostname
       containers:
-      - name: api
-        image: registry.example.com/platform-01-api:v1.0.0@sha256:abc123...
-        imagePullPolicy: IfNotPresent
-        resources:
-          requests:
-            cpu: 500m
-            memory: 512Mi
-          limits:
-            cpu: 1000m
-            memory: 1Gi
-        readinessProbe:
-          httpGet:
-            path: /health/ready
-            port: 8080
-          initialDelaySeconds: 10
-          periodSeconds: 5
-          timeoutSeconds: 3
-          failureThreshold: 3
-        livenessProbe:
-          httpGet:
-            path: /health/live
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 3
-          failureThreshold: 3
-        lifecycle:
-          preStop:
-            exec:
-              command: ["/bin/sh", "-c", "sleep 15"]
+        - name: api
+          image: registry.example.com/platform-01-api:v1.0.0@sha256:abc123...
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 15"]
       terminationGracePeriodSeconds: 30
 ```
 
 #### 資源限制檢查點
 
-| 檢查項 | 標準 | 驗證方法 |
-|--------|------|---------|
-| CPU Request | 根據平均使用量 | `kubectl top pods` |
-| CPU Limit | 根據峰值使用量 | 壓力測試 |
-| Memory Request | 平均 + 20% 緩衝 | 監控數據 |
-| Memory Limit | 最大使用量 | OOMKilled 事件 |
-| 副本數 | ≥3（生產） | `kubectl get deployment` |
-| 更新策略 | RollingUpdate | 零停機驗證 |
+| 檢查項         | 標準            | 驗證方法                 |
+| -------------- | --------------- | ------------------------ |
+| CPU Request    | 根據平均使用量  | `kubectl top pods`       |
+| CPU Limit      | 根據峰值使用量  | 壓力測試                 |
+| Memory Request | 平均 + 20% 緩衝 | 監控數據                 |
+| Memory Limit   | 最大使用量      | OOMKilled 事件           |
+| 副本數         | ≥3（生產）      | `kubectl get deployment` |
+| 更新策略       | RollingUpdate   | 零停機驗證               |
 
 ### 1.2 多場景負載測試[1]
 
@@ -125,6 +125,7 @@ jmeter -n -t test-plan.jmx \
 ```
 
 **期望結果**:
+
 - P95 響應時間 < 500ms
 - 錯誤率 < 0.1%
 - CPU 使用率 < 80%
@@ -144,6 +145,7 @@ kubectl rollout status deployment/platform-01-api -w
 ```
 
 **期望結果**:
+
 - 更新期間無請求失敗
 - Pod 優雅關閉（preStop 執行）
 - 新 Pod 就緒後才終止舊 Pod
@@ -161,6 +163,7 @@ kubectl get pods -o wide -w
 ```
 
 **期望結果**:
+
 - Pod 在其他節點上重新調度
 - 停機時間 < 30 秒
 - 無數據丟失
@@ -179,10 +182,10 @@ spec:
   selector:
     app: platform-01-api
   ports:
-  - name: http
-    port: 80
-    targetPort: 8080
-    protocol: TCP
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP
   sessionAffinity: None
 ```
 
@@ -200,20 +203,20 @@ metadata:
 spec:
   ingressClassName: nginx
   tls:
-  - hosts:
-    - api.platform-01.example.com
-    secretName: platform-01-api-tls
+    - hosts:
+        - api.platform-01.example.com
+      secretName: platform-01-api-tls
   rules:
-  - host: api.platform-01.example.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: platform-01-api
-            port:
-              number: 80
+    - host: api.platform-01.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: platform-01-api
+                port:
+                  number: 80
 ```
 
 ---
@@ -237,16 +240,16 @@ data:
       external_labels:
         cluster: production
         environment: prod
-    
+
     alerting:
       alertmanagers:
       - static_configs:
         - targets:
           - alertmanager:9093
-    
+
     rule_files:
     - /etc/prometheus/rules/*.yml
-    
+
     scrape_configs:
     - job_name: 'kubernetes-pods'
       kubernetes_sd_configs:
@@ -285,35 +288,35 @@ spec:
         app: prometheus
     spec:
       containers:
-      - name: prometheus
-        image: prom/prometheus:v2.45.0
-        args:
-        - --config.file=/etc/prometheus/prometheus.yml
-        - --storage.tsdb.path=/prometheus
-        - --storage.tsdb.retention.time=15d
-        - --web.enable-lifecycle
-        ports:
-        - containerPort: 9090
+        - name: prometheus
+          image: prom/prometheus:v2.45.0
+          args:
+            - --config.file=/etc/prometheus/prometheus.yml
+            - --storage.tsdb.path=/prometheus
+            - --storage.tsdb.retention.time=15d
+            - --web.enable-lifecycle
+          ports:
+            - containerPort: 9090
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 2Gi
+            limits:
+              cpu: 2000m
+              memory: 4Gi
+          volumeMounts:
+            - name: config
+              mountPath: /etc/prometheus
+            - name: storage
+              mountPath: /prometheus
+  volumeClaimTemplates:
+    - metadata:
+        name: storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
         resources:
           requests:
-            cpu: 1000m
-            memory: 2Gi
-          limits:
-            cpu: 2000m
-            memory: 4Gi
-        volumeMounts:
-        - name: config
-          mountPath: /etc/prometheus
-        - name: storage
-          mountPath: /prometheus
-  volumeClaimTemplates:
-  - metadata:
-      name: storage
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 100Gi
+            storage: 100Gi
 ```
 
 ### 2.2 Loki 日誌聚合[2]
@@ -328,18 +331,18 @@ metadata:
 data:
   loki-config.yaml: |
     auth_enabled: false
-    
+
     ingester:
       chunk_idle_period: 3m
       max_chunk_age: 1h
       max_streams_per_user: 10000
       chunk_retain_period: 1m
-    
+
     limits_config:
       enforce_metric_name: false
       reject_old_samples: true
       reject_old_samples_max_age: 168h
-    
+
     schema_config:
       configs:
       - from: 2020-10-24
@@ -349,20 +352,20 @@ data:
         index:
           prefix: index_
           period: 24h
-    
+
     server:
       http_listen_port: 3100
-    
+
     storage_config:
       boltdb_shipper:
         active_index_directory: /loki/boltdb-shipper-active
         shared_store: filesystem
       filesystem:
         directory: /loki/chunks
-    
+
     chunk_store_config:
       max_look_back_period: 0s
-    
+
     table_manager:
       retention_deletes_enabled: false
       retention_period: 0s
@@ -381,7 +384,7 @@ data:
   tempo.yaml: |
     server:
       http_listen_port: 3200
-    
+
     distributor:
       receivers:
         otlp:
@@ -390,17 +393,17 @@ data:
               endpoint: 0.0.0.0:4317
             http:
               endpoint: 0.0.0.0:4318
-    
+
     ingester:
       trace_idle_period: 10s
       max_block_duration: 5m
-    
+
     compactor:
       compaction:
         compaction_window: 1h
         max_compaction_objects: 6000000
         block_retention: 1h
-    
+
     storage:
       trace:
         backend: s3
@@ -436,7 +439,7 @@ data:
             scrape_interval: 10s
             static_configs:
             - targets: ['localhost:8888']
-    
+
     processors:
       batch:
         send_batch_size: 1024
@@ -444,7 +447,7 @@ data:
       memory_limiter:
         check_interval: 1s
         limit_mib: 512
-    
+
     exporters:
       prometheus:
         endpoint: "0.0.0.0:8889"
@@ -454,7 +457,7 @@ data:
           insecure: true
       logging:
         loglevel: debug
-    
+
     service:
       pipelines:
         traces:
@@ -515,17 +518,17 @@ kind: Kustomization
 namespace: platform-01
 
 resources:
-- deployment.yaml
-- service.yaml
-- configmap.yaml
+  - deployment.yaml
+  - service.yaml
+  - configmap.yaml
 
 commonLabels:
   app: platform-01
   version: v1
 
 replicas:
-- name: platform-01-api
-  count: 3
+  - name: platform-01-api
+    count: 3
 ```
 
 #### Overlay 配置
@@ -536,7 +539,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 bases:
-- ../../base/platform-01
+  - ../../base/platform-01
 
 namespace: platform-01-prod
 
@@ -546,13 +549,13 @@ commonLabels:
   environment: production
 
 patchesStrategicMerge:
-- patches/deployment.yaml
+  - patches/deployment.yaml
 
 configMapGenerator:
-- name: platform-01-config
-  literals:
-  - LOG_LEVEL=INFO
-  - ENVIRONMENT=production
+  - name: platform-01-config
+    literals:
+      - LOG_LEVEL=INFO
+      - ENVIRONMENT=production
 ```
 
 ### 3.3 ArgoCD 部署[3]
@@ -567,32 +570,32 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  
+
   source:
     repoURL: https://github.com/autoecoops/deployment-repo.git
     targetRevision: main
     path: overlays/production
-  
+
   destination:
     server: https://kubernetes.default.svc
     namespace: platform-01-prod
-  
+
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
     retry:
       limit: 5
       backoff:
         duration: 5s
         factor: 2
         maxDuration: 3m
-  
+
   notification:
     - destinations:
-      - slack
+        - slack
       selector:
         resources.in: "apps"
 ```
@@ -618,18 +621,18 @@ jobs:
   sast:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    
-    - name: Snyk Scan
-      uses: snyk/actions/golang@master
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - uses: actions/checkout@v3
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Snyk Scan
+        uses: snyk/actions/golang@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
   build:
     needs: sast
@@ -638,40 +641,40 @@ jobs:
       contents: read
       packages: write
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Build Image
-      run: |
-        docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
-    
-    - name: Scan with Trivy
-      uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-        format: 'sarif'
-        output: 'trivy-results.sarif'
-    
-    - name: Generate SBOM
-      run: |
-        trivy image --format cyclonedx \
-          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
-          -o sbom.json
-    
-    - name: Sign Image with Cosign
-      env:
-        COSIGN_EXPERIMENTAL: 1
-      run: |
-        cosign sign --yes \
-          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-    
-    - name: Attach SBOM
-      run: |
-        cosign attach attestation --attestation sbom.json \
-          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-    
-    - name: Push Image
-      run: |
-        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+      - uses: actions/checkout@v3
+
+      - name: Build Image
+        run: |
+          docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .
+
+      - name: Scan with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          format: "sarif"
+          output: "trivy-results.sarif"
+
+      - name: Generate SBOM
+        run: |
+          trivy image --format cyclonedx \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
+            -o sbom.json
+
+      - name: Sign Image with Cosign
+        env:
+          COSIGN_EXPERIMENTAL: 1
+        run: |
+          cosign sign --yes \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Attach SBOM
+        run: |
+          cosign attach attestation --attestation sbom.json \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Push Image
+        run: |
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
 ```
 
 ### 4.2 部署前驗證
@@ -682,20 +685,20 @@ kind: ValidatingWebhookConfiguration
 metadata:
   name: image-signature-verification
 webhooks:
-- name: verify.sigstore.dev
-  clientConfig:
-    service:
-      name: cosign-webhook
-      namespace: cosign-system
-      path: "/verify"
-    caBundle: LS0tLS1CRUdJTi...
-  rules:
-  - operations: ["CREATE", "UPDATE"]
-    apiGroups: ["apps"]
-    apiVersions: ["v1"]
-    resources: ["deployments", "statefulsets", "daemonsets"]
-  admissionReviewVersions: ["v1"]
-  sideEffects: None
+  - name: verify.sigstore.dev
+    clientConfig:
+      service:
+        name: cosign-webhook
+        namespace: cosign-system
+        path: "/verify"
+      caBundle: LS0tLS1CRUdJTi...
+    rules:
+      - operations: ["CREATE", "UPDATE"]
+        apiGroups: ["apps"]
+        apiVersions: ["v1"]
+        resources: ["deployments", "statefulsets", "daemonsets"]
+    admissionReviewVersions: ["v1"]
+    sideEffects: None
 ```
 
 ---
@@ -835,7 +838,7 @@ resource "kubernetes_deployment" "api" {
         container {
           name  = "api"
           image = "${var.registry}/${var.image_name}:${var.image_tag}@${var.image_digest}"
-          
+
           resources {
             requests = {
               cpu    = var.cpu_request
@@ -910,29 +913,29 @@ metadata:
   name: platform-01-alerts
 spec:
   groups:
-  - name: platform-01.rules
-    interval: 30s
-    rules:
-    - alert: HighErrorRate
-      expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
-      for: 5m
-      annotations:
-        summary: "High error rate detected"
-        description: "Error rate is {{ $value }} for {{ $labels.job }}"
-    
-    - alert: PodCrashLooping
-      expr: rate(kube_pod_container_status_restarts_total[15m]) > 0.1
-      for: 5m
-      annotations:
-        summary: "Pod is crash looping"
-        description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is crash looping"
-    
-    - alert: HighMemoryUsage
-      expr: container_memory_usage_bytes / container_spec_memory_limit_bytes > 0.9
-      for: 5m
-      annotations:
-        summary: "High memory usage"
-        description: "Memory usage is {{ $value | humanizePercentage }} for {{ $labels.pod }}"
+    - name: platform-01.rules
+      interval: 30s
+      rules:
+        - alert: HighErrorRate
+          expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+          for: 5m
+          annotations:
+            summary: "High error rate detected"
+            description: "Error rate is {{ $value }} for {{ $labels.job }}"
+
+        - alert: PodCrashLooping
+          expr: rate(kube_pod_container_status_restarts_total[15m]) > 0.1
+          for: 5m
+          annotations:
+            summary: "Pod is crash looping"
+            description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} is crash looping"
+
+        - alert: HighMemoryUsage
+          expr: container_memory_usage_bytes / container_spec_memory_limit_bytes > 0.9
+          for: 5m
+          annotations:
+            summary: "High memory usage"
+            description: "Memory usage is {{ $value | humanizePercentage }} for {{ $labels.pod }}"
 ```
 
 ### 7.2 Grafana 儀表板

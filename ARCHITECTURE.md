@@ -36,12 +36,14 @@ Contract Layer & SDK:
 **Purpose**: Observability, self-healing, and remediation orchestration for infrastructure anomalies.
 
 **Core Responsibilities**:
+
 - Real-time metrics collection and anomaly detection
 - Automated failure diagnosis and root cause analysis
 - Self-healing action orchestration with policy validation
 - Distributed tracing and performance profiling
 
 **Key Components**:
+
 - Prometheus + Thanos for metrics collection and long-term storage
 - Loki for structured log aggregation
 - Tempo for distributed tracing
@@ -53,12 +55,14 @@ Contract Layer & SDK:
 **Purpose**: Infrastructure as Code management, GitOps workflows, and supply chain compliance.
 
 **Core Responsibilities**:
+
 - Declarative infrastructure management via Git
 - Continuous deployment with drift detection
 - SBOM generation and vulnerability scanning
 - Compliance validation and attestation
 
 **Key Components**:
+
 - ArgoCD for GitOps orchestration
 - Flux CD for multi-cluster synchronization
 - Terraform for infrastructure provisioning
@@ -70,12 +74,14 @@ Contract Layer & SDK:
 **Purpose**: Node-level management, hardware integration, and edge agent orchestration.
 
 **Core Responsibilities**:
+
 - Node baseline establishment and drift detection
 - Hardware inventory and health monitoring
 - Edge agent lifecycle management
 - Network and storage resource optimization
 
 **Key Components**:
+
 - Custom node agents for baseline enforcement
 - Hardware inventory service
 - Edge agent controller
@@ -88,6 +94,7 @@ Contract Layer & SDK:
 Provides unified identity and authorization across all platforms using OIDC federation.
 
 **Responsibilities**:
+
 - OIDC Discovery Endpoint for OAuth 2.0 flows
 - RBAC rule synchronization from policy-audit service
 - API key rotation and revocation management
@@ -100,6 +107,7 @@ Provides unified identity and authorization across all platforms using OIDC fede
 Centralized knowledge management with vector search capabilities for RAG (Retrieval-Augmented Generation) context.
 
 **Responsibilities**:
+
 - Document ingestion with malware scanning (ClamAV)
 - Vector embedding with fixed model versioning
 - Semantic search across indexed documents
@@ -112,6 +120,7 @@ Centralized knowledge management with vector search capabilities for RAG (Retrie
 Asynchronous event streaming for loosely-coupled service communication.
 
 **Responsibilities**:
+
 - Event routing and delivery guarantees
 - Event replay for audit and recovery
 - Deduplication and idempotency key management
@@ -124,6 +133,7 @@ Asynchronous event streaming for loosely-coupled service communication.
 Centralized policy enforcement and immutable audit trail management.
 
 **Responsibilities**:
+
 - Policy decision evaluation (OPA/Kyverno)
 - Immutable audit log storage with Object Lock
 - Compliance report generation
@@ -180,6 +190,7 @@ The platform deploys on Kubernetes with the following resource organization:
 - **observability namespace**: Prometheus, Grafana, Loki, Tempo, Alertmanager
 
 Each namespace includes:
+
 - Deployments with resource requests/limits
 - Services for internal and external access
 - ConfigMaps for configuration management
@@ -212,19 +223,19 @@ Each namespace includes:
 
 ## Technology Stack Summary
 
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| Container Orchestration | Kubernetes 1.27+ | Platform deployment and management |
-| Service Mesh | Istio 1.17+ | Traffic management and security |
-| Metrics | Prometheus + Thanos | Time-series metrics collection |
-| Logs | Loki | Structured log aggregation |
-| Traces | Tempo | Distributed tracing |
-| Dashboards | Grafana | Metrics visualization |
-| Policy Engine | OPA/Kyverno | Policy enforcement |
-| GitOps | ArgoCD + Flux CD | Declarative deployment |
-| IaC | Terraform | Infrastructure provisioning |
-| Container Registry | Harbor | Secure image storage |
-| CI/CD | GitHub Actions | Build and deployment automation |
+| Component               | Technology          | Purpose                            |
+| ----------------------- | ------------------- | ---------------------------------- |
+| Container Orchestration | Kubernetes 1.27+    | Platform deployment and management |
+| Service Mesh            | Istio 1.17+         | Traffic management and security    |
+| Metrics                 | Prometheus + Thanos | Time-series metrics collection     |
+| Logs                    | Loki                | Structured log aggregation         |
+| Traces                  | Tempo               | Distributed tracing                |
+| Dashboards              | Grafana             | Metrics visualization              |
+| Policy Engine           | OPA/Kyverno         | Policy enforcement                 |
+| GitOps                  | ArgoCD + Flux CD    | Declarative deployment             |
+| IaC                     | Terraform           | Infrastructure provisioning        |
+| Container Registry      | Harbor              | Secure image storage               |
+| CI/CD                   | GitHub Actions      | Build and deployment automation    |
 
 ## Deployment Environments
 

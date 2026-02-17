@@ -6,11 +6,11 @@ on:
       - main
       - develop
     paths:
-      - 'platforms/**'
-      - 'core/**'
-      - 'interfaces/**'
-      - 'ci-cd/**'
-      - '.github/workflows/**'
+      - "platforms/**"
+      - "core/**"
+      - "interfaces/**"
+      - "ci-cd/**"
+      - ".github/workflows/**"
   pull_request:
     branches:
       - main
@@ -19,8 +19,8 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  NODE_VERSION: '20'
-  PNPM_VERSION: '10.4.1'
+  NODE_VERSION: "20"
+  PNPM_VERSION: "10.4.1"
 
 jobs:
   validate-commit:
@@ -37,7 +37,7 @@ jobs:
           COMMITS=$(git log --oneline -n 10)
           echo "Recent commits:"
           echo "$COMMITS"
-          
+
           # Check if any commit message doesn't follow Conventional Commits
           if git log --oneline -n 1 | grep -qvE '^[a-f0-9]{7} (feat|fix|docs|style|refactor|test|chore)(\(.+\))?:'; then
             echo "❌ Commit message does not follow Conventional Commits format"
@@ -105,15 +105,15 @@ jobs:
       - name: Run Trivy vulnerability scan
         uses: aquasecurity/trivy-action@c1824fd6edce30d7ab345a9989de00bbd46ef284 # v0.34.0
         with:
-          scan-type: 'fs'
-          scan-ref: '.'
-          format: 'sarif'
-          output: 'trivy-results.sarif'
+          scan-type: "fs"
+          scan-ref: "."
+          format: "sarif"
+          output: "trivy-results.sarif"
 
       - name: Upload Trivy results to GitHub Security
         uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.28.10
         with:
-          sarif_file: 'trivy-results.sarif'
+          sarif_file: "trivy-results.sarif"
 
       - name: Run SAST scan with Semgrep
         uses: returntocorp/semgrep-action@v1

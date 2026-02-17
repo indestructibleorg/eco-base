@@ -1,11 +1,13 @@
 # Production Configuration Guide
 
 ## Overview
+
 This document provides the complete configuration required for deploying the Ecosystem v1.0 to production.
 
 ## Prerequisites
 
 ### Kubernetes Cluster Requirements
+
 - **Version**: Kubernetes 1.27+
 - **Nodes**: Minimum 3 nodes
 - **Resources per node**: 4 CPU, 8GB RAM
@@ -13,6 +15,7 @@ This document provides the complete configuration required for deploying the Eco
 - **Network**: VPC with proper networking configuration
 
 ### Required Secrets
+
 The following GitHub Secrets must be configured:
 
 ```
@@ -26,6 +29,7 @@ CLOUDFLARE_API_TOKEN_READ=Vl2I3FAEsuH8uj1X_viZYKnK3bHn3Oa47FGt4gNi
 ```
 
 ### Additional Required Secrets
+
 These must be added to the Kubernetes cluster:
 
 ```
@@ -42,12 +46,14 @@ SLACK_WEBHOOK: Slack webhook for notifications
 ## Deployment Architecture
 
 ### Namespaces
+
 - `ecosystem-staging`: Staging environment
 - `ecosystem-production`: Production environment
 
 ### Services
 
 #### Client (Frontend)
+
 - **Image**: `ghcr.io/machops/ecosystem/client:latest`
 - **Replicas**: 2 (staging), 3 (production)
 - **Port**: 3000
@@ -56,6 +62,7 @@ SLACK_WEBHOOK: Slack webhook for notifications
   - Limits: 500m CPU, 512Mi memory
 
 #### Server (Backend)
+
 - **Image**: `ghcr.io/machops/ecosystem/server:latest`
 - **Replicas**: 2 (staging), 3 (production)
 - **Port**: 8080
@@ -95,10 +102,12 @@ Production deployment requires manual approval in the GitHub Actions workflow.
 ## Monitoring and Observability
 
 ### Health Checks
+
 - **Client**: HTTP GET on `/` port 3000
 - **Server**: HTTP GET on `/health` port 8080
 
 ### Logs
+
 ```bash
 # View client logs
 kubectl logs -f deployment/client -n ecosystem-production
@@ -108,7 +117,9 @@ kubectl logs -f deployment/server -n ecosystem-production
 ```
 
 ### Metrics
+
 Configure Prometheus to scrape metrics from:
+
 - Client service: `http://client.ecosystem-production.svc.cluster.local:80/metrics`
 - Server service: `http://server.ecosystem-production.svc.cluster.local:80/metrics`
 
@@ -127,18 +138,21 @@ kubectl rollout history deployment/server -n ecosystem-production
 ## Troubleshooting
 
 ### Pods not starting
+
 ```bash
 kubectl describe pod <pod-name> -n ecosystem-production
 kubectl logs <pod-name> -n ecosystem-production
 ```
 
 ### Service not accessible
+
 ```bash
 kubectl get endpoints -n ecosystem-production
 kubectl describe service <service-name> -n ecosystem-production
 ```
 
 ### Image pull errors
+
 Ensure the GitHub token has proper permissions to pull from GHCR.
 
 ## Security Considerations
@@ -152,6 +166,7 @@ Ensure the GitHub token has proper permissions to pull from GHCR.
 ## Performance Tuning
 
 ### Horizontal Pod Autoscaling
+
 Configure HPA based on CPU/memory metrics:
 
 ```yaml
@@ -167,23 +182,26 @@ spec:
   minReplicas: 3
   maxReplicas: 10
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 70
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
 ```
 
 ### Resource Limits
+
 Adjust resource limits based on actual usage patterns.
 
 ## Backup and Recovery
 
 ### Database Backups
+
 Configure regular backups of Supabase database.
 
 ### Configuration Backups
+
 Backup Kubernetes manifests and configurations:
 
 ```bash
@@ -193,6 +211,7 @@ kubectl get all -n ecosystem-production -o yaml > backup-$(date +%Y%m%d).yaml
 ## Support and Maintenance
 
 For issues or questions:
+
 - Check logs: `kubectl logs -f <pod-name> -n ecosystem-production`
 - Review deployment status: `kubectl get deployments -n ecosystem-production`
 - Monitor metrics in Grafana

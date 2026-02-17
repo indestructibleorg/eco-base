@@ -7,29 +7,34 @@ AutoEcoOps Ecosystem is a comprehensive, production-ready platform designed to u
 ### Key Features
 
 **Three-Layer Platform Architecture**
+
 - **Platform-01**: IndestructibleAutoOps - Observability, self-healing, and remediation orchestration
 - **Platform-02**: IAOps - Infrastructure as Code, GitOps workflows, and supply chain compliance
 - **Platform-03**: MachineNativeOps - Node management, hardware integration, and edge agents
 
 **Shared Kernel Services**
+
 - **Auth Service**: Unified OIDC-based identity and authorization
 - **Memory Hub**: Centralized knowledge management with vector search
 - **Event Bus**: Asynchronous event streaming and replay
 - **Policy & Audit**: Policy enforcement and immutable audit trails
 
 **Enterprise-Grade Observability**
+
 - Prometheus + Thanos for metrics collection and long-term storage
 - Loki for structured log aggregation
 - Tempo for distributed tracing
 - Grafana for comprehensive dashboards and visualization
 
 **GitOps & Infrastructure Management**
+
 - ArgoCD for declarative deployment and drift detection
 - Flux CD for multi-cluster synchronization
 - Terraform for infrastructure provisioning
 - SLSA Build Level 3 compliance framework
 
 **Security & Compliance**
+
 - OIDC federation for identity management
 - RBAC with least privilege principle
 - Encryption at rest and in transit
@@ -48,12 +53,14 @@ AutoEcoOps Ecosystem is a comprehensive, production-ready platform designed to u
 ### Installation
 
 1. **Clone the repository**
+
 ```bash
 git clone https://github.com/autoecoops/ecosystem.git
 cd ecosystem
 ```
 
 2. **Provision infrastructure**
+
 ```bash
 cd infrastructure/terraform/environments/prod
 terraform init
@@ -61,6 +68,7 @@ terraform apply
 ```
 
 3. **Deploy shared kernel**
+
 ```bash
 kubectl apply -f infrastructure/kustomize/base/auth-service.yaml
 kubectl apply -f infrastructure/kustomize/base/memory-hub.yaml
@@ -69,11 +77,13 @@ kubectl apply -f infrastructure/kustomize/base/policy-audit.yaml
 ```
 
 4. **Deploy observability stack**
+
 ```bash
 kubectl apply -f infrastructure/kustomize/base/observability.yaml
 ```
 
 5. **Deploy platform services**
+
 ```bash
 kubectl apply -f platforms/platform-01/k8s/
 kubectl apply -f platforms/platform-02/k8s/
@@ -81,6 +91,7 @@ kubectl apply -f platforms/platform-03/k8s/
 ```
 
 6. **Configure GitOps**
+
 ```bash
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
@@ -164,19 +175,19 @@ autoecoops-ecosystem/
 
 ## Technology Stack
 
-| Component | Technology | Version |
-|-----------|-----------|---------|
-| Container Orchestration | Kubernetes | 1.27+ |
-| Service Mesh | Istio | 1.17+ |
-| Metrics | Prometheus + Thanos | 2.48+ |
-| Logs | Loki | 2.9+ |
-| Traces | Tempo | 2.2+ |
-| Dashboards | Grafana | 10.0+ |
-| Policy Engine | OPA/Kyverno | Latest |
-| GitOps | ArgoCD + Flux CD | 2.8+ |
-| IaC | Terraform | 1.0+ |
-| Container Registry | Harbor | 2.8+ |
-| CI/CD | GitHub Actions | Latest |
+| Component               | Technology          | Version |
+| ----------------------- | ------------------- | ------- |
+| Container Orchestration | Kubernetes          | 1.27+   |
+| Service Mesh            | Istio               | 1.17+   |
+| Metrics                 | Prometheus + Thanos | 2.48+   |
+| Logs                    | Loki                | 2.9+    |
+| Traces                  | Tempo               | 2.2+    |
+| Dashboards              | Grafana             | 10.0+   |
+| Policy Engine           | OPA/Kyverno         | Latest  |
+| GitOps                  | ArgoCD + Flux CD    | 2.8+    |
+| IaC                     | Terraform           | 1.0+    |
+| Container Registry      | Harbor              | 2.8+    |
+| CI/CD                   | GitHub Actions      | Latest  |
 
 ## Development
 

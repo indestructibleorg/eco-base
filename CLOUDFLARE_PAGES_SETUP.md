@@ -23,12 +23,12 @@
 
 在「設置構建和部署」頁面中，配置以下參數：
 
-| 設置項目 | 值 |
-|---------|-----|
-| **框架預設** | Next.js |
-| **構建命令** | `npx @cloudflare/next-on-pages@1` |
-| **構建輸出目錄** | `vercel/output/static` |
-| **根目錄** | `/frontend/project-01` |
+| 設置項目         | 值                                |
+| ---------------- | --------------------------------- |
+| **框架預設**     | Next.js                           |
+| **構建命令**     | `npx @cloudflare/next-on-pages@1` |
+| **構建輸出目錄** | `vercel/output/static`            |
+| **根目錄**       | `/frontend/project-01`            |
 
 ### 第三步：配置環境變數
 
@@ -63,6 +63,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 ### 測試自動部署
 
 1. 在本地修改代碼並推送至 main 分支：
+
    ```bash
    git add .
    git commit -m "test: verify Cloudflare Pages auto-deployment"

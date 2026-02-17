@@ -9,6 +9,7 @@
 ## Phase 1: Repository Settings ✅
 
 ### Branch Protection Rules Configured
+
 - **Protected Branch**: `main`
 - **Required Status Checks**:
   - `ci/test`
@@ -25,6 +26,7 @@
   - Deletions: Disabled
 
 ### Pull Request Created
+
 - **PR #1**: feat: Add CI/CD workflows and repository configuration
 - **Branch**: `feature/ci-cd-workflows` → `main`
 - **Status**: Open and ready for review
@@ -35,18 +37,20 @@
 
 All secrets have been configured in the repository:
 
-| Secret Name | Status | Description |
-|------------|--------|-------------|
-| SUPABASE_URL | ✅ Configured | Supabase project URL |
-| SUPABASE_ANON_KEY | ✅ Configured | Supabase public key |
-| SUPABASE_SERVICE_ROLE_KEY | ✅ Configured | Supabase service role key |
-| ANTHROPIC_API_KEY | ✅ Configured | Anthropic Claude API key |
-| GROQ_API_KEY | ✅ Configured | Groq API key |
-| CLOUDFLARE_API_TOKEN | ✅ Configured | Cloudflare API token |
+| Secret Name               | Status        | Description                |
+| ------------------------- | ------------- | -------------------------- |
+| SUPABASE_URL              | ✅ Configured | Supabase project URL       |
+| SUPABASE_ANON_KEY         | ✅ Configured | Supabase public key        |
+| SUPABASE_SERVICE_ROLE_KEY | ✅ Configured | Supabase service role key  |
+| ANTHROPIC_API_KEY         | ✅ Configured | Anthropic Claude API key   |
+| GROQ_API_KEY              | ✅ Configured | Groq API key               |
+| CLOUDFLARE_API_TOKEN      | ✅ Configured | Cloudflare API token       |
 | CLOUDFLARE_API_TOKEN_READ | ✅ Configured | Cloudflare read-only token |
 
 ### Additional Secrets Required (to be added)
+
 These secrets need to be configured before production deployment:
+
 - `KUBE_CONFIG_STAGING`: Base64-encoded kubeconfig for staging
 - `KUBE_CONFIG_PRODUCTION`: Base64-encoded kubeconfig for production
 - `DATABASE_URL`: PostgreSQL connection string
@@ -60,6 +64,7 @@ These secrets need to be configured before production deployment:
 ## Phase 3: CI/CD Workflows ✅
 
 ### CI Pipeline (`.github/workflows/ci.yml`)
+
 - **Trigger**: Push to `main` or `develop`, Pull Requests
 - **Jobs**:
   1. **Lint**: ESLint code quality checks
@@ -68,6 +73,7 @@ These secrets need to be configured before production deployment:
   4. **Security Scan**: Trivy vulnerability scanning
 
 ### CD Pipeline (`.github/workflows/cd.yml`)
+
 - **Trigger**: Push to `main`, manual workflow dispatch
 - **Jobs**:
   1. **Build and Push**: Build and push Docker images to GHCR
@@ -76,6 +82,7 @@ These secrets need to be configured before production deployment:
   4. **Smoke Tests**: Verify production deployment
 
 ### Container Registry
+
 - **Registry**: `ghcr.io/machops/ecosystem`
 - **Images**:
   - `client`: Frontend application
@@ -88,22 +95,26 @@ These secrets need to be configured before production deployment:
 ### Kubernetes Manifests Created
 
 #### Base Configuration (`infrastructure/kustomize/base/`)
+
 - `namespace.yaml`: Production namespace
 - `client-deployment.yaml`: Frontend deployment (3 replicas)
 - `server-deployment.yaml`: Backend deployment (3 replicas)
 - `kustomization.yaml`: Base kustomization
 
 #### Staging Overlay (`infrastructure/kustomize/overlays/staging/`)
+
 - `kustomization.yaml`: Staging configuration
 - `replicas-patch.yaml`: 2 replicas per service
 
 #### Production Overlay (`infrastructure/kustomize/overlays/production/`)
+
 - `kustomization.yaml`: Production configuration
 - `replicas-patch.yaml`: 3 replicas per service
 
 ### Service Specifications
 
 #### Client (Frontend)
+
 - **Image**: `ghcr.io/machops/ecosystem/client:IMAGE_TAG`
 - **Replicas**: 2 (staging), 3 (production)
 - **Port**: 3000
@@ -113,6 +124,7 @@ These secrets need to be configured before production deployment:
 - **Health Checks**: Liveness and readiness probes configured
 
 #### Server (Backend)
+
 - **Image**: `ghcr.io/machops/ecosystem/server:IMAGE_TAG`
 - **Replicas**: 2 (staging), 3 (production)
 - **Port**: 8080
@@ -122,6 +134,7 @@ These secrets need to be configured before production deployment:
 - **Health Checks**: Liveness and readiness probes on `/health`
 
 ### Documentation
+
 - **PRODUCTION_CONFIG.md**: Complete production configuration guide
   - Prerequisites
   - Deployment steps
@@ -137,6 +150,7 @@ These secrets need to be configured before production deployment:
 ## Deployment Workflow
 
 ### Staging Deployment (Automatic)
+
 1. Code pushed to `main` branch
 2. CI pipeline runs (lint, test, build, security scan)
 3. CD pipeline builds and pushes Docker images
@@ -144,6 +158,7 @@ These secrets need to be configured before production deployment:
 5. Smoke tests verify deployment
 
 ### Production Deployment (Manual)
+
 1. Staging deployment successful
 2. Manual approval required in GitHub Actions
 3. Deployment to `ecosystem-production` namespace
@@ -155,6 +170,7 @@ These secrets need to be configured before production deployment:
 ## Next Steps for Production Deployment
 
 ### 1. Merge Pull Request #1
+
 ```bash
 # Review and approve PR #1
 # Ensure all CI checks pass
@@ -162,7 +178,9 @@ These secrets need to be configured before production deployment:
 ```
 
 ### 2. Configure Additional GitHub Secrets
+
 Add the following secrets to the repository:
+
 - `KUBE_CONFIG_STAGING`
 - `KUBE_CONFIG_PRODUCTION`
 - `DATABASE_URL`
@@ -172,23 +190,27 @@ Add the following secrets to the repository:
 - `SLACK_WEBHOOK`
 
 ### 3. Set Up Kubernetes Clusters
+
 - Provision staging cluster
 - Provision production cluster
 - Configure kubectl access
 - Create namespaces
 
 ### 4. Configure DNS and SSL
+
 - Set up DNS records for `ecosystem.machops.io`
 - Set up DNS records for `api.ecosystem.machops.io`
 - Configure SSL certificates (Let's Encrypt or Cloudflare)
 
 ### 5. Deploy Monitoring Stack
+
 - Deploy Prometheus
 - Deploy Grafana
 - Configure dashboards
 - Set up alerting
 
 ### 6. Execute Production Deployment
+
 ```bash
 # Deploy will happen automatically via GitHub Actions
 # Monitor the workflow run
@@ -196,6 +218,7 @@ Add the following secrets to the repository:
 ```
 
 ### 7. Post-Deployment Validation
+
 - Run smoke tests
 - Verify monitoring dashboards
 - Test API endpoints
@@ -207,15 +230,18 @@ Add the following secrets to the repository:
 ## Access Information
 
 ### Repository
+
 - **URL**: https://github.com/machops/ecosystem
 - **Pull Request**: https://github.com/machops/ecosystem/pull/1
 - **Branch**: `main` (protected)
 
 ### Container Registry
+
 - **Registry**: https://github.com/machops/ecosystem/pkgs/container/ecosystem
 - **Images**: `client`, `server`
 
 ### Documentation
+
 - **Production Config**: `docs/deployment/PRODUCTION_CONFIG.md`
 - **Deployment Guide**: `docs/deployment/DEPLOYMENT_GUIDE.md`
 
@@ -224,6 +250,7 @@ Add the following secrets to the repository:
 ## Security Notes
 
 ✅ **Configured**:
+
 - Branch protection rules
 - Required status checks
 - Code owner reviews
@@ -232,6 +259,7 @@ Add the following secrets to the repository:
 - Security scanning in CI/CD
 
 ⚠️ **Attention Required**:
+
 - Add additional Kubernetes secrets
 - Configure network policies
 - Implement RBAC
@@ -243,6 +271,7 @@ Add the following secrets to the repository:
 ## Support
 
 For issues or questions:
+
 1. Check CI/CD workflow runs in GitHub Actions
 2. Review documentation in `docs/deployment/`
 3. Consult troubleshooting guide in `PRODUCTION_CONFIG.md`

@@ -55,6 +55,7 @@
 - [x] 生成 API 文件
 - [x] 生成開發者指南
 - [x] 生成運維手冊
+
 ## Phase 7: 交付與驗證
 
 - [x] 最終整合驗證
@@ -82,7 +83,7 @@
 - [x] 配置構建命令：npx @cloudflare/next-on-pages@1
 - [x] 配置輸出目錄：vercel/output/static
 - [x] 設置根目錄：/frontend/project-01
-- [x] 添加環境變數（NEXT_PUBLIC_* 前綴）
+- [x] 添加環境變數（NEXT*PUBLIC*\* 前綴）
 - [x] 測試自動部署流程
 - [x] 驗證部署成功並訪問站點
 
@@ -95,7 +96,6 @@
 - [x] 測試自定義域名訪問
 - [x] 配置域名重定向（可選）
 - [x] 設置 WWW 子域名重定向
-
 
 ## Cloudflare Pages 構建問題一次性修復
 

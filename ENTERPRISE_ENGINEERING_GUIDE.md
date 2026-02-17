@@ -13,15 +13,15 @@ AutoEcoOps Ecosystem v1.0 是一個企業級 DevOps 平台，實現了三層平�
 
 ### 核心能力
 
-| 能力 | 實現狀態 | 驗證來源 |
-|------|--------|--------|
-| 三層平台架構 | ✅ 完成 | 內部設計 |
-| OPA/Kyverno 統一策略 | ✅ 已驗證 | CNCF、Plural |
-| SLSA 3 供應鏈安全 | ✅ 已驗證 | GitHub、OpenSSF |
-| 不可變審計日誌 | ✅ 已驗證 | AWS、PostgreSQL |
-| Kubernetes 生產配置 | ✅ 完成 | Kubernetes 官方 |
-| 多集群部署 | ⏳ 待實現 | - |
-| 自我修復引擎 | ⏳ 待實現 | - |
+| 能力                 | 實現狀態  | 驗證來源        |
+| -------------------- | --------- | --------------- |
+| 三層平台架構         | ✅ 完成   | 內部設計        |
+| OPA/Kyverno 統一策略 | ✅ 已驗證 | CNCF、Plural    |
+| SLSA 3 供應鏈安全    | ✅ 已驗證 | GitHub、OpenSSF |
+| 不可變審計日誌       | ✅ 已驗證 | AWS、PostgreSQL |
+| Kubernetes 生產配置  | ✅ 完成   | Kubernetes 官方 |
+| 多集群部署           | ⏳ 待實現 | -               |
+| 自我修復引擎         | ⏳ 待實現 | -               |
 
 ---
 
@@ -32,6 +32,7 @@ AutoEcoOps Ecosystem v1.0 是一個企業級 DevOps 平台，實現了三層平�
 #### 決策：OPA/Gatekeeper + Kyverno 混合模式
 
 **選擇依據**[1]:
+
 - **OPA/Gatekeeper**: 企業級跨棧策略引擎（Kubernetes + Terraform + API）
 - **Kyverno**: Kubernetes 原生補充（簡化 YAML 規則）
 - **GitOps 集成**: 所有策略版本化、審計化
@@ -58,12 +59,14 @@ AutoEcoOps Ecosystem v1.0 是一個企業級 DevOps 平台，實現了三層平�
 ```
 
 **關鍵特性**:
+
 - **Policy-as-Code**: 所有策略存儲在 Git，支援版本控制
 - **Mutation & Generation**: 自動修復非合規資源
 - **Audit Integration**: 每個策略決策記錄到不可變日誌
 - **RBAC + Policy**: 雙層授權（身份 + 策略）
 
 **實現檢查點**:
+
 - ✅ OPA/Gatekeeper 支援 Rego 語言（複雜規則）
 - ✅ Kyverno 支援 YAML + CEL（簡單規則）
 - ✅ 兩者都支援 Mutation 與 Generation
@@ -76,6 +79,7 @@ AutoEcoOps Ecosystem v1.0 是一個企業級 DevOps 平台，實現了三層平�
 #### 決策：GitHub Actions + Sigstore 完整實現
 
 **選擇依據**[2][3]:
+
 - **GitHub Actions**: 原生隔離構建環境
 - **Sigstore**: OpenSSF 推薦的開源簽署工具
 - **無需管理密鑰**: Fulcio 通過 OIDC 自動頒發短期證書
@@ -111,6 +115,7 @@ AutoEcoOps Ecosystem v1.0 是一個企業級 DevOps 平台，實現了三層平�
 ```
 
 **SLSA 3 檢查點**:
+
 - ✅ **構建隔離**: 每個工作流程在隔離虛擬機運行
 - ✅ **簽署**: Cosign 簽署所有構建產物
 - ✅ **證書管理**: Fulcio 自動頒發短期證書（無需手動管理密鑰）
@@ -119,6 +124,7 @@ AutoEcoOps Ecosystem v1.0 是一個企業級 DevOps 平台，實現了三層平�
 - ✅ **SBOM**: CycloneDX 格式的依賴清單
 
 **實現檢查點**:
+
 - ✅ GitHub Actions 原生支援 OIDC
 - ✅ Sigstore 完全開源且免費
 - ✅ 支援容器鏡像 + 軟體包簽署
@@ -131,6 +137,7 @@ AutoEcoOps Ecosystem v1.0 是一個企業級 DevOps 平台，實現了三層平�
 #### 決策：多層不可變存儲
 
 **選擇依據**:
+
 - **主存儲**: PostgreSQL Append-only（自建環境）或 AWS S3 Object Lock（雲端）
 - **備份**: 定期快照 + 跨區域複製
 - **加密**: AES-256 + 簽署（RSA-4096）
@@ -169,6 +176,7 @@ AutoEcoOps Ecosystem v1.0 是一個企業級 DevOps 平台，實現了三層平�
 ```
 
 **審計事件必須字段**:
+
 - `timestamp`: ISO-8601 格式
 - `traceId`: 分散式追蹤 ID
 - `actor`: 操作人（用戶或系統）
@@ -179,6 +187,7 @@ AutoEcoOps Ecosystem v1.0 是一個企業級 DevOps 平台，實現了三層平�
 - `compliance_tags`: 合規標籤
 
 **實現檢查點**:
+
 - ✅ PostgreSQL 觸發器防止更新/刪除
 - ✅ S3 Object Lock 法律保留模式
 - ✅ AES-256 加密 + RSA-4096 簽署
@@ -212,6 +221,7 @@ infrastructure/
 ```
 
 **生產資源清單**:
+
 - ✅ Deployment（副本數 ≥3）
 - ✅ Service（ClusterIP + LoadBalancer）
 - ✅ Ingress（TLS + 速率限制）
@@ -222,6 +232,7 @@ infrastructure/
 - ✅ NetworkPolicy（網路隔離）
 
 **實現檢查點**:
+
 - ✅ 所有服務最少 3 副本（高可用）
 - ✅ 資源限制設置（CPU/Memory）
 - ✅ 就緒探針 + 存活探針
@@ -266,6 +277,7 @@ Policy & Audit
 ```
 
 **實現檢查點**:
+
 - ✅ 所有部署通過 Git 驅動
 - ✅ 部署前驗證簽署
 - ✅ 部署前檢查策略合規
@@ -277,24 +289,26 @@ Policy & Audit
 
 ### 部署前檢查清單
 
-| 檢查項 | 狀態 | 責任人 |
-|-------|------|-------|
+| 檢查項                | 狀態      | 責任人       |
+| --------------------- | --------- | ------------ |
 | Kubernetes 1.27+ 環境 | ⏳ 待驗證 | 基礎設施團隊 |
-| OPA/Gatekeeper 部署 | ⏳ 待實現 | 平台團隊 |
-| Sigstore 設置 | ⏳ 待實現 | 安全團隊 |
-| 審計日誌存儲 | ⏳ 待實現 | 基礎設施團隊 |
-| GitOps 工作流程 | ⏳ 待實現 | 平台團隊 |
-| 監控與告警 | ⏳ 待實現 | 運維團隊 |
+| OPA/Gatekeeper 部署   | ⏳ 待實現 | 平台團隊     |
+| Sigstore 設置         | ⏳ 待實現 | 安全團隊     |
+| 審計日誌存儲          | ⏳ 待實現 | 基礎設施團隊 |
+| GitOps 工作流程       | ⏳ 待實現 | 平台團隊     |
+| 監控與告警            | ⏳ 待實現 | 運維團隊     |
 
 ### 多集群部署
 
 **Active-Active 拓撲**:
+
 - 區域 A: 主叢集 + 備份叢集
 - 區域 B: 主叢集 + 備份叢集
 - 審計日誌跨區域複製（RPO ≤1 小時）
 - 事件流去重與重放（RTO ≤15 分鐘）
 
 **實現步驟**:
+
 1. 部署區域 A 主叢集
 2. 配置區域 B 備份叢集
 3. 設置審計日誌複製
@@ -330,6 +344,7 @@ Policy & Audit
 **目標**: 實現 ML 驅動的異常檢測與自動修復
 
 **關鍵組件**:
+
 - 異常檢測模型（基於 Prometheus 指標）
 - 修復決策引擎（基於 OPA 策略）
 - 自動修復 Operator（基於 Kubernetes Operator Framework）
@@ -340,6 +355,7 @@ Policy & Audit
 **目標**: 實現跨區域 Active-Active 部署
 
 **關鍵組件**:
+
 - 審計日誌跨區域複製
 - 事件流去重與重放
 - 故障轉移自動化
@@ -350,6 +366,7 @@ Policy & Audit
 **目標**: 自動化合規報表生成
 
 **關鍵組件**:
+
 - SOC 2 報表自動生成
 - ISO 27001 審計日誌收集
 - GDPR 數據保護驗證

@@ -34,14 +34,14 @@ The AutoEcoOps Ecosystem deployment architecture consists of multiple interconne
 
 The deployment leverages the following technology stack:
 
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| **Frontend Framework** | Next.js 15.0.8 | React-based application framework with SSR/SSG capabilities |
-| **Package Manager** | pnpm 8.15.0 | Fast, disk-space efficient package manager for monorepo |
-| **Build Tool** | Cloudflare Pages | Serverless platform for static and dynamic content |
-| **Build Adapter** | @cloudflare/next-on-pages | Adapter converting Next.js output to Cloudflare Workers format |
-| **DNS Provider** | Cloudflare | Authoritative DNS and edge caching infrastructure |
-| **Version Control** | GitHub | Source code repository and CI/CD orchestration |
+| Component              | Technology                | Purpose                                                        |
+| ---------------------- | ------------------------- | -------------------------------------------------------------- |
+| **Frontend Framework** | Next.js 15.0.8            | React-based application framework with SSR/SSG capabilities    |
+| **Package Manager**    | pnpm 8.15.0               | Fast, disk-space efficient package manager for monorepo        |
+| **Build Tool**         | Cloudflare Pages          | Serverless platform for static and dynamic content             |
+| **Build Adapter**      | @cloudflare/next-on-pages | Adapter converting Next.js output to Cloudflare Workers format |
+| **DNS Provider**       | Cloudflare                | Authoritative DNS and edge caching infrastructure              |
+| **Version Control**    | GitHub                    | Source code repository and CI/CD orchestration                 |
 
 ### Monorepo Structure
 
@@ -200,16 +200,16 @@ vars = { ENVIRONMENT = "staging" }
 The `frontend/project-01/next.config.js` must include Cloudflare Pages adapter:
 
 ```javascript
-import { withPlainConfig } from '@cloudflare/next-on-pages/next-config';
+import { withPlainConfig } from "@cloudflare/next-on-pages/next-config";
 
 export default withPlainConfig({
   // Next.js configuration options
   reactStrictMode: true,
   swcMinify: true,
-  
+
   // Output directory for Cloudflare Pages
-  distDir: '.next',
-  
+  distDir: ".next",
+
   // Image optimization (use external service for serverless)
   images: {
     unoptimized: true,
@@ -242,34 +242,34 @@ This configuration prevents npm fallback during Cloudflare Pages builds, ensurin
 
 Environment variables are organized into three categories:
 
-#### 1. Build-Time Variables (NEXT_PUBLIC_*)
+#### 1. Build-Time Variables (NEXT*PUBLIC*\*)
 
 Variables prefixed with `NEXT_PUBLIC_` are embedded in the client-side bundle:
 
-| Variable | Purpose | Example |
-|----------|---------|---------|
-| `NEXT_PUBLIC_API_URL` | Backend API endpoint | `https://api.autoecoops.io` |
-| `NEXT_PUBLIC_OAUTH_URL` | OAuth provider URL | `https://auth.autoecoops.io` |
-| `NEXT_PUBLIC_APP_NAME` | Application display name | `AutoEcoOps Ecosystem` |
-| `NEXT_PUBLIC_ENVIRONMENT` | Deployment environment | `production` |
+| Variable                  | Purpose                  | Example                      |
+| ------------------------- | ------------------------ | ---------------------------- |
+| `NEXT_PUBLIC_API_URL`     | Backend API endpoint     | `https://api.autoecoops.io`  |
+| `NEXT_PUBLIC_OAUTH_URL`   | OAuth provider URL       | `https://auth.autoecoops.io` |
+| `NEXT_PUBLIC_APP_NAME`    | Application display name | `AutoEcoOps Ecosystem`       |
+| `NEXT_PUBLIC_ENVIRONMENT` | Deployment environment   | `production`                 |
 
 #### 2. Runtime Variables (Server-Side)
 
 Variables without `NEXT_PUBLIC_` prefix are only available on the server:
 
-| Variable | Purpose | Example |
-|----------|---------|---------|
-| `DATABASE_URL` | Database connection string | `postgresql://user:pass@host/db` |
-| `API_SECRET_KEY` | Secret authentication key | `sk_live_...` |
-| `ENCRYPTION_KEY` | Data encryption key | `base64-encoded-key` |
+| Variable         | Purpose                    | Example                          |
+| ---------------- | -------------------------- | -------------------------------- |
+| `DATABASE_URL`   | Database connection string | `postgresql://user:pass@host/db` |
+| `API_SECRET_KEY` | Secret authentication key  | `sk_live_...`                    |
+| `ENCRYPTION_KEY` | Data encryption key        | `base64-encoded-key`             |
 
 #### 3. Cloudflare-Specific Variables
 
-| Variable | Purpose | Example |
-|----------|---------|---------|
-| `CF_ACCOUNT_ID` | Cloudflare account identifier | `abc123def456` |
-| `CF_API_TOKEN` | Cloudflare API token | `v1.0abc123...` |
-| `CF_ZONE_ID` | DNS zone identifier | `xyz789abc123` |
+| Variable        | Purpose                       | Example         |
+| --------------- | ----------------------------- | --------------- |
+| `CF_ACCOUNT_ID` | Cloudflare account identifier | `abc123def456`  |
+| `CF_API_TOKEN`  | Cloudflare API token          | `v1.0abc123...` |
+| `CF_ZONE_ID`    | DNS zone identifier           | `xyz789abc123`  |
 
 ### Setting Variables in Cloudflare Pages
 
@@ -413,13 +413,13 @@ Preview deployments are automatically created for pull requests:
 
 #### Common Build Errors
 
-| Error | Cause | Solution |
-|-------|-------|----------|
-| `No Next.js version detected` | Next.js not in dependencies | Add `next` to root `package.json` |
-| `The project is set up for pnpm but running via npm` | Package manager mismatch | Ensure `.npmrc` exists with `prefer-pnpm=true` |
-| `Cannot find module '@cloudflare/next-on-pages'` | Missing adapter | Run `pnpm install --frozen-lockfile=false` |
-| `Build command failed: ENOENT` | Incorrect directory path | Verify `wrangler.toml` build command path |
-| `Timeout during build` | Build exceeding time limit | Optimize build process or increase timeout |
+| Error                                                | Cause                       | Solution                                       |
+| ---------------------------------------------------- | --------------------------- | ---------------------------------------------- |
+| `No Next.js version detected`                        | Next.js not in dependencies | Add `next` to root `package.json`              |
+| `The project is set up for pnpm but running via npm` | Package manager mismatch    | Ensure `.npmrc` exists with `prefer-pnpm=true` |
+| `Cannot find module '@cloudflare/next-on-pages'`     | Missing adapter             | Run `pnpm install --frozen-lockfile=false`     |
+| `Build command failed: ENOENT`                       | Incorrect directory path    | Verify `wrangler.toml` build command path      |
+| `Timeout during build`                               | Build exceeding time limit  | Optimize build process or increase timeout     |
 
 ### Runtime Monitoring
 
@@ -613,7 +613,6 @@ fetch-retry-maxtimeout=120000
 
 **Document Revision History**
 
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| 1.0 | 2026-02-12 | Manus AI | Initial comprehensive deployment guide |
-
+| Version | Date       | Author   | Changes                                |
+| ------- | ---------- | -------- | -------------------------------------- |
+| 1.0     | 2026-02-12 | Manus AI | Initial comprehensive deployment guide |

@@ -1,6 +1,7 @@
 # DNS 設置指南 - autoecoops.io (Cloudflare)
 
 ## 域名信息
+
 - **域名**: autoecoops.io
 - **DNS 託管**: Cloudflare
 - **區域**: Taiwan (asia-east1)
@@ -12,6 +13,7 @@
 ### 第 1 步：觸發 Staging 部署
 
 1. **推送到 main 分支觸發部署**:
+
    ```bash
    cd /workspace/ecosystem
    git add .
@@ -25,16 +27,17 @@
    - 等待大約 15-20 分鐘完成
 
 3. **驗證 Staging 部署**:
+
    ```bash
    # 切換到 staging cluster
    gcloud container clusters get-credentials eco-staging --region asia-east1 --project my-project-ops-1991
-   
+
    # 檢查 pods
    kubectl get pods -n ecosystem-staging
-   
+
    # 檢查 services（重要！）
    kubectl get svc -n ecosystem-staging
-   
+
    # 檢查 Ingress
    kubectl get ingress -n ecosystem-staging
    ```
@@ -72,11 +75,12 @@
    - 點擊「儲存」
 
 4. **驗證 DNS 生效**（等待 1-5 分鐘）:
+
    ```bash
    # 檢查 DNS 解析
    dig staging.autoecoops.io
    dig api-staging.autoecoops.io
-   
+
    # 或使用線上工具
    # https://dnschecker.org/
    ```
@@ -100,16 +104,17 @@
    - 查看 workflow 完成狀態
 
 3. **驗證 Production 部署**:
+
    ```bash
    # 切換到 production cluster
    gcloud container clusters get-credentials eco-production --region asia-east1 --project my-project-ops-1991
-   
+
    # 檢查 pods
    kubectl get pods -n ecosystem-production
-   
+
    # 檢查 services
    kubectl get svc -n ecosystem-production
-   
+
    # 檢查 Ingress
    kubectl get ingress -n ecosystem-production
    ```
@@ -152,6 +157,7 @@
    - 點擊「儲存」
 
 4. **驗證 DNS 生效**（等待 1-5 分鐘）:
+
    ```bash
    dig autoecoops.io
    dig api.autoecoops.io
@@ -168,17 +174,19 @@
 ## 📊 DNS 記錄總結
 
 ### Staging 環境
-| 子域名 | 類型 | IP/目標 | 代理狀態 |
-|--------|------|---------|----------|
-| staging.autoecoops.io | A | Staging LB IP | ✅ 已代理 |
-| api-staging.autoecoops.io | A | Staging LB IP | ✅ 已代理 |
+
+| 子域名                    | 類型 | IP/目標       | 代理狀態  |
+| ------------------------- | ---- | ------------- | --------- |
+| staging.autoecoops.io     | A    | Staging LB IP | ✅ 已代理 |
+| api-staging.autoecoops.io | A    | Staging LB IP | ✅ 已代理 |
 
 ### Production 環境
-| 子域名 | 類型 | IP/目標 | 代理狀態 |
-|--------|------|---------|----------|
-| autoecoops.io (@) | A | Production LB IP | ✅ 已代理 |
-| api.autoecoops.io | A | Production LB IP | ✅ 已代理 |
-| www.autoecoops.io | CNAME | autoecoops.io | ✅ 已代理 |
+
+| 子域名            | 類型  | IP/目標          | 代理狀態  |
+| ----------------- | ----- | ---------------- | --------- |
+| autoecoops.io (@) | A     | Production LB IP | ✅ 已代理 |
+| api.autoecoops.io | A     | Production LB IP | ✅ 已代理 |
+| www.autoecoops.io | CNAME | autoecoops.io    | ✅ 已代理 |
 
 ---
 
@@ -187,6 +195,7 @@
 ### Cloudflare 自動 SSL（推薦）
 
 ✅ **好處**:
+
 - 免費的 SSL/TLS 證書
 - 自動續期
 - 零配置
@@ -194,6 +203,7 @@
 - CDN 加速
 
 **配置步驟**:
+
 1. 在 Cloudflare Dashboard → SSL/TLS
 2. 設置模式為 **「Flexible」** 或 **「Full」**
 3. 選擇 **「Always Use HTTPS」**
@@ -202,6 +212,7 @@
 ### GKE Managed Certificates（備選方案）
 
 我們的 Kubernetes 配置已經包含 GKE Managed Certificates，它會自動為以下域名提供 SSL:
+
 - staging.autoecoops.io
 - api-staging.autoecoops.io
 - autoecoops.io
@@ -214,7 +225,9 @@
 ## 🛠️ 故障排除
 
 ### 問題 1: Load Balancer IP 沒有出現
+
 **解決方案**:
+
 ```bash
 # 檢查 Ingress 狀態
 kubectl describe ingress ecosystem-ingress-staging -n ecosystem-staging
@@ -227,16 +240,19 @@ kubectl get ingress -n ecosystem-staging -w
 ```
 
 ### 問題 2: DNS 沒有解析
+
 **解決方案**:
+
 1. 等待 DNS 傳播（可能需要 5-30 分鐘）
 2. 清除本地 DNS 快取:
+
    ```bash
    # macOS
    sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
-   
+
    # Linux
    sudo systemctl restart systemd-resolved
-   
+
    # Windows
    ipconfig /flushdns
    ```
@@ -245,7 +261,9 @@ kubectl get ingress -n ecosystem-staging -w
 4. 使用線上工具驗證: https://dnschecker.org/
 
 ### 問題 3: 無法訪問網站
+
 **檢查清單**:
+
 ```bash
 # 1. 檢查 pods 是否運行
 kubectl get pods -n ecosystem-staging
@@ -266,7 +284,9 @@ kubectl run test-pod --rm -it --image=curlimages/curl --restart=Never -n ecosyst
 ```
 
 ### 問題 4: SSL 證書錯誤
+
 **解決方案**:
+
 1. 確認 Cloudflare 代理已啟用（橙色雲朵）
 2. 檢查 SSL/TLS 模式是否設為 Flexible 或 Full
 3. 清除瀏覽器快取並使用無痕模式
@@ -277,6 +297,7 @@ kubectl run test-pod --rm -it --image=curlimages/curl --restart=Never -n ecosyst
 ## ✅ 驗證清單
 
 ### Staging 部署驗證
+
 - [ ] GitHub Actions CI/CD 成功完成
 - [ ] Pods 全部運行中（3/3）
 - [ ] Load Balancer IP 已分配
@@ -285,6 +306,7 @@ kubectl run test-pod --rm -it --image=curlimages/curl --restart=Never -n ecosyst
 - [ ] API 健康檢查 https://api-staging.autoecoops.io/health 成功
 
 ### Production 部署驗證
+
 - [ ] Production 部署已批准並完成
 - [ ] Pods 全部運行中（3/3）
 - [ ] Load Balancer IP 已分配
@@ -341,6 +363,7 @@ kubectl get ingress -n ecosystem-production
 ## 📞 需要幫助？
 
 如果遇到問題:
+
 1. 檢查 GitHub Actions workflow 日誌
 2. 查看 Kubernetes pod 日誌
 3. 驗證 DNS 設置

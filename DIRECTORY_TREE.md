@@ -417,39 +417,46 @@ autoecoops-ecosystem/
 ## Key Files & Directories
 
 ### Configuration Files
+
 - `ARCHITECTURE.md` - Complete system architecture documentation
 - `README.md` - Project overview and quick start guide
 - `COMMIT_CONVENTION.md` - Git commit message standards
 - `todo.md` - Project tracking and TODO items
 
 ### Platform Services
+
 - `platforms/platform-01/` - IndestructibleAutoOps (Observability & Self-Healing)
 - `platforms/platform-02/` - IAOps (Infrastructure as Code & GitOps)
 - `platforms/platform-03/` - MachineNativeOps (Node Management & Edge)
 
 ### Shared Kernel
+
 - `core/auth-service/` - Identity and authorization service
 - `core/memory-hub/` - Knowledge management and vector search
 - `core/event-bus/` - Event streaming and replay
 - `core/policy-audit/` - Policy enforcement and audit logging
 
 ### Infrastructure
+
 - `infrastructure/terraform/` - Terraform modules for cloud resources
 - `infrastructure/helm-charts/` - Helm charts for deployment
 - `infrastructure/kustomize/` - Kustomize overlays for K8s manifests
 
 ### Observability
+
 - `observability/prometheus/` - Prometheus configuration
 - `observability/grafana/` - Grafana dashboards
 - `observability/loki/` - Loki log aggregation
 - `observability/tempo/` - Tempo distributed tracing
 
 ### CI/CD
+
 - `ci-cd/github-actions/` - GitHub Actions workflows
 - `ci-cd/argocd/` - ArgoCD configuration
 - `ci-cd/scripts/` - Deployment and testing scripts
 
 ### Documentation
+
 - `docs/architecture/` - Architecture documentation
 - `docs/deployment/` - Deployment guides
 - `docs/api/` - API documentation
