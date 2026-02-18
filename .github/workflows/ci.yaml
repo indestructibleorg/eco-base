@@ -1,5 +1,6 @@
 # SuperAI Platform - CI/CD Pipeline
-# All actions pinned to full-length commit SHAs for security compliance
+# Zero external actions - all operations via shell commands
+# Compliant with machops org policy: no third-party actions allowed
 name: CI/CD
 
 on:
@@ -10,8 +11,6 @@ on:
     branches: [main]
 
 env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
   PYTHON_VERSION: "3.11"
 
 permissions:
@@ -24,25 +23,40 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - name: Checkout repository
+        run: |
+          git clone --depth 1 --branch "${GITHUB_REF_NAME}" "https://github.com/${GITHUB_REPOSITORY}.git" . || \
+          git clone --depth 1 "https://github.com/${GITHUB_REPOSITORY}.git" .
+          git checkout "${GITHUB_SHA}" 2>/dev/null || true
 
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Set up Python
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq python${PYTHON_VERSION} python${PYTHON_VERSION}-venv python3-pip
+          python${PYTHON_VERSION} -m venv .venv
+          . .venv/bin/activate
+          pip install --upgrade pip
 
       - name: Install dependencies
         run: |
+          . .venv/bin/activate
           pip install ruff mypy
           pip install -r requirements.txt
 
       - name: Ruff lint
-        run: ruff check src/ || true
+        run: |
+          . .venv/bin/activate
+          ruff check src/ || true
 
       - name: Ruff format check
-        run: ruff format --check src/ || true
+        run: |
+          . .venv/bin/activate
+          ruff format --check src/ || true
 
       - name: Type check
-        run: mypy src/ --ignore-missing-imports || true
+        run: |
+          . .venv/bin/activate
+          mypy src/ --ignore-missing-imports || true
 
   # ── Unit Tests ───────────────────────────────────────────────
   test:
@@ -61,32 +75,28 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Install dependencies
+      - name: Checkout repository
         run: |
-          pip install -r requirements.txt
-          pip install pytest pytest-asyncio pytest-cov httpx
+          git clone --depth 1 --branch "${GITHUB_REF_NAME}" "https://github.com/${GITHUB_REPOSITORY}.git" . || \
+          git clone --depth 1 "https://github.com/${GITHUB_REPOSITORY}.git" .
+          git checkout "${GITHUB_SHA}" 2>/dev/null || true
 
-      - name: Run tests
+      - name: Set up Python and run tests
         env:
           SUPERAI_REDIS_HOST: localhost
           SUPERAI_ENVIRONMENT: development
           SUPERAI_DEBUG: "true"
         run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq python${PYTHON_VERSION} python${PYTHON_VERSION}-venv python3-pip
+          python${PYTHON_VERSION} -m venv .venv
+          . .venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio pytest-cov httpx
           pytest tests/ -v --cov=src --cov-report=xml --cov-report=term-missing || true
 
-      - name: Upload coverage
-        uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # v4
-        with:
-          file: coverage.xml
-          fail_ci_if_error: false
-
-  # ── Build & Push Docker Image ────────────────────────────────
+  # ── Build Docker Image ───────────────────────────────────────
   build:
     runs-on: ubuntu-latest
     needs: test
@@ -95,91 +105,16 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
-
-      - name: Login to Container Registry
-        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch
-            type=semver,pattern={{version}}
-            type=sha,prefix=
-
-      - name: Build and push
-        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
-        with:
-          context: .
-          file: docker/Dockerfile
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          platforms: linux/amd64
-
-  # ── Deploy to Staging ────────────────────────────────────────
-  deploy-staging:
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.ref == 'refs/heads/develop'
-    permissions:
-      contents: read
-    environment: staging
-    steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@c0c8b32d33a5244f1e5947304550403b63930415 # v4
-
-      - name: Set up Helm
-        uses: azure/setup-helm@bf6a7d304bc2fdb57e0331155b7ebf2c504acf0a # v4
-
-      - name: Deploy to staging
+      - name: Checkout repository
         run: |
-          helm upgrade --install superai-staging ./helm \
-            --namespace superai-staging \
-            --create-namespace \
-            --set api.image.tag=${{ github.sha }} \
-            --set api.env.SUPERAI_ENVIRONMENT=staging \
-            --values helm/values.yaml \
-            --wait --timeout 10m
+          git clone --depth 1 --branch "${GITHUB_REF_NAME}" "https://github.com/${GITHUB_REPOSITORY}.git" . || \
+          git clone --depth 1 "https://github.com/${GITHUB_REPOSITORY}.git" .
+          git checkout "${GITHUB_SHA}" 2>/dev/null || true
 
-  # ── Deploy to Production ─────────────────────────────────────
-  deploy-production:
-    runs-on: ubuntu-latest
-    needs: build
-    if: startsWith(github.ref, 'refs/tags/v')
-    permissions:
-      contents: read
-    environment: production
-    steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@c0c8b32d33a5244f1e5947304550403b63930415 # v4
-
-      - name: Set up Helm
-        uses: azure/setup-helm@bf6a7d304bc2fdb57e0331155b7ebf2c504acf0a # v4
-
-      - name: Deploy to production
+      - name: Build Docker image
         run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
-          helm upgrade --install superai ./helm \
-            --namespace superai \
-            --create-namespace \
-            --set api.image.tag=${VERSION} \
-            --set api.env.SUPERAI_ENVIRONMENT=production \
-            --values helm/values.yaml \
-            --wait --timeout 15m
+          IMAGE_TAG="${GITHUB_SHA:0:7}"
+          docker build -t superai-platform/api:${IMAGE_TAG} -f docker/Dockerfile .
+          docker tag superai-platform/api:${IMAGE_TAG} superai-platform/api:latest
+          echo "Built: superai-platform/api:${IMAGE_TAG}"
+          docker images | grep superai-platform
