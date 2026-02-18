@@ -10,6 +10,7 @@ Enterprise-grade validation suite implementing:
 - Schema property quality (descriptions, no defaults on required, unique enums, valid regex)
 - Sample data validation against input/output schemas
 - Cross-skill non-overlap verification
+- Additional schema rules: minProperties enforcement, patternProperties count, enum min items, type consistency
 """
 
 import json
@@ -31,9 +32,9 @@ INPUT_SCHEMA_PATH = SKILL_DIR / "schemas" / "input.schema.json"
 OUTPUT_SCHEMA_PATH = SKILL_DIR / "schemas" / "output.schema.json"
 
 
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 # Fixtures
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 
 def _load_json(path: Path, label: str) -> Dict[str, Any]:
     """Load and validate a JSON file, raising precise errors."""
@@ -85,9 +86,9 @@ def output_schema() -> Dict[str, Any]:
     return _load_json(OUTPUT_SCHEMA_PATH, "Output schema file")
 
 
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 # Manifest existence guard
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 
 def test_manifest_exists():
     assert MANIFEST_PATH.exists(), (
@@ -100,9 +101,9 @@ def test_manifest_valid_json(manifest):
     assert isinstance(manifest, dict), "Manifest must be a JSON object (dict)."
 
 
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 # Manifest structure
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 
 def test_manifest_required_fields(manifest):
     required = [
@@ -118,11 +119,11 @@ def test_manifest_required_fields(manifest):
 
 
 def test_manifest_id_matches_directory(manifest):
-    expected_id = SKILL_DIR.name
-    actual_id = manifest["id"]
-    assert actual_id == expected_id, (
-        f"Manifest 'id' '{actual_id}' does not match directory name "
-        f"'{expected_id}'. Update 'id' in skill.json to '{expected_id}'."
+    expected = SKILL_DIR.name
+    actual = manifest["id"]
+    assert actual == expected, (
+        f"Manifest 'id' '{actual}' does not match directory name "
+        f"'{expected}'. Update 'id' in skill.json to '{expected}'."
     )
 
 
@@ -155,9 +156,9 @@ def test_manifest_description_length(manifest):
     )
 
 
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 # DAG integrity
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 
 def test_action_dag_no_missing_deps(manifest):
     action_ids = {a["id"] for a in manifest["actions"]}
@@ -259,9 +260,9 @@ def test_action_dag_dependency_order(manifest):
             )
 
 
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 # Governance
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 
 def test_governance_block(manifest):
     gov = manifest["governance"]
@@ -277,16 +278,12 @@ def test_governance_block(manifest):
     )
     required_tags = ["slsa-l3", "audit-trail", "soc2-compliant"]
     tags = gov.get("compliance_tags", [])
-    # Accept both exact match and prefix match for soc2
-    resolved_tags = set(tags)
-    tag_aliases = {"soc2-compliant": {"soc2-compliant", "soc2"}}
-    for req_tag in required_tags:
-        aliases = tag_aliases.get(req_tag, {req_tag})
-        assert resolved_tags & aliases, (
-            f"Missing compliance tag '{req_tag}' (or alias) in 'compliance_tags'. "
-            f"Current tags: {tags}. "
-            f"Add '{req_tag}' to skill.json under 'governance'."
-        )
+    missing_tags = [t for t in required_tags if t not in tags]
+    assert not missing_tags, (
+        f"Missing compliance tags in 'compliance_tags': {', '.join(missing_tags)}. "
+        f"Current tags: {tags}. "
+        f"Add missing tags to skill.json under 'governance'."
+    )
     allowed_lifecycle = ["active", "maintenance", "deprecated"]
     lp = gov.get("lifecycle_policy", "")
     assert lp in allowed_lifecycle, (
@@ -296,9 +293,9 @@ def test_governance_block(manifest):
     )
 
 
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 # Metadata governance identity
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 
 def test_metadata_governance_identity(manifest):
     meta = manifest["metadata"]
@@ -328,9 +325,9 @@ def test_metadata_governance_identity(manifest):
     )
 
 
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 # Action scripts — existence + executable
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 
 def test_action_scripts_exist_and_executable():
     actions_dir = SKILL_DIR / "actions"
@@ -356,12 +353,11 @@ def test_action_scripts_exist_and_executable():
         )
 
 
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 # Schema structural validation
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 
 def test_schemas_exist_and_valid(input_schema, output_schema):
-    """Validate schema files have required top-level fields."""
     for schema, name in [(input_schema, "input"), (output_schema, "output")]:
         assert "$schema" in schema, (
             f"{name}.schema.json missing '$schema' field. "
@@ -380,7 +376,6 @@ def test_schemas_exist_and_valid(input_schema, output_schema):
 
 @pytest.mark.skipif(not HAS_JSONSCHEMA, reason="jsonschema not installed")
 def test_schemas_jsonschema_validation(input_schema, output_schema):
-    """Validate schemas are valid JSON Schema documents using Draft7Validator."""
     for schema, name in [(input_schema, "input"), (output_schema, "output")]:
         try:
             Draft7Validator.check_schema(schema)
@@ -391,7 +386,6 @@ def test_schemas_jsonschema_validation(input_schema, output_schema):
 
 
 def test_schema_properties_have_descriptions(input_schema, output_schema):
-    """Every property must have a 'description' field."""
     for schema, name in [(input_schema, "input"), (output_schema, "output")]:
         properties = schema.get("properties", {})
         for prop_name, prop in properties.items():
@@ -404,7 +398,6 @@ def test_schema_properties_have_descriptions(input_schema, output_schema):
 
 
 def test_schema_required_fields_have_no_defaults(input_schema, output_schema):
-    """Required fields must not have default values."""
     for schema, name in [(input_schema, "input"), (output_schema, "output")]:
         required = schema.get("required", [])
         properties = schema.get("properties", {})
@@ -419,7 +412,6 @@ def test_schema_required_fields_have_no_defaults(input_schema, output_schema):
 
 
 def test_schema_enum_values_are_unique(input_schema, output_schema):
-    """Enum values in schema properties must be unique."""
     for schema, name in [(input_schema, "input"), (output_schema, "output")]:
         properties = schema.get("properties", {})
         for prop_name, prop in properties.items():
@@ -433,7 +425,6 @@ def test_schema_enum_values_are_unique(input_schema, output_schema):
 
 
 def test_schema_pattern_properties_valid_regex(input_schema, output_schema):
-    """Regex patterns in patternProperties must compile."""
     for schema, name in [(input_schema, "input"), (output_schema, "output")]:
         pattern_props = schema.get("patternProperties", {})
         for pattern in pattern_props:
@@ -448,7 +439,6 @@ def test_schema_pattern_properties_valid_regex(input_schema, output_schema):
 
 
 def test_schema_string_properties_have_constraints(input_schema, output_schema):
-    """String properties should have minLength or pattern constraints."""
     for schema, name in [(input_schema, "input"), (output_schema, "output")]:
         required = set(schema.get("required", []))
         properties = schema.get("properties", {})
@@ -470,13 +460,78 @@ def test_schema_string_properties_have_constraints(input_schema, output_schema):
                     )
 
 
-# ═══════════════════════════════════════════════════════════════════
+def test_schema_min_properties_enforcement(input_schema, output_schema):
+    for schema, name in [(input_schema, "input"), (output_schema, "output")]:
+        min_props = schema.get("minProperties", 0)
+        assert min_props >= 1, (
+            f"{name}.schema.json 'minProperties' {min_props} is less than 1. "
+            f"Update 'minProperties' in {name}.schema.json to at least 1."
+        )
+
+
+def test_schema_pattern_properties_count(input_schema, output_schema):
+    for schema, name in [(input_schema, "input"), (output_schema, "output")]:
+        if "patternProperties" in schema:
+            pattern_props = schema["patternProperties"]
+            assert len(pattern_props) >= 1, (
+                f"{name}.schema.json has empty 'patternProperties'. "
+                f"Either add patterns or remove the empty object from "
+                f"{name}.schema.json."
+            )
+
+
+def test_schema_enum_min_items(input_schema, output_schema):
+    for schema, name in [(input_schema, "input"), (output_schema, "output")]:
+        properties = schema.get("properties", {})
+        for prop_name, prop in properties.items():
+            if isinstance(prop, dict) and "enum" in prop:
+                enum = prop["enum"]
+                assert len(enum) >= 2, (
+                    f"Enum in property '{prop_name}' of {name} schema has "
+                    f"less than 2 items ({len(enum)}). Add more items to the "
+                    f"enum in {name}.schema.json."
+                )
+
+
+def test_schema_type_consistency(input_schema, output_schema):
+    for schema, name in [(input_schema, "input"), (output_schema, "output")]:
+        properties = schema.get("properties", {})
+        for prop_name, prop in properties.items():
+            if isinstance(prop, dict) and "type" in prop:
+                prop_type = prop["type"]
+                if prop_type == "object":
+                    assert "properties" in prop or "patternProperties" in prop, (
+                        f"Object property '{prop_name}' in {name} schema lacks "
+                        f"'properties' or 'patternProperties'. Add sub-structure "
+                        f"to {name}.schema.json."
+                    )
+                elif prop_type == "array":
+                    assert "items" in prop, (
+                        f"Array property '{prop_name}' in {name} schema lacks "
+                        f"'items' definition. Add 'items' to {name}.schema.json."
+                    )
+
+
+def test_schema_array_items_have_type(input_schema, output_schema):
+    for schema, name in [(input_schema, "input"), (output_schema, "output")]:
+        properties = schema.get("properties", {})
+        for prop_name, prop in properties.items():
+            if isinstance(prop, dict) and prop.get("type") == "array":
+                items = prop.get("items", {})
+                if isinstance(items, dict):
+                    assert "type" in items, (
+                        f"Array property '{prop_name}' in {name} schema has "
+                        f"'items' without 'type'. Add 'type' to 'items' in "
+                        f"{name}.schema.json."
+                    )
+
+
+# ════════════════════════════════════════════════════════════════════
 # Sample data validation against schemas
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 
 @pytest.mark.skipif(not HAS_JSONSCHEMA, reason="jsonschema not installed")
 def test_sample_input_validates_against_schema(input_schema):
-    """A valid sample input must pass schema validation."""
     sample = {
         "repository": "indestructibleorg/indestructibleeco",
         "target_path": "backend/ai/src/app.py",
@@ -499,7 +554,6 @@ def test_sample_input_validates_against_schema(input_schema):
 
 @pytest.mark.skipif(not HAS_JSONSCHEMA, reason="jsonschema not installed")
 def test_sample_output_validates_against_schema(output_schema):
-    """A valid sample output must pass schema validation."""
     sample = {
         "root_cause": "Unbounded cache growth in vllm_adapter inference pool",
         "fix_applied": True,
@@ -530,7 +584,6 @@ def test_sample_output_validates_against_schema(output_schema):
 
 @pytest.mark.skipif(not HAS_JSONSCHEMA, reason="jsonschema not installed")
 def test_invalid_input_rejected_by_schema(input_schema):
-    """An invalid sample input must be rejected by schema validation."""
     invalid_sample = {
         "repository": "not a valid repo format!!!",
         "target_path": "",
@@ -544,9 +597,9 @@ def test_invalid_input_rejected_by_schema(input_schema):
     )
 
 
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 # References
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 
 def test_references_exist():
     refs_dir = SKILL_DIR / "references"
@@ -565,9 +618,9 @@ def test_references_exist():
         )
 
 
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 # Cross-skill non-overlap
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 
 def test_no_overlap_with_github_actions_repair_pro(manifest):
     sibling = SKILL_DIR.parent / "github-actions-repair-pro" / "skill.json"
@@ -592,12 +645,11 @@ def test_no_overlap_with_github_actions_repair_pro(manifest):
     )
 
 
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 # Manifest-to-schema cross-reference
-# ═══════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════
 
 def test_manifest_inputs_match_schema(manifest, input_schema):
-    """Manifest input names must appear in input schema properties."""
     schema_props = set(input_schema.get("properties", {}).keys())
     manifest_inputs = {inp["name"] for inp in manifest.get("inputs", [])}
     missing = manifest_inputs - schema_props
@@ -608,7 +660,6 @@ def test_manifest_inputs_match_schema(manifest, input_schema):
 
 
 def test_manifest_outputs_match_schema(manifest, output_schema):
-    """Manifest output names must appear in output schema properties."""
     schema_props = set(output_schema.get("properties", {}).keys())
     manifest_outputs = {out["name"] for out in manifest.get("outputs", [])}
     missing = manifest_outputs - schema_props
@@ -619,7 +670,6 @@ def test_manifest_outputs_match_schema(manifest, output_schema):
 
 
 def test_manifest_required_inputs_match_schema(manifest, input_schema):
-    """Required inputs in manifest must be required in schema."""
     schema_required = set(input_schema.get("required", []))
     manifest_required = {
         inp["name"] for inp in manifest.get("inputs", [])
@@ -633,7 +683,6 @@ def test_manifest_required_inputs_match_schema(manifest, input_schema):
 
 
 def test_manifest_required_outputs_match_schema(manifest, output_schema):
-    """Required outputs in manifest must be required in schema."""
     schema_required = set(output_schema.get("required", []))
     manifest_required = {
         out["name"] for out in manifest.get("outputs", [])

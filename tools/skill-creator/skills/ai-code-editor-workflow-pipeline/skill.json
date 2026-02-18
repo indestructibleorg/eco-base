@@ -38,7 +38,7 @@
   "actions": [
     {
       "id": "understand",
-      "name": "Phase 1: Understand — Build Mental Model",
+      "name": "Phase 1: Understand \u2014 Build Mental Model",
       "type": "shell",
       "config": {
         "command": "bash actions/understand.sh",
@@ -49,11 +49,14 @@
         "timeout_seconds": 60
       },
       "depends_on": [],
-      "retry": { "max_attempts": 2, "backoff_ms": 1000 }
+      "retry": {
+        "max_attempts": 2,
+        "backoff_ms": 1000
+      }
     },
     {
       "id": "retrieve-code",
-      "name": "Phase 2a: Retrieve — Code Repository & Dependencies",
+      "name": "Phase 2a: Retrieve \u2014 Code Repository & Dependencies",
       "type": "shell",
       "config": {
         "command": "bash actions/retrieve-code.sh",
@@ -63,12 +66,17 @@
         },
         "timeout_seconds": 30
       },
-      "depends_on": ["understand"],
-      "retry": { "max_attempts": 3, "backoff_ms": 2000 }
+      "depends_on": [
+        "understand"
+      ],
+      "retry": {
+        "max_attempts": 3,
+        "backoff_ms": 2000
+      }
     },
     {
       "id": "retrieve-knowledge",
-      "name": "Phase 2b: Retrieve — Knowledge Base & Documentation",
+      "name": "Phase 2b: Retrieve \u2014 Knowledge Base & Documentation",
       "type": "api",
       "config": {
         "method": "POST",
@@ -80,16 +88,29 @@
         "body": {
           "query": "{{ .problem_description }}",
           "top_k": 10,
-          "filters": { "type": ["incident", "fix", "runbook"] }
+          "filters": {
+            "type": [
+              "incident",
+              "fix",
+              "runbook"
+            ]
+          }
         },
-        "expected_status": [200]
+        "expected_status": [
+          200
+        ]
       },
-      "depends_on": ["understand"],
-      "retry": { "max_attempts": 2, "backoff_ms": 2000 }
+      "depends_on": [
+        "understand"
+      ],
+      "retry": {
+        "max_attempts": 2,
+        "backoff_ms": 2000
+      }
     },
     {
       "id": "analyze",
-      "name": "Phase 3: Analyze — Root Cause Identification",
+      "name": "Phase 3: Analyze \u2014 Root Cause Identification",
       "type": "shell",
       "config": {
         "command": "bash actions/analyze.sh",
@@ -100,12 +121,18 @@
         },
         "timeout_seconds": 120
       },
-      "depends_on": ["retrieve-code", "retrieve-knowledge"],
-      "retry": { "max_attempts": 2, "backoff_ms": 3000 }
+      "depends_on": [
+        "retrieve-code",
+        "retrieve-knowledge"
+      ],
+      "retry": {
+        "max_attempts": 2,
+        "backoff_ms": 3000
+      }
     },
     {
       "id": "reason",
-      "name": "Phase 4: Reason — Solution Derivation",
+      "name": "Phase 4: Reason \u2014 Solution Derivation",
       "type": "shell",
       "config": {
         "command": "bash actions/reason.sh",
@@ -114,12 +141,17 @@
         },
         "timeout_seconds": 60
       },
-      "depends_on": ["analyze"],
-      "retry": { "max_attempts": 1, "backoff_ms": 1000 }
+      "depends_on": [
+        "analyze"
+      ],
+      "retry": {
+        "max_attempts": 1,
+        "backoff_ms": 1000
+      }
     },
     {
       "id": "consolidate",
-      "name": "Phase 5a: Remediate — Consolidate Changes",
+      "name": "Phase 5a: Remediate \u2014 Consolidate Changes",
       "type": "shell",
       "config": {
         "command": "bash actions/consolidate.sh",
@@ -129,12 +161,17 @@
         },
         "timeout_seconds": 60
       },
-      "depends_on": ["reason"],
-      "retry": { "max_attempts": 2, "backoff_ms": 2000 }
+      "depends_on": [
+        "reason"
+      ],
+      "retry": {
+        "max_attempts": 2,
+        "backoff_ms": 2000
+      }
     },
     {
       "id": "integrate",
-      "name": "Phase 5b: Remediate — Integrate into System",
+      "name": "Phase 5b: Remediate \u2014 Integrate into System",
       "type": "shell",
       "config": {
         "command": "bash actions/integrate.sh",
@@ -145,12 +182,17 @@
         },
         "timeout_seconds": 60
       },
-      "depends_on": ["consolidate"],
-      "retry": { "max_attempts": 1, "backoff_ms": 1000 }
+      "depends_on": [
+        "consolidate"
+      ],
+      "retry": {
+        "max_attempts": 1,
+        "backoff_ms": 1000
+      }
     },
     {
       "id": "validate",
-      "name": "Phase 6: Validate — Recursive Multi-Layer Verification",
+      "name": "Phase 6: Validate \u2014 Recursive Multi-Layer Verification",
       "type": "shell",
       "config": {
         "command": "bash actions/validate.sh",
@@ -160,12 +202,17 @@
         },
         "timeout_seconds": 180
       },
-      "depends_on": ["integrate"],
-      "retry": { "max_attempts": 3, "backoff_ms": 5000 }
+      "depends_on": [
+        "integrate"
+      ],
+      "retry": {
+        "max_attempts": 3,
+        "backoff_ms": 5000
+      }
     },
     {
       "id": "audit",
-      "name": "Phase 7: Audit — Compliance & Immutable Trail",
+      "name": "Phase 7: Audit \u2014 Compliance & Immutable Trail",
       "type": "shell",
       "config": {
         "command": "bash actions/audit.sh",
@@ -176,8 +223,13 @@
         },
         "timeout_seconds": 60
       },
-      "depends_on": ["validate"],
-      "retry": { "max_attempts": 2, "backoff_ms": 2000 }
+      "depends_on": [
+        "validate"
+      ],
+      "retry": {
+        "max_attempts": 2,
+        "backoff_ms": 2000
+      }
     }
   ],
   "inputs": [
@@ -274,8 +326,18 @@
   ],
   "governance": {
     "owner": "platform-team",
-    "approval_chain": ["platform-team", "security-team"],
-    "compliance_tags": ["slsa-l3", "sbom", "soc2", "audit-trail", "zero-trust"],
+    "approval_chain": [
+      "platform-team",
+      "security-team"
+    ],
+    "compliance_tags": [
+      "slsa-l3",
+      "sbom",
+      "soc2",
+      "audit-trail",
+      "zero-trust",
+      "soc2-compliant"
+    ],
     "lifecycle_policy": "active"
   },
   "metadata": {

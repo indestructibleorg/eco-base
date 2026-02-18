@@ -3,6 +3,7 @@
   "title": "ai-code-editor-workflow-pipeline input",
   "type": "object",
   "required": ["repository", "target_path", "problem_description", "auth_token"],
+  "minProperties": 4,
   "properties": {
     "repository": {
       "type": "string",
