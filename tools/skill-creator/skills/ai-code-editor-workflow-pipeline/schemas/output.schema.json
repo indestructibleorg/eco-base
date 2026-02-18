@@ -3,6 +3,7 @@
   "title": "ai-code-editor-workflow-pipeline output",
   "type": "object",
   "required": ["root_cause", "fix_applied", "verification_status", "audit_trail"],
+  "minProperties": 4,
   "properties": {
     "root_cause": {
       "type": "string",
