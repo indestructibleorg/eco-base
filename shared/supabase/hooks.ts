@@ -85,10 +85,14 @@ export function useAuth() {
 
 /**
  * Hook for real-time updates to a table
+ * @param table - The table name to subscribe to
+ * @param filter - Optional filter condition
+ * @param primaryKey - The primary key column name (defaults to 'id')
  */
 export function useRealtimeSubscription<T extends keyof Database['public']['Tables']>(
   table: T,
-  filter?: { column: string; value: any }
+  filter?: { column: string; value: any },
+  primaryKey: string = 'id'
 ) {
   const [data, setData] = useState<Database['public']['Tables'][T]['Row'][]>([]);
   const [loading, setLoading] = useState(true);
@@ -136,13 +140,13 @@ export function useRealtimeSubscription<T extends keyof Database['public']['Tabl
           } else if (payload.eventType === 'UPDATE') {
             setData((prev) =>
               prev.map((item) =>
-                (item as any).id === (payload.new as any).id
+                (item as any)[primaryKey] === (payload.new as any)[primaryKey]
                   ? (payload.new as Database['public']['Tables'][T]['Row'])
                   : item
               )
             );
           } else if (payload.eventType === 'DELETE') {
-            setData((prev) => prev.filter((item) => (item as any).id !== (payload.old as any).id));
+            setData((prev) => prev.filter((item) => (item as any)[primaryKey] !== (payload.old as any)[primaryKey]));
           }
         }
       )

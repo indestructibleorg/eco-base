@@ -1,5 +1,4 @@
 name = "project-05"
-type = "javascript"
 account_id = "your_account_id"
 workers_dev = true
 route = ""

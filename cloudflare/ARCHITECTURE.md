@@ -6,7 +6,7 @@ This document explains the architectural decisions for the Cloudflare Workers de
 
 ## Chosen Structure: Project-Based Organization
 
-```
+```text
 cloudflare/
 ├── frontend/
 │   ├── project-01/    # Self-contained worker
@@ -81,7 +81,7 @@ wrangler deploy
 
 ### Option 1: Single Monolithic Worker ❌
 
-```
+```text
 cloudflare/
 ├── wrangler.toml      # Single config for all
 ├── src/
@@ -106,7 +106,7 @@ cloudflare/
 
 ### Option 2: Type-Based Organization ❌
 
-```
+```text
 cloudflare/
 ├── apis/
 │   ├── project-01/
@@ -133,7 +133,7 @@ cloudflare/
 
 ### Option 3: Subdomain-Based Organization ❌
 
-```
+```text
 cloudflare/
 ├── api.example.com/
 │   ├── project-01/
@@ -157,7 +157,7 @@ cloudflare/
 
 ### ✅ Chosen: Project-Based Organization
 
-```
+```text
 cloudflare/
 ├── frontend/
 │   ├── project-01/    # Clear, simple
@@ -181,7 +181,7 @@ cloudflare/
 
 Each project follows this pattern:
 
-```
+```text
 project-01/
 ├── wrangler.toml          # Cloudflare configuration
 ├── package.json           # Dependencies and scripts
@@ -197,7 +197,7 @@ project-01/
 
 ## Deployment Flow
 
-```
+```text
 Local Development
     ↓
 wrangler dev
@@ -244,7 +244,7 @@ wrangler deploy --env production
 ### Growth to 20+ Projects
 
 As projects grow, maintain structure:
-```
+```text
 cloudflare/
 ├── frontend/
 │   ├── project-01/
@@ -349,7 +349,7 @@ Sentry.init({
 ### 1. Shared Utilities
 
 Create shared code when patterns emerge:
-```
+```text
 cloudflare/
 ├── shared/
 │   ├── types.ts

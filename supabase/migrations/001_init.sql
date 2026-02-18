@@ -64,6 +64,12 @@ CREATE POLICY "Users can view their own audit logs" ON public.audit_logs
 CREATE POLICY "Admins can view all audit logs" ON public.audit_logs
   FOR SELECT USING (auth.jwt() ->> 'role' = 'admin');
 
+CREATE POLICY "Only admins can insert audit logs" ON public.audit_logs
+  FOR INSERT WITH CHECK (auth.jwt() ->> 'role' = 'admin');
+
+CREATE POLICY "Only admins can delete audit logs" ON public.audit_logs
+  FOR DELETE USING (auth.jwt() ->> 'role' = 'admin');
+
 -- Create sessions table for session management
 CREATE TABLE IF NOT EXISTS public.sessions (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -84,6 +90,9 @@ ALTER TABLE public.sessions ENABLE ROW LEVEL SECURITY;
 -- Sessions policies
 CREATE POLICY "Users can view their own sessions" ON public.sessions
   FOR SELECT USING (user_id = auth.uid());
+
+CREATE POLICY "Users can insert their own sessions" ON public.sessions
+  FOR INSERT WITH CHECK (user_id = auth.uid());
 
 CREATE POLICY "Users can delete their own sessions" ON public.sessions
   FOR DELETE USING (user_id = auth.uid());
