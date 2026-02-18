@@ -1,0 +1,15 @@
+apiVersion: v2
+name: superai-platform
+description: Enterprise AI Inference Platform with multi-engine routing
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - ai
+  - inference
+  - llm
+  - vllm
+  - kubernetes
+maintainers:
+  - name: SuperAI Engineering
+    email: eng@superai.platform

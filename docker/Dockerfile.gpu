@@ -1,0 +1,64 @@
+# ── SuperAI Platform - GPU Inference Engine Dockerfile ───────────
+# For running vLLM/SGLang/TensorRT-LLM engine containers
+
+FROM nvidia/cuda:12.4.1-devel-ubuntu22.04 AS base
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3.11 python3.11-venv python3-pip \
+    git wget curl \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1 && \
+    update-alternatives --install /usr/bin/python python /usr/bin/python3.11 1
+
+WORKDIR /engine
+
+# ── vLLM Engine ──────────────────────────────────────────────────
+FROM base AS vllm
+
+RUN pip install --no-cache-dir \
+    vllm>=0.6.0 \
+    torch>=2.4.0
+
+ENV VLLM_ATTENTION_BACKEND=FLASH_ATTN
+
+EXPOSE 8001
+
+ENTRYPOINT ["python", "-m", "vllm.entrypoints.openai.api_server"]
+CMD ["--host", "0.0.0.0", \
+     "--port", "8001", \
+     "--model", "meta-llama/Llama-3.1-8B-Instruct", \
+     "--gpu-memory-utilization", "0.90", \
+     "--max-model-len", "32768", \
+     "--enable-prefix-caching", \
+     "--enable-chunked-prefill"]
+
+# ── SGLang Engine ────────────────────────────────────────────────
+FROM base AS sglang
+
+RUN pip install --no-cache-dir \
+    "sglang[all]>=0.3.0" \
+    torch>=2.4.0
+
+EXPOSE 8003
+
+ENTRYPOINT ["python", "-m", "sglang.launch_server"]
+CMD ["--host", "0.0.0.0", \
+     "--port", "8003", \
+     "--model-path", "meta-llama/Llama-3.1-8B-Instruct", \
+     "--mem-fraction-static", "0.88"]
+
+# ── TGI Engine ───────────────────────────────────────────────────
+FROM ghcr.io/huggingface/text-generation-inference:2.4.1 AS tgi
+
+EXPOSE 8002
+
+ENTRYPOINT ["text-generation-launcher"]
+CMD ["--model-id", "meta-llama/Llama-3.1-8B-Instruct", \
+     "--port", "8002", \
+     "--max-input-length", "4096", \
+     "--max-total-tokens", "8192", \
+     "--quantize", "awq"]

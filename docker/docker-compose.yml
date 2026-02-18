@@ -1,0 +1,239 @@
+# ── SuperAI Platform - Docker Compose ────────────────────────────
+# Full stack: API Gateway + Engines + Infrastructure
+
+version: "3.9"
+
+x-common: &common
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options:
+      max-size: "50m"
+      max-file: "5"
+
+services:
+  # ── API Gateway ──────────────────────────────────────────────
+  api-gateway:
+    <<: *common
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: superai-api
+    ports:
+      - "8000:8000"
+    environment:
+      - SUPERAI_ENVIRONMENT=production
+      - SUPERAI_LOG_LEVEL=INFO
+      - SUPERAI_REDIS_HOST=redis
+      - SUPERAI_POSTGRES_HOST=postgres
+      - SUPERAI_VLLM_HOST=vllm
+      - SUPERAI_VLLM_PORT=8001
+      - SUPERAI_TGI_HOST=tgi
+      - SUPERAI_TGI_PORT=8002
+      - SUPERAI_SGLANG_HOST=sglang
+      - SUPERAI_SGLANG_PORT=8003
+      - SUPERAI_OLLAMA_HOST=ollama
+      - SUPERAI_OLLAMA_PORT=11434
+    env_file:
+      - ../.env
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    networks:
+      - superai-net
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8000/health').raise_for_status()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ── vLLM Engine ──────────────────────────────────────────────
+  vllm:
+    <<: *common
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.gpu
+      target: vllm
+    container_name: superai-vllm
+    ports:
+      - "8001:8001"
+    volumes:
+      - model-cache:/models
+    environment:
+      - HF_HOME=/models
+      - VLLM_ATTENTION_BACKEND=FLASH_ATTN
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - superai-net
+
+  # ── TGI Engine ───────────────────────────────────────────────
+  tgi:
+    <<: *common
+    image: ghcr.io/huggingface/text-generation-inference:2.4.1
+    container_name: superai-tgi
+    ports:
+      - "8002:8002"
+    volumes:
+      - model-cache:/models
+    environment:
+      - MODEL_ID=meta-llama/Llama-3.1-8B-Instruct
+      - PORT=8002
+      - MAX_INPUT_LENGTH=4096
+      - MAX_TOTAL_TOKENS=8192
+      - HUGGING_FACE_HUB_TOKEN=${HF_TOKEN:-}
+    command: ["--model-id", "meta-llama/Llama-3.1-8B-Instruct", "--port", "8002"]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - superai-net
+
+  # ── SGLang Engine ────────────────────────────────────────────
+  sglang:
+    <<: *common
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.gpu
+      target: sglang
+    container_name: superai-sglang
+    ports:
+      - "8003:8003"
+    volumes:
+      - model-cache:/models
+    environment:
+      - HF_HOME=/models
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - superai-net
+
+  # ── Ollama Engine ────────────────────────────────────────────
+  ollama:
+    <<: *common
+    image: ollama/ollama:latest
+    container_name: superai-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - superai-net
+
+  # ── Redis ────────────────────────────────────────────────────
+  redis:
+    <<: *common
+    image: redis:7-alpine
+    container_name: superai-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes --maxmemory 2gb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - superai-net
+
+  # ── PostgreSQL ───────────────────────────────────────────────
+  postgres:
+    <<: *common
+    image: postgres:16-alpine
+    container_name: superai-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=superai
+      - POSTGRES_PASSWORD=superai_secret
+      - POSTGRES_DB=superai
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U superai"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - superai-net
+
+  # ── Prometheus ───────────────────────────────────────────────
+  prometheus:
+    <<: *common
+    image: prom/prometheus:v2.54.0
+    container_name: superai-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.retention.time=30d"
+      - "--web.enable-lifecycle"
+    networks:
+      - superai-net
+
+  # ── Grafana ──────────────────────────────────────────────────
+  grafana:
+    <<: *common
+    image: grafana/grafana:11.2.0
+    container_name: superai-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=superai_admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - superai-net
+
+volumes:
+  model-cache:
+    driver: local
+  ollama-data:
+    driver: local
+  redis-data:
+    driver: local
+  postgres-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+
+networks:
+  superai-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16

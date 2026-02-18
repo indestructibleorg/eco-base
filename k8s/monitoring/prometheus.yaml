@@ -1,0 +1,160 @@
+# SuperAI Platform - Prometheus Monitoring Stack
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+  namespace: superai
+  labels:
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/component: monitoring
+    app.kubernetes.io/part-of: superai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: prometheus
+    spec:
+      serviceAccountName: superai-sa
+      containers:
+        - name: prometheus
+          image: prom/prometheus:v2.54.0
+          ports:
+            - containerPort: 9090
+          args:
+            - "--config.file=/etc/prometheus/prometheus.yml"
+            - "--storage.tsdb.retention.time=30d"
+            - "--storage.tsdb.path=/prometheus"
+            - "--web.enable-lifecycle"
+            - "--web.enable-admin-api"
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1000m"
+              memory: "2Gi"
+          volumeMounts:
+            - name: config
+              mountPath: /etc/prometheus
+            - name: data
+              mountPath: /prometheus
+      volumes:
+        - name: config
+          configMap:
+            name: prometheus-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: prometheus-data
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: superai
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+
+    scrape_configs:
+      - job_name: "superai-api"
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names: ["superai"]
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+            action: keep
+            regex: true
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+            action: replace
+            target_label: __metrics_path__
+            regex: (.+)
+          - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+            action: replace
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: $1:$2
+            target_label: __address__
+          - source_labels: [__meta_kubernetes_pod_label_app_kubernetes_io_name]
+            action: replace
+            target_label: app
+          - source_labels: [__meta_kubernetes_pod_label_app_kubernetes_io_component]
+            action: replace
+            target_label: component
+
+    rule_files:
+      - "/etc/prometheus/alerts.yml"
+
+  alerts.yml: |
+    groups:
+      - name: superai-alerts
+        rules:
+          - alert: HighErrorRate
+            expr: rate(superai_errors_total[5m]) > 0.1
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "High error rate on {{ $labels.engine }}"
+
+          - alert: HighLatency
+            expr: histogram_quantile(0.99, rate(superai_request_duration_seconds_bucket[5m])) > 10
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "P99 latency > 10s on {{ $labels.engine }}"
+
+          - alert: EngineDown
+            expr: superai_engine_status == 0
+            for: 2m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Engine {{ $labels.engine }} is unhealthy"
+
+          - alert: HighGPUMemory
+            expr: superai_gpu_memory_used_bytes / superai_gpu_memory_total_bytes > 0.95
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "GPU memory > 95% on {{ $labels.engine }}"
+
+          - alert: QueueBacklog
+            expr: superai_queue_depth > 100
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Request queue depth > 100"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-data
+  namespace: superai
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-svc
+  namespace: superai
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9090
+      targetPort: 9090
+  selector:
+    app.kubernetes.io/name: prometheus

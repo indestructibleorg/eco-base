@@ -1,0 +1,43 @@
+# SuperAI Platform - Namespace & RBAC
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: superai
+  labels:
+    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/part-of: superai
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: superai-sa
+  namespace: superai
+  labels:
+    app.kubernetes.io/name: superai-platform
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: superai-role
+  namespace: superai
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "configmaps", "secrets"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "statefulsets"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: superai-rolebinding
+  namespace: superai
+subjects:
+  - kind: ServiceAccount
+    name: superai-sa
+    namespace: superai
+roleRef:
+  kind: Role
+  name: superai-role
+  apiGroup: rbac.authorization.k8s.io
