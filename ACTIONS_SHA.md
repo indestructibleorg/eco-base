@@ -22,12 +22,12 @@
 ### github/codeql-action/init@v4
 - Full SHA: `9e907b5e64f6b83e7804b09294d44122997950d6`
 - 版本: v4.32.3
-- 發佈日期: 2026-02-13
+- 日期: 2026-02-13
 
 ### github/codeql-action/analyze@v4
 - Full SHA: `9e907b5e64f6b83e7804b09294d44122997950d6`
 - 版本: v4.32.3
-- 發佈日期: 2026-02-13
+- 日期: 2026-02-13
 
 ## 修復策略
 
