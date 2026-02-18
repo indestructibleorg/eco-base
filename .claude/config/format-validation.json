@@ -1,0 +1,103 @@
+{
+  "validation": {
+    "enabled": true,
+    "level": "strict",
+    "stopOnError": true,
+    "stopOnWarning": false,
+    "timeout": 300000
+  },
+  "formats": {
+    "json": {
+      "enabled": true,
+      "validateSchema": true,
+      "fixIndentation": true,
+      "indent": 2,
+      "checkBOM": true,
+      "checkEncoding": true,
+      "ensureNewline": true
+    },
+    "yaml": {
+      "enabled": true,
+      "indent": 2,
+      "allowTabs": false,
+      "checkBOM": true,
+      "checkEncoding": true,
+      "ensureNewline": true,
+      "convertCRLF": true
+    },
+    "toml": {
+      "enabled": true,
+      "indent": 2,
+      "checkBOM": true,
+      "checkEncoding": true,
+      "ensureNewline": true,
+      "convertCRLF": true
+    },
+    "sql": {
+      "enabled": true,
+      "checkBOM": true,
+      "checkEncoding": true,
+      "ensureNewline": true,
+      "convertCRLF": true
+    }
+  },
+  "excludePaths": [
+    "node_modules/**",
+    ".git/**",
+    ".next/**",
+    "dist/**",
+    "build/**",
+    ".cache/**",
+    "coverage/**"
+  ],
+  "autoFix": {
+    "enabled": true,
+    "beforeCommit": true,
+    "createBackup": true,
+    "fixableIssues": [
+      "indentation",
+      "trailingWhitespace",
+      "bom",
+      "lineEndings",
+      "finalNewline"
+    ]
+  },
+  "reporting": {
+    "enabled": true,
+    "verbose": true,
+    "generateHTML": true,
+    "outputDir": ".claude/reports",
+    "saveHistory": true
+  },
+  "hooks": {
+    "preCommit": {
+      "enabled": true,
+      "validate": true,
+      "autoFix": false,
+      "script": ".claude/hooks/pre-commit-validator.sh"
+    },
+    "prePush": {
+      "enabled": true,
+      "validate": true,
+      "autoFix": false,
+      "script": ".claude/hooks/pre-commit-validator.sh"
+    }
+  },
+  "codeStyle": {
+    "jsonIndent": 2,
+    "yamlIndent": 2,
+    "maxLineLength": 100,
+    "trailingComma": "none",
+    "usePrettier": true
+  },
+  "errorMessages": {
+    "invalidJson": "JSON syntax error detected. File: {file}. Error: {error}",
+    "invalidYaml": "YAML syntax error detected. File: {file}. Error: {error}",
+    "invalidToml": "TOML syntax error detected. File: {file}. Error: {error}",
+    "invalidEncoding": "File encoding must be UTF-8. File: {file}. Current: {encoding}",
+    "dosLineEndings": "File has DOS line endings (CRLF). File: {file}",
+    "trailingWhitespace": "File has trailing whitespace. File: {file}",
+    "bomDetected": "File contains BOM marker. File: {file}",
+    "noFinalNewline": "File missing final newline. File: {file}"
+  }
+}

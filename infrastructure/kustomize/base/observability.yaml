@@ -18,21 +18,21 @@ data:
       external_labels:
         cluster: 'autoecoops-prod'
         environment: 'production'
-    
+
     alerting:
       alertmanagers:
       - static_configs:
         - targets:
           - alertmanager:9093
-    
+
     rule_files:
     - '/etc/prometheus/rules/*.yml'
-    
+
     scrape_configs:
     - job_name: 'prometheus'
       static_configs:
       - targets: ['localhost:9090']
-    
+
     - job_name: 'kubernetes-apiservers'
       kubernetes_sd_configs:
       - role: endpoints
@@ -44,7 +44,7 @@ data:
       - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
         action: keep
         regex: default;kubernetes;https
-    
+
     - job_name: 'kubernetes-nodes'
       kubernetes_sd_configs:
       - role: node
@@ -55,7 +55,7 @@ data:
       relabel_configs:
       - action: labelmap
         regex: __meta_kubernetes_node_label_(.+)
-    
+
     - job_name: 'kubernetes-pods'
       kubernetes_sd_configs:
       - role: pod
@@ -92,14 +92,14 @@ data:
         annotations:
           summary: "High error rate detected"
           description: "Error rate is {{ $value | humanizePercentage }} for {{ $labels.instance }}"
-      
+
       - alert: HighMemoryUsage
         expr: container_memory_usage_bytes / container_spec_memory_limit_bytes > 0.9
         for: 5m
         annotations:
           summary: "High memory usage detected"
           description: "Memory usage is {{ $value | humanizePercentage }} for {{ $labels.pod_name }}"
-      
+
       - alert: PodCrashLooping
         expr: rate(kube_pod_container_status_restarts_total[15m]) > 0
         for: 5m
@@ -115,7 +115,7 @@ metadata:
 data:
   loki-config.yaml: |
     auth_enabled: false
-    
+
     ingester:
       chunk_idle_period: 3m
       chunk_retain_period: 1m
@@ -128,12 +128,12 @@ data:
           kvstore:
             store: inmemory
           replication_factor: 1
-    
+
     limits_config:
       enforce_metric_name: false
       reject_old_samples: true
       reject_old_samples_max_age: 168h
-    
+
     schema_config:
       configs:
       - from: 2020-10-24
@@ -143,11 +143,11 @@ data:
         index:
           prefix: index_
           period: 24h
-    
+
     server:
       http_listen_port: 3100
       log_level: info
-    
+
     storage_config:
       boltdb_shipper:
         active_index_directory: /loki/boltdb-shipper-active
@@ -155,10 +155,10 @@ data:
         shared_store: filesystem
       filesystem:
         directory: /loki/chunks
-    
+
     chunk_store_config:
       max_look_back_period: 0s
-    
+
     table_manager:
       retention_deletes_enabled: false
       retention_period: 0s
@@ -173,17 +173,17 @@ data:
     server:
       http_listen_port: 3200
       log_level: info
-    
+
     distributor:
       rate_limit_bytes: 10000000
-    
+
     ingester:
       lifecycler:
         ring:
           kvstore:
             store: inmemory
           replication_factor: 1
-    
+
     storage:
       trace:
         backend: local
@@ -191,7 +191,7 @@ data:
           path: /var/tempo
         wal:
           path: /var/tempo/wal
-    
+
     metrics_generator:
       registry:
         external_labels:

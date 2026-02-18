@@ -15,7 +15,7 @@ jobs:
   lint-and-test:
     executor:
       name: node/default
-      tag: '22'
+      tag: "22"
     steps:
       - checkout
       - node/install-packages:
@@ -34,7 +34,7 @@ jobs:
   build:
     executor:
       name: node/default
-      tag: '22'
+      tag: "22"
     steps:
       - checkout
       - node/install-packages:

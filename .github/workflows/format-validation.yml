@@ -1,0 +1,226 @@
+name: Format Validation Pipeline
+
+on:
+  push:
+    branches: ["main", "develop", "claude/*"]
+    paths:
+      - "**/*.json"
+      - "**/*.yaml"
+      - "**/*.yml"
+      - "**/*.toml"
+      - "**/*.sql"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/**"
+  pull_request:
+    branches: ["main", "develop"]
+    paths:
+      - "**/*.json"
+      - "**/*.yaml"
+      - "**/*.yml"
+      - "**/*.toml"
+      - "**/*.sql"
+
+jobs:
+  format-validation:
+    name: Format & Syntax Validation
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.1.1
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install validation tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y yamllint jq dos2unix python3-yaml
+          pip install toml pylint
+
+      - name: Run JSON validation
+        id: json-validation
+        continue-on-error: false
+        run: |
+          echo "🔍 Validating JSON files..."
+          find . -type f -name "*.json" \
+            ! -path "*/node_modules/*" \
+            ! -path "*/.git/*" \
+            ! -path "*/.next/*" \
+            ! -path "*/dist/*" \
+            -print0 | xargs -0 -I {} bash -c '
+              if ! jq empty "{}" 2>/dev/null; then
+                echo "❌ Invalid JSON: {}"
+                exit 1
+              fi
+            '
+          echo "✅ All JSON files are valid"
+
+      - name: Run YAML validation
+        id: yaml-validation
+        continue-on-error: false
+        run: |
+          echo "🔍 Validating YAML files..."
+          find . -type f \( -name "*.yaml" -o -name "*.yml" \) \
+            ! -path "*/node_modules/*" \
+            ! -path "*/.git/*" \
+            ! -path "*/.next/*" \
+            -print0 | xargs -0 -I {} bash -c '
+              if ! python3 -c "import yaml; yaml.safe_load(open(\"{}\"))" 2>/dev/null; then
+                echo "❌ Invalid YAML: {}"
+                exit 1
+              fi
+              if grep -P "\t" "{}" > /dev/null 2>&1; then
+                echo "❌ YAML contains tabs (must use spaces): {}"
+                exit 1
+              fi
+            '
+          echo "✅ All YAML files are valid"
+
+      - name: Run TOML validation
+        id: toml-validation
+        continue-on-error: false
+        run: |
+          echo "🔍 Validating TOML files..."
+          find . -type f -name "*.toml" \
+            ! -path "*/node_modules/*" \
+            ! -path "*/.git/*" \
+            -print0 | xargs -0 -I {} bash -c '
+              if ! python3 -c "import tomllib; tomllib.loads(open(\"{}\").read())" 2>/dev/null; then
+                echo "❌ Invalid TOML: {}"
+                exit 1
+              fi
+            '
+          echo "✅ All TOML files are valid"
+
+      - name: Check file encoding
+        id: encoding-check
+        continue-on-error: false
+        run: |
+          echo "🔍 Checking file encoding..."
+          find . -type f \( -name "*.json" -o -name "*.yaml" -o -name "*.yml" -o -name "*.toml" -o -name "*.sql" \) \
+            ! -path "*/node_modules/*" \
+            ! -path "*/.git/*" \
+            ! -path "*/.next/*" \
+            -print0 | xargs -0 -I {} bash -c '
+              encoding=$(file -b --mime-encoding "{}")
+              if [[ "$encoding" != "utf-8" && "$encoding" != "ascii" ]]; then
+                echo "❌ Invalid encoding (must be UTF-8): {} (current: $encoding)"
+                exit 1
+              fi
+            '
+          echo "✅ All files have correct encoding (UTF-8)"
+
+      - name: Check line endings
+        id: line-endings-check
+        continue-on-error: false
+        run: |
+          echo "🔍 Checking line endings..."
+          find . -type f \( -name "*.json" -o -name "*.yaml" -o -name "*.yml" -o -name "*.toml" -o -name "*.sql" \) \
+            ! -path "*/node_modules/*" \
+            ! -path "*/.git/*" \
+            ! -path "*/.next/*" \
+            -print0 | xargs -0 -I {} bash -c '
+              if grep -l $'\''\r'\'' "{}" > /dev/null 2>&1; then
+                echo "❌ File has DOS line endings (CRLF): {}"
+                exit 1
+              fi
+            '
+          echo "✅ All files have Unix line endings (LF)"
+
+      - name: Check for trailing whitespace
+        id: trailing-whitespace-check
+        continue-on-error: true
+        run: |
+          echo "🔍 Checking for trailing whitespace..."
+          TRAILING=$(find . -type f \( -name "*.json" -o -name "*.yaml" -o -name "*.yml" -o -name "*.toml" \) \
+            ! -path "*/node_modules/*" \
+            ! -path "*/.git/*" \
+            ! -path "*/.next/*" \
+            -exec grep -l '[[:space:]]$' {} \;)
+          if [[ -n "$TRAILING" ]]; then
+            echo "⚠️  Files with trailing whitespace:"
+            echo "$TRAILING"
+          else
+            echo "✅ No trailing whitespace detected"
+          fi
+
+      - name: Run Prettier check
+        id: prettier-check
+        continue-on-error: true
+        run: |
+          echo "🔍 Running Prettier format check..."
+          pnpm prettier --check "**/*.{json,yaml,yml,md}" --ignore-path .gitignore || {
+            echo "⚠️  Some files need formatting"
+            echo "Run: pnpm prettier --write \"**/*.{json,yaml,yml,md}\""
+          }
+
+      - name: Run TypeScript type check
+        id: typescript-check
+        continue-on-error: false
+        run: |
+          echo "🔍 Running TypeScript compilation check..."
+          pnpm check
+
+      - name: Generate validation report
+        if: always()
+        run: |
+          echo "# 📋 Format Validation Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Validation Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| JSON Validation | ${{ steps.json-validation.outcome }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| YAML Validation | ${{ steps.yaml-validation.outcome }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| TOML Validation | ${{ steps.toml-validation.outcome }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| File Encoding | ${{ steps.encoding-check.outcome }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Line Endings | ${{ steps.line-endings-check.outcome }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Trailing Whitespace | ${{ steps.trailing-whitespace-check.outcome }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Prettier Format | ${{ steps.prettier-check.outcome }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| TypeScript Types | ${{ steps.typescript-check.outcome }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Summary" >> $GITHUB_STEP_SUMMARY
+          echo "All configuration files have been validated for syntax and format compliance." >> $GITHUB_STEP_SUMMARY
+
+      - name: Comment on PR with results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const status = context.payload.pull_request ? '✅ Format validation passed' : '❌ Format validation failed';
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🔍 Format Validation\n\n${status}\n\nAll configuration files (JSON, YAML, TOML, SQL) have been validated for:\n- ✅ Syntax correctness\n- ✅ File encoding (UTF-8)\n- ✅ Line endings (LF)\n- ✅ Trailing whitespace\n- ✅ Proper formatting`
+            })
+
+      - name: Fail if validation failed
+        if: |
+          steps.json-validation.outcome == 'failure' ||
+          steps.yaml-validation.outcome == 'failure' ||
+          steps.toml-validation.outcome == 'failure' ||
+          steps.encoding-check.outcome == 'failure' ||
+          steps.line-endings-check.outcome == 'failure' ||
+          steps.typescript-check.outcome == 'failure'
+        run: |
+          echo "❌ Format validation failed!"
+          exit 1

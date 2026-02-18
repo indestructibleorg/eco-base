@@ -35,7 +35,7 @@ jobs:
           COMMITS=$(git log --oneline -n 10)
           echo "Recent commits:"
           echo "$COMMITS"
-          
+
           # Check if any commit message doesn't follow Conventional Commits
           if git log --oneline -n 1 | grep -qvE '^[a-f0-9]{7} (feat|fix|docs|style|refactor|test|chore)(\(.+\))?:'; then
             echo "❌ Commit message does not follow Conventional Commits format"
