@@ -217,6 +217,9 @@ def _is_detection_context(line: str) -> bool:
         "STALE_PATTERNS",            # Variable name
         "Check for stale",           # Comment
         "superai, SUPERAI_",         # Documentation listing
+        "Stale `",                   # Markdown backtick-quoted references
+        "`superai`",                 # Markdown inline code
+        "`SUPERAI_`",               # Markdown inline code
     ]
     return any(ind in stripped for ind in indicators)
 
