@@ -69,6 +69,13 @@ def test_local_and_docker_actions():
         policy
     )
     assert len(violations) == 0
+
+    # Docker with malformed SHA256 digest - should fail
+    violations = actions_policy_core.validate_docker_action(
+        'docker://alpine@sha256:deadbeef',
+        policy
+    )
+    assert len(violations) > 0
     
     # Test with policy that doesn't require docker digest pinning
     policy_permissive = {

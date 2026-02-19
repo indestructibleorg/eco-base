@@ -37,8 +37,7 @@ def extract_actions_from_workflow(workflow_file: Path, repo_root: Path) -> List[
         
         return actions
     except Exception as e:
-        print(f"Error parsing workflow {workflow_file}: {e}")
-        return []
+        raise RuntimeError(f"Error parsing workflow {workflow_file}: {e}") from e
 
 
 def is_local_action(action_ref: str) -> bool:

@@ -91,7 +91,7 @@ indestructibleeco/
 | Namespace | `indestructibleeco` (K8s, Docker, Helm) | 1.0 |
 | Container Naming | `eco-*` prefix for all containers | 1.0 |
 | Registry | `ghcr.io/indestructibleorg/*` | 1.0 |
-| GitHub Actions | Only from `indestructibleorg` org, pinned to commit SHAs | 1.0 |
+| GitHub Actions | Actions from `indestructibleorg` (SHA-pinned), plus local `./.github/actions/*` and digest-pinned `docker://` actions | 1.0 |
 
 ## Environment Variables (ECO_* Prefix)
 
