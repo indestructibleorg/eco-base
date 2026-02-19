@@ -1,8 +1,19 @@
 name = "indestructibleeco-workers"
 main = "workers/webhook-router.ts"
 compatibility_date = "2024-06-01"
+compatibility_flags = ["nodejs_compat"]
+
 [vars]
 ENVIRONMENT = "production"
+RATE_LIMIT_PER_MINUTE = "120"
+DEDUP_TTL_SECONDS = "300"
+DEAD_LETTER_TTL_SECONDS = "86400"
+
 [[routes]]
 pattern = "api.indestructibleeco.io/webhook/*"
 zone_name = "indestructibleeco.io"
+
+[[kv_namespaces]]
+binding = "WEBHOOK_KV"
+id = "eco-webhook-kv-prod"
+preview_id = "eco-webhook-kv-preview"

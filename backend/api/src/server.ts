@@ -12,6 +12,7 @@ import { platformRouter } from "./routes/platforms";
 import { yamlRouter } from "./routes/yaml";
 import { aiRouter } from "./routes/ai";
 import { healthRouter } from "./routes/health";
+import { imWebhookRouter } from "./routes/im-webhook";
 import { errorHandler } from "./middleware/error-handler";
 import { rateLimiter } from "./middleware/rate-limiter";
 import { authMiddleware } from "./middleware/auth";
@@ -50,6 +51,7 @@ app.use("/api", rateLimiter);
 app.use("/api/v1/platforms", authMiddleware, platformRouter);
 app.use("/api/v1/yaml", authMiddleware, yamlRouter);
 app.use("/api/v1/ai", authMiddleware, aiRouter);
+app.use("/api/v1/im", imWebhookRouter);
 
 // ─── Error Handler ───
 app.use(errorHandler);
