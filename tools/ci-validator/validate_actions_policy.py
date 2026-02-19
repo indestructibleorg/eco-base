@@ -81,7 +81,6 @@ class ActionsPolicyValidator:
         
         # Get enforcement level
         policy_config = self.policy.get('policy', {})
-        enforcement_level = policy_config.get('enforcement_level', 'error')
         
         for workflow_file in workflow_files:
             # Extract actions using shared function
