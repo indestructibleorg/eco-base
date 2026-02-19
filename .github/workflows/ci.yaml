@@ -72,6 +72,7 @@ jobs:
     - name: JS syntax check
       run: |
         node --check tools/yaml-toolkit/bin/cli.js
+        node --check tools/yaml-toolkit/bin/validate-qyaml.js
         node --check tools/skill-creator/scripts/validate.js
         echo "JS syntax check passed"
 
@@ -225,6 +226,7 @@ jobs:
           packages/shared-types packages/api-client packages/ui-kit \
           platforms/web platforms/desktop platforms/im-integration platforms/platform-template \
           ecosystem/monitoring ecosystem/tracing ecosystem/service-discovery \
+          ecosystem/logging ecosystem/gateway \
           tools/yaml-toolkit tools/skill-creator tools/ci-validator \
           k8s/base k8s/ingress k8s/monitoring k8s/argocd \
           src docs; do
@@ -246,6 +248,8 @@ jobs:
           tools/skill-creator/SKILL.md \
           k8s/argocd/argo-app.yaml \
           scripts/argocd-install.sh \
+          Makefile \
+          tools/yaml-toolkit/bin/validate-qyaml.js \
           tsconfig.base.json \
           tsconfig.json \
           .eslintrc.json \
