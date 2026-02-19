@@ -38,30 +38,26 @@ class ActionsPolicyValidator:
         self.violations = []
         
     def _load_policy(self) -> dict:
-        """Load the actions policy configuration"""
-        if not self.policy_file.exists():
-            print(f"Warning: Policy file not found at {self.policy_file}")
-            print("Using default policy configuration.")
-            return actions_policy_core.get_default_policy()
+        """Load the actions policy configuration
         
-        if not YAML_AVAILABLE:
-            print("Warning: PyYAML is not installed. Cannot load custom policy file.")
-            print("Using default policy configuration.")
-            print("Install PyYAML with: pip install pyyaml")
-            return actions_policy_core.get_default_policy()
+        Uses the shared load_policy_file function for consistency with the CI validator.
+        For the standalone tool, we exit on parse errors rather than falling back to defaults.
+        """
+        policy, error = actions_policy_core.load_policy_file(self.policy_file)
         
-        try:
-            with open(self.policy_file, 'r') as f:
-                loaded = yaml.safe_load(f)
-        except yaml.YAMLError as e:
-            print(f"Error: Failed to parse policy file {self.policy_file}: {e}")
-            sys.exit(1)
-
-        if loaded is None:
-            print(f"Warning: Policy file {self.policy_file} is empty; using default policy.")
-            return actions_policy_core.get_default_policy()
-
-        return loaded
+        if error:
+            # Distinguish between missing file (warning) and parse errors (fatal)
+            if not self.policy_file.exists():
+                print(f"Warning: Policy file not found at {self.policy_file}")
+                print("Using default policy configuration.")
+            elif "parse" in error.lower() or "yaml" in error.lower():
+                print(f"Error: {error}")
+                sys.exit(1)
+            else:
+                print(f"Warning: {error}")
+                print("Using default policy configuration.")
+        
+        return policy if policy is not None else actions_policy_core.get_default_policy()
     
     def validate_all_workflows(self) -> Tuple[int, int]:
         """Validate all workflow files in .github/workflows/"""

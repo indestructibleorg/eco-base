@@ -284,6 +284,7 @@ def test_default_policy():
     assert policy['policy']['require_org_ownership'] is True
     assert 'indestructibleorg' in policy['policy']['allowed_organizations']
     assert policy['policy']['require_sha_pinning'] is True
+    assert policy['policy']['require_docker_digest_pinning'] is True
     assert 'blocked_actions' in policy
     
     print("  ✓ Default policy structure is correct")
