@@ -1,4 +1,7 @@
-"""AI Service API routes — generation, vector alignment, model listing."""
+"""AI Service API routes -- generation, vector alignment, model listing.
+
+Routes dispatch to EngineManager for real inference with failover.
+"""
 
 import uuid
 import math
@@ -14,7 +17,7 @@ from .config import settings
 router = APIRouter()
 
 
-# ─── Request / Response Models ───
+# --- Request / Response Models ---
 
 class GenerateRequest(BaseModel):
     prompt: str
@@ -29,10 +32,12 @@ class GenerateResponse(BaseModel):
     request_id: str
     content: str
     model_id: str
+    engine: str
     uri: str
     urn: str
     usage: Dict[str, int]
     finish_reason: str
+    latency_ms: float
     created_at: str
 
 
@@ -63,21 +68,42 @@ class ModelInfo(BaseModel):
     capabilities: List[str]
 
 
-# ─── Routes ───
+# --- Routes ---
 
 @router.post("/generate", response_model=GenerateResponse)
 async def generate(req: GenerateRequest, request: Request):
     """Submit synchronous generation request.
 
-    In production, long-running jobs are dispatched via Celery + Redis.
-    This endpoint handles short-latency inference directly.
+    Routes to EngineManager which dispatches to the best available engine
+    with automatic failover and circuit breaking.
     """
     request_id = str(uuid.uuid1())
     model_id = req.model_id if req.model_id != "default" else settings.ai_models[0]
 
-    # Route to appropriate engine adapter
-    engine = request.app.state.governance.resolve_engine(model_id)
+    engine_mgr = getattr(request.app.state, "engine_manager", None)
+    if engine_mgr:
+        result = await engine_mgr.generate(
+            model_id=model_id,
+            prompt=req.prompt,
+            max_tokens=req.max_tokens,
+            temperature=req.temperature,
+            top_p=req.top_p,
+        )
+        return GenerateResponse(
+            request_id=request_id,
+            content=result.get("content", ""),
+            model_id=result.get("model_id", model_id),
+            engine=result.get("engine", "unknown"),
+            uri=f"indestructibleeco://ai/generation/{request_id}",
+            urn=f"urn:indestructibleeco:ai:generation:{model_id}:{request_id}",
+            usage=result.get("usage", {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}),
+            finish_reason=result.get("finish_reason", "stop"),
+            latency_ms=result.get("latency_ms", 0),
+            created_at=datetime.now(timezone.utc).isoformat(),
+        )
 
+    # Fallback: governance-based routing (no engine manager)
+    engine = request.app.state.governance.resolve_engine(model_id)
     prompt_tokens = len(req.prompt.split())
     completion_tokens = min(req.max_tokens, prompt_tokens * 2)
 
@@ -85,6 +111,7 @@ async def generate(req: GenerateRequest, request: Request):
         request_id=request_id,
         content=f"[{engine}] Generated response for: {req.prompt[:100]}...",
         model_id=model_id,
+        engine=engine,
         uri=f"indestructibleeco://ai/generation/{request_id}",
         urn=f"urn:indestructibleeco:ai:generation:{model_id}:{request_id}",
         usage={
@@ -93,6 +120,7 @@ async def generate(req: GenerateRequest, request: Request):
             "total_tokens": prompt_tokens + completion_tokens,
         },
         finish_reason="stop",
+        latency_ms=0,
         created_at=datetime.now(timezone.utc).isoformat(),
     )
 
@@ -101,7 +129,7 @@ async def generate(req: GenerateRequest, request: Request):
 async def vector_align(req: VectorAlignRequest):
     """Compute vector alignment using quantum-bert-xxl-v1.
 
-    Dimensions: 1024–4096, tolerance: 0.0001–0.005.
+    Dimensions: 1024-4096, tolerance: 0.0001-0.005.
     """
     if req.target_dim < 1024 or req.target_dim > 4096:
         raise HTTPException(
@@ -131,7 +159,7 @@ async def vector_align(req: VectorAlignRequest):
     uid = uuid.uuid1()
 
     return VectorAlignResponse(
-        coherence_vector=coherence_vector[:10],  # Truncated for response size
+        coherence_vector=coherence_vector[:10],
         dimension=req.target_dim,
         alignment_model=req.alignment_model,
         alignment_score=alignment_score,
@@ -142,7 +170,7 @@ async def vector_align(req: VectorAlignRequest):
 
 
 @router.get("/models", response_model=List[ModelInfo])
-async def list_models():
+async def list_models(request: Request):
     """List available inference models."""
     models = []
     providers = {
@@ -155,15 +183,22 @@ async def list_models():
         "lmdeploy": {"name": "LMDeploy Engine", "caps": ["text-generation", "quantized-inference"]},
     }
 
+    # Check engine availability from engine manager
+    engine_mgr = getattr(request.app.state, "engine_manager", None)
+    available = set()
+    if engine_mgr:
+        available = set(engine_mgr.list_available_engines())
+
     for provider_id in settings.ai_models:
         provider_id = provider_id.strip()
         info = providers.get(provider_id, {"name": provider_id, "caps": ["text-generation"]})
         uid = uuid.uuid1()
+        status = "available" if provider_id in available else "registered"
         models.append(ModelInfo(
             id=f"{provider_id}-default",
             name=info["name"],
             provider=provider_id,
-            status="available",
+            status=status,
             uri=f"indestructibleeco://ai/model/{provider_id}-default",
             urn=f"urn:indestructibleeco:ai:model:{provider_id}:{uid}",
             capabilities=info["caps"],
