@@ -1,17 +1,34 @@
-"""AI Service API routes -- generation, vector alignment, model listing,
-embedding, async jobs.
+"""AI Service API routes — generation, vector alignment, model listing,
+embedding, async jobs, OpenAI-compatible chat/completions/embeddings.
 
 Routes dispatch to EngineManager for real inference with failover,
-EmbeddingService for vector embeddings, and InferenceWorker for async jobs.
+EmbeddingService for vector embeddings, InferenceWorker for async jobs,
+and ModelRegistry for model resolution.
+
+OpenAI-compatible endpoints:
+  POST /v1/chat/completions  — ChatCompletionRequest/Response
+  POST /v1/completions       — CompletionRequest
+  POST /v1/embeddings        — EmbeddingRequest (OpenAI format)
+  GET  /v1/models            — ModelInfo list from registry
+
+Legacy endpoints (kept for backward compat):
+  POST /generate             — simple prompt-based generation
+  POST /vector/align         — vector alignment
+  POST /embeddings           — eco embedding format
+  POST /embeddings/similarity
+  POST /jobs, GET /jobs, etc — async job management
+  POST /qyaml/descriptor     — governance descriptor
 """
 
 import uuid
 import math
 import random
+import time
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 from fastapi import APIRouter, HTTPException, Request
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
 from .config import settings
@@ -19,7 +36,7 @@ from .config import settings
 router = APIRouter()
 
 
-# --- Request / Response Models ---
+# ─── Legacy Request / Response Models ─────────────────────────────────────────
 
 class GenerateRequest(BaseModel):
     prompt: str
@@ -60,7 +77,7 @@ class VectorAlignResponse(BaseModel):
     urn: str
 
 
-class ModelInfo(BaseModel):
+class LegacyModelInfo(BaseModel):
     id: str
     name: str
     provider: str
@@ -71,7 +88,7 @@ class ModelInfo(BaseModel):
 
 
 class EmbedRequest(BaseModel):
-    input: Any  # str or List[str]
+    input: Any
     model: str = "default"
     dimensions: int = 1024
     encoding_format: str = "float"
@@ -137,89 +154,345 @@ class JobStatusResponse(BaseModel):
     completed_at: Optional[str] = None
 
 
-# --- Routes ---
+# ─── OpenAI-Compatible Models (using shared schemas) ─────────────────────────
 
-@router.post("/generate", response_model=GenerateResponse)
-async def generate(req: GenerateRequest, request: Request):
-    """Submit synchronous generation request.
+class OAIChatMessage(BaseModel):
+    role: str
+    content: str
+    name: Optional[str] = None
 
-    Routes to EngineManager which dispatches to the best available engine
-    with automatic failover and circuit breaking.
-    """
-    request_id = str(uuid.uuid1())
-    model_id = req.model_id if req.model_id != "default" else settings.ai_models[0]
+
+class OAIChatCompletionRequest(BaseModel):
+    model: str = "default"
+    messages: List[OAIChatMessage]
+    temperature: float = Field(default=0.7, ge=0.0, le=2.0)
+    top_p: float = Field(default=1.0, ge=0.0, le=1.0)
+    max_tokens: int = Field(default=2048, ge=1, le=131072)
+    stream: bool = False
+    stop: Optional[List[str]] = None
+    seed: Optional[int] = None
+    frequency_penalty: float = Field(default=0.0, ge=-2.0, le=2.0)
+    presence_penalty: float = Field(default=0.0, ge=-2.0, le=2.0)
+
+
+class OAICompletionRequest(BaseModel):
+    model: str = "default"
+    prompt: Union[str, List[str]] = ""
+    max_tokens: int = Field(default=2048, ge=1, le=131072)
+    temperature: float = Field(default=0.7, ge=0.0, le=2.0)
+    top_p: float = Field(default=1.0, ge=0.0, le=1.0)
+    stream: bool = False
+    stop: Optional[List[str]] = None
+
+
+class OAIEmbeddingRequest(BaseModel):
+    input: Union[str, List[str]]
+    model: str = "default"
+    encoding_format: str = "float"
+    dimensions: Optional[int] = None
+
+
+# ─── Helpers ──────────────────────────────────────────────────────────────────
+
+async def _resolve_model_id(request: Request, model_id: str) -> str:
+    """Resolve model_id through ModelRegistry, falling back to config."""
+    if model_id == "default":
+        registry = getattr(request.app.state, "model_registry", None)
+        if registry:
+            resolved = await registry.resolve_model("default")
+            if resolved:
+                return resolved.model_id
+        return settings.ai_models[0]
+
+    registry = getattr(request.app.state, "model_registry", None)
+    if registry:
+        resolved = await registry.resolve_model(model_id)
+        if resolved:
+            return resolved.model_id
+
+    return model_id
+
+
+async def _generate_via_engine(
+    request: Request,
+    model_id: str,
+    prompt: str,
+    max_tokens: int = 2048,
+    temperature: float = 0.7,
+    top_p: float = 0.9,
+) -> Dict[str, Any]:
+    """Dispatch generation to EngineManager with registry-resolved model."""
+    resolved_model = await _resolve_model_id(request, model_id)
 
     engine_mgr = getattr(request.app.state, "engine_manager", None)
     if engine_mgr:
         result = await engine_mgr.generate(
-            model_id=model_id,
-            prompt=req.prompt,
-            max_tokens=req.max_tokens,
-            temperature=req.temperature,
-            top_p=req.top_p,
+            model_id=resolved_model,
+            prompt=prompt,
+            max_tokens=max_tokens,
+            temperature=temperature,
+            top_p=top_p,
         )
-        return GenerateResponse(
-            request_id=request_id,
-            content=result.get("content", ""),
-            model_id=result.get("model_id", model_id),
-            engine=result.get("engine", "unknown"),
-            uri=f"indestructibleeco://ai/generation/{request_id}",
-            urn=f"urn:indestructibleeco:ai:generation:{model_id}:{request_id}",
-            usage=result.get("usage", {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}),
-            finish_reason=result.get("finish_reason", "stop"),
-            latency_ms=result.get("latency_ms", 0),
-            created_at=datetime.now(timezone.utc).isoformat(),
-        )
+        result["model_id"] = resolved_model
+        return result
 
-    # Fallback: governance-based routing (no engine manager)
-    engine = request.app.state.governance.resolve_engine(model_id)
-    prompt_tokens = len(req.prompt.split())
-    completion_tokens = min(req.max_tokens, prompt_tokens * 2)
-
-    return GenerateResponse(
-        request_id=request_id,
-        content=f"[{engine}] Generated response for: {req.prompt[:100]}...",
-        model_id=model_id,
-        engine=engine,
-        uri=f"indestructibleeco://ai/generation/{request_id}",
-        urn=f"urn:indestructibleeco:ai:generation:{model_id}:{request_id}",
-        usage={
+    # Fallback
+    governance = getattr(request.app.state, "governance", None)
+    engine = governance.resolve_engine(resolved_model) if governance else "fallback"
+    prompt_tokens = len(prompt.split())
+    completion_tokens = min(max_tokens, prompt_tokens * 2)
+    return {
+        "content": f"[{engine}] Generated response for: {prompt[:100]}...",
+        "model_id": resolved_model,
+        "engine": engine,
+        "finish_reason": "stop",
+        "usage": {
             "prompt_tokens": prompt_tokens,
             "completion_tokens": completion_tokens,
             "total_tokens": prompt_tokens + completion_tokens,
         },
-        finish_reason="stop",
-        latency_ms=0,
+        "latency_ms": 0,
+    }
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# OpenAI-Compatible Routes
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@router.post("/v1/chat/completions")
+async def chat_completions(req: OAIChatCompletionRequest, request: Request):
+    """OpenAI-compatible chat completion endpoint.
+
+    Resolves model through ModelRegistry, dispatches to EngineManager.
+    Supports streaming via SSE when stream=True.
+    """
+    resolved_model = await _resolve_model_id(request, req.model)
+
+    # Build prompt from messages
+    prompt_parts: List[str] = []
+    for msg in req.messages:
+        prompt_parts.append(f"{msg.role}: {msg.content}")
+    prompt = "\n".join(prompt_parts)
+
+    start = time.monotonic()
+    result = await _generate_via_engine(
+        request,
+        model_id=resolved_model,
+        prompt=prompt,
+        max_tokens=req.max_tokens,
+        temperature=req.temperature,
+        top_p=req.top_p,
+    )
+    elapsed = (time.monotonic() - start) * 1000
+
+    request_id = f"chatcmpl-{uuid.uuid4().hex[:12]}"
+    content = result.get("content", "")
+    usage = result.get("usage", {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0})
+
+    if req.stream:
+        import json
+
+        async def stream_generator():
+            words = content.split()
+            chunk_size = max(1, len(words) // 5) if words else 1
+            chunks = [
+                " ".join(words[i:i + chunk_size])
+                for i in range(0, len(words), chunk_size)
+            ]
+            for idx, chunk_text in enumerate(chunks):
+                is_last = idx == len(chunks) - 1
+                chunk_data = {
+                    "id": request_id,
+                    "object": "chat.completion.chunk",
+                    "created": int(time.time()),
+                    "model": resolved_model,
+                    "choices": [{
+                        "index": 0,
+                        "delta": {"content": chunk_text} if not is_last else {},
+                        "finish_reason": "stop" if is_last else None,
+                    }],
+                }
+                yield f"data: {json.dumps(chunk_data)}\n\n"
+            yield "data: [DONE]\n\n"
+
+        return StreamingResponse(
+            stream_generator(),
+            media_type="text/event-stream",
+            headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+        )
+
+    return {
+        "id": request_id,
+        "object": "chat.completion",
+        "created": int(time.time()),
+        "model": resolved_model,
+        "choices": [{
+            "index": 0,
+            "message": {"role": "assistant", "content": content},
+            "finish_reason": result.get("finish_reason", "stop"),
+        }],
+        "usage": usage,
+        "system_fingerprint": f"eco-{result.get('engine', 'unknown')}",
+    }
+
+
+@router.post("/v1/completions")
+async def completions(req: OAICompletionRequest, request: Request):
+    """OpenAI-compatible legacy completion endpoint."""
+    resolved_model = await _resolve_model_id(request, req.model)
+
+    prompt = req.prompt if isinstance(req.prompt, str) else " ".join(req.prompt)
+
+    start = time.monotonic()
+    result = await _generate_via_engine(
+        request,
+        model_id=resolved_model,
+        prompt=prompt,
+        max_tokens=req.max_tokens,
+        temperature=req.temperature,
+        top_p=req.top_p,
+    )
+    elapsed = (time.monotonic() - start) * 1000
+
+    request_id = f"cmpl-{uuid.uuid4().hex[:12]}"
+    content = result.get("content", "")
+    usage = result.get("usage", {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0})
+
+    return {
+        "id": request_id,
+        "object": "text_completion",
+        "created": int(time.time()),
+        "model": resolved_model,
+        "choices": [{
+            "index": 0,
+            "text": content,
+            "finish_reason": result.get("finish_reason", "stop"),
+        }],
+        "usage": usage,
+    }
+
+
+@router.post("/v1/embeddings")
+async def oai_embeddings(req: OAIEmbeddingRequest, request: Request):
+    """OpenAI-compatible embedding endpoint.
+
+    Resolves model through ModelRegistry, dispatches to EmbeddingService.
+    """
+    embedding_svc = getattr(request.app.state, "embedding_service", None)
+    if not embedding_svc:
+        raise HTTPException(status_code=503, detail="Embedding service not available")
+
+    resolved_model = await _resolve_model_id(request, req.model)
+    texts: List[str] = [req.input] if isinstance(req.input, str) else list(req.input)
+    if not texts:
+        raise HTTPException(status_code=400, detail="Empty input")
+
+    dim = req.dimensions or settings.vector_dim
+
+    try:
+        result = await embedding_svc.embed_batch(
+            texts=texts,
+            model_id=resolved_model,
+            dimensions=dim,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+    data = [
+        {"object": "embedding", "index": i, "embedding": emb}
+        for i, emb in enumerate(result.embeddings)
+    ]
+
+    return {
+        "object": "list",
+        "data": data,
+        "model": resolved_model,
+        "usage": {
+            "prompt_tokens": result.total_tokens,
+            "total_tokens": result.total_tokens,
+        },
+    }
+
+
+@router.get("/v1/models")
+async def oai_list_models(request: Request):
+    """OpenAI-compatible model listing from ModelRegistry."""
+    registry = getattr(request.app.state, "model_registry", None)
+    if not registry:
+        raise HTTPException(status_code=503, detail="Model registry not available")
+
+    models = await registry.list_models()
+    engine_mgr = getattr(request.app.state, "engine_manager", None)
+    available_engines = set(engine_mgr.list_available_engines()) if engine_mgr else set()
+
+    data = []
+    for m in models:
+        has_available_engine = bool(set(m.compatible_engines) & available_engines)
+        data.append({
+            "id": m.model_id,
+            "object": "model",
+            "created": int(time.time()),
+            "owned_by": "indestructibleeco",
+            "permission": [],
+            "root": m.source,
+            "parent": None,
+            "capabilities": [c.value for c in m.capabilities],
+            "compatible_engines": m.compatible_engines,
+            "status": m.status.value,
+            "engine_available": has_available_engine,
+            "context_length": m.context_length,
+            "parameters_billion": m.parameters_billion,
+        })
+
+    return {"object": "list", "data": data}
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Legacy Routes (backward compatible)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@router.post("/generate", response_model=GenerateResponse)
+async def generate(req: GenerateRequest, request: Request):
+    """Submit synchronous generation request (legacy endpoint)."""
+    request_id = str(uuid.uuid1())
+
+    result = await _generate_via_engine(
+        request,
+        model_id=req.model_id,
+        prompt=req.prompt,
+        max_tokens=req.max_tokens,
+        temperature=req.temperature,
+        top_p=req.top_p,
+    )
+
+    model_id = result.get("model_id", req.model_id)
+    return GenerateResponse(
+        request_id=request_id,
+        content=result.get("content", ""),
+        model_id=model_id,
+        engine=result.get("engine", "unknown"),
+        uri=f"indestructibleeco://ai/generation/{request_id}",
+        urn=f"urn:indestructibleeco:ai:generation:{model_id}:{request_id}",
+        usage=result.get("usage", {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0}),
+        finish_reason=result.get("finish_reason", "stop"),
+        latency_ms=result.get("latency_ms", 0),
         created_at=datetime.now(timezone.utc).isoformat(),
     )
 
 
 @router.post("/vector/align", response_model=VectorAlignResponse)
 async def vector_align(req: VectorAlignRequest):
-    """Compute vector alignment using quantum-bert-xxl-v1.
-
-    Dimensions: 1024-4096, tolerance: 0.0001-0.005.
-    """
+    """Compute vector alignment using quantum-bert-xxl-v1."""
     if req.target_dim < 1024 or req.target_dim > 4096:
-        raise HTTPException(
-            status_code=400,
-            detail="target_dim must be between 1024 and 4096",
-        )
-
+        raise HTTPException(status_code=400, detail="target_dim must be between 1024 and 4096")
     if req.tolerance < 0.0001 or req.tolerance > 0.005:
-        raise HTTPException(
-            status_code=400,
-            detail="tolerance must be between 0.0001 and 0.005",
-        )
+        raise HTTPException(status_code=400, detail="tolerance must be between 0.0001 and 0.005")
 
-    # Generate coherence vector (production: actual model inference)
     random.seed(hash(tuple(req.tokens)))
     coherence_vector = [
         round(random.gauss(0, 1) / math.sqrt(req.target_dim), 6)
         for _ in range(req.target_dim)
     ]
-
-    # Normalize
     norm = math.sqrt(sum(v * v for v in coherence_vector))
     if norm > 0:
         coherence_vector = [round(v / norm, 6) for v in coherence_vector]
@@ -238,10 +511,9 @@ async def vector_align(req: VectorAlignRequest):
     )
 
 
-@router.get("/models", response_model=List[ModelInfo])
+@router.get("/models", response_model=List[LegacyModelInfo])
 async def list_models(request: Request):
-    """List available inference models."""
-    models = []
+    """List available inference models (legacy format)."""
     providers = {
         "vllm": {"name": "vLLM Engine", "caps": ["text-generation", "chat", "streaming"]},
         "ollama": {"name": "Ollama Engine", "caps": ["text-generation", "chat", "embedding"]},
@@ -252,18 +524,18 @@ async def list_models(request: Request):
         "lmdeploy": {"name": "LMDeploy Engine", "caps": ["text-generation", "quantized-inference"]},
     }
 
-    # Check engine availability from engine manager
     engine_mgr = getattr(request.app.state, "engine_manager", None)
     available = set()
     if engine_mgr:
         available = set(engine_mgr.list_available_engines())
 
+    models = []
     for provider_id in settings.ai_models:
         provider_id = provider_id.strip()
         info = providers.get(provider_id, {"name": provider_id, "caps": ["text-generation"]})
         uid = uuid.uuid1()
         status = "available" if provider_id in available else "registered"
-        models.append(ModelInfo(
+        models.append(LegacyModelInfo(
             id=f"{provider_id}-default",
             name=info["name"],
             provider=provider_id,
@@ -276,15 +548,11 @@ async def list_models(request: Request):
     return models
 
 
-# --- Embedding Routes ---
+# ─── Embedding Routes (eco format) ───────────────────────────────────────────
 
 @router.post("/embeddings", response_model=EmbedResponse)
 async def create_embeddings(req: EmbedRequest, request: Request):
-    """Generate embeddings for text input(s).
-
-    Accepts a single string or list of strings. Returns normalized
-    embedding vectors via EmbeddingService.
-    """
+    """Generate embeddings for text input(s) (eco format)."""
     embedding_svc = getattr(request.app.state, "embedding_service", None)
     if not embedding_svc:
         raise HTTPException(status_code=503, detail="Embedding service not available")
@@ -296,11 +564,7 @@ async def create_embeddings(req: EmbedRequest, request: Request):
     model = req.model if req.model != "default" else settings.alignment_model
 
     try:
-        result = await embedding_svc.embed_batch(
-            texts=texts,
-            model_id=model,
-            dimensions=req.dimensions,
-        )
+        result = await embedding_svc.embed_batch(texts=texts, model_id=model, dimensions=req.dimensions)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 
@@ -333,10 +597,7 @@ async def compute_similarity(req: SimilarityRequest, request: Request):
 
     try:
         result = await embedding_svc.similarity(
-            text_a=req.text_a,
-            text_b=req.text_b,
-            model_id=model,
-            dimensions=req.dimensions,
+            text_a=req.text_a, text_b=req.text_b, model_id=model, dimensions=req.dimensions,
         )
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
@@ -353,7 +614,7 @@ async def compute_similarity(req: SimilarityRequest, request: Request):
     )
 
 
-# --- Async Job Routes ---
+# ─── Async Job Routes ────────────────────────────────────────────────────────
 
 @router.post("/jobs", response_model=AsyncJobResponse)
 async def submit_job(req: AsyncJobRequest, request: Request):
@@ -364,16 +625,13 @@ async def submit_job(req: AsyncJobRequest, request: Request):
 
     from .services.worker import InferenceJob, JobPriority
 
-    priority_map = {
-        "high": JobPriority.HIGH,
-        "normal": JobPriority.NORMAL,
-        "low": JobPriority.LOW,
-    }
+    priority_map = {"high": JobPriority.HIGH, "normal": JobPriority.NORMAL, "low": JobPriority.LOW}
     priority = priority_map.get(req.priority, JobPriority.NORMAL)
-    model_id = req.model_id if req.model_id != "default" else settings.ai_models[0]
+
+    resolved_model = await _resolve_model_id(request, req.model_id)
 
     job = InferenceJob(
-        model_id=model_id,
+        model_id=resolved_model,
         prompt=req.prompt,
         max_tokens=req.max_tokens,
         temperature=req.temperature,
@@ -391,7 +649,7 @@ async def submit_job(req: AsyncJobRequest, request: Request):
         job_id=job_id,
         status=job.status.value,
         uri=f"indestructibleeco://ai/job/{job_id}",
-        urn=f"urn:indestructibleeco:ai:job:{model_id}:{job_id}",
+        urn=f"urn:indestructibleeco:ai:job:{resolved_model}:{job_id}",
         created_at=datetime.fromtimestamp(job.created_at, tz=timezone.utc).isoformat(),
     )
 
@@ -420,18 +678,13 @@ async def get_job(job_id: str, request: Request):
         created_at=datetime.fromtimestamp(job.created_at, tz=timezone.utc).isoformat(),
         completed_at=(
             datetime.fromtimestamp(job.completed_at, tz=timezone.utc).isoformat()
-            if job.completed_at
-            else None
+            if job.completed_at else None
         ),
     )
 
 
 @router.get("/jobs")
-async def list_jobs(
-    request: Request,
-    status: Optional[str] = None,
-    limit: int = 100,
-):
+async def list_jobs(request: Request, status: Optional[str] = None, limit: int = 100):
     """List async inference jobs, optionally filtered by status."""
     worker = getattr(request.app.state, "inference_worker", None)
     if not worker:
@@ -463,6 +716,8 @@ async def cancel_job(job_id: str, request: Request):
 
     return {"job_id": job_id, "status": "cancelled"}
 
+
+# ─── Governance Descriptor ────────────────────────────────────────────────────
 
 @router.post("/qyaml/descriptor")
 async def generate_qyaml_descriptor(request: Request):

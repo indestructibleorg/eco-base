@@ -3,10 +3,11 @@
 Runtime: Python 3.11 + FastAPI + Uvicorn
 Ports: 8000 (gRPC internal) + 8001 (HTTP)
 Vector alignment: quantum-bert-xxl-v1, dim 1024-4096, tol 0.0001-0.005
-Queuing: Async worker for inference jobs
+Queuing: Async worker + RequestQueue for inference jobs
 Engine management: 7 adapters with connection pools + circuit breakers
 Embedding: Batch embedding via engine adapters with fallback
 gRPC: Internal high-performance inference endpoint
+Registry: Central model lifecycle management
 """
 
 import os
@@ -43,6 +44,18 @@ def _resolve_engine_endpoints() -> Dict[str, str]:
 async def lifespan(app: FastAPI):
     app.state.start_time = time.time()
     app.state.governance = GovernanceEngine()
+
+    # --- Model Registry ---
+    from src.core.registry import ModelRegistry
+
+    registry = ModelRegistry()
+    app.state.model_registry = registry
+
+    # --- Request Queue ---
+    from src.core.queue import RequestQueue
+
+    request_queue = RequestQueue()
+    app.state.request_queue = request_queue
 
     # --- Engine Manager ---
     from .services.engine_manager import EngineManager
@@ -132,6 +145,9 @@ async def health(request: Request):
     grpc = getattr(request.app.state, "grpc_server", None)
     grpc_running = grpc.is_running if grpc else False
 
+    registry = getattr(request.app.state, "model_registry", None)
+    model_count = registry.count if registry else 0
+
     return {
         "status": "healthy",
         "service": "ai",
@@ -140,6 +156,7 @@ async def health(request: Request):
         "urn": f"urn:indestructibleeco:backend:ai:health:{uuid.uuid1()}",
         "uptime_seconds": round(uptime, 2),
         "engines": available_engines,
+        "models_registered": model_count,
         "worker": {"running": worker_running},
         "grpc": {"running": grpc_running, "port": settings.grpc_port},
         "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -180,6 +197,27 @@ async def embedding_health(request: Request):
     if not embedding_svc:
         return {"error": "embedding service not initialized"}
     return embedding_svc.get_stats()
+
+
+@app.get("/health/registry")
+async def registry_health(request: Request):
+    """Model registry statistics."""
+    registry = getattr(request.app.state, "model_registry", None)
+    if not registry:
+        return {"error": "model registry not initialized"}
+    models = await registry.list_models()
+    return {
+        "total_models": len(models),
+        "models": [
+            {
+                "model_id": m.model_id,
+                "status": m.status.value,
+                "engines": m.compatible_engines,
+                "loaded_on": m.loaded_on_engines,
+            }
+            for m in models
+        ],
+    }
 
 
 @app.get("/metrics")
@@ -231,6 +269,11 @@ async def metrics(request: Request):
             f"eco_grpc_embedding_requests_total {sm['total_embedding_requests']}",
         ])
 
+    registry = getattr(request.app.state, "model_registry", None)
+    registry_lines = []
+    if registry:
+        registry_lines.append(f"eco_models_registered_total {registry.count}")
+
     lines = [
         "# HELP eco_uptime_seconds AI service uptime in seconds",
         "# TYPE eco_uptime_seconds gauge",
@@ -251,7 +294,10 @@ async def metrics(request: Request):
     ] + embedding_lines + [
         "# HELP eco_grpc_requests_total Total gRPC requests",
         "# TYPE eco_grpc_requests_total counter",
-    ] + grpc_lines
+    ] + grpc_lines + [
+        "# HELP eco_models_registered_total Total models in registry",
+        "# TYPE eco_models_registered_total gauge",
+    ] + registry_lines
 
     return JSONResponse(
         content="\n".join(lines) + "\n",
