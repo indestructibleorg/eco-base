@@ -150,12 +150,21 @@ def validate_action_reference(
             )
     
     # Check SHA pinning requirement
-    if policy_config.get('require_sha_pinning', False):
-        if not SHA_PATTERN.match(ref):
+    is_sha = bool(SHA_PATTERN.match(ref))
+    require_sha_pinning = policy_config.get('require_sha_pinning', False)
+    block_tag_references = policy_config.get('block_tag_references', False)
+
+    if require_sha_pinning:
+        if not is_sha:
             violations.append(
                 f"Action '{action_base}@{ref}' must be pinned to a full-length commit SHA "
                 f"(40 hex characters); '{ref}' is not a full-length commit SHA."
             )
+    elif block_tag_references and not is_sha:
+        violations.append(
+            f"Action '{action_base}@{ref}' uses a tag or branch reference ('{ref}'), "
+            f"which is blocked by policy. Use a specific commit SHA instead."
+        )
     
     return violations
 
