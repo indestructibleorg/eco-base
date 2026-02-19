@@ -396,11 +396,28 @@ switch (command) {
     process.exit(allValid ? 0 : 1);
     break;
   }
+  case "validate-schema": {
+    // Delegate to the full schema validator (validate-qyaml.js)
+    const vqArgs = args.join(" ");
+    const vqPath = path.join(__dirname, "validate-qyaml.js");
+    if (!fs.existsSync(vqPath)) {
+      console.error("ERROR: validate-qyaml.js not found at " + vqPath);
+      process.exit(2);
+    }
+    const { execSync } = require("child_process");
+    try {
+      execSync(`node "${vqPath}" ${vqArgs}`, { stdio: "inherit" });
+    } catch (e) {
+      process.exit(e.status || 1);
+    }
+    break;
+  }
   default:
-    console.log("IndestructibleEco YAML Toolkit v1");
-    console.log("Commands: gen | validate | lint");
-    console.log("  gen      --input=module.json [--target=gke-production] [--output=output/]");
-    console.log("  validate <file.qyaml> [--strict]");
-    console.log("  lint     [directory]");
+    console.log("IndestructibleEco YAML Toolkit v8");
+    console.log("Commands: gen | validate | validate-schema | lint");
+    console.log("  gen              --input=module.json [--target=gke-production] [--output=output/]");
+    console.log("  validate         <file.qyaml> [--strict]");
+    console.log("  validate-schema  <file.qyaml> [--dir path] [--json] [--strict]");
+    console.log("  lint             [directory]");
     break;
 }

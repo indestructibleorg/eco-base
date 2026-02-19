@@ -35,6 +35,13 @@ release/
 
 # Docker
 .docker-data/
+docker-data/
+
+# Ecosystem runtime data
+ecosystem/monitoring/grafana/data/
+ecosystem/logging/data/
+ecosystem/tracing/data/
+ecosystem/service-discovery/data/
 
 # Python
 __pycache__/

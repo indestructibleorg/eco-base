@@ -58,7 +58,12 @@ pnpm --filter @indestructibleeco/web dev
 │   ├── desktop/           # Electron desktop app
 │   ├── im-integration/    # WhatsApp, Telegram, LINE, Messenger bots
 │   └── platform-template/ # Scaffold for new platforms
-├── ecosystem/             # Prometheus, Grafana, Jaeger, Consul
+├── ecosystem/             # Full observability, logging, tracing, gateway
+│   ├── monitoring/        # Prometheus + Grafana + Alertmanager
+│   ├── logging/           # Loki + Promtail
+│   ├── tracing/           # Jaeger + Tempo + OpenTelemetry Collector
+│   ├── service-discovery/ # Consul
+│   └── gateway/           # Nginx reverse proxy (dev)
 ├── tools/
 │   ├── yaml-toolkit/      # YAML Toolkit v8 — .qyaml generator & validator
 │   ├── skill-creator/     # Skill authoring & validation framework
