@@ -15,13 +15,6 @@ import argparse
 from pathlib import Path
 from typing import Tuple
 
-# Try to import PyYAML, but gracefully handle if not available
-try:
-    import yaml
-    YAML_AVAILABLE = True
-except ImportError:
-    YAML_AVAILABLE = False
-
 # Import shared validation logic
 try:
     from . import actions_policy_core
