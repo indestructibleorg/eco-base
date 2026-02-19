@@ -20,20 +20,29 @@ def extract_actions_from_workflow(workflow_file: Path, repo_root: Path) -> List[
         with open(workflow_file, 'r') as f:
             content = f.read()
         
-        # Find all 'uses:' statements
-        # Pattern: uses: owner/repo@ref or uses: owner/repo/path@ref
-        pattern = r'uses:\s*([^\s#]+)'
+        # Find all 'uses:' statements in actual workflow steps
+        # Pattern matches: "- uses:" or "  uses:" (with indentation) at line start
+        # Explicitly skip commented lines to avoid false positives
         actions = []
         
         for line_num, line in enumerate(content.split('\n'), 1):
-            match = re.search(pattern, line)
-            if match:
-                action_ref = match.group(1).strip()
-                actions.append({
-                    'action': action_ref,
-                    'line': line_num,
-                    'file': str(workflow_file.relative_to(repo_root))
-                })
+            stripped = line.lstrip()
+            
+            # Skip comment lines (including inline comments after whitespace)
+            if stripped.startswith('#'):
+                continue
+            
+            # Match actual step definitions: "- uses:" or indented "uses:"
+            # This anchors to step structure and avoids matching uses: in run: commands or comments
+            if re.match(r'^-?\s*uses:\s*', stripped):
+                match = re.search(r'uses:\s*([^\s#]+)', stripped)
+                if match:
+                    action_ref = match.group(1).strip()
+                    actions.append({
+                        'action': action_ref,
+                        'line': line_num,
+                        'file': str(workflow_file.relative_to(repo_root))
+                    })
         
         return actions
     except Exception as e:
@@ -73,13 +82,22 @@ def validate_docker_action(action_ref: str, policy: Dict) -> List[str]:
         return violations
     
     # Check if docker image is pinned to SHA256 digest
-    # Valid format: docker://image@sha256:hexdigest or docker://registry/image@sha256:hexdigest
+    # Valid format: docker://image@sha256:<64-hex-chars> or docker://registry/image@sha256:<64-hex-chars>
     if '@sha256:' not in action_ref:
         violations.append(
             f"Docker action '{action_ref}' must be pinned to immutable SHA256 digest "
             f"(e.g., docker://alpine@sha256:...). Mutable tags like ':latest' undermine "
             f"supply-chain security."
         )
+    else:
+        # Validate the digest format: must be exactly 64 hex characters after @sha256:
+        match = re.search(r'@sha256:([a-f0-9]+)$', action_ref, re.IGNORECASE)
+        if not match or len(match.group(1)) != 64:
+            violations.append(
+                f"Docker action '{action_ref}' has invalid SHA256 digest format. "
+                f"Digest must be exactly 64 hexadecimal characters "
+                f"(e.g., docker://alpine@sha256:c5b1261d...)."
+            )
     
     return violations
 
@@ -183,31 +201,37 @@ def get_default_policy() -> Dict:
     }
 
 
-def load_policy_file(policy_file: Path) -> Optional[Dict]:
+def load_policy_file(policy_file: Path) -> tuple[Optional[Dict], Optional[str]]:
     """
     Load policy from YAML file with graceful fallback
     
     Returns:
-        Policy dictionary if successful, None if PyYAML not available or file doesn't exist
+        Tuple of (policy_dict, error_message)
+        - (None, None) if file doesn't exist (use default policy)
+        - (None, "message") if PyYAML not available or parse error (caller should emit warning/error)
+        - (dict, None) if successfully loaded
     """
     if not policy_file.exists():
-        return None
+        return (None, None)
     
     try:
         import yaml
     except ImportError:
-        # PyYAML not available - return None to use default policy
-        return None
+        # PyYAML not available - caller should warn but use default policy
+        return (None, "PyYAML not installed; using default policy. Install PyYAML to use custom policy file.")
     
     try:
         with open(policy_file, 'r') as f:
             loaded = yaml.safe_load(f)
         
         if loaded is None:
-            # Empty file - return None to use default policy
-            return None
+            # Empty file - use default policy
+            return (None, f"Policy file {policy_file} is empty; using default policy.")
         
-        return loaded
-    except Exception:
-        # Parse error - return None to use default policy
-        return None
+        return (loaded, None)
+    except yaml.YAMLError as e:
+        # Parse error - this is a misconfiguration that should be reported
+        return (None, f"Failed to parse policy file {policy_file}: {e}")
+    except Exception as e:
+        # Other error - report it
+        return (None, f"Error reading policy file {policy_file}: {e}")

@@ -70,12 +70,21 @@ def test_local_and_docker_actions():
     )
     assert len(violations) == 0
 
-    # Docker with malformed SHA256 digest - should fail
+    # Docker with malformed SHA256 digest (too short) - should fail
     violations = actions_policy_core.validate_docker_action(
         'docker://alpine@sha256:deadbeef',
         policy
     )
     assert len(violations) > 0
+    assert 'invalid SHA256 digest format' in violations[0]
+    
+    # Docker with malformed SHA256 digest (non-hex chars) - should fail
+    violations = actions_policy_core.validate_docker_action(
+        'docker://alpine@sha256:gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg',
+        policy
+    )
+    assert len(violations) > 0
+    assert 'invalid SHA256 digest format' in violations[0]
     
     # Test with policy that doesn't require docker digest pinning
     policy_permissive = {
@@ -224,13 +233,16 @@ def test_policy_loading():
         policy_file = Path(tmpdir) / 'policy.yaml'
         
         # Test 1: Non-existent file
-        result = actions_policy_core.load_policy_file(policy_file)
-        assert result is None, "Non-existent file should return None"
+        policy, error = actions_policy_core.load_policy_file(policy_file)
+        assert policy is None, "Non-existent file should return None"
+        assert error is None, "Non-existent file should have no error"
         
         # Test 2: Empty file
         policy_file.write_text('')
-        result = actions_policy_core.load_policy_file(policy_file)
-        assert result is None, "Empty file should return None"
+        policy, error = actions_policy_core.load_policy_file(policy_file)
+        assert policy is None, "Empty file should return None"
+        assert error is not None, "Empty file should have warning message"
+        assert "empty" in error.lower()
         
         # Test 3: Valid policy
         policy_file.write_text("""
@@ -242,10 +254,22 @@ policy:
 blocked_actions:
   - actions/checkout
 """)
-        result = actions_policy_core.load_policy_file(policy_file)
-        if result is not None:  # Only test if PyYAML is available
-            assert result['policy']['allowed_organizations'] == ['testorg']
-            assert 'actions/checkout' in result['blocked_actions']
+        policy, error = actions_policy_core.load_policy_file(policy_file)
+        if policy is not None:  # Only test if PyYAML is available
+            assert error is None, "Valid policy should have no error"
+            assert policy['policy']['allowed_organizations'] == ['testorg']
+            assert 'actions/checkout' in policy['blocked_actions']
+        
+        # Test 4: Malformed YAML
+        policy_file.write_text("""
+policy:
+  invalid: [this is: bad yaml
+""")
+        policy, error = actions_policy_core.load_policy_file(policy_file)
+        assert policy is None, "Malformed YAML should return None"
+        if error:  # Only check if PyYAML is available
+            assert error is not None, "Malformed YAML should have error"
+            assert "parse" in error.lower() or "error" in error.lower()
         
         print("  ✓ Policy file loading works correctly")
 

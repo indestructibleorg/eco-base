@@ -463,11 +463,22 @@ def validate_actions_policy(repo: Path) -> list[dict]:
     
     # Load policy using shared module
     policy_file = repo / ".github" / "allowed-actions.yaml"
-    policy = actions_policy_core.load_policy_file(policy_file)
+    policy, load_error = actions_policy_core.load_policy_file(policy_file)
     
     if policy is None:
-        # PyYAML not available or file doesn't exist - use default policy
+        # Use default policy
         policy = actions_policy_core.get_default_policy()
+        
+        # Emit warning/error if there was a load error (parse failure, not just missing file)
+        if load_error and policy_file.exists():
+            # Policy file exists but couldn't be loaded - this is a serious misconfiguration
+            findings.append(finding(
+                Category.ACTIONS_POLICY,
+                Severity.ERROR,
+                ".github/allowed-actions.yaml",
+                f"Policy configuration error: {load_error}"
+            ))
+            # Continue with default policy but user is warned
     
     # Get enforcement level from policy
     policy_config = policy.get('policy', {})
@@ -500,13 +511,23 @@ def validate_actions_policy(repo: Path) -> list[dict]:
                         line=line_num
                     ))
         
-        except Exception as e:
+        except RuntimeError as e:
+            # Workflow parsing error - emit finding with configured severity
             findings.append(finding(
                 Category.ACTIONS_POLICY,
                 severity,
                 workflow_file.relative_to(repo),
                 f"Error parsing workflow: {e}"
             ))
+        except Exception as e:
+            # Unexpected error - always treat as ERROR regardless of enforcement level
+            findings.append(finding(
+                Category.ACTIONS_POLICY,
+                Severity.ERROR,
+                workflow_file.relative_to(repo),
+                f"Unexpected error validating workflow: {e}"
+            ))
+
     
     return findings
 
