@@ -14,7 +14,6 @@ Tests the core validation logic to ensure:
 
 import sys
 import tempfile
-import shutil
 from pathlib import Path
 
 # Add parent directory to path for imports
