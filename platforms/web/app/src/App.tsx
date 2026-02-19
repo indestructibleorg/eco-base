@@ -1,25 +1,31 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
+import { Layout } from "./components/Layout";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import Login from "./pages/Login";
-
-function RequireAuth({ children }: { children: JSX.Element }) {
-  const token = localStorage.getItem("eco_token");
-  if (!token) return <Navigate to="/login" replace />;
-  return children;
-}
+import Dashboard from "./pages/Dashboard";
+import AIPlayground from "./pages/AIPlayground";
+import Models from "./pages/Models";
+import Platforms from "./pages/Platforms";
+import Settings from "./pages/Settings";
 
 export default function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route
-        path="/"
         element={
-          <RequireAuth>
-            <Dashboard />
-          </RequireAuth>
+          <ProtectedRoute>
+            <Layout />
+          </ProtectedRoute>
         }
-      />
+      >
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/ai" element={<AIPlayground />} />
+        <Route path="/models" element={<Models />} />
+        <Route path="/platforms" element={<Platforms />} />
+        <Route path="/settings" element={<Settings />} />
+      </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
