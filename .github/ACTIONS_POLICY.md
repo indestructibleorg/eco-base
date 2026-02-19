@@ -10,6 +10,8 @@ This repository enforces strict GitHub Actions usage policies for security, repr
 
 **All GitHub Actions must be from repositories owned by `indestructibleorg`.**
 
+**Exceptions:** Local actions (`./.github/actions/`) and Docker actions (`docker://`) are permitted.
+
 ❌ **NOT ALLOWED:**
 ```yaml
 - uses: actions/checkout@v4
@@ -20,7 +22,13 @@ This repository enforces strict GitHub Actions usage policies for security, repr
 ✅ **ALLOWED:**
 ```yaml
 # Actions from indestructibleorg (when available)
-- uses: indestructibleorg/checkout-action@a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0
+- uses: indestructibleorg/checkout-action@1234567890abcdef1234567890abcdef12345678
+
+# Local actions are allowed
+- uses: ./.github/actions/my-custom-action
+
+# Docker actions are allowed
+- uses: docker://alpine:latest
 
 # Better: Use manual commands
 - name: Checkout
@@ -42,7 +50,7 @@ This repository enforces strict GitHub Actions usage policies for security, repr
 
 ✅ **ALLOWED:**
 ```yaml
-- uses: indestructibleorg/my-action@a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0
+- uses: indestructibleorg/my-action@1234567890abcdef1234567890abcdef12345678
 ```
 
 ### 3. Explicitly Blocked Actions
@@ -103,15 +111,23 @@ Policy compliance is enforced by:
    - Runs on every PR and push
    - Validates all workflow files
    - Reports violations with line numbers
+   - Honors `enforcement_level` configuration (error/warning)
 
 2. **Standalone Validator**: `tools/ci-validator/validate_actions_policy.py`
    - Can be run independently
    - Useful for pre-commit checks
+   - Works without PyYAML (uses default policy)
 
 3. **Policy Configuration**: `.github/allowed-actions.yaml`
    - Defines policy rules
-   - Lists approved actions (when available)
-   - Configurable enforcement level
+   - Lists blocked actions
+   - Configurable enforcement level (error or warning)
+   - Documents allowed exceptions (local actions, docker://)
+
+4. **Shared Validation Logic**: `tools/ci-validator/actions_policy_core.py`
+   - Core validation functions
+   - Eliminates code duplication
+   - Ensures consistent behavior
 
 ### Running Validation Locally
 
@@ -122,9 +138,19 @@ python3 tools/ci-validator/validate.py
 # Run only actions policy validation
 python3 tools/ci-validator/validate_actions_policy.py
 
+# Run test suite
+python3 tools/ci-validator/test_actions_policy.py
+
 # Check a specific repository
 python3 tools/ci-validator/validate_actions_policy.py --repo-root=/path/to/repo
 ```
+
+### Dependencies
+
+The validators gracefully handle missing dependencies:
+- If PyYAML is not installed, the default policy is used
+- No external dependencies required for basic validation
+- Install PyYAML for custom policy files: `pip install pyyaml`
 
 ## Alternative Approaches
 

@@ -13,8 +13,8 @@ policy:
   # Block tag references (e.g., @v1, @v2, @main)
   block_tag_references: true
   
-  # Enforcement is strict: all policy violations will fail the build
-  # (No configurable enforcement_level; validator always treats violations as errors)
+  # Enforcement level: "error" will fail the build, "warning" will only warn
+  enforcement_level: error
 
 # List of explicitly blocked actions (regardless of organization)
 blocked_actions:
@@ -40,6 +40,9 @@ description: |
   Current workflows use manual commands (git clone, gh CLI) instead of external actions
   to comply with this policy.
   
+  Local actions (./.github/actions/) and docker:// actions are permitted.
+  
   If you need to use a GitHub Action, either:
   - Create a wrapper action in the indestructibleorg organization
   - Use manual commands (git, gh, curl, etc.) to achieve the same functionality
+

@@ -9,12 +9,24 @@ Validates that all GitHub Actions used in workflows comply with repository polic
 """
 
 import os
-import re
 import sys
-import yaml
 import argparse
 from pathlib import Path
-from typing import List, Dict, Tuple
+from typing import Tuple
+
+# Try to import PyYAML, but gracefully handle if not available
+try:
+    import yaml
+    YAML_AVAILABLE = True
+except ImportError:
+    YAML_AVAILABLE = False
+
+# Import shared validation logic
+try:
+    from . import actions_policy_core
+except ImportError:
+    # Support running as script directly
+    import actions_policy_core
 
 
 class ActionsPolicyValidator:
@@ -24,22 +36,18 @@ class ActionsPolicyValidator:
         self.policy = self._load_policy()
         self.violations = []
         
-    def _load_policy(self) -> Dict:
+    def _load_policy(self) -> dict:
         """Load the actions policy configuration"""
         if not self.policy_file.exists():
             print(f"Warning: Policy file not found at {self.policy_file}")
-            return {
-                'policy': {
-                    'require_org_ownership': True,
-                    'allowed_organizations': ['indestructibleorg'],
-                    'require_sha_pinning': True,
-                    'block_tag_references': True,
-                    'enforcement_level': 'error'
-                },
-                'blocked_actions': [],
-                'approved_actions': [],
-                'exceptions': []
-            }
+            print("Using default policy configuration.")
+            return actions_policy_core.get_default_policy()
+        
+        if not YAML_AVAILABLE:
+            print("Warning: PyYAML is not installed. Cannot load custom policy file.")
+            print("Using default policy configuration.")
+            print("Install PyYAML with: pip install pyyaml")
+            return actions_policy_core.get_default_policy()
         
         try:
             with open(self.policy_file, 'r') as f:
@@ -50,109 +58,9 @@ class ActionsPolicyValidator:
 
         if loaded is None:
             print(f"Warning: Policy file {self.policy_file} is empty; using default policy.")
-            return {
-                'policy': {
-                    'require_org_ownership': True,
-                    'allowed_organizations': ['indestructibleorg'],
-                    'require_sha_pinning': True,
-                    'block_tag_references': True,
-                    'enforcement_level': 'error'
-                },
-                'blocked_actions': [],
-                'approved_actions': [],
-                'exceptions': []
-            }
+            return actions_policy_core.get_default_policy()
 
         return loaded
-    
-    def _extract_actions_from_workflow(self, workflow_file: Path) -> List[Dict]:
-        """Extract all 'uses:' statements from a workflow file"""
-        try:
-            with open(workflow_file, 'r') as f:
-                content = f.read()
-            
-            # Find all 'uses:' statements
-            # Pattern: uses: owner/repo@ref or uses: owner/repo/path@ref
-            pattern = r'uses:\s*([^\s#]+)'
-            actions = []
-            
-            for line_num, line in enumerate(content.split('\n'), 1):
-                match = re.search(pattern, line)
-                if match:
-                    action_ref = match.group(1).strip()
-                    actions.append({
-                        'action': action_ref,
-                        'line': line_num,
-                        'file': str(workflow_file.relative_to(self.repo_root))
-                    })
-            
-            return actions
-        except Exception as e:
-            print(f"Error parsing workflow {workflow_file}: {e}")
-            return []
-    
-    def _validate_action(self, action_info: Dict) -> List[str]:
-        """Validate a single action reference against policy"""
-        action_ref = action_info['action']
-        violations = []
-        
-        # Parse action reference: owner/repo@ref or owner/repo/path@ref
-        if '@' not in action_ref:
-            violations.append(
-                f"Action '{action_ref}' missing version/ref specifier"
-            )
-            return violations
-        
-        action_path, ref = action_ref.rsplit('@', 1)
-        parts = action_path.split('/')
-        
-        if len(parts) < 2:
-            violations.append(
-                f"Invalid action format '{action_ref}' (expected owner/repo@ref)"
-            )
-            return violations
-        
-        owner = parts[0]
-        repo = parts[1]
-        action_base = f"{owner}/{repo}"
-        
-        # Check if action is explicitly blocked
-        blocked_actions = self.policy.get('blocked_actions', [])
-        for blocked in blocked_actions:
-            if action_path.startswith(blocked):
-                violations.append(
-                    f"Action '{action_base}' is explicitly blocked by policy. "
-                    f"Use manual commands instead."
-                )
-                break
-        
-        # Check organization ownership requirement
-        policy_config = self.policy.get('policy', {})
-        if policy_config.get('require_org_ownership', False):
-            allowed_orgs = policy_config.get('allowed_organizations', [])
-            if owner not in allowed_orgs:
-                violations.append(
-                    f"Action from '{owner}' is not allowed. "
-                    f"Only actions from {', '.join(allowed_orgs)} are permitted."
-                )
-        
-        # Check SHA pinning requirement
-        if policy_config.get('require_sha_pinning', False):
-            # SHA should be 40 characters hex
-            sha_pattern = re.compile(r'^[a-f0-9]{40}$', re.IGNORECASE)
-            if not sha_pattern.match(ref):
-                # Check if it's a tag or other non-SHA reference
-                if policy_config.get('block_tag_references', False):
-                    violations.append(
-                        f"Action '{action_base}@{ref}' must be pinned to full-length commit SHA (40 characters), "
-                        f"not non-SHA reference '{ref}' (tags and branches are not allowed)"
-                    )
-                else:
-                    violations.append(
-                        f"Action '{action_base}@{ref}' is not pinned to full-length commit SHA"
-                    )
-        
-        return violations
     
     def validate_all_workflows(self) -> Tuple[int, int]:
         """Validate all workflow files in .github/workflows/"""
@@ -171,21 +79,33 @@ class ActionsPolicyValidator:
         total_actions = 0
         total_violations = 0
         
+        # Get enforcement level
+        policy_config = self.policy.get('policy', {})
+        enforcement_level = policy_config.get('enforcement_level', 'error')
+        
         for workflow_file in workflow_files:
-            actions = self._extract_actions_from_workflow(workflow_file)
+            # Extract actions using shared function
+            actions = actions_policy_core.extract_actions_from_workflow(
+                workflow_file, self.repo_root
+            )
             
             for action_info in actions:
                 total_actions += 1
-                action_violations = self._validate_action(action_info)
+                action_ref = action_info['action']
                 
-                if action_violations:
-                    total_violations += len(action_violations)
-                    for violation in action_violations:
+                # Validate using shared function
+                violation_messages = actions_policy_core.validate_action_reference(
+                    action_ref, self.policy, enforcement_level
+                )
+                
+                if violation_messages:
+                    total_violations += len(violation_messages)
+                    for message in violation_messages:
                         self.violations.append({
                             'file': action_info['file'],
                             'line': action_info['line'],
-                            'action': action_info['action'],
-                            'violation': violation
+                            'action': action_ref,
+                            'violation': message
                         })
         
         return total_actions, total_violations
@@ -196,16 +116,17 @@ class ActionsPolicyValidator:
             print("✓ All GitHub Actions comply with repository policy")
             return
         
+        policy_config = self.policy.get('policy', {})
+        enforcement_level = policy_config.get('enforcement_level', 'error')
+        
         print(f"✗ Found {len(self.violations)} policy violation(s):\n")
         
         for v in self.violations:
-            print(f"  {v['file']}:{v['line']}")
+            level_str = "ERROR" if enforcement_level == 'error' else "WARNING"
+            print(f"  [{level_str}] {v['file']}:{v['line']}")
             print(f"    Action: {v['action']}")
             print(f"    Violation: {v['violation']}")
             print()
-        
-        policy_config = self.policy.get('policy', {})
-        enforcement_level = policy_config.get('enforcement_level', 'error')
         
         if enforcement_level == 'error':
             print("Policy enforcement level: ERROR")

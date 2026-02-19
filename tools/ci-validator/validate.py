@@ -32,6 +32,13 @@ from pathlib import Path
 from datetime import datetime, timezone
 from typing import Any
 
+# Import shared actions policy validation logic
+try:
+    from . import actions_policy_core
+except ImportError:
+    # Support running as script directly
+    import actions_policy_core
+
 # Resolve repo root (two levels up from this script)
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent.parent
@@ -454,111 +461,44 @@ def validate_actions_policy(repo: Path) -> list[dict]:
     if not workflows_dir.exists():
         return findings
     
-    # Load policy
+    # Load policy using shared module
     policy_file = repo / ".github" / "allowed-actions.yaml"
-    default_policy = {
-        'policy': {
-            'require_org_ownership': True,
-            'allowed_organizations': ['indestructibleorg'],
-            'require_sha_pinning': True,
-            'block_tag_references': True
-        },
-        'blocked_actions': [],
-        'approved_actions': []
-    }
-    policy = default_policy
+    policy = actions_policy_core.load_policy_file(policy_file)
     
-    if policy_file.exists():
-        try:
-            import yaml
-            with open(policy_file, 'r') as f:
-                loaded_policy = yaml.safe_load(f)
-            if loaded_policy is None:
-                policy = default_policy
-            else:
-                policy = loaded_policy
-        except Exception as e:
-            findings.append(finding(
-                Category.ACTIONS_POLICY, Severity.ERROR, ".github/allowed-actions.yaml",
-                f"Failed to load policy file: {e}"
-            ))
-            return findings
+    if policy is None:
+        # PyYAML not available or file doesn't exist - use default policy
+        policy = actions_policy_core.get_default_policy()
+    
+    # Get enforcement level from policy
+    policy_config = policy.get('policy', {})
+    enforcement_level = policy_config.get('enforcement_level', 'error')
+    severity = Severity.ERROR if enforcement_level == 'error' else Severity.WARNING
     
     workflow_files = list(workflows_dir.glob('*.yml')) + list(workflows_dir.glob('*.yaml'))
     
     for workflow_file in workflow_files:
         try:
-            content = workflow_file.read_text()
+            # Extract actions using shared function
+            actions = actions_policy_core.extract_actions_from_workflow(workflow_file, repo)
             
-            # Find all 'uses:' statements
-            pattern = r'uses:\s*([^\s#]+)'
-            
-            for line_num, line in enumerate(content.split('\n'), 1):
-                match = re.search(pattern, line)
-                if match:
-                    action_ref = match.group(1).strip()
-                    
-                    # Validate the action
-                    if '@' not in action_ref:
-                        findings.append(finding(
-                            Category.ACTIONS_POLICY, Severity.ERROR,
-                            workflow_file.relative_to(repo),
-                            f"Action '{action_ref}' missing version/ref specifier",
-                            line=line_num
-                        ))
-                        continue
-                    
-                    action_path, ref = action_ref.rsplit('@', 1)
-                    parts = action_path.split('/')
-                    
-                    if len(parts) < 2:
-                        findings.append(finding(
-                            Category.ACTIONS_POLICY, Severity.ERROR,
-                            workflow_file.relative_to(repo),
-                            f"Invalid action format '{action_ref}' (expected owner/repo@ref)",
-                            line=line_num
-                        ))
-                        continue
-                    
-                    owner = parts[0]
-                    repository_name = parts[1]
-                    action_base = f"{owner}/{repository_name}"
-                    
-                    # Check if action is explicitly blocked
-                    blocked_actions = policy.get('blocked_actions', [])
-                    for blocked in blocked_actions:
-                        if action_path.startswith(blocked):
-                            findings.append(finding(
-                                Category.ACTIONS_POLICY, Severity.ERROR,
-                                workflow_file.relative_to(repo),
-                                f"Action '{action_base}' is explicitly blocked by policy. Use manual commands instead.",
-                                line=line_num
-                            ))
-                            break
-                    
-                    # Check organization ownership requirement
-                    policy_config = policy.get('policy', {})
-                    if policy_config.get('require_org_ownership', False):
-                        allowed_orgs = policy_config.get('allowed_organizations', [])
-                        if owner not in allowed_orgs:
-                            findings.append(finding(
-                                Category.ACTIONS_POLICY, Severity.ERROR,
-                                workflow_file.relative_to(repo),
-                                f"Action from '{owner}' is not allowed. Only actions from {', '.join(allowed_orgs)} are permitted.",
-                                line=line_num
-                            ))
-                    
-                    # Check SHA pinning requirement
-                    if policy_config.get('require_sha_pinning', False):
-                        # SHA should be 40 characters hex
-                        sha_pattern = re.compile(r'^[a-f0-9]{40}$', re.IGNORECASE)
-                        if not sha_pattern.match(ref):
-                            findings.append(finding(
-                                Category.ACTIONS_POLICY, Severity.ERROR,
-                                workflow_file.relative_to(repo),
-                                f"Action '{action_base}@{ref}' must be pinned to a full-length commit SHA (40 hex characters); '{ref}' is not a full-length commit SHA.",
-                                line=line_num
-                            ))
+            for action_info in actions:
+                action_ref = action_info['action']
+                line_num = action_info['line']
+                
+                # Validate using shared function
+                violation_messages = actions_policy_core.validate_action_reference(
+                    action_ref, policy, enforcement_level
+                )
+                
+                # Convert violations to findings
+                for message in violation_messages:
+                    findings.append(finding(
+                        Category.ACTIONS_POLICY,
+                        severity,
+                        workflow_file.relative_to(repo),
+                        message,
+                        line=line_num
+                    ))
         
         except Exception as e:
             findings.append(finding(

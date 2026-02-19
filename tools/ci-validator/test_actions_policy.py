@@ -1,0 +1,300 @@
+#!/usr/bin/env python3
+"""
+Tests for GitHub Actions Policy Validator
+
+Tests the core validation logic to ensure:
+1. Detection of blocked actions
+2. Organization ownership validation
+3. SHA pinning enforcement
+4. Handling of malformed action references
+5. Policy file loading (present, absent, empty, malformed)
+6. Local actions and docker:// actions are allowed
+7. Enforcement level configuration
+"""
+
+import sys
+import os
+import tempfile
+import shutil
+from pathlib import Path
+
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent))
+
+import actions_policy_core
+
+
+def test_sha_pattern():
+    """Test SHA pattern regex"""
+    print("Testing SHA pattern validation...")
+    
+    # Valid SHAs
+    assert actions_policy_core.SHA_PATTERN.match('a' * 40)
+    assert actions_policy_core.SHA_PATTERN.match('1234567890abcdef' * 2 + '12345678')
+    assert actions_policy_core.SHA_PATTERN.match('ABCDEF1234567890' * 2 + 'ABCDEF12')
+    
+    # Invalid SHAs
+    assert not actions_policy_core.SHA_PATTERN.match('v1.0.0')
+    assert not actions_policy_core.SHA_PATTERN.match('main')
+    assert not actions_policy_core.SHA_PATTERN.match('a' * 39)  # Too short
+    assert not actions_policy_core.SHA_PATTERN.match('a' * 41)  # Too long
+    assert not actions_policy_core.SHA_PATTERN.match('g' * 40)  # Invalid hex
+    
+    print("  ✓ SHA pattern validation works correctly")
+
+
+def test_local_and_docker_actions():
+    """Test detection of local and docker actions"""
+    print("Testing local and docker action detection...")
+    
+    assert actions_policy_core.is_local_action('./.github/actions/my-action')
+    assert actions_policy_core.is_local_action('./path/to/action')
+    assert not actions_policy_core.is_local_action('owner/repo@sha')
+    
+    assert actions_policy_core.is_docker_action('docker://alpine:latest')
+    assert actions_policy_core.is_docker_action('docker://my-image:tag')
+    assert not actions_policy_core.is_docker_action('owner/repo@sha')
+    
+    print("  ✓ Local and docker action detection works correctly")
+
+
+def test_validate_action_reference():
+    """Test action reference validation logic"""
+    print("Testing action reference validation...")
+    
+    policy = {
+        'policy': {
+            'require_org_ownership': True,
+            'allowed_organizations': ['indestructibleorg'],
+            'require_sha_pinning': True,
+            'block_tag_references': True
+        },
+        'blocked_actions': ['actions/checkout', 'actions/setup-node']
+    }
+    
+    # Test 1: Valid action from allowed org with SHA
+    violations = actions_policy_core.validate_action_reference(
+        'indestructibleorg/my-action@' + 'a' * 40,
+        policy
+    )
+    assert len(violations) == 0, "Valid action should have no violations"
+    
+    # Test 2: Local action should be allowed
+    violations = actions_policy_core.validate_action_reference(
+        './.github/actions/my-action',
+        policy
+    )
+    assert len(violations) == 0, "Local action should be allowed"
+    
+    # Test 3: Docker action should be allowed
+    violations = actions_policy_core.validate_action_reference(
+        'docker://alpine:latest',
+        policy
+    )
+    assert len(violations) == 0, "Docker action should be allowed"
+    
+    # Test 4: Action from wrong org
+    violations = actions_policy_core.validate_action_reference(
+        'actions/checkout@' + 'a' * 40,
+        policy
+    )
+    assert len(violations) >= 1, "Action from wrong org should have violations"
+    assert any('actions' in v and 'not allowed' in v for v in violations)
+    
+    # Test 5: Action with tag instead of SHA
+    violations = actions_policy_core.validate_action_reference(
+        'indestructibleorg/my-action@v1',
+        policy
+    )
+    assert len(violations) >= 1, "Action with tag should have violations"
+    assert any('full-length commit SHA' in v for v in violations)
+    
+    # Test 6: Explicitly blocked action
+    violations = actions_policy_core.validate_action_reference(
+        'actions/checkout@' + 'a' * 40,
+        policy
+    )
+    assert any('explicitly blocked' in v for v in violations)
+    
+    # Test 7: Missing @ symbol
+    violations = actions_policy_core.validate_action_reference(
+        'owner/repo',
+        policy
+    )
+    assert len(violations) >= 1
+    assert any('missing version/ref specifier' in v for v in violations)
+    
+    # Test 8: Invalid format
+    violations = actions_policy_core.validate_action_reference(
+        'invalid@ref',
+        policy
+    )
+    assert len(violations) >= 1
+    assert any('Invalid action format' in v for v in violations)
+    
+    print("  ✓ Action reference validation works correctly")
+
+
+def test_extract_actions_from_workflow():
+    """Test action extraction from workflow files"""
+    print("Testing action extraction from workflows...")
+    
+    with tempfile.TemporaryDirectory() as tmpdir:
+        repo_root = Path(tmpdir)
+        workflows_dir = repo_root / '.github' / 'workflows'
+        workflows_dir.mkdir(parents=True)
+        
+        workflow_file = workflows_dir / 'test.yml'
+        workflow_file.write_text("""
+name: Test
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: indestructibleorg/my-action@1234567890abcdef1234567890abcdef12345678
+    - uses: ./.github/actions/local
+    - uses: docker://alpine:latest
+    - name: Run command
+      run: echo "test"
+""")
+        
+        actions = actions_policy_core.extract_actions_from_workflow(workflow_file, repo_root)
+        
+        assert len(actions) == 4, f"Expected 4 actions, found {len(actions)}"
+        assert actions[0]['action'] == 'actions/checkout@v4'
+        assert actions[1]['action'] == 'indestructibleorg/my-action@1234567890abcdef1234567890abcdef12345678'
+        assert actions[2]['action'] == './.github/actions/local'
+        assert actions[3]['action'] == 'docker://alpine:latest'
+        assert all('line' in a for a in actions)
+        assert all('file' in a for a in actions)
+        
+        print("  ✓ Action extraction works correctly")
+
+
+def test_policy_loading():
+    """Test policy file loading"""
+    print("Testing policy file loading...")
+    
+    with tempfile.TemporaryDirectory() as tmpdir:
+        policy_file = Path(tmpdir) / 'policy.yaml'
+        
+        # Test 1: Non-existent file
+        result = actions_policy_core.load_policy_file(policy_file)
+        assert result is None, "Non-existent file should return None"
+        
+        # Test 2: Empty file
+        policy_file.write_text('')
+        result = actions_policy_core.load_policy_file(policy_file)
+        assert result is None, "Empty file should return None"
+        
+        # Test 3: Valid policy
+        policy_file.write_text("""
+policy:
+  require_org_ownership: true
+  allowed_organizations:
+    - testorg
+  require_sha_pinning: true
+blocked_actions:
+  - actions/checkout
+""")
+        result = actions_policy_core.load_policy_file(policy_file)
+        if result is not None:  # Only test if PyYAML is available
+            assert result['policy']['allowed_organizations'] == ['testorg']
+            assert 'actions/checkout' in result['blocked_actions']
+        
+        print("  ✓ Policy file loading works correctly")
+
+
+def test_default_policy():
+    """Test default policy structure"""
+    print("Testing default policy...")
+    
+    policy = actions_policy_core.get_default_policy()
+    
+    assert 'policy' in policy
+    assert policy['policy']['require_org_ownership'] is True
+    assert 'indestructibleorg' in policy['policy']['allowed_organizations']
+    assert policy['policy']['require_sha_pinning'] is True
+    assert 'blocked_actions' in policy
+    
+    print("  ✓ Default policy structure is correct")
+
+
+def test_enforcement_level():
+    """Test enforcement level handling"""
+    print("Testing enforcement level configuration...")
+    
+    policy_error = {
+        'policy': {
+            'require_org_ownership': True,
+            'allowed_organizations': ['indestructibleorg'],
+            'require_sha_pinning': True,
+            'enforcement_level': 'error'
+        },
+        'blocked_actions': []
+    }
+    
+    policy_warning = {
+        'policy': {
+            'require_org_ownership': True,
+            'allowed_organizations': ['indestructibleorg'],
+            'require_sha_pinning': True,
+            'enforcement_level': 'warning'
+        },
+        'blocked_actions': []
+    }
+    
+    # Both should detect violations, but enforcement level affects how they're reported
+    violations_error = actions_policy_core.validate_action_reference(
+        'actions/checkout@v4', policy_error, 'error'
+    )
+    violations_warning = actions_policy_core.validate_action_reference(
+        'actions/checkout@v4', policy_warning, 'warning'
+    )
+    
+    # Both should detect the same violations
+    assert len(violations_error) > 0
+    assert len(violations_warning) > 0
+    
+    print("  ✓ Enforcement level configuration works correctly")
+
+
+def run_all_tests():
+    """Run all tests"""
+    print("=" * 70)
+    print("GitHub Actions Policy Validator - Test Suite")
+    print("=" * 70)
+    print()
+    
+    try:
+        test_sha_pattern()
+        test_local_and_docker_actions()
+        test_default_policy()
+        test_policy_loading()
+        test_extract_actions_from_workflow()
+        test_validate_action_reference()
+        test_enforcement_level()
+        
+        print()
+        print("=" * 70)
+        print("✓ ALL TESTS PASSED")
+        print("=" * 70)
+        return 0
+    except AssertionError as e:
+        print()
+        print("=" * 70)
+        print(f"✗ TEST FAILED: {e}")
+        print("=" * 70)
+        return 1
+    except Exception as e:
+        print()
+        print("=" * 70)
+        print(f"✗ UNEXPECTED ERROR: {e}")
+        print("=" * 70)
+        return 2
+
+
+if __name__ == '__main__':
+    sys.exit(run_all_tests())
