@@ -25,6 +25,10 @@ spec:
         app: ai
     spec:
       serviceAccountName: ai-sa
+    securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    fsGroup: 1000
       containers:
       - name: ai
         image: ghcr.io/indestructibleorg/ai:latest
