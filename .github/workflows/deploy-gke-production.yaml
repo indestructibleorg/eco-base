@@ -112,7 +112,7 @@ jobs:
       - name: Apply production manifests
         run: |
           mkdir -p /tmp/k8s-production
-          python3 -c "
+          python3 << 'CONVERT_EOF'
           import yaml, os, glob
           for f in sorted(glob.glob('k8s/production/*.qyaml')):
               with open(f) as fh:
@@ -121,7 +121,7 @@ jobs:
               name = os.path.basename(f).replace('.qyaml', '.yaml')
               with open(f'/tmp/k8s-production/{name}', 'w') as fh:
                   yaml.dump_all(k8s_docs, fh, default_flow_style=False)
-          "
+          CONVERT_EOF
           done
 
           echo "Applying namespace..."
