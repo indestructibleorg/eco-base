@@ -26,6 +26,10 @@ spec:
         version: v1.0.0
     spec:
       serviceAccountName: api-sa
+    securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    fsGroup: 1000
       containers:
       - name: api
         image: ghcr.io/indestructibleorg/api:latest

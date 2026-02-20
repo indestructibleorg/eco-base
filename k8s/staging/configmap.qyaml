@@ -55,11 +55,11 @@ metadata:
     environment: staging
 type: Opaque
 stringData:
-  ECO_SECRET_KEY: "staging-change-me-openssl-rand-hex-32"
+  ECO_SECRET_KEY: "INJECT_FROM_K8S_SECRET"
   ECO_POSTGRES_USER: "indestructibleeco"
-  ECO_POSTGRES_PASSWORD: "eco_staging_secret"
+  ECO_POSTGRES_PASSWORD: "INJECT_FROM_K8S_SECRET"
   ECO_REDIS_PASSWORD: ""
-  ECO_JWT_SECRET: "staging-jwt-secret-change-me"
+  ECO_JWT_SECRET: "INJECT_FROM_K8S_SECRET"
   ECO_SUPABASE_URL: "placeholder"
   ECO_SUPABASE_ANON_KEY: "placeholder"
   ECO_SUPABASE_SERVICE_ROLE_KEY: "placeholder"

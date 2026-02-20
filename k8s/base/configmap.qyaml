@@ -54,9 +54,9 @@ metadata:
     app.kubernetes.io/name: indestructibleeco-platform
 type: Opaque
 stringData:
-  ECO_SECRET_KEY: "k8s-production-change-me-openssl-rand-hex-32"
+  ECO_SECRET_KEY: "INJECT_FROM_K8S_SECRET"
   ECO_POSTGRES_USER: "indestructibleeco"
-  ECO_POSTGRES_PASSWORD: "eco_secret_k8s"
+  ECO_POSTGRES_PASSWORD: "INJECT_FROM_K8S_SECRET"
   ECO_REDIS_PASSWORD: ""
   HF_TOKEN: ""
 ---
