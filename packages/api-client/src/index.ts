@@ -1,4 +1,9 @@
-// API Client — public exports
-export { createApiClient } from "./client";
-export { createWsClient }  from "./ws";
-export type * from "./generated";
+/**
+ * IndestructibleEco API Client — public exports.
+ * URI: indestructibleeco://packages/api-client
+ */
+export { EcoApiClient } from './client';
+export type {
+  ClientConfig, RetryConfig, RequestInterceptor,
+  RequestConfig, ApiResponse, ApiError,
+} from './client';

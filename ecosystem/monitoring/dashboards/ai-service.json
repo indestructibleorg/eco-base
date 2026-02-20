@@ -1,0 +1,104 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "title": "Inference Latency (p50/p95/p99)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "targets": [
+        { "expr": "histogram_quantile(0.50, rate(eco_inference_latency_seconds_bucket[5m]))", "legendFormat": "p50" },
+        { "expr": "histogram_quantile(0.95, rate(eco_inference_latency_seconds_bucket[5m]))", "legendFormat": "p95" },
+        { "expr": "histogram_quantile(0.99, rate(eco_inference_latency_seconds_bucket[5m]))", "legendFormat": "p99" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "s" } }
+    },
+    {
+      "title": "Engine Health Status",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 12, "x": 12, "y": 0 },
+      "targets": [
+        { "expr": "eco_engine_health_status", "legendFormat": "{{engine}}" }
+      ],
+      "fieldConfig": { "defaults": { "mappings": [
+        { "type": "value", "options": { "1": { "text": "Healthy", "color": "green" }, "0": { "text": "Down", "color": "red" } } }
+      ] } }
+    },
+    {
+      "title": "Circuit Breaker State",
+      "type": "state-timeline",
+      "gridPos": { "h": 4, "w": 12, "x": 12, "y": 4 },
+      "targets": [
+        { "expr": "eco_circuit_breaker_state", "legendFormat": "{{engine}}" }
+      ]
+    },
+    {
+      "title": "Request Queue Depth",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "targets": [
+        { "expr": "eco_request_queue_depth", "legendFormat": "queue_depth" },
+        { "expr": "eco_request_queue_pending", "legendFormat": "pending" }
+      ]
+    },
+    {
+      "title": "Inference Throughput (req/s)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+      "targets": [
+        { "expr": "rate(eco_inference_requests_total[5m])", "legendFormat": "{{model}}" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "reqps" } }
+    },
+    {
+      "title": "Token Generation Rate",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
+      "targets": [
+        { "expr": "rate(eco_tokens_generated_total[5m])", "legendFormat": "{{engine}}" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short" } }
+    },
+    {
+      "title": "Error Rate by Engine",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 },
+      "targets": [
+        { "expr": "rate(eco_inference_errors_total[5m])", "legendFormat": "{{engine}} - {{error_type}}" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "short", "color": { "mode": "palette-classic" } } }
+    },
+    {
+      "title": "Embedding Latency",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 24 },
+      "targets": [
+        { "expr": "histogram_quantile(0.95, rate(eco_embedding_latency_seconds_bucket[5m]))", "legendFormat": "p95" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "s" } }
+    },
+    {
+      "title": "Active Connections per Engine",
+      "type": "bargauge",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 24 },
+      "targets": [
+        { "expr": "eco_connection_pool_active", "legendFormat": "{{engine}}" }
+      ]
+    }
+  ],
+  "schemaVersion": 39,
+  "tags": ["indestructibleeco", "ai-service", "inference"],
+  "templating": {
+    "list": [
+      { "name": "namespace", "type": "query", "query": "label_values(eco_inference_requests_total, namespace)", "current": { "text": "indestructibleeco" } }
+    ]
+  },
+  "time": { "from": "now-1h", "to": "now" },
+  "title": "IndestructibleEco AI Service",
+  "uid": "eco-ai-service-v1"
+}

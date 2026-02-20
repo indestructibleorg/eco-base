@@ -298,6 +298,10 @@ jobs:
           tests/unit/test_proto_stubs.py \
           tests/unit/test_api_types.py \
           tests/unit/test_yaml_studio.py \
+          tests/unit/test_ui_kit.py \
+          tests/unit/test_api_client.py \
+          tests/unit/test_grafana_dashboard.py \
+          tests/unit/test_alert_rules.py \
           backend/ai/src/services/engine_manager.py \
           backend/ai/src/services/circuit_breaker.py; do
           if [ -f "$file" ]; then
