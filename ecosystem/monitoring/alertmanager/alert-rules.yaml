@@ -1,0 +1,154 @@
+# IndestructibleEco Prometheus Alert Rules
+# URI: indestructibleeco://ecosystem/monitoring/alertmanager/alert-rules
+
+groups:
+  - name: eco-inference-alerts
+    rules:
+      - alert: HighInferenceLatency
+        expr: histogram_quantile(0.95, rate(eco_inference_latency_seconds_bucket[5m])) > 5
+        for: 3m
+        labels:
+          severity: warning
+          team: ai-platform
+        annotations:
+          summary: "High inference latency on {{ $labels.engine }}"
+          description: "p95 latency is {{ $value }}s (threshold: 5s) for engine {{ $labels.engine }}"
+          runbook_url: "https://docs.indestructibleeco.io/runbooks/high-latency"
+
+      - alert: CriticalInferenceLatency
+        expr: histogram_quantile(0.99, rate(eco_inference_latency_seconds_bucket[5m])) > 15
+        for: 2m
+        labels:
+          severity: critical
+          team: ai-platform
+        annotations:
+          summary: "Critical inference latency on {{ $labels.engine }}"
+          description: "p99 latency is {{ $value }}s (threshold: 15s)"
+
+      - alert: EngineDown
+        expr: eco_engine_health_status == 0
+        for: 1m
+        labels:
+          severity: critical
+          team: ai-platform
+        annotations:
+          summary: "Inference engine {{ $labels.engine }} is down"
+          description: "Engine {{ $labels.engine }} has been unhealthy for >1m"
+          runbook_url: "https://docs.indestructibleeco.io/runbooks/engine-down"
+
+      - alert: AllEnginesDown
+        expr: count(eco_engine_health_status == 1) == 0
+        for: 30s
+        labels:
+          severity: critical
+          team: ai-platform
+          pagerduty: "true"
+        annotations:
+          summary: "All inference engines are down"
+          description: "No healthy inference engines available. Service is fully degraded."
+
+      - alert: CircuitBreakerOpen
+        expr: eco_circuit_breaker_state == 2
+        for: 2m
+        labels:
+          severity: warning
+          team: ai-platform
+        annotations:
+          summary: "Circuit breaker OPEN for {{ $labels.engine }}"
+          description: "Engine {{ $labels.engine }} circuit breaker has been open for >2m"
+
+  - name: eco-queue-alerts
+    rules:
+      - alert: QueueOverflow
+        expr: eco_request_queue_depth > 500
+        for: 2m
+        labels:
+          severity: warning
+          team: ai-platform
+        annotations:
+          summary: "Request queue depth is {{ $value }}"
+          description: "Queue depth exceeds 500 for >2m. Consider scaling up."
+
+      - alert: QueueCritical
+        expr: eco_request_queue_depth > 2000
+        for: 1m
+        labels:
+          severity: critical
+          team: ai-platform
+        annotations:
+          summary: "Request queue critically full ({{ $value }})"
+          description: "Queue depth exceeds 2000. Requests may be dropped."
+
+      - alert: StaleJobsAccumulating
+        expr: eco_stale_jobs_count > 10
+        for: 5m
+        labels:
+          severity: warning
+          team: ai-platform
+        annotations:
+          summary: "{{ $value }} stale jobs detected"
+          description: "Jobs stuck in processing state for extended period."
+
+  - name: eco-error-alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(eco_inference_errors_total[5m]) / rate(eco_inference_requests_total[5m]) > 0.05
+        for: 3m
+        labels:
+          severity: warning
+          team: ai-platform
+        annotations:
+          summary: "Error rate {{ $value | humanizePercentage }} on {{ $labels.engine }}"
+          description: "Error rate exceeds 5% for engine {{ $labels.engine }}"
+
+      - alert: CriticalErrorRate
+        expr: rate(eco_inference_errors_total[5m]) / rate(eco_inference_requests_total[5m]) > 0.20
+        for: 1m
+        labels:
+          severity: critical
+          team: ai-platform
+        annotations:
+          summary: "Critical error rate {{ $value | humanizePercentage }}"
+          description: "Error rate exceeds 20%. Immediate investigation required."
+
+      - alert: GovernanceViolation
+        expr: increase(eco_governance_violations_total[1h]) > 5
+        for: 0s
+        labels:
+          severity: warning
+          team: security
+        annotations:
+          summary: "{{ $value }} governance violations in last hour"
+          description: "Multiple .qyaml governance violations detected."
+
+  - name: eco-resource-alerts
+    rules:
+      - alert: HighMemoryUsage
+        expr: container_memory_working_set_bytes{namespace="indestructibleeco"} / container_spec_memory_limit_bytes > 0.85
+        for: 5m
+        labels:
+          severity: warning
+          team: ai-platform
+        annotations:
+          summary: "High memory usage on {{ $labels.pod }}"
+          description: "Memory usage is {{ $value | humanizePercentage }} of limit."
+
+      - alert: HighCPUUsage
+        expr: rate(container_cpu_usage_seconds_total{namespace="indestructibleeco"}[5m]) / container_spec_cpu_quota * 100000 > 0.85
+        for: 5m
+        labels:
+          severity: warning
+          team: ai-platform
+        annotations:
+          summary: "High CPU usage on {{ $labels.pod }}"
+          description: "CPU usage is {{ $value | humanizePercentage }} of limit."
+
+      - alert: PodRestartLoop
+        expr: increase(kube_pod_container_status_restarts_total{namespace="indestructibleeco"}[1h]) > 3
+        for: 0s
+        labels:
+          severity: critical
+          team: ai-platform
+        annotations:
+          summary: "Pod {{ $labels.pod }} restarting frequently"
+          description: "{{ $value }} restarts in the last hour."
