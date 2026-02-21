@@ -58,11 +58,13 @@ spec:
               value: "staging"
           resources:
             requests:
-              cpu: "200m"
-              memory: "256Mi"
+              cpu: "250m"
+              memory: "512Mi"
+              ephemeral-storage: "256Mi"
             limits:
               cpu: "500m"
               memory: "1Gi"
+              ephemeral-storage: "256Mi"
           readinessProbe:
             httpGet:
               path: /health
