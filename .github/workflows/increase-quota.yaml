@@ -208,7 +208,13 @@ jobs:
                   issue = json.load(resp)
                   print(f"Issue created: {issue.get('html_url', 'unknown')}")
           except urllib.error.HTTPError as exc:
-              raise RuntimeError(f"Failed to create issue: HTTP {exc.code}") from exc
+              error_body = exc.read().decode("utf-8", errors="replace")
+              try:
+                  error_json = json.loads(error_body)
+                  error_message = error_json.get("message", error_body)
+              except json.JSONDecodeError:
+                  error_message = error_body
+              raise RuntimeError(f"Failed to create issue: HTTP {exc.code} - {error_message}") from exc
           PY
 
       - name: Notify on success
