@@ -12,8 +12,8 @@
 
 ### SSD Quota Increase
 - [x] Create SSD quota increase automation script (`scripts/increase_ssd_quota.py`)
-- [x] Create interactive quota request script (`scripts/increase_ssd_quota.sh`)
-- [x] Create comprehensive SSD quota documentation (`docs/gke-ssd-quota.md`)
+- [x] Create interactive quota request script (`scripts/setup-gcp-quota.sh`)
+- [x] Create comprehensive SSD quota documentation (`docs/gcp-quota-guide.md`)
 - [x] Create GitHub workflow for quota request automation (`.github/workflows/increase-quota.yaml`)
 - [ ] Navigate to GCP Console IAM & Admin → Quotas
 - [ ] Increase SSD_TOTAL_GB in asia-east1 from 250 to 500GB
@@ -22,10 +22,10 @@
 
 ### OAuth Consent Screen & Credentials
 - [x] Create OAuth setup automation script (`scripts/setup_gcp_oauth.py`)
-- [x] Create interactive OAuth setup script (`scripts/setup_gcp_oauth.sh`)
+- [x] Create interactive OAuth setup script (`scripts/configure-oauth-consent.sh`)
 - [x] Create OAuth ConfigMap/Secret manifests for staging and production
 - [x] Create Argo CD application for OAuth configuration
-- [x] Create comprehensive OAuth setup documentation (`docs/gke-oauth-setup.md`)
+- [x] Create comprehensive OAuth setup documentation (`docs/oauth-setup-guide.md`)
 - [x] Create GitHub workflow for OAuth secret updates (`.github/workflows/setup-oauth.yaml`)
 - [ ] Configure OAuth consent screen (External user type)
 - [ ] Create OAuth 2.0 Client ID (Web application)
