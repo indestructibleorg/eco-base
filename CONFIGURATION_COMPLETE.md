@@ -79,6 +79,7 @@ This single command will:
 ### Step-by-Step Deployment
 
 #### Step 1: Configure Secrets
+
 ```bash
 ./scripts/configure_all_secrets.sh
 ```
