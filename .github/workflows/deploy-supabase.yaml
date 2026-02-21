@@ -23,13 +23,10 @@ jobs:
 
       - name: Install Node.js 20
         run: |
-          curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/nodesource.gpg
-          echo "deb [signed-by=/usr/share/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
-          sudo apt-get update -y
+          curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
           sudo apt-get install -y nodejs
           node --version
           npm --version
-
       - name: Install Supabase CLI
         run: |
           npm install -g supabase
