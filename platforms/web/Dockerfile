@@ -30,6 +30,12 @@ LABEL org.opencontainers.image.title="IndestructibleEco Web Frontend" \
       org.opencontainers.image.vendor="IndestructibleOrg" \
       org.opencontainers.image.source="https://github.com/indestructibleorg/indestructibleeco"
 
+# SECURITY NOTE: Nginx runs as root (uid 0) to bind privileged port 80.
+# This is a documented exception. In production, consider:
+# 1. Using a reverse proxy (e.g., Envoy) that handles port 80/443
+# 2. Running nginx on unprivileged port (e.g., 8080) with port mapping
+# 3. Using Linux capabilities (CAP_NET_BIND_SERVICE) instead of full root
+
 # Nginx config with API proxy, WebSocket, SPA fallback, health check
 RUN printf 'server {\n\
     listen 80;\n\

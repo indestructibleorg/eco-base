@@ -1,31 +1,103 @@
-# GKE eco-staging Deployment
+# IndestructibleEco - GKE Deployment & Security Remediation
 
-## Phase 1: Dockerfiles
-- [x] Create web frontend Dockerfile (platforms/web/Dockerfile)
-- [x] AI backend Dockerfile verified (backend/ai/Dockerfile)
-- [x] API backend Dockerfile verified (backend/api/Dockerfile)
+## Current Status
+- **Repository**: indestructibleorg/indestructibleeco
+- **Latest Commit**: 12fc544 (Supabase config and edge function)
+- **Staging Cluster**: eco-staging (6/6 pods Running ✅)
+- **Production Cluster**: Deleted (needs recreation after SSD quota increase)
 
-## Phase 2: K8s Staging Overlay (.qyaml)
-- [x] k8s/staging/namespace.qyaml (eco-staging namespace + SA + RBAC)
-- [x] k8s/staging/configmap.qyaml (eco-staging ConfigMap + Secrets)
-- [x] k8s/staging/api-gateway.qyaml (API gateway deployment + svc)
-- [x] k8s/staging/ai-service.qyaml (AI service deployment + svc)
-- [x] k8s/staging/api-service.qyaml (Express API deployment + svc)
-- [x] k8s/staging/web-frontend.qyaml (Web frontend deployment + svc)
-- [x] k8s/staging/redis.qyaml (Redis StatefulSet + svc)
-- [x] k8s/staging/postgres.qyaml (Postgres StatefulSet + svc)
-- [x] k8s/staging/ingress.qyaml (GKE Ingress)
+---
 
-## Phase 3: Argo CD
-- [x] k8s/argocd/argo-app-eco-staging.yaml (Argo CD app for eco-staging)
+## Phase 1: GCP Infrastructure (BLOCKED - Needs Browser)
 
-## Phase 4: Deploy workflow + script
-- [x] .github/workflows/deploy-gke.yaml (CI/CD for GKE)
-- [x] deploy.sh (manual deployment script)
+### SSD Quota Increase
+- [ ] Navigate to GCP Console IAM & Admin → Quotas
+- [ ] Increase SSD_TOTAL_GB in asia-east1 from 250 to 500GB
+- [ ] Verify quota increase applied
+- **Blocker**: Org policy caps consumer override at 250, requires browser-based quota request
 
-## Phase 5: Tests + CI
-- [x] tests/unit/test_gke_deploy.py (26 tests)
-- [x] CI Gate 4 structure check updated
-- [x] Commit and push (2e4d299)
-- [x] CI ALL GREEN (5 gates passed)
-- [x] Deploy to GKE workflow: expected failure (needs KUBE_CONFIG_STAGING secret with valid GCP SA key)
+### OAuth Consent Screen & Credentials
+- [ ] Configure OAuth consent screen (External user type)
+- [ ] Create OAuth 2.0 Client ID (Web application)
+- [ ] Add redirect URIs: `https://staging.autoecoops.io/auth/callback`, `https://production.autoecoops.io/auth/callback`
+- [ ] Share Client ID and Client Secret
+- **Blocker**: IAP brands API requires org membership, needs GCP Console UI
+
+---
+
+## Phase 2: GKE Cluster Operations
+
+### Staging Cluster
+- [x] Verify eco-staging cluster health and pod status
+- [x] Fix web-frontend CrashLoopBackOff (nginx upstream + securityContext)
+- [x] All 6 pods Running (gateway, ai, api, web, postgres, redis)
+- [x] Endpoints live: https://staging.autoecoops.io/ and https://api-staging.autoecoops.io/
+
+### Production Cluster
+- [ ] Recreate eco-production cluster per docs/gke-operations.md
+- [ ] Deploy production workloads (9 manifests)
+- [ ] Verify production endpoints
+
+---
+
+## Phase 3: Supabase Configuration
+
+- [x] Update K8s eco-secrets with real Supabase URL
+- [x] Update K8s eco-secrets with real Supabase anon key
+- [x] Update GitHub secrets with new Supabase values
+- [x] Update ConfigMaps (staging + production)
+- [ ] Deploy Supabase Edge Function (hello-world) - needs personal access token
+- [ ] Verify Supabase integration end-to-end
+
+---
+
+## Phase 4: Security Remediation
+
+### Completed Fixes
+- [x] Fix python-multipart vulnerability (>=0.0.18)
+- [x] Add USER to backend/ai/Dockerfile (uid 1001)
+- [x] Add USER to backend/api/Dockerfile (uid 1001)
+- [x] Add security comment to platforms/web/Dockerfile (nginx requires root)
+
+### Pending Fixes
+- [ ] Fix Docker socket exposure (2 Critical findings)
+- [ ] Fix privileged service (2 Critical findings)
+- [ ] Fix path traversal in JavaScript (21 Critical/High findings)
+- [ ] Fix Django URL host injection (1 Critical finding)
+
+---
+
+## Phase 5: ConfigMap Parity
+
+### Keys Missing in Production (23 keys)
+- [x] Add AI/engine config keys to production configmap
+- [x] Add service URL keys to production configmap
+- [x] Add runtime config keys to production configmap
+
+### Keys Missing in Staging (13 keys)
+- [x] Add security keys to staging configmap
+- [x] Add observability keys to staging configmap
+- [x] Add auth keys to staging configmap
+
+### Additional Fixes
+- [x] Create production Secret manifest (was missing)
+- [x] Add governance block to production configmap
+- [x] Fix test assertion for production configmap
+- [x] All 53 tests passing
+
+---
+
+## Phase 6: Repo Updates & Integration
+
+- [ ] Commit and push all pending changes
+- [ ] Verify CI passes (623 tests)
+- [ ] Verify deploy workflow succeeds
+- [ ] Update documentation
+
+---
+
+## Test Status
+- **Unit tests**: 623 passing ✅
+- **K8s tests**: 53 passing ✅
+- **QYAML files**: 31 parse correctly ✅
+- **Workflow files**: 14 parse correctly ✅

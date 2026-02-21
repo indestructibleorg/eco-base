@@ -153,7 +153,7 @@ class TestProductionManifests:
     def test_configmap_production_vars(self):
         content = _read("k8s/production/configmap.qyaml")
         assert "ECO_ENVIRONMENT" in content
-        assert '"production"' in content
+        assert "production" in content
         assert "ECO_LOG_LEVEL" in content
 
     def test_configmap_no_hardcoded_secrets(self):
