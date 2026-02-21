@@ -246,7 +246,10 @@ jobs:
               error_body = exc.read().decode("utf-8", errors="replace")
               try:
                   error_json = json.loads(error_body)
-                  error_message = error_json.get("message", error_body)
+        run: |
+          if [ -n "${GCP_CREDENTIALS_DIR:-}" ]; then
+            rm -rf "$GCP_CREDENTIALS_DIR"
+          fi
               except json.JSONDecodeError:
                   error_message = error_body
               raise RuntimeError(f"Failed to create issue: HTTP {exc.code} - {error_message}") from exc
