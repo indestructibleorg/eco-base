@@ -280,7 +280,7 @@ class TestSyncRegistry:
             model_registry=mock_registry,
         )
 
-        # Should not raise exception - error is silently ignored
+        # Should not raise exception - error is caught and debug-logged
         await mon._sync_registry()
 
         # Verify update_status was called (even though it raised)
@@ -311,7 +311,7 @@ class TestSyncRegistry:
             model_registry=mock_registry,
         )
 
-        # Should not raise exception - error is silently ignored
+        # Should not raise exception - error is caught and debug-logged
         await mon._sync_registry()
 
         # Verify update_status was called (even though it raised)
