@@ -159,18 +159,24 @@ jobs:
             --current-limit "$CURRENT_LIMIT" \
             --requested-limit "$REQUESTED_LIMIT" \
             --justification "$JUSTIFICATION" \
-            --output-json > quota_request.raw
+            --output-json > quota_request.raw 2>&1
 
-          awk 'BEGIN{capture=0} /^\{/{capture=1} capture{print}' quota_request.raw > quota_request.json
+          awk 'BEGIN{capture=0} /^\{/{capture=1} { if (capture) { print > "quota_request.json" } else { print > "quota_request.log" } }' quota_request.raw
 
           if [ ! -s quota_request.json ]; then
             echo "Failed to extract JSON payload from quota request output"
+            echo "Full raw output from quota request command:"
             cat quota_request.raw
             exit 1
           fi
-          
+
+          echo "Quota request JSON payload:"
           cat quota_request.json
 
+          if [ -s quota_request.log ]; then
+            echo "Non-JSON output from quota request (for debugging):"
+            cat quota_request.log
+          fi
       - name: Create issue for tracking
         env:
           REGION: ${{ github.event.inputs.region }}
