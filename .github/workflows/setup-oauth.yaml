@@ -33,9 +33,16 @@ jobs:
           git clone --depth 1 https://github.com/${{ github.repository }}.git .
           git checkout ${{ github.sha }}
 
+      - name: Install Python 3.11
+        run: |
+          sudo add-apt-repository ppa:deadsnakes/ppa -y
+          sudo apt-get update -y
+          sudo apt-get install -y python3.11 python3.11-venv python3.11-pip
+          python3.11 --version
+
       - name: Install dependencies
         run: |
-          pip install google-cloud-secret-manager google-auth
+          python3.11 -m pip install google-cloud-secret-manager google-auth
 
       - name: Install gcloud CLI and authenticate
         env:
@@ -59,9 +66,9 @@ jobs:
           ECO_OAUTH_CLIENT_ID: ${{ secrets.ECO_OAUTH_CLIENT_ID }}
           ECO_OAUTH_CLIENT_SECRET: ${{ secrets.ECO_OAUTH_CLIENT_SECRET }}
         run: |
-          python scripts/setup_gcp_oauth.py \
-            --environment $ENVIRONMENT \
-            --action $ACTION
+          python3.11 scripts/setup_gcp_oauth.py \
+            --environment "$ENVIRONMENT" \
+            --action "$ACTION"
 
       - name: Update K8s secrets
         if: github.event.inputs.action == 'update-secrets'
@@ -81,6 +88,7 @@ jobs:
         env:
           ENVIRONMENT: ${{ github.event.inputs.environment }}
         run: |
+          echo "OAuth setup completed successfully for $ENVIRONMENT"
           echo "OAuth setup completed successfully for ${ENVIRONMENT}"
 
       - name: Cleanup credentials
