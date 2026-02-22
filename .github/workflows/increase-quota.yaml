@@ -55,11 +55,13 @@ jobs:
         run: |
           python scripts/increase_ssd_quota.py \
             --action check \
-            --region $REGION \
+            --region "$REGION" \
             --output-json > quota_status.json
           
-          echo "usage=$(jq -r '.usage' quota_status.json)" >> $GITHUB_OUTPUT
-          echo "limit=$(jq -r '.limit' quota_status.json)" >> $GITHUB_OUTPUT
+          USAGE=$(jq -r '.usage' quota_status.json)
+          LIMIT=$(jq -r '.limit' quota_status.json)
+          echo "usage=$USAGE" >> $GITHUB_OUTPUT
+          echo "limit=$LIMIT" >> $GITHUB_OUTPUT
           
           cat quota_status.json
 
@@ -105,9 +107,9 @@ jobs:
         run: |
           python scripts/increase_ssd_quota.py \
             --action request \
-            --region $REGION \
-            --current-limit $CURRENT_LIMIT \
-            --requested-limit $REQUESTED_LIMIT \
+            --region "$REGION" \
+            --current-limit "$CURRENT_LIMIT" \
+            --requested-limit "$REQUESTED_LIMIT" \
             --justification "$JUSTIFICATION" \
             --output-json > quota_request.json
           
@@ -121,6 +123,12 @@ jobs:
 
       - name: Create issue for tracking
         uses: actions/github-script@v7
+        env:
+          REGION: ${{ github.event.inputs.region }}
+          CURRENT_LIMIT: ${{ github.event.inputs.current_limit }}
+          REQUESTED_LIMIT: ${{ github.event.inputs.requested_limit }}
+          CURRENT_USAGE: ${{ needs.check-current-quota.outputs.current_usage }}
+          JUSTIFICATION: ${{ github.event.inputs.justification }}
         with:
           script: |
             const fs = require('fs');
@@ -128,13 +136,13 @@ jobs:
             
             const body = `## SSD Quota Increase Request
             
-            **Region**: ${{ github.event.inputs.region }}
-            **Current Limit**: ${{ github.event.inputs.current_limit }} GB
-            **Requested Limit**: ${{ github.event.inputs.requested_limit }} GB
-            **Current Usage**: ${{ needs.check-current-quota.outputs.current_usage }} GB
+            **Region**: "${process.env.REGION}"
+            **Current Limit**: "${process.env.CURRENT_LIMIT}" GB
+            **Requested Limit**: "${process.env.REQUESTED_LIMIT}" GB
+            **Current Usage**: "${process.env.CURRENT_USAGE}" GB
             
             **Justification**:
-            ${{ github.event.inputs.justification }}
+            ${process.env.JUSTIFICATION}
             
             **Request ID**: \`${request.request_id || 'N/A'}\`
             **Status**: \`${request.status || 'Submitted'}\`
@@ -151,7 +159,7 @@ jobs:
             github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `SSD Quota Increase Request - ${{ github.event.inputs.region }}`,
+              title: `SSD Quota Increase Request - ${process.env.REGION}`,
               body: body,
               labels: ['quota', 'infrastructure', 'gcp']
             });
