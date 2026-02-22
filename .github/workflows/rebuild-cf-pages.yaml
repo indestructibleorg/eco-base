@@ -1,0 +1,75 @@
+name: Rebuild Cloudflare Pages
+# Deletes all existing Cloudflare Pages projects and creates a new one named eco-base-web
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List existing Pages projects
+        run: |
+          PROJECTS=$(curl -s \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects")
+          echo "=== Existing Projects ==="
+          echo "$PROJECTS" | python3 << 'PYEOF2'
+          import json,sys
+          data=json.load(sys.stdin)
+          print('success:', data.get('success'))
+          for p in data.get('result',[]):
+              print('  -', p['name'])
+          PYEOF2
+
+      - name: Delete all existing Pages projects
+        run: |
+          PROJECTS=$(curl -s \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects")
+          NAMES=$(echo "$PROJECTS" | python3 << 'PYEOF2'
+          import json,sys
+          data=json.load(sys.stdin)
+          for p in data.get('result',[]):
+              print(p['name'])
+          PYEOF2
+          )
+          for name in $NAMES; do
+            echo "Deleting: $name"
+            curl -s -X DELETE \
+              -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+              "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects/$name"
+            echo "Deleted: $name"
+          done
+
+      - name: Create new Pages project eco-base-web
+        run: |
+          RESULT=$(curl -s -X POST \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects" \
+            -d '{"name":"eco-base-web","production_branch":"main"}')
+          echo "$RESULT" | python3 << 'PYEOF2'
+          import json,sys
+          d=json.load(sys.stdin)
+          print('success:', d.get('success'))
+          if d.get('result'):
+              print('Project name:', d['result'].get('name'))
+              print('Subdomain:', d['result'].get('subdomain'))
+          if d.get('errors'):
+              print('Errors:', d['errors'])
+          PYEOF2
+
+      - name: Verify project created
+        run: |
+          curl -s \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects/eco-base-web" \
+            | python3 << 'PYEOF2'
+          import json,sys
+          d=json.load(sys.stdin)
+          print('Verified:', d.get('success'))
+          if d.get('result'):
+              print('Name:', d['result'].get('name'))
+              print('Subdomain:', d['result'].get('subdomain'))
+          PYEOF2
