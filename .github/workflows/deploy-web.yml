@@ -48,4 +48,4 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           packageManager: npm
-          command: pages deploy platforms/web/dist --project-name=indestructibleeco --commit-dirty=true
+          command: pages deploy platforms/web/dist --project-name=eco-base-web --commit-dirty=true
