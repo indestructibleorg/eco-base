@@ -455,9 +455,9 @@ class GrpcServer:
             )
 
         except ImportError:
-            self._running = True
-            logger.info(
-                "gRPC server started in lightweight mode on port %d (grpcio not available)",
+            logger.warning(
+                "grpcio not available — gRPC server NOT started on port %d; "
+                "install grpcio to enable gRPC support",
                 self._config.port,
             )
 

@@ -148,7 +148,7 @@ production_secret = {
         'ECO_SUPABASE_ANON_KEY': 'sb_publishable_RVYrVe_Kqy4nGjcyyFdEbw_mnG1mraC',
         'ECO_SUPABASE_SERVICE_ROLE_KEY': 'INJECT_FROM_K8S_SECRET',
         'HF_TOKEN': '',
-        'DATABASE_URL': 'postgresql://eco_app:eco_production_secret@eco-postgres-svc.eco-production.svc.cluster.local:5432/eco_production'
+        'DATABASE_URL': 'INJECT_FROM_K8S_SECRET'
     }
 }
 
