@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write
 
 jobs:
   publish-shared-types:
@@ -18,6 +17,8 @@ jobs:
         git clone --depth 1 https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git .
         git fetch --depth=1 origin tag ${{ github.ref_name }}
         git checkout ${{ github.ref_name }}
+        # Remove pnpm lockfile so npm does not try to resolve workspace:* protocol
+        rm -f pnpm-lock.yaml package-lock.json
 
     - name: Setup Node.js 20 and npm registry
       run: |
@@ -32,14 +33,15 @@ jobs:
     - name: Build and publish shared-types
       working-directory: packages/shared-types
       run: |
-        npm install --legacy-peer-deps
+        npm install --legacy-peer-deps --ignore-scripts
         npm run build
         PKG_NAME=$(node -p "require('./package.json').name")
         PKG_VER=$(node -p "require('./package.json').version")
-        if npm view "${PKG_NAME}@${PKG_VER}" version 2>/dev/null; then
+        PUBLISHED=$(npm view "${PKG_NAME}@${PKG_VER}" version 2>/dev/null || true)
+        if [ -n "$PUBLISHED" ]; then
           echo "Version ${PKG_VER} already published, skipping"
         else
-          npm publish --access public --provenance
+          npm publish --access public
         fi
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -53,6 +55,7 @@ jobs:
         git clone --depth 1 https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git .
         git fetch --depth=1 origin tag ${{ github.ref_name }}
         git checkout ${{ github.ref_name }}
+        rm -f pnpm-lock.yaml package-lock.json
 
     - name: Setup Node.js 20 and npm registry
       run: |
@@ -65,14 +68,15 @@ jobs:
     - name: Build and publish api-client
       working-directory: packages/api-client
       run: |
-        npm install --legacy-peer-deps
+        npm install --legacy-peer-deps --ignore-scripts
         npm run build
         PKG_NAME=$(node -p "require('./package.json').name")
         PKG_VER=$(node -p "require('./package.json').version")
-        if npm view "${PKG_NAME}@${PKG_VER}" version 2>/dev/null; then
+        PUBLISHED=$(npm view "${PKG_NAME}@${PKG_VER}" version 2>/dev/null || true)
+        if [ -n "$PUBLISHED" ]; then
           echo "Version ${PKG_VER} already published, skipping"
         else
-          npm publish --access public --provenance
+          npm publish --access public
         fi
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -86,6 +90,7 @@ jobs:
         git clone --depth 1 https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git .
         git fetch --depth=1 origin tag ${{ github.ref_name }}
         git checkout ${{ github.ref_name }}
+        rm -f pnpm-lock.yaml package-lock.json
 
     - name: Setup Node.js 20 and npm registry
       run: |
@@ -98,14 +103,15 @@ jobs:
     - name: Build and publish ui-kit
       working-directory: packages/ui-kit
       run: |
-        npm install --legacy-peer-deps
+        npm install --legacy-peer-deps --ignore-scripts
         npm run build
         PKG_NAME=$(node -p "require('./package.json').name")
         PKG_VER=$(node -p "require('./package.json').version")
-        if npm view "${PKG_NAME}@${PKG_VER}" version 2>/dev/null; then
+        PUBLISHED=$(npm view "${PKG_NAME}@${PKG_VER}" version 2>/dev/null || true)
+        if [ -n "$PUBLISHED" ]; then
           echo "Version ${PKG_VER} already published, skipping"
         else
-          npm publish --access public --provenance
+          npm publish --access public
         fi
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
