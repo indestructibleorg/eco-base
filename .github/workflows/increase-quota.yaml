@@ -177,7 +177,6 @@ jobs:
             --output-json > quota_request.raw 2>&1
 
           awk 'BEGIN{capture=0} /^\{/{capture=1} { if (capture) { print > "quota_request.json" } else { print > "quota_request.log" } }' quota_request.raw
-            --output-json > quota_request.json
 
           cat quota_request.json
 
