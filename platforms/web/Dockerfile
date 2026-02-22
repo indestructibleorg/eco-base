@@ -4,16 +4,14 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copy package files
-COPY ./package.json ./
-COPY ./vite.config.js ./
+# Copy the app/ subdirectory which contains the TypeScript React app
+# (app/ has its own package.json, vite.config.ts, index.html, and src/)
+COPY ./app/ ./
 
-# Install dependencies
+# Install all dependencies (including dev deps for build)
 RUN npm install --legacy-peer-deps
 
-# Copy app source and build
-COPY ./app/ ./app/
-COPY ./index.html ./
+# Build the app
 RUN npm run build
 
 FROM nginx:1.25-alpine AS production
