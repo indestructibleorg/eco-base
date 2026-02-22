@@ -30,6 +30,18 @@ export function getSupabase(): SupabaseClient | null {
   return _client;
 }
 
+/**
+ * Returns the Supabase client or throws if not configured.
+ * Use this in all DB operations that require a valid client.
+ */
+export function getSupabaseOrThrow(): SupabaseClient {
+  const client = getSupabase();
+  if (!client) {
+    throw new Error("Supabase client not initialized — check SUPABASE_URL and SUPABASE_KEY env vars");
+  }
+  return client;
+}
+
 // ── Row Types ────────────────────────────────────────────────────────────────
 
 export interface UserRow {
@@ -97,7 +109,7 @@ export interface GovernanceRow {
 // ── Users ────────────────────────────────────────────────────────────────────
 
 export async function getUserById(userId: string): Promise<UserRow | null> {
-  const { data, error } = await getSupabase()
+  const { data, error } = await getSupabaseOrThrow()
     .from("users")
     .select("*")
     .eq("id", userId)
@@ -110,7 +122,7 @@ export async function updateUser(
   userId: string,
   updates: Partial<Pick<UserRow, "display_name" | "avatar_url" | "metadata">>
 ): Promise<UserRow | null> {
-  const { data, error } = await getSupabase()
+  const { data, error } = await getSupabaseOrThrow()
     .from("users")
     .update(updates)
     .eq("id", userId)
@@ -123,7 +135,7 @@ export async function updateUser(
 // ── Platforms ────────────────────────────────────────────────────────────────
 
 export async function listPlatforms(): Promise<PlatformRow[]> {
-  const { data, error } = await getSupabase()
+  const { data, error } = await getSupabaseOrThrow()
     .from("platforms")
     .select("*")
     .order("created_at", { ascending: false });
@@ -132,7 +144,7 @@ export async function listPlatforms(): Promise<PlatformRow[]> {
 }
 
 export async function getPlatformById(id: string): Promise<PlatformRow | null> {
-  const { data, error } = await getSupabase()
+  const { data, error } = await getSupabaseOrThrow()
     .from("platforms")
     .select("*")
     .eq("id", id)
@@ -145,7 +157,7 @@ export async function createPlatform(
   record: Pick<PlatformRow, "name" | "slug" | "type" | "config" | "capabilities" | "owner_id"> &
     Partial<Pick<PlatformRow, "k8s_namespace" | "deploy_target" | "urn">>
 ): Promise<PlatformRow> {
-  const { data, error } = await getSupabase()
+  const { data, error } = await getSupabaseOrThrow()
     .from("platforms")
     .insert(record)
     .select()
@@ -158,7 +170,7 @@ export async function updatePlatform(
   id: string,
   updates: Partial<Pick<PlatformRow, "name" | "status" | "config" | "capabilities" | "deploy_target">>
 ): Promise<PlatformRow> {
-  const { data, error } = await getSupabase()
+  const { data, error } = await getSupabaseOrThrow()
     .from("platforms")
     .update(updates)
     .eq("id", id)
@@ -169,7 +181,7 @@ export async function updatePlatform(
 }
 
 export async function deletePlatform(id: string): Promise<void> {
-  const { error } = await getSupabase()
+  const { error } = await getSupabaseOrThrow()
     .from("platforms")
     .delete()
     .eq("id", id);
@@ -182,7 +194,7 @@ export async function createAiJob(
   record: Pick<AiJobRow, "user_id" | "prompt" | "model_id"> &
     Partial<Pick<AiJobRow, "model_params" | "uri" | "urn">>
 ): Promise<AiJobRow> {
-  const { data, error } = await getSupabase()
+  const { data, error } = await getSupabaseOrThrow()
     .from("ai_jobs")
     .insert({ ...record, status: "pending" })
     .select()
@@ -192,7 +204,7 @@ export async function createAiJob(
 }
 
 export async function getAiJob(jobId: string): Promise<AiJobRow | null> {
-  const { data, error } = await getSupabase()
+  const { data, error } = await getSupabaseOrThrow()
     .from("ai_jobs")
     .select("*")
     .eq("id", jobId)
@@ -205,7 +217,7 @@ export async function updateAiJob(
   jobId: string,
   updates: Partial<Pick<AiJobRow, "status" | "result" | "error" | "engine" | "tokens_used" | "usage" | "latency_ms" | "completed_at">>
 ): Promise<AiJobRow> {
-  const { data, error } = await getSupabase()
+  const { data, error } = await getSupabaseOrThrow()
     .from("ai_jobs")
     .update(updates)
     .eq("id", jobId)
@@ -219,7 +231,7 @@ export async function listAiJobsByUser(
   userId: string,
   limit = 50
 ): Promise<AiJobRow[]> {
-  const { data, error } = await getSupabase()
+  const { data, error } = await getSupabaseOrThrow()
     .from("ai_jobs")
     .select("*")
     .eq("user_id", userId)
@@ -230,7 +242,7 @@ export async function listAiJobsByUser(
 }
 
 export async function getPendingJobs(limit = 20): Promise<AiJobRow[]> {
-  const { data, error } = await getSupabase()
+  const { data, error } = await getSupabaseOrThrow()
     .from("ai_jobs")
     .select("*")
     .in("status", ["pending", "running"])
@@ -246,7 +258,7 @@ export async function insertGovernanceRecord(
   record: Pick<GovernanceRow, "action" | "resource_type" | "resource_id"> &
     Partial<Pick<GovernanceRow, "actor_id" | "details" | "compliance_tags" | "uri" | "urn">>
 ): Promise<GovernanceRow> {
-  const { data, error } = await getSupabase()
+  const { data, error } = await getSupabaseOrThrow()
     .from("governance_records")
     .insert(record)
     .select()
@@ -259,7 +271,7 @@ export async function listGovernanceRecords(
   filters?: { resource_type?: string; resource_id?: string; action?: string },
   limit = 100
 ): Promise<GovernanceRow[]> {
-  let query = getSupabase()
+  let query = getSupabaseOrThrow()
     .from("governance_records")
     .select("*")
     .order("created_at", { ascending: false })
