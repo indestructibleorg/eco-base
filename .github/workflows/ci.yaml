@@ -25,8 +25,10 @@ jobs:
     steps:
     - name: Checkout
       run: |
-        git clone --depth 1 https://github.com/${{ github.repository }}.git .
-        git checkout ${{ github.sha }}
+        git init .
+        git remote add origin https://github.com/${{ github.repository }}.git
+        git fetch --depth=1 origin ${{ github.sha }}
+        git checkout FETCH_HEAD
 
     - name: Run CI Validator Engine
       id: validator
@@ -51,8 +53,10 @@ jobs:
     steps:
     - name: Checkout
       run: |
-        git clone --depth 1 https://github.com/${{ github.repository }}.git .
-        git checkout ${{ github.sha }}
+        git init .
+        git remote add origin https://github.com/${{ github.repository }}.git
+        git fetch --depth=1 origin ${{ github.sha }}
+        git checkout FETCH_HEAD
 
     - name: Python compile check
       run: |
@@ -134,8 +138,10 @@ jobs:
     steps:
     - name: Checkout
       run: |
-        git clone --depth 1 https://github.com/${{ github.repository }}.git .
-        git checkout ${{ github.sha }}
+        git init .
+        git remote add origin https://github.com/${{ github.repository }}.git
+        git fetch --depth=1 origin ${{ github.sha }}
+        git checkout FETCH_HEAD
 
     - name: Core module tests (schemas, auth, queue, registry, API)
       run: |
@@ -227,8 +233,10 @@ jobs:
     steps:
     - name: Checkout
       run: |
-        git clone --depth 1 https://github.com/${{ github.repository }}.git .
-        git checkout ${{ github.sha }}
+        git init .
+        git remote add origin https://github.com/${{ github.repository }}.git
+        git fetch --depth=1 origin ${{ github.sha }}
+        git checkout FETCH_HEAD
 
     - name: Build AI Docker image
       run: |
@@ -349,8 +357,10 @@ jobs:
     steps:
     - name: Checkout
       run: |
-        git clone --depth 1 https://github.com/${{ github.repository }}.git .
-        git checkout ${{ github.sha }}
+        git init .
+        git remote add origin https://github.com/${{ github.repository }}.git
+        git fetch --depth=1 origin ${{ github.sha }}
+        git checkout FETCH_HEAD
 
     - name: Run Auto-Fix Engine (diagnostic mode)
       run: |
