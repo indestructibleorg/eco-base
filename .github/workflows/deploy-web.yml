@@ -27,15 +27,13 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install pnpm
-        run: npm install -g pnpm@9
-
       - name: Install dependencies
-        run: pnpm install
+        working-directory: platforms/web/app
+        run: npm install
 
-      - name: Build web
-        working-directory: platforms/web
-        run: pnpm run build
+      - name: Build web app
+        working-directory: platforms/web/app
+        run: npm run build
         env:
           VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
@@ -45,7 +43,7 @@ jobs:
 
       - name: Deploy to Cloudflare Pages (eco-base)
         run: |
-          npx wrangler@3 pages deploy platforms/web/dist \
+          npx wrangler@3 pages deploy platforms/web/app/dist \
             --project-name=eco-base \
             --commit-dirty=true \
             --branch=main
