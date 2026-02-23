@@ -37,6 +37,7 @@ permissions:
 jobs:
   validate-input:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     outputs:
       services: ${{ steps.set-services.outputs.services }}
     steps:
@@ -56,29 +57,25 @@ jobs:
     if: contains(needs.validate-input.outputs.services, 'web')
     needs: validate-input
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
-        run: |
-          git clone --depth 1 https://github.com/${{ github.repository }}.git .
-          git checkout ${{ github.sha }}
-
-      - name: Install gcloud CLI
-        run: |
-          curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
-          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
-          sudo apt-get update -y && sudo apt-get install -y google-cloud-cli
-          echo "USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> $GITHUB_ENV
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
 
       - name: Authenticate to GCP
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          USE_GKE_GCLOUD_AUTH_PLUGIN: "True"
         run: |
-          TMP_KEY=$(mktemp)
+          TMP_DIR="$(mktemp -d)"
+          chmod 700 "$TMP_DIR"
+          TMP_KEY="$TMP_DIR/gcp-sa-key.json"
           echo "$GCP_SA_KEY" > "$TMP_KEY"
+          chmod 600 "$TMP_KEY"
           gcloud auth activate-service-account --key-file="$TMP_KEY"
           gcloud config set project ${{ env.PROJECT_ID }}
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
-          rm -f "$TMP_KEY"
+          rm -rf "$TMP_DIR"
 
       - name: Build and push Web image
         run: |
@@ -95,29 +92,25 @@ jobs:
     if: contains(needs.validate-input.outputs.services, 'api')
     needs: validate-input
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
-        run: |
-          git clone --depth 1 https://github.com/${{ github.repository }}.git .
-          git checkout ${{ github.sha }}
-
-      - name: Install gcloud CLI
-        run: |
-          curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
-          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
-          sudo apt-get update -y && sudo apt-get install -y google-cloud-cli
-          echo "USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> $GITHUB_ENV
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
 
       - name: Authenticate to GCP
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          USE_GKE_GCLOUD_AUTH_PLUGIN: "True"
         run: |
-          TMP_KEY=$(mktemp)
+          TMP_DIR="$(mktemp -d)"
+          chmod 700 "$TMP_DIR"
+          TMP_KEY="$TMP_DIR/gcp-sa-key.json"
           echo "$GCP_SA_KEY" > "$TMP_KEY"
+          chmod 600 "$TMP_KEY"
           gcloud auth activate-service-account --key-file="$TMP_KEY"
           gcloud config set project ${{ env.PROJECT_ID }}
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
-          rm -f "$TMP_KEY"
+          rm -rf "$TMP_DIR"
 
       - name: Build and push API image
         run: |
@@ -133,29 +126,25 @@ jobs:
     if: contains(needs.validate-input.outputs.services, 'ai')
     needs: validate-input
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
-        run: |
-          git clone --depth 1 https://github.com/${{ github.repository }}.git .
-          git checkout ${{ github.sha }}
-
-      - name: Install gcloud CLI
-        run: |
-          curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
-          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
-          sudo apt-get update -y && sudo apt-get install -y google-cloud-cli
-          echo "USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> $GITHUB_ENV
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
 
       - name: Authenticate to GCP
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          USE_GKE_GCLOUD_AUTH_PLUGIN: "True"
         run: |
-          TMP_KEY=$(mktemp)
+          TMP_DIR="$(mktemp -d)"
+          chmod 700 "$TMP_DIR"
+          TMP_KEY="$TMP_DIR/gcp-sa-key.json"
           echo "$GCP_SA_KEY" > "$TMP_KEY"
+          chmod 600 "$TMP_KEY"
           gcloud auth activate-service-account --key-file="$TMP_KEY"
           gcloud config set project ${{ env.PROJECT_ID }}
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
-          rm -f "$TMP_KEY"
+          rm -rf "$TMP_DIR"
 
       - name: Build and push AI image
         run: |
@@ -171,29 +160,25 @@ jobs:
     if: contains(needs.validate-input.outputs.services, 'gateway')
     needs: validate-input
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
-        run: |
-          git clone --depth 1 https://github.com/${{ github.repository }}.git .
-          git checkout ${{ github.sha }}
-
-      - name: Install gcloud CLI
-        run: |
-          curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
-          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list
-          sudo apt-get update -y && sudo apt-get install -y google-cloud-cli
-          echo "USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> $GITHUB_ENV
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
 
       - name: Authenticate to GCP
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          USE_GKE_GCLOUD_AUTH_PLUGIN: "True"
         run: |
-          TMP_KEY=$(mktemp)
+          TMP_DIR="$(mktemp -d)"
+          chmod 700 "$TMP_DIR"
+          TMP_KEY="$TMP_DIR/gcp-sa-key.json"
           echo "$GCP_SA_KEY" > "$TMP_KEY"
+          chmod 600 "$TMP_KEY"
           gcloud auth activate-service-account --key-file="$TMP_KEY"
           gcloud config set project ${{ env.PROJECT_ID }}
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
-          rm -f "$TMP_KEY"
+          rm -rf "$TMP_DIR"
 
       - name: Build and push Gateway image
         run: |
