@@ -22,7 +22,6 @@ permissions:
   issues: write
   pull-requests: write
   actions: read
-  workflows: write
 
 jobs:
   detect-and-fix:
