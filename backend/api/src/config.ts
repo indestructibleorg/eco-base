@@ -2,29 +2,6 @@
 // URI: indestructibleeco://backend/api/config
 // All environment variables use ECO_* prefix for namespace isolation.
 
-const isProduction = process.env.NODE_ENV === "production";
-
-// Fail-fast in production if critical secrets are not set
-if (isProduction) {
-  const requiredSecrets = [
-    { name: "ECO_JWT_SECRET", value: process.env.ECO_JWT_SECRET },
-    { name: "ECO_SUPABASE_URL", value: process.env.ECO_SUPABASE_URL },
-    { name: "ECO_SUPABASE_SERVICE_ROLE_KEY", value: process.env.ECO_SUPABASE_SERVICE_ROLE_KEY },
-  ];
-
-  const missing = requiredSecrets.filter(s => !s.value);
-  if (missing.length > 0) {
-    throw new Error(
-      `Production deployment requires the following environment variables: ${missing.map(s => s.name).join(", ")}`
-    );
-  }
-
-  // Ensure JWT secret is not the default value
-  if (process.env.ECO_JWT_SECRET === "dev-secret-change-in-production") {
-    throw new Error("ECO_JWT_SECRET must be changed from default value in production");
-  }
-}
-
 const config = {
   nodeEnv: process.env.NODE_ENV || "development",
   port: parseInt(process.env.ECO_API_PORT || process.env.PORT || "3000", 10),
@@ -34,8 +11,7 @@ const config = {
   // CORS
   corsOrigins: (process.env.ECO_CORS_ORIGINS || "http://localhost:5173")
     .split(",")
-    .map((s: string) => s.trim())
-    .filter((s: string) => s.length > 0),
+    .map((s: string) => s.trim()),
 
   // Supabase
   supabaseUrl: process.env.ECO_SUPABASE_URL || "",

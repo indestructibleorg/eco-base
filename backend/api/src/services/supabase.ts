@@ -109,23 +109,12 @@ export interface GovernanceRow {
 // ── Users ────────────────────────────────────────────────────────────────────
 
 export async function getUserById(userId: string): Promise<UserRow | null> {
-  const supabase = getSupabase();
-  if (!supabase) {
-    console.error("Supabase client not initialized");
-    return null;
-  }
-
-  const { data, error } = await supabase
   const { data, error } = await getSupabaseOrThrow()
     .from("users")
     .select("*")
     .eq("id", userId)
     .single();
-
-  if (error) {
-    console.error(`Failed to get user ${userId}:`, error.message);
-    return null;
-  }
+  if (error) return null;
   return data as UserRow;
 }
 
@@ -133,12 +122,6 @@ export async function updateUser(
   userId: string,
   updates: Partial<Pick<UserRow, "display_name" | "avatar_url" | "metadata">>
 ): Promise<UserRow | null> {
-  const supabase = getSupabase();
-  if (!supabase) {
-    throw new Error("Supabase client not initialized");
-  }
-
-  const { data, error } = await supabase
   const { data, error } = await getSupabaseOrThrow()
     .from("users")
     .update(updates)
@@ -152,12 +135,6 @@ export async function updateUser(
 // ── Platforms ────────────────────────────────────────────────────────────────
 
 export async function listPlatforms(): Promise<PlatformRow[]> {
-  const supabase = getSupabase();
-  if (!supabase) {
-    throw new Error("Supabase client not initialized");
-  }
-
-  const { data, error } = await supabase
   const { data, error } = await getSupabaseOrThrow()
     .from("platforms")
     .select("*")
@@ -167,23 +144,12 @@ export async function listPlatforms(): Promise<PlatformRow[]> {
 }
 
 export async function getPlatformById(id: string): Promise<PlatformRow | null> {
-  const supabase = getSupabase();
-  if (!supabase) {
-    console.error("Supabase client not initialized");
-    return null;
-  }
-
-  const { data, error } = await supabase
   const { data, error } = await getSupabaseOrThrow()
     .from("platforms")
     .select("*")
     .eq("id", id)
     .single();
-
-  if (error) {
-    console.error(`Failed to get platform ${id}:`, error.message);
-    return null;
-  }
+  if (error) return null;
   return data as PlatformRow;
 }
 
@@ -191,12 +157,6 @@ export async function createPlatform(
   record: Pick<PlatformRow, "name" | "slug" | "type" | "config" | "capabilities" | "owner_id"> &
     Partial<Pick<PlatformRow, "k8s_namespace" | "deploy_target" | "urn">>
 ): Promise<PlatformRow> {
-  const supabase = getSupabase();
-  if (!supabase) {
-    throw new Error("Supabase client not initialized");
-  }
-
-  const { data, error } = await supabase
   const { data, error } = await getSupabaseOrThrow()
     .from("platforms")
     .insert(record)
@@ -210,12 +170,6 @@ export async function updatePlatform(
   id: string,
   updates: Partial<Pick<PlatformRow, "name" | "status" | "config" | "capabilities" | "deploy_target">>
 ): Promise<PlatformRow> {
-  const supabase = getSupabase();
-  if (!supabase) {
-    throw new Error("Supabase client not initialized");
-  }
-
-  const { data, error } = await supabase
   const { data, error } = await getSupabaseOrThrow()
     .from("platforms")
     .update(updates)
@@ -227,12 +181,6 @@ export async function updatePlatform(
 }
 
 export async function deletePlatform(id: string): Promise<void> {
-  const supabase = getSupabase();
-  if (!supabase) {
-    throw new Error("Supabase client not initialized");
-  }
-
-  const { error } = await supabase
   const { error } = await getSupabaseOrThrow()
     .from("platforms")
     .delete()
@@ -246,12 +194,6 @@ export async function createAiJob(
   record: Pick<AiJobRow, "user_id" | "prompt" | "model_id"> &
     Partial<Pick<AiJobRow, "model_params" | "uri" | "urn">>
 ): Promise<AiJobRow> {
-  const supabase = getSupabase();
-  if (!supabase) {
-    throw new Error("Supabase client not initialized");
-  }
-
-  const { data, error } = await supabase
   const { data, error } = await getSupabaseOrThrow()
     .from("ai_jobs")
     .insert({ ...record, status: "pending" })
@@ -262,23 +204,12 @@ export async function createAiJob(
 }
 
 export async function getAiJob(jobId: string): Promise<AiJobRow | null> {
-  const supabase = getSupabase();
-  if (!supabase) {
-    console.error("Supabase client not initialized");
-    return null;
-  }
-
-  const { data, error } = await supabase
   const { data, error } = await getSupabaseOrThrow()
     .from("ai_jobs")
     .select("*")
     .eq("id", jobId)
     .single();
-
-  if (error) {
-    console.error(`Failed to get AI job ${jobId}:`, error.message);
-    return null;
-  }
+  if (error) return null;
   return data as AiJobRow;
 }
 
@@ -286,12 +217,6 @@ export async function updateAiJob(
   jobId: string,
   updates: Partial<Pick<AiJobRow, "status" | "result" | "error" | "engine" | "tokens_used" | "usage" | "latency_ms" | "completed_at">>
 ): Promise<AiJobRow> {
-  const supabase = getSupabase();
-  if (!supabase) {
-    throw new Error("Supabase client not initialized");
-  }
-
-  const { data, error } = await supabase
   const { data, error } = await getSupabaseOrThrow()
     .from("ai_jobs")
     .update(updates)
@@ -306,12 +231,6 @@ export async function listAiJobsByUser(
   userId: string,
   limit = 50
 ): Promise<AiJobRow[]> {
-  const supabase = getSupabase();
-  if (!supabase) {
-    throw new Error("Supabase client not initialized");
-  }
-
-  const { data, error } = await supabase
   const { data, error } = await getSupabaseOrThrow()
     .from("ai_jobs")
     .select("*")
@@ -323,12 +242,6 @@ export async function listAiJobsByUser(
 }
 
 export async function getPendingJobs(limit = 20): Promise<AiJobRow[]> {
-  const supabase = getSupabase();
-  if (!supabase) {
-    throw new Error("Supabase client not initialized");
-  }
-
-  const { data, error } = await supabase
   const { data, error } = await getSupabaseOrThrow()
     .from("ai_jobs")
     .select("*")
@@ -345,12 +258,6 @@ export async function insertGovernanceRecord(
   record: Pick<GovernanceRow, "action" | "resource_type" | "resource_id"> &
     Partial<Pick<GovernanceRow, "actor_id" | "details" | "compliance_tags" | "uri" | "urn">>
 ): Promise<GovernanceRow> {
-  const supabase = getSupabase();
-  if (!supabase) {
-    throw new Error("Supabase client not initialized");
-  }
-
-  const { data, error } = await supabase
   const { data, error } = await getSupabaseOrThrow()
     .from("governance_records")
     .insert(record)
@@ -364,12 +271,6 @@ export async function listGovernanceRecords(
   filters?: { resource_type?: string; resource_id?: string; action?: string },
   limit = 100
 ): Promise<GovernanceRow[]> {
-  const supabase = getSupabase();
-  if (!supabase) {
-    throw new Error("Supabase client not initialized");
-  }
-
-  let query = supabase
   let query = getSupabaseOrThrow()
     .from("governance_records")
     .select("*")

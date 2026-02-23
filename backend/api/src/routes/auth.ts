@@ -17,13 +17,6 @@ authRouter.post("/signup", async (req: Request, res: Response, next: NextFunctio
       return;
     }
 
-    const supabase = getSupabase();
-    if (!supabase) {
-      res.status(503).json({ error: "service_unavailable", message: "Authentication service is not configured" });
-      return;
-    }
-
-    const { data, error } = await supabase.auth.signUp({
     const { data, error } = await getSupabaseOrThrow().auth.signUp({
       email,
       password,
@@ -67,13 +60,6 @@ authRouter.post("/login", async (req: Request, res: Response, next: NextFunction
       return;
     }
 
-    const supabase = getSupabase();
-    if (!supabase) {
-      res.status(503).json({ error: "service_unavailable", message: "Authentication service is not configured" });
-      return;
-    }
-
-    const { data, error } = await supabase.auth.signInWithPassword({
     const { data, error } = await getSupabaseOrThrow().auth.signInWithPassword({
       email,
       password,
@@ -112,13 +98,6 @@ authRouter.post("/refresh", async (req: Request, res: Response, next: NextFuncti
       return;
     }
 
-    const supabase = getSupabase();
-    if (!supabase) {
-      res.status(503).json({ error: "service_unavailable", message: "Authentication service is not configured" });
-      return;
-    }
-
-    const { data, error } = await supabase.auth.refreshSession({
     const { data, error } = await getSupabaseOrThrow().auth.refreshSession({
       refresh_token,
     });
@@ -148,10 +127,7 @@ authRouter.post("/refresh", async (req: Request, res: Response, next: NextFuncti
 // POST /auth/logout — Sign out (requires auth)
 authRouter.post("/logout", requireAuth, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
-    const supabase = getSupabase();
     const token = req.headers.authorization?.replace("Bearer ", "");
-    if (token && supabase) {
-      await supabase.auth.admin.signOut(token);
     if (token) {
       await getSupabaseOrThrow().auth.admin.signOut(token);
     }

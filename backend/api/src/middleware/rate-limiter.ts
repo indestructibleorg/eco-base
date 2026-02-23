@@ -35,8 +35,8 @@ function getLimit(req: AuthenticatedRequest): number {
     : config.rateLimitPublic;
 }
 
-async function checkRedis(key: string, limit: number, windowMs: number): Promise<{ allowed: boolean; remaining: number; resetAt: number } | null> {
-  if (!redis) return null;
+async function checkRedis(key: string, limit: number, windowMs: number): Promise<{ allowed: boolean; remaining: number; resetAt: number }> {
+  if (!redis) throw new Error("no redis");
 
   const now = Date.now();
   const windowKey = `${key}:${Math.floor(now / windowMs)}`;
@@ -86,8 +86,7 @@ export async function rateLimiter(
   let result: { allowed: boolean; remaining: number; resetAt: number };
 
   try {
-    const redisResult = await checkRedis(key, limit, windowMs);
-    result = redisResult ?? checkMemory(key, limit, windowMs);
+    result = await checkRedis(key, limit, windowMs);
   } catch {
     result = checkMemory(key, limit, windowMs);
   }

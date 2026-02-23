@@ -9,7 +9,7 @@ name: Auto-Repair
 
 on:
   workflow_run:
-    workflows: ["CI"]
+    workflows: ["IndestructibleEco CI/CD"]
     types: [completed]
 
 permissions:

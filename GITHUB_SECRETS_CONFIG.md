@@ -10,7 +10,7 @@
 | `GCP_SA_KEY` | *(Service Account JSON)* | Google Cloud Service Account key for deployment |
 | `SUPABASE_URL` | `https://yrfxijooswpvdpdseswy.supabase.co` | Supabase project URL |
 | `SUPABASE_ANON_KEY` | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlyZnhpam9vc3dwdmRwZHNlc3d5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA3MjYxNjMsImV4cCI6MjA4NjMwMjE2M30.R4gO5Kj5G0aYnvOE3N4D3gBN1Zu7fD9d31z99qW023I` | Supabase anonymous key |
-| `SUPABASE_SECRET_KEY` | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlyZnhpam9vc3dwdmRwZHNlc3d5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MDcyNjE2MywiZXhwIjoyMDg2MzAyMTYzfQ.-OGp0mC6K3iJzk5-oWl6LsbQpkBwk8yTPMa-hEL74MQ` | Supabase service role key |
+| `SUPABASE_SECRET_KEY` | `REDACTED_SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key |
 | `CLOUDFLARE_API_TOKEN` | `GAWRh-e2rxB4G4cpl9gpLqFJQYK1W2UCEtF8nZhC` | Cloudflare Global API Token |
 | `CLOUDFLARE_ACCOUNT_ID` | `2fead4a141ec2c677eb3bf0ac535f1d5` | Cloudflare Account ID |
 | `CLOUDFLARE_ZONE_ID` | `3f10062913fe82ee54594594413c3d68` | Cloudflare Zone ID |
