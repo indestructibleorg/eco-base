@@ -55,7 +55,7 @@ CMD ["--host", "0.0.0.0", \
      "--mem-fraction-static", "0.88"]
 
 # ── Target: TGI ───────────────────────────────────────────────────────
-FROM ghcr.io/huggingface/text-generation-inference:2.4.1 AS tgi
+FROM ghcr.io/huggingface/text-generation-inference:3.3.7 AS tgi
 
 EXPOSE 8002
 
