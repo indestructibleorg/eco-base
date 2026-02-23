@@ -517,6 +517,88 @@ def fix_remove_continue_on_error(finding: dict, repo: Path, dry_run: bool = Fals
 
 # ── CLI Entry Point ──────────────────────────────────────────
 
+
+@register_fix("remove-%YAML-directive")
+def fix_remove_yaml_directive(file_path, finding, dry_run=False):
+    """Remove %YAML directive lines from YAML files."""
+    result = {"strategy": "remove-%YAML-directive", "applied": False, "details": ""}
+    try:
+        lines = file_path.read_text().splitlines(keepends=True)
+        new_lines = [l for l in lines if not l.strip().startswith("%YAML")]
+        if len(new_lines) < len(lines):
+            result["details"] = f"Removed {len(lines)-len(new_lines)} %YAML directive line(s)"
+            if not dry_run:
+                file_path.write_text("".join(new_lines))
+            result["applied"] = True
+        else:
+            result["details"] = "No %YAML directive found"
+    except Exception as e:
+        result["details"] = f"Error: {e}"
+    return result
+
+
+@register_fix("replace-tabs-with-spaces")
+def fix_replace_tabs(file_path, finding, dry_run=False):
+    """Replace tab indentation with 2-space indentation in YAML files."""
+    result = {"strategy": "replace-tabs-with-spaces", "applied": False, "details": ""}
+    try:
+        content = file_path.read_text()
+        if "\t" in content:
+            fixed = content.expandtabs(2)
+            result["details"] = "Replaced tab characters with spaces"
+            if not dry_run:
+                file_path.write_text(fixed)
+            result["applied"] = True
+        else:
+            result["details"] = "No tab characters found"
+    except Exception as e:
+        result["details"] = f"Error: {e}"
+    return result
+
+
+@register_fix("inject-governance-field")
+def fix_inject_governance_field(file_path, finding, dry_run=False):
+    """Inject a missing governance field into an existing document_metadata block."""
+    result = {"strategy": "inject-governance-field", "applied": False, "details": ""}
+    try:
+        content = file_path.read_text()
+        # Determine which field is missing from the finding message
+        missing_field = None
+        for field in ["unique_id", "uri", "owner", "classification", "retention_policy", "compliance_tags"]:
+            if field in finding.get("message", ""):
+                missing_field = field
+                break
+        if not missing_field:
+            result["details"] = "Could not determine missing field from finding"
+            return result
+        # Default values for each field
+        defaults = {
+            "unique_id": f"eco-auto-{abs(hash(str(file_path)))%999999:06d}",
+            "uri": f"indestructibleeco://{str(file_path).replace(str(file_path.parent.parent), '').lstrip('/')}",
+            "owner": "platform-team@indestructibleeco.io",
+            "classification": "internal",
+            "retention_policy": "3y",
+            "compliance_tags": '["SOC2", "ISO27001"]',
+        }
+        val = defaults.get(missing_field, "REQUIRED")
+        # Inject after document_metadata: line
+        if "document_metadata:" in content:
+            inject_line = f"  {missing_field}: \"{val}\"\n"
+            fixed = content.replace("document_metadata:\n", f"document_metadata:\n{inject_line}", 1)
+            if fixed != content:
+                result["details"] = f"Injected missing field: {missing_field}"
+                if not dry_run:
+                    file_path.write_text(fixed)
+                result["applied"] = True
+            else:
+                result["details"] = f"Could not inject field {missing_field} — manual review needed"
+        else:
+            result["details"] = "No document_metadata block found — use governance-block strategy first"
+    except Exception as e:
+        result["details"] = f"Error: {e}"
+    return result
+
+
 if __name__ == "__main__":
     dry_run = "--dry-run" in sys.argv
     report_path = None
