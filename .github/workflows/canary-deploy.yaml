@@ -306,7 +306,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
       with:
-        token: ${{ secrets.AUTO_FIX_TOKEN }}
+        token: ${{ secrets.AUTO_FIX_TOKEN || secrets.GITHUB_TOKEN }}
 
     - name: Authenticate to GCP
       uses: google-github-actions/auth@6fc4af4b145ae7821d527454aa9bd537d1f2dc5f  # v2.1.7
@@ -342,7 +342,9 @@ jobs:
             echo "Production promotion simulated (kubectl not configured)"
         fi
 
-    - name: Commit production image tag update
+    - name: Commit production image tag update via PR
+      env:
+        GH_TOKEN: ${{ secrets.AUTO_FIX_TOKEN || secrets.GITHUB_TOKEN }}
       run: |
         IMAGE_TAG="${{ needs.preflight.outputs.image_tag }}"
         git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -351,10 +353,18 @@ jobs:
         if git diff --cached --quiet; then
           echo "No kustomization changes to commit"
         else
+          # Best practice: never push directly to main — use PR flow
+          BRANCH="bot/promote-${IMAGE_TAG//[^a-zA-Z0-9]/-}-$(date +%s)"
+          git checkout -b "$BRANCH"
           COMMIT_MSG="chore(deploy): promote $IMAGE_TAG to production [skip ci]"
           git commit -m "$COMMIT_MSG"
-          git push origin main
-          echo "Committed production promotion"
+          git push origin "$BRANCH"
+          # Create PR and enable auto-merge (will merge once CI passes)
+          PR_BODY="Automated production image tag promotion. Image: ${IMAGE_TAG}. SLO gates: all passed. Auto-merges once CI passes."
+          PR_URL=$(gh pr create             --title "$COMMIT_MSG"             --body "$PR_BODY"             --label "automated,bot-pr"             --base main             --head "$BRANCH")
+          echo "Created PR: $PR_URL"
+          gh pr merge "$PR_URL" --auto --squash || true
+          echo "Auto-merge enabled"
         fi
 
     - name: Production promotion summary
@@ -377,7 +387,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
       with:
-        token: ${{ secrets.AUTO_FIX_TOKEN }}
+        token: ${{ secrets.AUTO_FIX_TOKEN || secrets.GITHUB_TOKEN }}
 
     - name: Rollback staging via ArgoCD
       run: |
@@ -397,7 +407,7 @@ jobs:
     - name: Open incident issue
       uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7.0.1
       with:
-        github-token: ${{ secrets.AUTO_FIX_TOKEN }}
+        github-token: ${{ secrets.AUTO_FIX_TOKEN || secrets.GITHUB_TOKEN }}
         script: |
           const imageTag = '${{ needs.preflight.outputs.image_tag }}';
           const sloReport = '${{ needs.slo-gate.outputs.slo_report }}';
