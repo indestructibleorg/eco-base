@@ -134,6 +134,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ needs.open-pr.outputs.pr_number }}
+          PROBLEMS_JSON: ${{ needs.detect.outputs.problems_json }}
           DRY_RUN: ${{ env.DRY_RUN }}
         run: python3 tools/autonomous-bot/auto_merge.py
 

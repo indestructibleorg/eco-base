@@ -1,0 +1,126 @@
+# Mergify — Conditional Auto-Merge Configuration
+# Reference: https://docs.mergify.com/
+#
+# Defense Matrix Layer 2: Conditional merge with safety gates
+# Philosophy: Merge is only allowed when ALL gates pass.
+# For sensitive paths, human approval is ALWAYS required.
+
+queue_rules:
+  - name: default
+    merge_conditions:
+      - check-success = validate
+      - check-success = lint
+      - check-success = opa-policy
+      - check-success = test
+      - check-success = build
+      - check-success = supply-chain
+    merge_method: squash
+    commit_message_template: |
+      {{ title }} (#{{ number }})
+
+      {{ body }}
+
+      Co-authored-by: eco-base-bot <bot@eco-base.io>
+
+  - name: security-fast-track
+    description: Fast-track security fixes from autonomous bot
+    merge_conditions:
+      - check-success = validate
+      - check-success = lint
+      - check-success = opa-policy
+      - check-success = test
+      - check-success = build
+      - check-success = supply-chain
+      - label = security-fix
+      - label = autonomous-bot
+    merge_method: squash
+
+pull_request_rules:
+  # ─── Autonomous Bot PRs: auto-merge when all CI passes ───────────────────
+  - name: Auto-merge autonomous bot PRs (non-sensitive)
+    description: Merge bot PRs automatically when CI passes and no sensitive paths touched
+    conditions:
+      - label = autonomous-bot
+      - label = auto-merge
+      - check-success = validate
+      - check-success = lint
+      - check-success = opa-policy
+      - check-success = test
+      - check-success = build
+      - check-success = supply-chain
+      - files~=^(?!.*(payment|security-config|secrets|\.sops|CODEOWNERS|branch-protection)).*$
+    actions:
+      queue:
+        name: default
+      delete_head_branch: {}
+
+  # ─── Sensitive path PRs: require human approval ──────────────────────────
+  - name: Block auto-merge for sensitive paths
+    description: Require human approval for payment, security-config, secrets
+    conditions:
+      - files~=(payment|security-config|secrets|\.sops|CODEOWNERS|branch-protection)
+    actions:
+      label:
+        add: [requires-human-review]
+      comment:
+        message: |
+          ## Human Review Required
+
+          This PR touches sensitive paths and cannot be auto-merged.
+
+          **Affected sensitive paths detected:**
+          ```
+          {{ files | selectattr('filename', 'match', '(payment|security-config|secrets|\\.sops|CODEOWNERS)') | map(attribute='filename') | join('\n') }}
+          ```
+
+          A senior engineer must review and approve before merge.
+          cc: @indestructiblemachinen
+
+  # ─── Dependabot PRs: auto-merge patch/minor updates ──────────────────────
+  - name: Auto-merge Dependabot patch updates
+    conditions:
+      - author = dependabot[bot]
+      - check-success = validate
+      - check-success = test
+      - check-success = build
+      - title~=^(chore|fix)\(deps\).*bump.*from .* to .*
+    actions:
+      queue:
+        name: default
+      delete_head_branch: {}
+
+  # ─── Stale PRs: add label after 7 days ───────────────────────────────────
+  - name: Label stale PRs
+    conditions:
+      - updated-at < 7 days ago
+      - -label = stale
+      - -merged
+      - -closed
+    actions:
+      label:
+        add: [stale]
+      comment:
+        message: |
+          This PR has been inactive for 7 days and has been marked as stale.
+          If it is still relevant, please update it or leave a comment.
+
+  # ─── Conflict detection ───────────────────────────────────────────────────
+  - name: Request conflict resolution
+    conditions:
+      - conflict
+      - -merged
+      - -closed
+    actions:
+      label:
+        add: [has-conflicts]
+      comment:
+        message: |
+          This PR has merge conflicts. Please resolve them before it can be merged.
+
+  # ─── Auto-delete merged branches ─────────────────────────────────────────
+  - name: Delete merged branches
+    conditions:
+      - merged
+      - head~=^(bot/|fix/|feat/|chore/|dependabot/)
+    actions:
+      delete_head_branch: {}

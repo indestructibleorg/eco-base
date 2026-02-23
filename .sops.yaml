@@ -1,0 +1,34 @@
+# SOPS (Secrets OPerationS) Configuration
+# Encrypts secrets in Git using age/GPG keys — no plaintext secrets in repo
+# Reference: https://github.com/getsops/sops
+#
+# Usage:
+#   sops --encrypt secrets/dev.yaml > secrets/dev.enc.yaml
+#   sops --decrypt secrets/dev.enc.yaml
+#
+# Key rotation: update keys here and re-encrypt all secrets files
+
+creation_rules:
+  # Production secrets — require GCP KMS key
+  - path_regex: secrets/prod/.*\.yaml$
+    gcp_kms: projects/eco-base-prod/locations/global/keyRings/sops-keyring/cryptoKeys/sops-key
+    encrypted_regex: '^(data|stringData|password|token|key|secret|credential)$'
+
+  # Staging secrets — GCP KMS staging key
+  - path_regex: secrets/staging/.*\.yaml$
+    gcp_kms: projects/eco-base-staging/locations/global/keyRings/sops-keyring/cryptoKeys/sops-key
+    encrypted_regex: '^(data|stringData|password|token|key|secret|credential)$'
+
+  # Development secrets — age key (local dev)
+  - path_regex: secrets/dev/.*\.yaml$
+    age: age1ql3z7hjy54pw3hyww5ayyfg7zqgvc7w3j2elw8zmrj2kg5sfn9aqmcac8p
+    encrypted_regex: '^(data|stringData|password|token|key|secret|credential)$'
+
+  # Kubernetes sealed secrets manifest pattern
+  - path_regex: k8s/.*\.enc\.yaml$
+    gcp_kms: projects/eco-base-prod/locations/global/keyRings/sops-keyring/cryptoKeys/sops-key
+
+  # Default fallback — age key
+  - path_regex: .*\.enc\.yaml$
+    age: age1ql3z7hjy54pw3hyww5ayyfg7zqgvc7w3j2elw8zmrj2kg5sfn9aqmcac8p
+    encrypted_regex: '^(data|stringData|password|token|key|secret|credential)$'
