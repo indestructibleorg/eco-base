@@ -1,0 +1,191 @@
+name: Auto-Fix CI Failures
+
+on:
+  workflow_run:
+    workflows:
+      - "IndestructibleEco CI/CD"
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      target_run_id:
+        description: 'Workflow run ID to analyze (optional)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  actions: read
+
+jobs:
+  analyze-failure:
+    name: Analyze & Auto-Fix CI Failure
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure')
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      with:
+        fetch-depth: 10
+
+    - name: Collect failure context
+      id: context
+      run: |
+        if [ "${{ github.event_name }}" = "workflow_run" ]; then
+          RUN_ID="${{ github.event.workflow_run.id }}"
+          COMMIT_SHA="${{ github.event.workflow_run.head_sha }}"
+          BRANCH="${{ github.event.workflow_run.head_branch }}"
+        else
+          RUN_ID="${{ inputs.target_run_id }}"
+          COMMIT_SHA="${{ github.sha }}"
+          BRANCH="${{ github.ref_name }}"
+        fi
+        echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+        echo "commit_sha=$COMMIT_SHA" >> "$GITHUB_OUTPUT"
+        echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+        echo "=== Analyzing Run: $RUN_ID on branch $BRANCH ==="
+
+    - name: Fetch failed job details
+      id: failed_jobs
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+        RUN_ID: ${{ steps.context.outputs.run_id }}
+      run: |
+        python3 - << 'PYEOF'
+        import json, os, urllib.request
+
+        run_id = os.environ.get("RUN_ID", "")
+        repo = os.environ.get("GITHUB_REPOSITORY", "")
+        token = os.environ.get("GITHUB_TOKEN", "")
+
+        if not run_id or run_id == "":
+            print("No run_id provided, skipping job analysis")
+            exit(0)
+
+        url = f"https://api.github.com/repos/{repo}/actions/runs/{run_id}/jobs"
+        req = urllib.request.Request(url, headers={
+            "Authorization": f"token {token}",
+            "Accept": "application/vnd.github.v3+json",
+        })
+        try:
+            with urllib.request.urlopen(req) as resp:
+                data = json.loads(resp.read())
+                failed_jobs = [j for j in data.get("jobs", []) if j.get("conclusion") == "failure"]
+
+                print(f"\n=== Failed Jobs ({len(failed_jobs)}) ===")
+                failure_summary = []
+                for job in failed_jobs:
+                    print(f"\nJob: {job['name']}")
+                    for step in job.get("steps", []):
+                        if step.get("conclusion") == "failure":
+                            print(f"  Failed Step: {step['name']}")
+                            failure_summary.append({
+                                "job": job["name"],
+                                "step": step["name"],
+                            })
+
+                with open("/tmp/failure-summary.json", "w") as f:
+                    json.dump(failure_summary, f, indent=2)
+
+                if not failed_jobs:
+                    print("No failed jobs found")
+        except Exception as e:
+            print(f"Could not fetch job details: {e}")
+        PYEOF
+
+    - name: Run auto-fix engine
+      id: autofix
+      run: |
+        echo "=== Auto-Fix Engine ==="
+        python3 tools/ci-validator/auto-fix.py --dry-run --report=/tmp/autofix-report.json 2>/dev/null || true
+        if [ -f /tmp/autofix-report.json ]; then
+          cat /tmp/autofix-report.json | python3 -m json.tool || true
+          AUTO_FIXABLE=$(python3 -c "
+        import json
+        try:
+            d = json.load(open('/tmp/autofix-report.json'))
+            print(d.get('auto_fixable', 0))
+        except:
+            print(0)
+          ")
+          echo "auto_fixable=$AUTO_FIXABLE" >> "$GITHUB_OUTPUT"
+        else
+          echo "auto_fixable=0" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Apply auto-fixes (if any)
+      if: steps.autofix.outputs.auto_fixable > 0
+      run: |
+        echo "=== Applying Auto-Fixes ==="
+        python3 tools/ci-validator/auto-fix.py --report=/tmp/autofix-applied.json 2>/dev/null || true
+        echo "Auto-fixes applied"
+
+    - name: Commit and push auto-fixes
+      if: steps.autofix.outputs.auto_fixable > 0
+      run: |
+        git config user.name "IndestructibleAutoOps"
+        git config user.email "indestructible-auto-ops@outlook.com"
+        if git diff --quiet; then
+          echo "No changes to commit"
+        else
+          git add -A
+          git commit -m "fix(auto): apply CI auto-fixes from run ${{ steps.context.outputs.run_id }}"
+          git push origin HEAD:${{ steps.context.outputs.branch }} || echo "Push failed — may need manual review"
+        fi
+
+    - name: Generate consolidated repair report
+      run: |
+        python3 - << 'PYEOF'
+        import json, os
+        from datetime import datetime, timezone
+
+        report = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "trigger": {
+                "run_id": os.environ.get("RUN_ID", ""),
+                "commit": "${{ steps.context.outputs.commit_sha }}",
+                "branch": "${{ steps.context.outputs.branch }}",
+                "repository": os.environ.get("GITHUB_REPOSITORY", ""),
+            },
+            "failure_summary": [],
+            "autofix": {},
+            "recommendations": [],
+        }
+
+        try:
+            with open("/tmp/failure-summary.json") as f:
+                report["failure_summary"] = json.load(f)
+        except Exception:
+            pass
+
+        try:
+            with open("/tmp/autofix-report.json") as f:
+                af = json.load(f)
+                report["autofix"] = af
+                if af.get("auto_fixable", 0) > 0:
+                    report["recommendations"].append(
+                        "Auto-fixes were applied — review the commit for changes"
+                    )
+                if af.get("manual_required", 0) > 0:
+                    report["recommendations"].append(
+                        "Manual review required for some issues — see autofix report"
+                    )
+        except Exception:
+            pass
+
+        if not report["recommendations"]:
+            report["recommendations"].append(
+                "No auto-fixable issues detected — review CI logs for root cause"
+            )
+
+        print("=== Consolidated Repair Report ===")
+        print(json.dumps(report, indent=2))
+        PYEOF
+      env:
+        RUN_ID: ${{ steps.context.outputs.run_id }}
