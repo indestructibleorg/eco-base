@@ -14,7 +14,7 @@ RUN npm install --legacy-peer-deps
 # Build the app
 RUN npm run build
 
-FROM nginx:1.25-alpine AS production
+FROM nginx:1.29-alpine AS production
 LABEL org.opencontainers.image.title="IndestructibleEco Web Frontend" \
       org.opencontainers.image.version="1.0.2" \
       org.opencontainers.image.vendor="IndestructibleOrg" \
