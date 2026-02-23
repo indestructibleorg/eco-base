@@ -371,6 +371,99 @@ def run_auto_fix(repo: Path, dry_run: bool = False, report_path: str = None) -> 
         return 0
 
 
+# ── Additional Fix Strategies (added by auto-fix-ci framework) ──────────────
+
+@register_fix("heredoc-replacement")
+def fix_heredoc_replacement(finding: dict, repo: Path, dry_run: bool = False) -> dict:
+    """
+    Fix inline 'python3 -c "..."' patterns in GitHub Actions workflows.
+    Converts multi-line python -c "..." to heredoc (python3 << 'PYEOF' ... PYEOF).
+    """
+    result = {"strategy": "heredoc-replacement", "applied": False, "details": ""}
+    file_path = repo / finding.get("file", "")
+    line_num = finding.get("line", 0)
+
+    if not file_path.exists() or line_num == 0:
+        result["details"] = f"Cannot locate file or line: {finding.get('file')}:L{line_num}"
+        return result
+
+    content = file_path.read_text()
+    lines = content.splitlines(keepends=True)
+
+    if line_num > len(lines):
+        result["details"] = f"Line {line_num} exceeds file length ({len(lines)})"
+        return result
+
+    target_line = lines[line_num - 1]
+
+    # Pattern: python3 -c "..." (single line, double-quoted)
+    import re
+    single_line_match = re.search(r'(python3?\s+-c\s+)"(.*?)"', target_line)
+    if single_line_match:
+        indent = len(target_line) - len(target_line.lstrip())
+        indent_str = " " * indent
+        py_cmd = single_line_match.group(1)
+        py_code = single_line_match.group(2).replace('\\n', '\n')
+
+        # Build heredoc replacement
+        heredoc_lines = [
+            f"{indent_str}python3 << 'PYEOF'\n",
+        ]
+        for code_line in py_code.split('\n'):
+            heredoc_lines.append(f"{indent_str}{code_line}\n")
+        heredoc_lines.append(f"{indent_str}PYEOF\n")
+
+        if not dry_run:
+            lines[line_num - 1] = "".join(heredoc_lines)
+            file_path.write_text("".join(lines))
+
+        result["applied"] = True
+        result["details"] = f"Converted python3 -c \"...\" to heredoc at L{line_num}"
+        return result
+
+    # Pattern: multi-line python3 -c "... (opening quote, code spans multiple lines)
+    multiline_match = re.search(r'(python3?\s+-c\s+)"', target_line)
+    if multiline_match:
+        # Find the closing quote (on a line by itself or with just whitespace)
+        start_line = line_num - 1
+        end_line = start_line
+        indent = len(target_line) - len(target_line.lstrip())
+        indent_str = " " * indent
+
+        # Collect lines until we find the closing "
+        py_code_lines = []
+        i = start_line + 1
+        while i < len(lines):
+            l = lines[i]
+            stripped = l.strip()
+            if stripped == '"' or stripped.endswith('"') and not stripped.endswith('\\"'):
+                # This is the closing line - include content before "
+                closing_content = stripped.rstrip('"').strip()
+                if closing_content:
+                    py_code_lines.append(f"{indent_str}{closing_content}\n")
+                end_line = i
+                break
+            else:
+                py_code_lines.append(l)
+            i += 1
+
+        if end_line > start_line:
+            # Build heredoc replacement
+            heredoc = [f"{indent_str}python3 << 'PYEOF'\n"]
+            heredoc.extend(py_code_lines)
+            heredoc.append(f"{indent_str}PYEOF\n")
+
+            if not dry_run:
+                new_lines = lines[:start_line] + heredoc + lines[end_line + 1:]
+                file_path.write_text("".join(new_lines))
+
+            result["applied"] = True
+            result["details"] = f"Converted multi-line python3 -c to heredoc (L{line_num}-L{end_line + 1})"
+            return result
+
+    result["details"] = f"Could not parse python -c pattern at L{line_num}: {target_line.strip()[:80]}"
+    return result
+
 # ── CLI Entry Point ──────────────────────────────────────────
 
 if __name__ == "__main__":
