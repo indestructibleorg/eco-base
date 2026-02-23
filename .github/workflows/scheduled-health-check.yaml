@@ -187,3 +187,171 @@ jobs:
             --repo "${{ github.repository }}" \
             --body "$BODY" 2>/dev/null || echo "Could not comment on issue"
         fi
+
+  # ══════════════════════════════════════════════════════════════════
+  # Multi-Cluster SLO Health Matrix
+  # Checks SLO compliance across all registered clusters/platforms
+  # ══════════════════════════════════════════════════════════════════
+  multi-cluster-slo-matrix:
+    name: Multi-Cluster SLO Matrix
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+    - name: Checkout
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+
+    - name: Query SLO metrics across clusters
+      id: slo
+      run: |
+        PROMETHEUS_URL="${{ secrets.PROMETHEUS_URL }}"
+        PROMETHEUS_TOKEN="${{ secrets.PROMETHEUS_TOKEN }}"
+
+        python3 << 'PYEOF'
+        import os, json, urllib.request, urllib.error, datetime
+
+        prometheus_url = os.environ.get('PROMETHEUS_URL', '').rstrip('/')
+        token = os.environ.get('PROMETHEUS_TOKEN', '')
+
+        # Define SLO targets per platform (from architecture spec)
+        # Availability >= 99.99%, P95 latency <= 200ms, Error rate <= 0.1%
+        platforms = [
+            {'name': 'platform-01', 'namespace': 'platform-01', 'service': 'indestructible-auto-ops'},
+            {'name': 'platform-02', 'namespace': 'platform-02', 'service': 'ia-ops'},
+            {'name': 'platform-03', 'namespace': 'platform-03', 'service': 'machine-native-ops'},
+            {'name': 'core-auth',   'namespace': 'core',        'service': 'auth-service'},
+            {'name': 'core-memory', 'namespace': 'core',        'service': 'memory-hub'},
+            {'name': 'core-events', 'namespace': 'core',        'service': 'event-bus'},
+        ]
+
+        SLO_AVAILABILITY = 99.99
+        SLO_P95_LATENCY_MS = 200
+        SLO_ERROR_RATE = 0.1
+
+        def query_prometheus(query):
+            if not prometheus_url:
+                return None
+            try:
+                import urllib.parse
+                url = f'{prometheus_url}/api/v1/query?query={urllib.parse.quote(query)}'
+                req = urllib.request.Request(url, headers={
+                    'Authorization': f'Bearer {token}',
+                })
+                with urllib.request.urlopen(req, timeout=10) as resp:
+                    data = json.loads(resp.read())
+                    results = data.get('data', {}).get('result', [])
+                    if results:
+                        return float(results[0]['value'][1])
+            except Exception as e:
+                pass
+            return None
+
+        results = []
+        overall_healthy = True
+
+        for p in platforms:
+            ns = p['namespace']
+            svc = p['service']
+
+            # Query availability (1 - error_rate)
+            avail_query = f'(1 - rate(http_requests_total{{namespace="{ns}",status=~"5.."}}[5m]) / rate(http_requests_total{{namespace="{ns}"}}[5m])) * 100'
+            p95_query = f'histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{{namespace="{ns}"}}[5m])) * 1000'
+            error_query = f'rate(http_requests_total{{namespace="{ns}",status=~"5.."}}[5m]) / rate(http_requests_total{{namespace="{ns}"}}[5m]) * 100'
+
+            avail = query_prometheus(avail_query)
+            p95 = query_prometheus(p95_query)
+            error_rate = query_prometheus(error_query)
+
+            if avail is None and p95 is None:
+                status = 'NO_DATA'
+                healthy = True  # Don't alert if Prometheus not configured
+            else:
+                avail_ok = avail is None or avail >= SLO_AVAILABILITY
+                p95_ok = p95 is None or p95 <= SLO_P95_LATENCY_MS
+                error_ok = error_rate is None or error_rate <= SLO_ERROR_RATE
+                healthy = avail_ok and p95_ok and error_ok
+                status = 'HEALTHY' if healthy else 'SLO_BREACH'
+
+            if not healthy:
+                overall_healthy = False
+
+            results.append({
+                'platform': p['name'],
+                'namespace': ns,
+                'status': status,
+                'availability_pct': round(avail, 4) if avail is not None else None,
+                'p95_latency_ms': round(p95, 2) if p95 is not None else None,
+                'error_rate_pct': round(error_rate, 4) if error_rate is not None else None,
+                'slo_breach': not healthy,
+            })
+
+        # Print matrix
+        print(f'\nMulti-Cluster SLO Matrix — {datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")}')
+        print(f'{"Platform":<20} {"Status":<12} {"Availability":<15} {"P95 Latency":<14} {"Error Rate"}')
+        print('-' * 80)
+        for r in results:
+            avail_str = f'{r["availability_pct"]}%' if r['availability_pct'] is not None else 'N/A'
+            p95_str = f'{r["p95_latency_ms"]}ms' if r['p95_latency_ms'] is not None else 'N/A'
+            err_str = f'{r["error_rate_pct"]}%' if r['error_rate_pct'] is not None else 'N/A'
+            print(f'{r["platform"]:<20} {r["status"]:<12} {avail_str:<15} {p95_str:<14} {err_str}')
+
+        print(f'\nOverall: {"HEALTHY" if overall_healthy else "SLO BREACH DETECTED"}')
+
+        # Save results
+        with open('/tmp/slo-matrix.json', 'w') as f:
+            json.dump({
+                'timestamp': datetime.datetime.utcnow().isoformat() + 'Z',
+                'overall_healthy': overall_healthy,
+                'platforms': results,
+                'slo_targets': {
+                    'availability_pct': SLO_AVAILABILITY,
+                    'p95_latency_ms': SLO_P95_LATENCY_MS,
+                    'error_rate_pct': SLO_ERROR_RATE,
+                },
+            }, f, indent=2)
+
+        # Signal breach
+        if not overall_healthy:
+            exit(1)
+        PYEOF
+      env:
+        PROMETHEUS_URL: ${{ secrets.PROMETHEUS_URL }}
+        PROMETHEUS_TOKEN: ${{ secrets.PROMETHEUS_TOKEN }}
+
+    - name: Create SLO breach incident
+      if: failure() && steps.slo.outcome == 'failure'
+      uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7.0.1
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const fs = require('fs');
+          let matrix = {};
+          try {
+            matrix = JSON.parse(fs.readFileSync('/tmp/slo-matrix.json', 'utf8'));
+          } catch (e) {}
+
+          const breaches = (matrix.platforms || []).filter(p => p.slo_breach);
+          const breachList = breaches.map(p =>
+            `| ${p.platform} | ${p.availability_pct ?? 'N/A'}% | ${p.p95_latency_ms ?? 'N/A'}ms | ${p.error_rate_pct ?? 'N/A'}% |`
+          ).join('\n');
+
+          await github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: `[SLO Breach] Multi-cluster SLO violation detected — ${new Date().toISOString().slice(0,16)}Z`,
+            body: [
+              '## SLO Breach Detected',
+              '',
+              'The following platforms are violating SLO targets:',
+              '',
+              '| Platform | Availability | P95 Latency | Error Rate |',
+              '|----------|-------------|-------------|------------|',
+              breachList || '| (see workflow logs) | - | - | - |',
+              '',
+              '**SLO Targets**: Availability >= 99.99% | P95 <= 200ms | Error Rate <= 0.1%',
+              '',
+              `**Workflow Run**: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              '',
+              '_Auto-created by scheduled-health-check.yaml_',
+            ].join('\n'),
+            labels: ['incident', 'slo-breach', 'automated'],
+          });

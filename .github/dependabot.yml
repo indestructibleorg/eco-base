@@ -1,0 +1,257 @@
+# IndestructibleEco — Dependabot Configuration
+# URI: indestructibleeco://github/dependabot
+# Covers: npm (monorepo), pip, Docker, GitHub Actions
+# Auto-updates patch versions; minor/major require review.
+
+version: 2
+updates:
+  # ── GitHub Actions ──────────────────────────────────────────
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Taipei"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "github-actions"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    reviewers:
+      - "indestructibleorg/platform-team"
+    groups:
+      actions-minor:
+        patterns:
+          - "actions/*"
+          - "docker/*"
+          - "google-github-actions/*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  # ── npm (root) ───────────────────────────────────────────────
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "09:00"
+      timezone: "Asia/Taipei"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "npm"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      npm-patch:
+        patterns: ["*"]
+        update-types: ["patch"]
+      npm-minor:
+        patterns: ["*"]
+        update-types: ["minor"]
+
+  # ── npm (backend/api) ────────────────────────────────────────
+  - package-ecosystem: "npm"
+    directory: "/backend/api"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "09:30"
+      timezone: "Asia/Taipei"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "npm"
+      - "backend"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # ── npm (platforms/web) ──────────────────────────────────────
+  - package-ecosystem: "npm"
+    directory: "/platforms/web"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "10:00"
+      timezone: "Asia/Taipei"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "npm"
+      - "frontend"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # ── npm (packages/*) ─────────────────────────────────────────
+  - package-ecosystem: "npm"
+    directory: "/packages/api-client"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+      time: "09:00"
+      timezone: "Asia/Taipei"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "npm"
+      - "sdk"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/shared-types"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+      time: "09:30"
+      timezone: "Asia/Taipei"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "npm"
+      - "sdk"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
+  # ── pip (root) ───────────────────────────────────────────────
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "thursday"
+      time: "09:00"
+      timezone: "Asia/Taipei"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "python"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    groups:
+      pip-patch:
+        patterns: ["*"]
+        update-types: ["patch"]
+      pip-minor:
+        patterns: ["*"]
+        update-types: ["minor"]
+
+  # ── pip (backend/ai) ─────────────────────────────────────────
+  - package-ecosystem: "pip"
+    directory: "/backend/ai"
+    schedule:
+      interval: "weekly"
+      day: "thursday"
+      time: "09:30"
+      timezone: "Asia/Taipei"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "python"
+      - "ai"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # ── Docker (root) ────────────────────────────────────────────
+  - package-ecosystem: "docker"
+    directory: "/docker"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+      time: "09:00"
+      timezone: "Asia/Taipei"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "docker"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
+  # ── Docker (backend/api) ─────────────────────────────────────
+  - package-ecosystem: "docker"
+    directory: "/backend/api"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+      time: "09:30"
+      timezone: "Asia/Taipei"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "docker"
+      - "backend"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
+  # ── Docker (backend/ai) ──────────────────────────────────────
+  - package-ecosystem: "docker"
+    directory: "/backend/ai"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+      time: "10:00"
+      timezone: "Asia/Taipei"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "docker"
+      - "ai"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
+  # ── Docker (platforms/web) ───────────────────────────────────
+  - package-ecosystem: "docker"
+    directory: "/platforms/web"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+      time: "10:30"
+      timezone: "Asia/Taipei"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "docker"
+      - "frontend"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"

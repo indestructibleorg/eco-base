@@ -1,0 +1,315 @@
+name: Infrastructure Drift Detection & Auto-Sync
+
+# IndestructibleEco Drift Detection
+# URI: indestructibleeco://github/workflows/drift-detection
+#
+# Detects configuration drift between GitOps desired state (this repo)
+# and actual cluster state (GKE), then:
+#   - If drift detected → trigger ArgoCD sync + open issue
+#   - If sync fails → open P1 incident issue with diff
+#   - If no drift → close any existing drift issues
+
+on:
+  schedule:
+    # Every 30 minutes
+    - cron: "0,30 * * * *"
+  workflow_dispatch:
+    inputs:
+      auto_sync:
+        description: "Automatically sync drifted apps"
+        required: false
+        default: "true"
+        type: choice
+        options: ["true", "false"]
+      namespace_filter:
+        description: "Namespace to check (empty = all)"
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: read
+
+env:
+  GKE_CLUSTER: indestructibleeco-prod
+  GKE_REGION: asia-east1
+  ARGOCD_APPS: "eco-production eco-staging eco-monitoring eco-core"
+
+jobs:
+  # ══════════════════════════════════════════════════════════════════
+  # Job 1: Detect drift across all ArgoCD applications
+  # ══════════════════════════════════════════════════════════════════
+  detect-drift:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      drift_detected: ${{ steps.detect.outputs.drift_detected }}
+      drifted_apps: ${{ steps.detect.outputs.drifted_apps }}
+      drift_summary: ${{ steps.detect.outputs.drift_summary }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@6fc4af4b145ae7821d527454aa9bd537d1f2dc5f  # v2.1.7
+      with:
+        workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+        service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+      continue-on-error: true
+
+    - name: Get GKE credentials
+      uses: google-github-actions/get-gke-credentials@7a108e64ed8546fe38316b4086e91da13f4785e1  # v2.3.1
+      with:
+        cluster_name: ${{ env.GKE_CLUSTER }}
+        location: ${{ env.GKE_REGION }}
+      continue-on-error: true
+
+    - name: Detect ArgoCD application drift
+      id: detect
+      run: |
+        DRIFTED_APPS=""
+        DRIFT_DETAILS=""
+        DRIFT_DETECTED=false
+
+        # Check each ArgoCD app via API
+        for APP in ${{ env.ARGOCD_APPS }}; do
+          STATUS=$(curl -s \
+            -H "Authorization: Bearer ${{ secrets.ARGOCD_TOKEN }}" \
+            "${{ secrets.ARGOCD_SERVER }}/api/v1/applications/$APP" 2>/dev/null | \
+            python3 -c 'import sys,json; d=json.load(sys.stdin); print(d.get("status",{}).get("sync",{}).get("status","Unknown")+"|"+d.get("status",{}).get("health",{}).get("status","Unknown"))' \
+            2>/dev/null || echo "Unknown|Unknown")
+
+          SYNC_STATUS=$(echo "$STATUS" | cut -d'|' -f1)
+          HEALTH=$(echo "$STATUS" | cut -d'|' -f2)
+
+          echo "App: $APP | Sync: $SYNC_STATUS | Health: $HEALTH"
+
+          if [ "$SYNC_STATUS" = "OutOfSync" ] || [ "$HEALTH" = "Degraded" ]; then
+            DRIFT_DETECTED=true
+            DRIFTED_APPS="$DRIFTED_APPS $APP"
+            DRIFT_DETAILS="$DRIFT_DETAILS\n- $APP: sync=$SYNC_STATUS health=$HEALTH"
+          fi
+        done
+
+        # Fallback: check kubectl diff if ArgoCD not configured
+        if [ -z "${{ secrets.ARGOCD_SERVER }}" ]; then
+          echo "ArgoCD not configured — checking kubectl diff"
+          for DIR in k8s/base k8s/staging k8s/monitoring; do
+            if [ -d "$DIR" ]; then
+              DIFF=$(kubectl diff -k "$DIR" 2>/dev/null | head -50 || echo "")
+              if [ -n "$DIFF" ]; then
+                DRIFT_DETECTED=true
+                DRIFTED_APPS="$DRIFTED_APPS $DIR"
+                DRIFT_DETAILS="$DRIFT_DETAILS\n- $DIR: kubectl diff detected changes"
+              fi
+            fi
+          done
+        fi
+
+        echo "drift_detected=$DRIFT_DETECTED" >> "$GITHUB_OUTPUT"
+        echo "drifted_apps=$DRIFTED_APPS" >> "$GITHUB_OUTPUT"
+        printf "drift_summary=%s" "$(echo -e "$DRIFT_DETAILS" | tr '\n' '|')" >> "$GITHUB_OUTPUT"
+
+        if [ "$DRIFT_DETECTED" = "true" ]; then
+          echo "DRIFT DETECTED in:$DRIFTED_APPS"
+          exit 0  # Don't fail here, let auto-sync job handle it
+        else
+          echo "No drift detected — all apps in sync"
+        fi
+
+  # ══════════════════════════════════════════════════════════════════
+  # Job 2: Auto-Sync drifted applications
+  # ══════════════════════════════════════════════════════════════════
+  auto-sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: detect-drift
+    if: needs.detect-drift.outputs.drift_detected == 'true' && (github.event.inputs.auto_sync != 'false')
+    outputs:
+      sync_success: ${{ steps.sync.outputs.sync_success }}
+      sync_results: ${{ steps.sync.outputs.sync_results }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@6fc4af4b145ae7821d527454aa9bd537d1f2dc5f  # v2.1.7
+      with:
+        workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+        service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+      continue-on-error: true
+
+    - name: Get GKE credentials
+      uses: google-github-actions/get-gke-credentials@7a108e64ed8546fe38316b4086e91da13f4785e1  # v2.3.1
+      with:
+        cluster_name: ${{ env.GKE_CLUSTER }}
+        location: ${{ env.GKE_REGION }}
+      continue-on-error: true
+
+    - name: Sync drifted applications via ArgoCD
+      id: sync
+      run: |
+        DRIFTED="${{ needs.detect-drift.outputs.drifted_apps }}"
+        SYNC_SUCCESS=true
+        SYNC_RESULTS=""
+
+        for APP in $DRIFTED; do
+          echo "Syncing $APP..."
+          if [ -n "${{ secrets.ARGOCD_SERVER }}" ]; then
+            RESULT=$(curl -s -X POST \
+              -H "Authorization: Bearer ${{ secrets.ARGOCD_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              -d '{"prune":false,"dryRun":false,"strategy":{"hook":{}}}' \
+              "${{ secrets.ARGOCD_SERVER }}/api/v1/applications/$APP/sync" 2>/dev/null | \
+              python3 -c 'import sys,json; d=json.load(sys.stdin); print(d.get("status",{}).get("operationState",{}).get("phase","Unknown"))' \
+              2>/dev/null || echo "Error")
+
+            if [ "$RESULT" = "Succeeded" ] || [ "$RESULT" = "Running" ]; then
+              SYNC_RESULTS="$SYNC_RESULTS\n- $APP: SYNCED ($RESULT)"
+              echo "  $APP: sync $RESULT"
+            else
+              SYNC_SUCCESS=false
+              SYNC_RESULTS="$SYNC_RESULTS\n- $APP: FAILED ($RESULT)"
+              echo "  $APP: sync FAILED ($RESULT)"
+            fi
+          else
+            # Fallback: kubectl apply
+            for DIR in k8s/base k8s/staging; do
+              if [ -d "$DIR" ]; then
+                kubectl apply -k "$DIR" 2>/dev/null && \
+                  SYNC_RESULTS="$SYNC_RESULTS\n- $DIR: kubectl apply succeeded" || \
+                  SYNC_RESULTS="$SYNC_RESULTS\n- $DIR: kubectl apply failed"
+              fi
+            done
+            break
+          fi
+        done
+
+        echo "sync_success=$SYNC_SUCCESS" >> "$GITHUB_OUTPUT"
+        printf "sync_results=%s" "$(echo -e "$SYNC_RESULTS" | tr '\n' '|')" >> "$GITHUB_OUTPUT"
+
+  # ══════════════════════════════════════════════════════════════════
+  # Job 3: Open/update drift incident issue
+  # ══════════════════════════════════════════════════════════════════
+  manage-drift-issue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [detect-drift, auto-sync]
+    if: always() && needs.detect-drift.outputs.drift_detected == 'true'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+
+    - name: Create or update drift incident issue
+      uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7.0.1
+      with:
+        github-token: ${{ secrets.AUTO_FIX_TOKEN }}
+        script: |
+          const driftedApps = '${{ needs.detect-drift.outputs.drifted_apps }}'.trim();
+          const syncSuccess = '${{ needs.auto-sync.outputs.sync_success }}';
+          const syncResults = '${{ needs.auto-sync.outputs.sync_results }}'.split('|').filter(Boolean).join('\n');
+          const driftSummary = '${{ needs.detect-drift.outputs.drift_summary }}'.split('|').filter(Boolean).join('\n');
+          const runUrl = `${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}`;
+
+          const statusEmoji = syncSuccess === 'true' ? 'Resolved' : 'Active';
+          const title = `[Drift] Infrastructure drift detected — ${new Date().toISOString().split('T')[0]}`;
+
+          const body = [
+            '## Infrastructure Drift Detected',
+            '',
+            `Status: ${statusEmoji}`,
+            `Detected at: ${new Date().toISOString()}`,
+            `Run: ${runUrl}`,
+            '',
+            '### Drifted Applications',
+            driftSummary || driftedApps,
+            '',
+            '### Auto-Sync Results',
+            syncResults || 'Auto-sync not triggered',
+            '',
+            '### Next Steps',
+            syncSuccess === 'true'
+              ? '- Auto-sync completed. Monitor for recurrence.'
+              : '- [ ] Manual investigation required\n- [ ] Check ArgoCD logs\n- [ ] Verify cluster connectivity',
+          ].join('\n');
+
+          // Check for existing open drift issue
+          const existing = await github.rest.issues.listForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            labels: 'drift,automated',
+            state: 'open',
+            per_page: 5,
+          });
+
+          if (existing.data.length > 0) {
+            // Update existing issue
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: existing.data[0].number,
+              body: `## Drift Update — ${new Date().toISOString()}\n\n${body}`,
+            });
+            console.log(`Updated existing drift issue #${existing.data[0].number}`);
+            if (syncSuccess === 'true') {
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.data[0].number,
+                state: 'closed',
+                state_reason: 'completed',
+              });
+              console.log('Closed drift issue (auto-sync resolved)');
+            }
+          } else if (syncSuccess !== 'true') {
+            // Open new issue only if sync failed
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: ['drift', 'infrastructure', 'automated', 'p1'],
+            });
+            console.log(`Opened drift issue #${issue.data.number}`);
+          }
+
+  # ══════════════════════════════════════════════════════════════════
+  # Job 4: Close stale drift issues when no drift detected
+  # ══════════════════════════════════════════════════════════════════
+  close-resolved-drift:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: detect-drift
+    if: needs.detect-drift.outputs.drift_detected == 'false'
+    steps:
+    - name: Close resolved drift issues
+      uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7.0.1
+      with:
+        github-token: ${{ secrets.AUTO_FIX_TOKEN }}
+        script: |
+          const existing = await github.rest.issues.listForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            labels: 'drift,automated',
+            state: 'open',
+            per_page: 10,
+          });
+
+          for (const issue of existing.data) {
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              body: `Drift resolved — all applications are now in sync as of ${new Date().toISOString()}. Closing automatically.`,
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              state: 'closed',
+              state_reason: 'completed',
+            });
+            console.log(`Closed resolved drift issue #${issue.number}`);
+          }

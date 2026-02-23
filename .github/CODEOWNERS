@@ -1,0 +1,52 @@
+# CODEOWNERS — IndestructibleEco (eco-base)
+# URI: indestructibleeco://github/codeowners
+#
+# Format: <pattern> <owner> [<owner> ...]
+# Owners are automatically requested for review when a PR touches their paths.
+# GitHub Teams: @indestructibleorg/<team>
+# Individuals:  @<username>
+#
+# Reference: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# ── Default: all changes require platform team review ──────────────
+*                                   @indestructibleorg/platform-team
+
+# ── Shared Kernel (Control Plane) ──────────────────────────────────
+.github/                            @indestructibleorg/platform-team @indestructibleorg/devops-team
+.github/workflows/                  @indestructibleorg/devops-team
+policy/                             @indestructibleorg/security-team @indestructibleorg/platform-team
+tools/                              @indestructibleorg/platform-team
+
+# ── Backend / API ───────────────────────────────────────────────────
+backend/                            @indestructibleorg/backend-team
+backend/api/                        @indestructibleorg/backend-team
+backend/ai/                         @indestructibleorg/ai-team @indestructibleorg/backend-team
+backend/k8s/                        @indestructibleorg/devops-team @indestructibleorg/backend-team
+
+# ── Platform Implementations ────────────────────────────────────────
+platforms/                          @indestructibleorg/platform-team
+platforms/platform-template/        @indestructibleorg/platform-team
+platforms/web/                      @indestructibleorg/frontend-team
+platforms/desktop/                  @indestructibleorg/frontend-team
+platforms/im-integration/           @indestructibleorg/backend-team
+
+# ── Infrastructure / Kubernetes ─────────────────────────────────────
+k8s/                                @indestructibleorg/devops-team
+k8s/base/                           @indestructibleorg/devops-team
+monitoring/                         @indestructibleorg/devops-team @indestructibleorg/sre-team
+ecosystem/                          @indestructibleorg/platform-team
+
+# ── Supply Chain & Security ─────────────────────────────────────────
+sbom.json                           @indestructibleorg/security-team
+SECURITY.md                         @indestructibleorg/security-team
+.github/workflows/security-scan.yaml @indestructibleorg/security-team
+.github/workflows/canary-deploy.yaml @indestructibleorg/devops-team @indestructibleorg/sre-team
+
+# ── Governance & Compliance ─────────────────────────────────────────
+*.qyaml                             @indestructibleorg/platform-team @indestructibleorg/devops-team
+GOVERNANCE.md                       @indestructibleorg/platform-team
+CHANGELOG.md                        @indestructibleorg/platform-team
+
+# ── Auto-generated files (no review required) ───────────────────────
+# Files modified by github-actions[bot] auto-fix workflows
+# are exempted from CODEOWNERS review via branch protection bypass rules.
