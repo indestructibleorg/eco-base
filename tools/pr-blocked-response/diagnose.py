@@ -37,6 +37,8 @@ from datetime import datetime, timezone
 REPO           = os.environ.get("REPO", "indestructibleorg/eco-base")
 SPECIFIC_PR    = os.environ.get("SPECIFIC_PR", "").strip()
 GH_TOKEN       = os.environ.get("GH_TOKEN", "")
+TRIGGER_EVENT  = os.environ.get("TRIGGER_EVENT", "").strip()
+SOURCE_WORKFLOW = os.environ.get("SOURCE_WORKFLOW", "").strip()
 
 # Internal required checks — ONLY these matter for merge decisions
 REQUIRED_CHECKS = {"validate", "lint", "test", "build", "opa-policy", "supply-chain"}
@@ -72,6 +74,9 @@ TRACKED_SKIPPED_KEYWORDS = {"gate", "ci"}
 
 # Labels attached to centralized CI anomaly tracking issues
 AUTO_ANOMALY_ISSUE_LABELS = ["blocked", "ci/cd", "needs-attention"]
+ANOMALY_ESCALATION_THRESHOLD = 3
+ANOMALY_SEVERITY_LABEL = "sev/high"
+HUMAN_REVIEW_LABEL = "human-review-required"
 
 # AI/Bot actors whose review comments are evaluated by governance policy
 AI_BOT_ACTORS = {
@@ -457,6 +462,33 @@ def collect_non_required_gate_anomalies(check_runs):
     return anomalies
 
 
+def current_trigger_source():
+    if TRIGGER_EVENT == "workflow_run":
+        return f"workflow_run: {SOURCE_WORKFLOW or 'unknown'}"
+    return TRIGGER_EVENT or "unknown"
+
+
+def build_dedup_key(pr_num, head_sha):
+    source = SOURCE_WORKFLOW or TRIGGER_EVENT or "unknown"
+    return f"{pr_num}:{head_sha or 'unknown'}:{source}"
+
+
+def build_anomaly_signature(anomalies):
+    return "|".join(f"{name}::{conclusion}" for name, conclusion in sorted(set(anomalies)))
+
+
+def parse_anomaly_metadata(body):
+    text = body or ""
+    dedup_match = re.search(r'<!-- autoecoops:dkey=(.*?) -->', text)
+    signature_match = re.search(r'<!-- autoecoops:asig=(.*?) -->', text)
+    count_match = re.search(r'<!-- autoecoops:acount=(\d+) -->', text)
+    return {
+        "dedup_key": dedup_match.group(1) if dedup_match else "",
+        "signature": signature_match.group(1) if signature_match else "",
+        "count": int(count_match.group(1)) if count_match else 0,
+    }
+
+
 def find_open_auto_anomaly_issue(pr_num):
     title_key = f"[Auto] PR #{pr_num} CI anomaly tracking"
     page = 1
@@ -471,33 +503,63 @@ def find_open_auto_anomaly_issue(pr_num):
     return None
 
 
-def upsert_auto_anomaly_issue(pr_num, anomalies):
+def upsert_auto_anomaly_issue(pr_num, anomalies, head_sha):
     title = f"[Auto] PR #{pr_num} CI anomaly tracking"
+    dedup_key = build_dedup_key(pr_num, head_sha)
+    anomaly_signature = build_anomaly_signature(anomalies)
+    trigger_source = current_trigger_source()
+    observed_at = datetime.now(timezone.utc).isoformat()
     body_lines = "\n".join(
         f"- `{name}`: `{conclusion}`"
         for name, conclusion in sorted(set(anomalies), key=lambda item: item[0].lower())
     )
-    body = (
-        f"## Auto-detected CI/Gate anomalies for PR #{pr_num}\n\n"
-        f"The following non-required gates are not healthy and need follow-up:\n\n"
-        f"{body_lines}\n\n"
-        f"This issue is automatically maintained and will be auto-closed once anomalies disappear.\n\n"
-        f"> AutoEcoOps PR Governance Engine"
-    )
 
     issue = find_open_auto_anomaly_issue(pr_num)
     if issue:
+        meta = parse_anomaly_metadata(issue.get("body", ""))
+        if meta["dedup_key"] == dedup_key:
+            print(f"  [ANOMALY-ISSUE] Dedup hit for key {dedup_key}")
+            return {"issue_number": issue["number"], "anomaly_count": meta["count"], "dedup_skipped": True}
+        anomaly_count = meta["count"] + 1 if meta["signature"] == anomaly_signature else 1
+        body = (
+            f"## Auto-detected CI/Gate anomalies for PR #{pr_num}\n\n"
+            f"- **Trigger Source:** `{trigger_source}`\n"
+            f"- **Observed At:** `{observed_at}`\n"
+            f"- **Consecutive Observations:** `{anomaly_count}` / `{ANOMALY_ESCALATION_THRESHOLD}`\n\n"
+            f"The following non-required gates are not healthy and need follow-up:\n\n"
+            f"{body_lines}\n\n"
+            f"This issue is automatically maintained and will be auto-closed once anomalies disappear.\n\n"
+            f"<!-- autoecoops:dkey={dedup_key} -->\n"
+            f"<!-- autoecoops:asig={anomaly_signature} -->\n"
+            f"<!-- autoecoops:acount={anomaly_count} -->\n\n"
+            f"> AutoEcoOps PR Governance Engine"
+        )
         current_body = (issue.get("body", "") or "").replace("\r\n", "\n").strip()
         next_body = (body or "").replace("\r\n", "\n").strip()
         if current_body == next_body:
             print(f"  [ANOMALY-ISSUE] No changes for issue #{issue['number']}")
-            return issue["number"]
+            return {"issue_number": issue["number"], "anomaly_count": anomaly_count, "dedup_skipped": False}
         updated = gh_api(f"/repos/{REPO}/issues/{issue['number']}", method="PATCH", data={"body": body})
         if updated.get("_http_error"):
             print(f"  [ANOMALY-ISSUE] Failed to update issue #{issue['number']}: {updated.get('_http_error')}")
-            return None
+            return {"issue_number": None, "anomaly_count": anomaly_count, "dedup_skipped": False}
         print(f"  [ANOMALY-ISSUE] Updated issue #{issue['number']}")
-        return issue["number"]
+        return {"issue_number": issue["number"], "anomaly_count": anomaly_count, "dedup_skipped": False}
+
+    anomaly_count = 1
+    body = (
+        f"## Auto-detected CI/Gate anomalies for PR #{pr_num}\n\n"
+        f"- **Trigger Source:** `{trigger_source}`\n"
+        f"- **Observed At:** `{observed_at}`\n"
+        f"- **Consecutive Observations:** `{anomaly_count}` / `{ANOMALY_ESCALATION_THRESHOLD}`\n\n"
+        f"The following non-required gates are not healthy and need follow-up:\n\n"
+        f"{body_lines}\n\n"
+        f"This issue is automatically maintained and will be auto-closed once anomalies disappear.\n\n"
+        f"<!-- autoecoops:dkey={dedup_key} -->\n"
+        f"<!-- autoecoops:asig={anomaly_signature} -->\n"
+        f"<!-- autoecoops:acount={anomaly_count} -->\n\n"
+        f"> AutoEcoOps PR Governance Engine"
+    )
 
     created = gh_api(
         f"/repos/{REPO}/issues",
@@ -507,12 +569,30 @@ def upsert_auto_anomaly_issue(pr_num, anomalies):
     issue_number = created.get("number")
     if created.get("_http_error"):
         print(f"  [ANOMALY-ISSUE] Failed to create issue: {created.get('_http_error')}")
-        return None
+        return {"issue_number": None, "anomaly_count": anomaly_count, "dedup_skipped": False}
     if issue_number:
         print(f"  [ANOMALY-ISSUE] Created issue #{issue_number}")
     else:
         print(f"  [ANOMALY-ISSUE] Failed to create issue: no issue number returned")
-    return issue_number
+    return {"issue_number": issue_number, "anomaly_count": anomaly_count, "dedup_skipped": False}
+
+
+def apply_anomaly_escalation(pr_num, issue_number, anomaly_count):
+    if not issue_number or anomaly_count < ANOMALY_ESCALATION_THRESHOLD:
+        return
+    print(
+        f"  [ANOMALY-ESCALATE] count={anomaly_count} >= {ANOMALY_ESCALATION_THRESHOLD}, "
+        f"adding {HUMAN_REVIEW_LABEL} and {ANOMALY_SEVERITY_LABEL}"
+    )
+    add_label(pr_num, HUMAN_REVIEW_LABEL)
+    issue_data = gh_api(f"/repos/{REPO}/issues/{issue_number}")
+    if not isinstance(issue_data, dict):
+        return
+    existing_labels = [label.get("name") for label in issue_data.get("labels", []) if isinstance(label, dict)]
+    if ANOMALY_SEVERITY_LABEL in existing_labels:
+        return
+    updated_labels = existing_labels + [ANOMALY_SEVERITY_LABEL]
+    gh_api(f"/repos/{REPO}/issues/{issue_number}", method="PATCH", data={"labels": updated_labels})
 
 
 def close_auto_anomaly_issue_if_clean(pr_num):
@@ -663,9 +743,11 @@ def process_pr(pr_num, pr_title, pr_branch, head_sha, merge_status, labels):
     print(f"  all_pass={all_pass} any_pending={any_pending} merge_status={merge_status}")
     if anomalies:
         print(f"  [ANOMALIES] Non-required gate anomalies: {anomalies}")
-        issue_number = upsert_auto_anomaly_issue(pr_num, anomalies)
+        anomaly_result = upsert_auto_anomaly_issue(pr_num, anomalies, head_sha)
+        issue_number = anomaly_result.get("issue_number")
         if issue_number:
             add_label(pr_num, "blocked")
+            apply_anomaly_escalation(pr_num, issue_number, anomaly_result.get("anomaly_count", 0))
     else:
         close_auto_anomaly_issue_if_clean(pr_num)
 

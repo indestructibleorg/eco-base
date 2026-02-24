@@ -78,6 +78,8 @@ jobs:
           GH_TOKEN: ${{ secrets.AUTO_FIX_TOKEN || secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           SPECIFIC_PR: ${{ github.event.inputs.pr_number || '' }}
+          TRIGGER_EVENT: ${{ github.event_name }}
+          SOURCE_WORKFLOW: ${{ github.event.workflow_run.name || '' }}
         run: python3 tools/pr-blocked-response/diagnose.py
 
       - name: Run AutoEcoOps High-Governance Engine
