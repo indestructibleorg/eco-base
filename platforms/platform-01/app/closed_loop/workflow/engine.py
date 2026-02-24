@@ -932,7 +932,7 @@ class WorkflowEngine:
             logger.error(f"工作流导入失败: {e}")
             return None
     
-    def create_workflow(self, workflow_def: Dict[str, Any], description: str = "") -> Dict[str, Any]:
+    def create_workflow_from_dict(self, workflow_def: Dict[str, Any], description: str = "") -> Dict[str, Any]:
         """创建工作流 (简化接口)"""
         workflow_id = workflow_def.get('id', str(uuid.uuid4()))
         

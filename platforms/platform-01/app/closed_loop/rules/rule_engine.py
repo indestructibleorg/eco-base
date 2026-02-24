@@ -87,6 +87,18 @@ class RuleEngine:
         """从字典添加规则"""
         condition = rule_dict.get('condition', {})
         action = rule_dict.get('action', 'alert')
+        if isinstance(action, RuleAction):
+            action_type = action
+        elif isinstance(action, str):
+            normalized_action = action.strip().lower()
+            if normalized_action in [a.value for a in RuleAction]:
+                action_type = RuleAction(normalized_action)
+            else:
+                logger.warning(f"无效规则动作: {action}, 使用默认动作 alert")
+                action_type = RuleAction.ALERT
+        else:
+            logger.warning(f"无效规则动作类型: {type(action).__name__}, 使用默认动作 alert")
+            action_type = RuleAction.ALERT
         
         rule = Rule(
             rule_id=rule_dict.get('id', f"rule_{datetime.now().timestamp()}"),
@@ -99,7 +111,7 @@ class RuleEngine:
                 'operator': condition.get('operator', '>'),
                 'threshold': condition.get('threshold', 80)
             },
-            action_type=RuleAction(action) if action in [a.value for a in RuleAction] else RuleAction.ALERT,
+            action_type=action_type,
             action_config=rule_dict.get('action_config', {}),
             priority=rule_dict.get('priority', 5)
         )

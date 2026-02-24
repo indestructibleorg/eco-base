@@ -222,7 +222,7 @@ try:
         'states': ['start', 'end'],
         'transitions': [{'from': 'start', 'to': 'end', 'event': 'complete'}]
     }
-    instance = wf_engine.create_workflow(workflow_def)
+    instance = wf_engine.create_workflow_from_dict(workflow_def)
     print(f"  ✅ 工作流创建成功: {instance['instance_id']}")
 except Exception as e:
     log_error("Phase 2", "workflow", "工作流引擎", e)

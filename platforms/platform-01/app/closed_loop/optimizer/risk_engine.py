@@ -4,6 +4,7 @@
 """
 
 import numpy as np
+from scipy import stats
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
 from datetime import datetime, timedelta
