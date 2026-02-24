@@ -1,0 +1,173 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: eco-base
+  namespace: argocd
+spec:
+  generators:
+    # 為每個環境生成應用程式
+    - list:
+        elements:
+          - name: staging
+            namespace: staging
+            branch: main
+            autoSync: true
+            prune: true
+            selfHeal: true
+          - name: production
+            namespace: production
+            branch: main
+            autoSync: false  # 生產環境需要手動同步
+            prune: false
+            selfHeal: false
+  
+  template:
+    metadata:
+      name: 'eco-base-{{name}}'
+      namespace: argocd
+      labels:
+        app: eco-base
+        environment: '{{name}}'
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: eco-base
+      
+      source:
+        repoURL: 'https://github.com/YOUR_ORG/eco-base.git'  # 替換為您的倉庫
+        targetRevision: '{{branch}}'
+        path: 'helm/eco-base'
+        helm:
+          valueFiles:
+            - 'values.yaml'
+            - 'values-{{name}}.yaml'
+          parameters:
+            - name: environment
+              value: '{{name}}'
+            - name: image.tag
+              value: '{{branch}}'
+      
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace: '{{namespace}}'
+      
+      syncPolicy:
+        automated:
+          prune: '{{prune}}'
+          selfHeal: '{{selfHeal}}'
+          allowEmpty: false
+        syncOptions:
+          - CreateNamespace=true
+          - PrunePropagationPolicy=foreground
+          - PruneLast=true
+          - RespectIgnoreDifferences=true
+          - ApplyOutOfSyncOnly=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
+      
+      ignoreDifferences:
+        - group: apps
+          kind: Deployment
+          jsonPointers:
+            - /spec/replicas
+        - group: ''
+          kind: Secret
+          jsonPointers:
+            - /data
+      
+      revisionHistoryLimit: 10
+
+---
+# 基礎設施組件 ApplicationSet
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: eco-base-infrastructure
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: cert-manager
+            namespace: cert-manager
+            path: infrastructure/cert-manager
+            syncWave: -5
+          - name: ingress-nginx
+            namespace: ingress-nginx
+            path: infrastructure/ingress-nginx
+            syncWave: -4
+          - name: monitoring
+            namespace: monitoring
+            path: infrastructure/monitoring
+            syncWave: -3
+          - name: network-policies
+            namespace: production
+            path: security/network-policies
+            syncWave: -2
+  
+  template:
+    metadata:
+      name: '{{name}}'
+      namespace: argocd
+      annotations:
+        argocd.argoproj.io/sync-wave: '{{syncWave}}'
+    spec:
+      project: eco-base
+      
+      source:
+        repoURL: 'https://github.com/YOUR_ORG/eco-base.git'
+        targetRevision: main
+        path: '{{path}}'
+      
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace: '{{namespace}}'
+      
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
+
+---
+# Supabase Application (獨立管理)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: supabase
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: eco-base
+  source:
+    repoURL: 'https://github.com/YOUR_ORG/eco-base.git'
+    targetRevision: main
+    path: 'supabase/k8s'
+    kustomize:
+      namePrefix: supabase-
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: supabase
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+  ignoreDifferences:
+    - group: ''
+      kind: Secret
+      jsonPointers:
+        - /data

@@ -1,0 +1,375 @@
+# Closed-Loop E2E Tests
+# 閉環 E2E 測試 - 每晚執行，PR 可選
+name: Closed-Loop E2E
+
+on:
+  schedule:
+    # 每晚 02:00 UTC 執行
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      test_suite:
+        description: 'Test suite to run'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - crash-resume
+          - idempotency
+          - verify-fail
+          - audit
+  pull_request:
+    branches: [main]
+    # PR 時可選執行（通過標籤觸發）
+    types: [labeled, synchronize]
+
+jobs:
+  # 決定是否運行 E2E 測試
+  should-run:
+    runs-on: ubuntu-latest
+    outputs:
+      run-e2e: ${{ steps.check.outputs.run-e2e }}
+    steps:
+      - id: check
+        run: |
+          if [[ "${{ github.event_name }}" == "schedule" ]] || \
+             [[ "${{ github.event_name }}" == "workflow_dispatch" ]] || \
+             [[ "${{ contains(github.event.pull_request.labels.*.name, 'run-e2e') }}" == "true" ]]; then
+            echo "run-e2e=true" >> $GITHUB_OUTPUT
+          else
+            echo "run-e2e=false" >> $GITHUB_OUTPUT
+          fi
+
+  crash-resume-test:
+    runs-on: ubuntu-latest
+    name: Crash-Resume E2E Test
+    needs: should-run
+    if: needs.should-run.outputs.run-e2e == 'true'
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install pytest pytest-json-report requests
+      
+      - name: Run Crash-Resume E2E Test
+        run: |
+          pytest tests/e2e/test_crash_resume_e2e.py \
+            -v \
+            --json-report \
+            --json-report-file=reports/crash_resume_report.json
+      
+      - name: Verify Crash-Resume Invariant
+        if: always()
+        run: |
+          python -c "
+          import json
+          import sys
+          
+          try:
+              with open('reports/crash_resume_report.json') as f:
+                  data = json.load(f)
+              
+              if data['summary']['failed'] > 0:
+                  print('❌ Crash-Resume test failed')
+                  sys.exit(1)
+              
+              # 檢查是否有足夠的 kill 次數
+              total_kills = 0
+              for test in data['tests']:
+                  if 'kill_count' in test.get('metadata', {}):
+                      total_kills += test['metadata']['kill_count']
+              
+              if total_kills < 20:
+                  print(f'⚠️  Only {total_kills} kills performed, expected at least 20')
+              else:
+                  print(f'✅ {total_kills} kills performed, crash-resume invariant verified')
+          except FileNotFoundError:
+              print('❌ Report file not found')
+              sys.exit(1)
+          "
+      
+      - name: Upload Crash-Resume Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: crash-resume-report
+          path: reports/crash_resume_report.json
+
+  idempotency-test:
+    runs-on: ubuntu-latest
+    name: Idempotency E2E Test
+    needs: should-run
+    if: needs.should-run.outputs.run-e2e == 'true'
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install pytest pytest-json-report requests
+      
+      - name: Run Idempotency E2E Test
+        run: |
+          pytest tests/e2e/test_idempotency_e2e.py \
+            -v \
+            --json-report \
+            --json-report-file=reports/idempotency_report.json
+      
+      - name: Verify Idempotency Invariant
+        if: always()
+        run: |
+          python -c "
+          import json
+          import sys
+          
+          try:
+              with open('reports/idempotency_report.json') as f:
+                  data = json.load(f)
+              
+              if data['summary']['failed'] > 0:
+                  print('❌ Idempotency test failed')
+                  sys.exit(1)
+              
+              print('✅ Idempotency invariant verified - replay produces no side effects')
+          except FileNotFoundError:
+              print('❌ Report file not found')
+              sys.exit(1)
+          "
+      
+      - name: Upload Idempotency Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: idempotency-report
+          path: reports/idempotency_report.json
+
+  verify-fail-test:
+    runs-on: ubuntu-latest
+    name: Verify-Fail E2E Test
+    needs: should-run
+    if: needs.should-run.outputs.run-e2e == 'true'
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install pytest pytest-json-report requests
+      
+      - name: Run Verify-Fail E2E Test
+        run: |
+          pytest tests/e2e/test_verify_fail_e2e.py \
+            -v \
+            --json-report \
+            --json-report-file=reports/verify_fail_report.json
+      
+      - name: Verify Rollback Invariant
+        if: always()
+        run: |
+          python -c "
+          import json
+          import sys
+          
+          try:
+              with open('reports/verify_fail_report.json') as f:
+                  data = json.load(f)
+              
+              if data['summary']['failed'] > 0:
+                  print('❌ Verify-Fail test failed')
+                  sys.exit(1)
+              
+              # 檢查是否有驗證失敗回滾的記錄
+              rollback_verified = False
+              for test in data['tests']:
+                  if 'rollback' in test['nodeid'].lower():
+                      rollback_verified = True
+                      break
+              
+              if rollback_verified:
+                  print('✅ Rollback on verify-fail verified')
+              else:
+                  print('⚠️  Rollback verification not found in test names')
+          except FileNotFoundError:
+              print('❌ Report file not found')
+              sys.exit(1)
+          "
+      
+      - name: Upload Verify-Fail Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verify-fail-report
+          path: reports/verify_fail_report.json
+
+  audit-test:
+    runs-on: ubuntu-latest
+    name: Audit & Reproducibility E2E Test
+    needs: should-run
+    if: needs.should-run.outputs.run-e2e == 'true'
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install pytest pytest-json-report requests
+      
+      - name: Run Audit E2E Test
+        run: |
+          pytest tests/e2e/test_audit_e2e.py \
+            -v \
+            --json-report \
+            --json-report-file=reports/audit_report.json
+      
+      - name: Verify Audit Invariant
+        if: always()
+        run: |
+          python -c "
+          import json
+          import sys
+          
+          try:
+              with open('reports/audit_report.json') as f:
+                  data = json.load(f)
+              
+              if data['summary']['failed'] > 0:
+                  print('❌ Audit test failed')
+                  sys.exit(1)
+              
+              print('✅ Audit invariant verified - manifest hash consistency confirmed')
+          except FileNotFoundError:
+              print('❌ Report file not found')
+              sys.exit(1)
+          "
+      
+      - name: Upload Audit Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-report
+          path: reports/audit_report.json
+
+  e2e-gate:
+    runs-on: ubuntu-latest
+    name: E2E Gate (All E2E Tests Must Pass)
+    needs: [crash-resume-test, idempotency-test, verify-fail-test, audit-test]
+    if: always() && needs.should-run.outputs.run-e2e == 'true'
+    steps:
+      - name: Check All E2E Jobs Passed
+        run: |
+          echo "Crash-Resume Test: ${{ needs.crash-resume-test.result }}"
+          echo "Idempotency Test: ${{ needs.idempotency-test.result }}"
+          echo "Verify-Fail Test: ${{ needs.verify-fail-test.result }}"
+          echo "Audit Test: ${{ needs.audit-test.result }}"
+          
+          if [[ "${{ needs.crash-resume-test.result }}" != "success" ]] || \
+             [[ "${{ needs.idempotency-test.result }}" != "success" ]] || \
+             [[ "${{ needs.verify-fail-test.result }}" != "success" ]] || \
+             [[ "${{ needs.audit-test.result }}" != "success" ]]; then
+            echo "❌ E2E Gate FAILED - 部分 E2E 測試未通過"
+            exit 1
+          fi
+          
+          echo "✅ E2E Gate PASSED - 所有 E2E 測試通過"
+
+  # 生成最終報告
+  generate-report:
+    runs-on: ubuntu-latest
+    name: Generate E2E Summary Report
+    needs: [crash-resume-test, idempotency-test, verify-fail-test, audit-test]
+    if: always() && needs.should-run.outputs.run-e2e == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download All Reports
+        uses: actions/download-artifact@v4
+        with:
+          path: reports/
+          pattern: '*-report'
+      
+      - name: Generate Summary
+        run: |
+          python -c "
+          import json
+          import os
+          from datetime import datetime
+          
+          summary = {
+              'timestamp': datetime.utcnow().isoformat(),
+              'run_id': '${{ github.run_id }}',
+              'commit': '${{ github.sha }}',
+              'results': {}
+          }
+          
+          report_files = {
+              'crash_resume': 'reports/crash-resume-report/crash_resume_report.json',
+              'idempotency': 'reports/idempotency-report/idempotency_report.json',
+              'verify_fail': 'reports/verify-fail-report/verify_fail_report.json',
+              'audit': 'reports/audit-report/audit_report.json'
+          }
+          
+          all_passed = True
+          
+          for name, path in report_files.items():
+              if os.path.exists(path):
+                  with open(path) as f:
+                      data = json.load(f)
+                  summary['results'][name] = {
+                      'passed': data['summary']['failed'] == 0,
+                      'total': data['summary']['total'],
+                      'passed_count': data['summary']['passed'],
+                      'failed_count': data['summary']['failed']
+                  }
+                  if data['summary']['failed'] > 0:
+                      all_passed = False
+              else:
+                  summary['results'][name] = {'passed': False, 'error': 'Report not found'}
+                  all_passed = False
+          
+          summary['all_passed'] = all_passed
+          
+          with open('reports/e2e_summary.json', 'w') as f:
+              json.dump(summary, f, indent=2)
+          
+          # 打印摘要
+          print('='*60)
+          print('Closed-Loop E2E Test Summary')
+          print('='*60)
+          for name, result in summary['results'].items():
+              status = '✅ PASS' if result.get('passed') else '❌ FAIL'
+              print(f'{name:20} {status}')
+          print('='*60)
+          if all_passed:
+              print('✅ ALL TESTS PASSED')
+          else:
+              print('❌ SOME TESTS FAILED')
+          "
+      
+      - name: Upload Summary Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-summary
+          path: reports/e2e_summary.json

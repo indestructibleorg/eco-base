@@ -1,0 +1,40 @@
+# =============================================================================
+# Eco-Backend RBAC
+# =============================================================================
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: eco-backend
+  namespace: eco-backend
+  labels:
+    app: eco-backend
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: eco-backend-role
+  namespace: eco-backend
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: eco-backend-rolebinding
+  namespace: eco-backend
+subjects:
+  - kind: ServiceAccount
+    name: eco-backend
+    namespace: eco-backend
+roleRef:
+  kind: Role
+  name: eco-backend-role
+  apiGroup: rbac.authorization.k8s.io

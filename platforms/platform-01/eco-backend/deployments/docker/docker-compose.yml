@@ -1,0 +1,168 @@
+# =============================================================================
+# Eco-Backend Docker Compose
+# =============================================================================
+
+version: '3.8'
+
+services:
+  # ==========================================================================
+  # 應用服務
+  # ==========================================================================
+  api:
+    build:
+      context: ../..
+      dockerfile: deployments/docker/Dockerfile
+    container_name: eco-backend-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=false
+      - DATABASE_URL=postgresql+asyncpg://eco_user:eco_pass@postgres:5432/eco_db
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+      - SECRET_KEY=${SECRET_KEY:-change-me-in-production}
+    env_file:
+      - ../../.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - eco-network
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  # ==========================================================================
+  # 工作進程
+  # ==========================================================================
+  worker:
+    build:
+      context: ../..
+      dockerfile: deployments/docker/Dockerfile
+    container_name: eco-backend-worker
+    restart: unless-stopped
+    command: celery -A app.core.celery worker --loglevel=info --concurrency=4
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql+asyncpg://eco_user:eco_pass@postgres:5432/eco_db
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+    env_file:
+      - ../../.env
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - eco-network
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+
+  # ==========================================================================
+  # 任務監控
+  # ==========================================================================
+  flower:
+    build:
+      context: ../..
+      dockerfile: deployments/docker/Dockerfile
+    container_name: eco-backend-flower
+    restart: unless-stopped
+    command: celery -A app.core.celery flower --port=5555
+    ports:
+      - "5555:5555"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+    depends_on:
+      - redis
+      - worker
+    networks:
+      - eco-network
+
+  # ==========================================================================
+  # PostgreSQL 數據庫
+  # ==========================================================================
+  postgres:
+    image: postgres:15-alpine
+    container_name: eco-backend-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=eco_user
+      - POSTGRES_PASSWORD=eco_pass
+      - POSTGRES_DB=eco_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - eco-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U eco_user -d eco_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ==========================================================================
+  # Redis 緩存
+  # ==========================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: eco-backend-redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - eco-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ==========================================================================
+  # Nginx 反向代理
+  # ==========================================================================
+  nginx:
+    image: nginx:alpine
+    container_name: eco-backend-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - api
+    networks:
+      - eco-network
+
+# ==========================================================================
+# 卷
+# ==========================================================================
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+# ==========================================================================
+# 網絡
+# ==========================================================================
+networks:
+  eco-network:
+    driver: bridge

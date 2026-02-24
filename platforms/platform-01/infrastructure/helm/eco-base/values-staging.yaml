@@ -1,0 +1,132 @@
+# =============================================================================
+# Eco-Base Helm Chart - Staging Environment Values
+# =============================================================================
+
+global:
+  environment: staging
+  domain: staging.your-domain.com  # 替換為您的域名
+  tls:
+    enabled: true
+    issuer: letsencrypt-staging
+
+# =============================================================================
+# API 服務 - Staging 配置
+# =============================================================================
+api:
+  replicaCount: 2
+  
+  image:
+    repository: us-central1-docker.pkg.dev/YOUR_PROJECT/eco-base/api
+    tag: latest  # CI/CD 會自動更新
+    pullPolicy: Always
+  
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+  
+  env:
+    - name: LOG_LEVEL
+      value: "debug"
+    - name: ENVIRONMENT
+      value: "staging"
+    - name: SUPABASE_URL
+      value: "https://your-project.supabase.co"  # 替換
+    - name: REDIS_HOST
+      value: "eco-base-redis-master"
+  
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+      nginx.ingress.kubernetes.io/rate-limit: "100"
+    hosts:
+      - host: api-staging.your-domain.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: api-staging-tls
+        hosts:
+          - api-staging.your-domain.com
+
+# =============================================================================
+# Web 前端 - Staging 配置
+# =============================================================================
+web:
+  replicaCount: 2
+  
+  image:
+    repository: us-central1-docker.pkg.dev/YOUR_PROJECT/eco-base/web
+    tag: latest
+    pullPolicy: Always
+  
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+    hosts:
+      - host: staging.your-domain.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: web-staging-tls
+        hosts:
+          - staging.your-domain.com
+
+# =============================================================================
+# AI 推理服務 - Staging 配置
+# =============================================================================
+aiInference:
+  enabled: true
+  replicaCount: 1
+  
+  image:
+    repository: us-central1-docker.pkg.dev/YOUR_PROJECT/eco-base/ai-inference
+    tag: latest
+    pullPolicy: Always
+  
+  resources:
+    requests:
+      cpu: 500m
+      memory: 2Gi
+      nvidia.com/gpu: 1
+    limits:
+      cpu: 2000m
+      memory: 8Gi
+      nvidia.com/gpu: 1
+  
+  env:
+    - name: MODEL_PATH
+      value: "/models"
+    - name: BATCH_SIZE
+      value: "1"
+
+# =============================================================================
+# Redis - Staging 配置
+# =============================================================================
+redis:
+  enabled: true
+  
+  master:
+    persistence:
+      size: 10Gi
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi

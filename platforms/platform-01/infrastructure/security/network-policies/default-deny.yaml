@@ -1,0 +1,55 @@
+# =============================================================================
+# Default Deny Network Policies
+# =============================================================================
+# 這些策略實施零信任網路安全模型:
+# 1. 默認拒絕所有入口流量
+# 2. 默認拒絕所有出口流量
+# 3. 然後明確允許必要的流量
+# =============================================================================
+
+# 生產命名空間 - 默認拒絕所有入口流量
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: production
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+
+---
+# 生產命名空間 - 默認拒絕所有出口流量
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-egress
+  namespace: production
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+
+---
+# Staging 命名空間 - 默認拒絕所有入口流量
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: staging
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+
+---
+# Staging 命名空間 - 默認拒絕所有出口流量
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-egress
+  namespace: staging
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress

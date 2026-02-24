@@ -1,0 +1,29 @@
+detector:
+  algorithms:
+    - STATISTICAL_ZSCORE
+    - ML_ISOLATION_FOREST
+  sensitivity: 0.95
+  window_size: 100
+
+remediator:
+  max_concurrent: 5
+  timeout: 300
+  dry_run: false
+
+rule_engine:
+  auto_reload: true
+  max_rules: 1000
+
+rca:
+  correlation_window: 300
+  max_depth: 5
+
+alert_router:
+  aggregation_window: 60
+  deduplication_ttl: 300
+
+capacity:
+  forecast_horizon: 24
+  models:
+    - PROPHET
+    - ARIMA

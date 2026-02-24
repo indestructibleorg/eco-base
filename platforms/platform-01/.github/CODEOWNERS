@@ -1,0 +1,26 @@
+# Global owners (fallback)
+* @platform-team
+
+# Governance / CI must be owned by platform/security (不可隨意改)
+/.github/ @platform-team @security-team
+/.github/workflows/ @platform-team @security-team
+/.github/branch-protection.json @platform-team @security-team
+/.github/required-checks.json @platform-team @security-team
+
+# Hard constraints scripts & policies
+/hard_constraints_check.sh @platform-team @security-team
+/scripts/ @platform-team @security-team
+/contracts/ @platform-team @security-team
+
+# Tests are critical evidence; require platform ownership
+/tests/ @platform-team
+/tests/e2e/ @platform-team
+
+# Dependency locks & toolchain pinning
+/requirements-dev.lock @platform-team @security-team
+/pyproject.toml @platform-team @security-team
+/poetry.lock @platform-team @security-team
+/uv.lock @platform-team @security-team
+
+# Docs (optional: keep platform as reviewer for governance docs)
+/docs/GOVERNANCE_REQUIRED_CHECKS.md @platform-team

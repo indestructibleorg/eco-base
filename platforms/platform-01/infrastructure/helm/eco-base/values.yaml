@@ -1,0 +1,361 @@
+# =============================================================================
+# Eco-Base Helm Chart - Default Values
+# =============================================================================
+# 此文件包含所有服務的默認配置
+# 環境特定配置在 values-<environment>.yaml 中覆蓋
+# =============================================================================
+
+# =============================================================================
+# 全局配置
+# =============================================================================
+global:
+  environment: development
+  
+  # GCP 配置
+  gcp:
+    projectId: ""
+    region: "us-central1"
+  
+  # 映像倉庫
+  imageRegistry: ""
+  
+  # 域名
+  domain: "localhost"
+  
+  # TLS 配置
+  tls:
+    enabled: false
+    issuer: "letsencrypt-staging"
+
+# =============================================================================
+# API 服務配置
+# =============================================================================
+api:
+  enabled: true
+  
+  replicaCount: 2
+  
+  image:
+    repository: api
+    tag: latest
+    pullPolicy: IfNotPresent
+  
+  service:
+    type: ClusterIP
+    port: 8000
+    targetPort: 8000
+  
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  
+  # 自動擴展
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 80
+  
+  # 健康檢查
+  livenessProbe:
+    enabled: true
+    path: /health
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  
+  readinessProbe:
+    enabled: true
+    path: /ready
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 3
+  
+  # 環境變數
+  env:
+    - name: LOG_LEVEL
+      value: "info"
+    - name: ENVIRONMENT
+      value: "development"
+  
+  # Secrets (從 K8s Secret 引用)
+  envFromSecrets:
+    - name: api-secrets
+      prefix: ""
+  
+  # 持久化存儲
+  persistence:
+    enabled: false
+  
+  # 服務帳戶
+  serviceAccount:
+    create: true
+    annotations: {}
+    name: ""
+  
+  # Pod 安全
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    fsGroup: 1000
+  
+  securityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+  
+  # Ingress 配置
+  ingress:
+    enabled: false
+  
+  # Pod 反親和性
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - api
+            topologyKey: kubernetes.io/hostname
+
+# =============================================================================
+# Web 前端配置
+# =============================================================================
+web:
+  enabled: true
+  
+  replicaCount: 2
+  
+  image:
+    repository: web
+    tag: latest
+    pullPolicy: IfNotPresent
+  
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 80
+  
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+  
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+  
+  livenessProbe:
+    enabled: true
+    path: /
+    initialDelaySeconds: 10
+    periodSeconds: 10
+  
+  readinessProbe:
+    enabled: true
+    path: /
+    initialDelaySeconds: 5
+    periodSeconds: 5
+  
+  env:
+    - name: NODE_ENV
+      value: "production"
+  
+  ingress:
+    enabled: false
+
+# =============================================================================
+# AI 推理服務配置
+# =============================================================================
+aiInference:
+  enabled: true
+  
+  replicaCount: 1
+  
+  image:
+    repository: ai-inference
+    tag: latest
+    pullPolicy: IfNotPresent
+  
+  service:
+    type: ClusterIP
+    port: 8080
+    targetPort: 8080
+  
+  resources:
+    requests:
+      cpu: 500m
+      memory: 2Gi
+      # GPU 配置
+      nvidia.com/gpu: 1
+    limits:
+      cpu: 4000m
+      memory: 16Gi
+      nvidia.com/gpu: 1
+  
+  # 節點選擇器 (確保調度到 GPU 節點)
+  nodeSelector:
+    node-type: gpu
+  
+  tolerations:
+    - key: nvidia.com/gpu
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
+  
+  autoscaling:
+    enabled: false  # GPU 工作負載通常不啟用 HPA
+  
+  env:
+    - name: MODEL_PATH
+      value: "/models"
+    - name: BATCH_SIZE
+      value: "1"
+    - name: MAX_TOKENS
+      value: "2048"
+  
+  # 模型存儲
+  persistence:
+    enabled: true
+    storageClass: standard-rwo
+    accessMode: ReadWriteOnce
+    size: 100Gi
+    mountPath: /models
+
+# =============================================================================
+# 數據庫配置 (如果使用內置 PostgreSQL)
+# =============================================================================
+postgresql:
+  enabled: false  # 使用 Supabase 時設為 false
+  
+  auth:
+    username: eco
+    database: ecobase
+    existingSecret: db-credentials
+  
+  primary:
+    persistence:
+      enabled: true
+      size: 50Gi
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: 1000m
+        memory: 2Gi
+
+# =============================================================================
+# Redis 配置
+# =============================================================================
+redis:
+  enabled: true
+  
+  architecture: standalone
+  
+  auth:
+    enabled: true
+    existingSecret: redis-credentials
+    existingSecretPasswordKey: password
+  
+  master:
+    persistence:
+      enabled: true
+      size: 10Gi
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 1Gi
+
+# =============================================================================
+# Ingress Controller 配置
+# =============================================================================
+ingressNginx:
+  enabled: false  # 通常由基礎設施團隊統一管理
+
+# =============================================================================
+# 網路策略
+# =============================================================================
+networkPolicy:
+  enabled: true
+  
+  # API 服務網路策略
+  api:
+    ingress:
+      - from:
+          - namespaceSelector:
+              matchLabels:
+                name: ingress-nginx
+        ports:
+          - protocol: TCP
+            port: 8000
+      - from:
+          - podSelector:
+              matchLabels:
+                app.kubernetes.io/name: web
+        ports:
+          - protocol: TCP
+            port: 8000
+    egress:
+      - to:
+          - namespaceSelector: {}
+        ports:
+          - protocol: TCP
+            port: 53
+          - protocol: UDP
+            port: 53
+      - to:
+          - podSelector:
+              matchLabels:
+                app.kubernetes.io/name: postgresql
+        ports:
+          - protocol: TCP
+            port: 5432
+      - to:
+          - podSelector:
+              matchLabels:
+                app.kubernetes.io/name: redis
+        ports:
+          - protocol: TCP
+            port: 6379
+
+# =============================================================================
+# Pod 中斷預算
+# =============================================================================
+podDisruptionBudget:
+  enabled: true
+  api:
+    minAvailable: 1
+  web:
+    minAvailable: 1
+
+# =============================================================================
+# Prometheus ServiceMonitor
+# =============================================================================
+serviceMonitor:
+  enabled: true
+  interval: 30s
+  scrapeTimeout: 10s
+  labels:
+    release: prometheus

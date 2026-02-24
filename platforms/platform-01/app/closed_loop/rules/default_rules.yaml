@@ -1,0 +1,153 @@
+# 默认闭环规则配置
+
+rules:
+  # CPU 高使用率告警
+  - id: cpu_high_usage
+    name: CPU 高使用率
+    description: 当CPU使用率超过阈值时触发
+    enabled: true
+    priority: 8
+    cooldown_minutes: 5
+    tags:
+      - cpu
+      - performance
+    condition:
+      type: metric_threshold
+      config:
+        metric: cpu_usage
+        threshold: 80
+        operator: '>'
+    action:
+      type: alert
+      config:
+        channel: slack
+        message: "CPU使用率过高: {{value}}%"
+
+  # 内存高使用率告警
+  - id: memory_high_usage
+    name: 内存高使用率
+    description: 当内存使用率超过阈值时触发
+    enabled: true
+    priority: 7
+    cooldown_minutes: 5
+    tags:
+      - memory
+      - performance
+    condition:
+      type: metric_threshold
+      config:
+        metric: memory_usage
+        threshold: 85
+        operator: '>'
+    action:
+      type: alert
+      config:
+        channel: slack
+        message: "内存使用率过高: {{value}}%"
+
+  # 异常检测触发修复
+  - id: anomaly_auto_remediate
+    name: 异常自动修复
+    description: 检测到异常时自动执行修复
+    enabled: true
+    priority: 9
+    cooldown_minutes: 10
+    tags:
+      - anomaly
+      - auto_remediate
+    condition:
+      type: anomaly_detected
+      config:
+        min_severity: 0.7
+    action:
+      type: remediate
+      config:
+        action_type: restart
+        target: "{{metric}}"
+
+  # 磁盘空间不足
+  - id: disk_space_low
+    name: 磁盘空间不足
+    description: 当磁盘空间低于阈值时触发
+    enabled: true
+    priority: 6
+    cooldown_minutes: 30
+    tags:
+      - disk
+      - storage
+    condition:
+      type: metric_threshold
+      config:
+        metric: disk_free_percent
+        threshold: 20
+        operator: '<'
+    action:
+      type: alert
+      config:
+        channel: email
+        message: "磁盘空间不足: 剩余 {{value}}%"
+
+  # 服务响应时间过长
+  - id: high_response_time
+    name: 响应时间过长
+    description: 当服务响应时间超过阈值时触发
+    enabled: true
+    priority: 7
+    cooldown_minutes: 3
+    tags:
+      - latency
+      - performance
+    condition:
+      type: metric_threshold
+      config:
+        metric: response_time_ms
+        threshold: 1000
+        operator: '>'
+    action:
+      type: escalate
+      config:
+        level: 2
+        message: "服务响应时间过长"
+
+  # 错误率过高
+  - id: high_error_rate
+    name: 错误率过高
+    description: 当错误率超过阈值时触发
+    enabled: true
+    priority: 9
+    cooldown_minutes: 2
+    tags:
+      - error
+      - reliability
+    condition:
+      type: metric_threshold
+      config:
+        metric: error_rate
+        threshold: 5
+        operator: '>'
+    action:
+      type: remediate
+      config:
+        action_type: rollback
+        target: "{{service}}"
+
+  # 夜间低流量时段
+  - id: night_time_maintenance
+    name: 夜间维护窗口
+    description: 夜间低流量时段执行维护任务
+    enabled: false
+    priority: 3
+    cooldown_minutes: 60
+    tags:
+      - maintenance
+      - scheduled
+    condition:
+      type: time_based
+      config:
+        start_time: "02:00"
+        end_time: "05:00"
+        days_of_week: [0, 1, 2, 3, 4]  # 周一到周五
+    action:
+      type: workflow
+      config:
+        workflow_id: maintenance_workflow

@@ -1,0 +1,406 @@
+# =============================================================================
+# kube-prometheus-stack Helm Values
+# =============================================================================
+# 此配置部署:
+# - Prometheus (指標收集和存儲)
+# - Grafana (可視化儀表板)
+# - Alertmanager (告警管理)
+# - Node Exporter (節點指標)
+# - kube-state-metrics (K8s 資源指標)
+# =============================================================================
+
+# =============================================================================
+# 全局配置
+# =============================================================================
+global:
+  rbac:
+    create: true
+  
+  # 映像倉庫配置 (使用 Artifact Registry)
+  imageRegistry: ""
+
+# =============================================================================
+# Prometheus 配置
+# =============================================================================
+prometheus:
+  enabled: true
+  
+  prometheusSpec:
+    # 存儲配置
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: standard-rwo
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 100Gi
+    
+    # 保留策略
+    retention: 30d
+    retentionSize: "90GB"
+    
+    # 資源限制
+    resources:
+      requests:
+        cpu: 500m
+        memory: 2Gi
+      limits:
+        cpu: 2000m
+        memory: 8Gi
+    
+    # 副本數 (高可用)
+    replicas: 2
+    
+    # 分片 (用於擴展)
+    shards: 1
+    
+    # 服務發現配置
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+    
+    # 啟用功能
+    enableAdminAPI: false
+    walCompression: true
+    
+    # 查詢配置
+    query:
+      maxSamples: 50000000
+      timeout: 2m
+    
+    # 額外抓取配置
+    additionalScrapeConfigs:
+      # 自定義應用程式指標
+      - job_name: 'eco-base-api'
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - production
+                - staging
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+            action: keep
+            regex: true
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+            action: replace
+            target_label: __metrics_path__
+            regex: (.+)
+          - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+            action: replace
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: $1:$2
+            target_label: __address__
+          - action: labelmap
+            regex: __meta_kubernetes_pod_label_(.+)
+          - source_labels: [__meta_kubernetes_namespace]
+            action: replace
+            target_label: kubernetes_namespace
+          - source_labels: [__meta_kubernetes_pod_name]
+            action: replace
+            target_label: kubernetes_pod_name
+      
+      # AI 推理服務指標
+      - job_name: 'ai-inference'
+        kubernetes_sd_configs:
+          - role: pod
+            namespaces:
+              names:
+                - production
+                - staging
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_label_app]
+            action: keep
+            regex: ai-inference
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_port]
+            action: replace
+            regex: (\d+)
+            target_label: __address__
+            replacement: __address__:$1
+
+# =============================================================================
+# Grafana 配置
+# =============================================================================
+grafana:
+  enabled: true
+  
+  admin:
+    existingSecret: grafana-admin-credentials
+    userKey: admin-user
+    passwordKey: admin-password
+  
+  # 持久化存儲
+  persistence:
+    enabled: true
+    type: pvc
+    storageClassName: standard-rwo
+    accessModes: ["ReadWriteOnce"]
+    size: 10Gi
+  
+  # 資源配置
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  
+  # 服務配置
+  service:
+    type: ClusterIP
+    port: 80
+  
+  # 啟用 Ingress (通過外部 Ingress Controller)
+  ingress:
+    enabled: false  # 由外部配置管理
+  
+  # 儀表板配置
+  dashboards:
+    default:
+      # 集群概覽
+      k8s-cluster:
+        gnetId: 7249
+        revision: 1
+        datasource: prometheus
+      
+      # 節點詳情
+      node-exporter:
+        gnetId: 1860
+        revision: 27
+        datasource: prometheus
+      
+      # Pod 監控
+      k8s-pods:
+        gnetId: 747
+        revision: 1
+        datasource: prometheus
+      
+      # 自定義 Eco-Base 儀表板 (從 ConfigMap 加載)
+      eco-base-api:
+        url: https://raw.githubusercontent.com/YOUR_ORG/eco-base/main/monitoring/grafana/dashboards/eco-base-api.json
+        datasource: prometheus
+  
+  # 儀表板提供者
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: 'default'
+          orgId: 1
+          folder: ''
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/default
+        - name: 'eco-base'
+          orgId: 1
+          folder: 'Eco-Base'
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/eco-base
+  
+  # 數據源配置
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://kube-prometheus-stack-prometheus:9090
+          access: proxy
+          isDefault: true
+          jsonData:
+            timeInterval: 5s
+            httpMethod: POST
+            manageAlerts: true
+            prometheusType: Prometheus
+            cacheLevel: 'High'
+            incrementalQuerying: true
+        
+        - name: Loki
+          type: loki
+          url: http://loki:3100
+          access: proxy
+          jsonData:
+            maxLines: 1000
+        
+        - name: Tempo
+          type: tempo
+          url: http://tempo:3100
+          access: proxy
+          jsonData:
+            tracesToLogs:
+              datasourceUid: 'loki'
+              tags: ['pod', 'namespace']
+              mappedTags: [{ key: 'service.name', value: 'service' }]
+              mapTagNamesEnabled: false
+              spanStartTimeShift: '1h'
+              spanEndTimeShift: '1h'
+              filterByTraceID: false
+              filterBySpanID: false
+  
+  # 啟用圖像渲染 (可選)
+  imageRenderer:
+    enabled: false
+
+# =============================================================================
+# Alertmanager 配置
+# =============================================================================
+alertmanager:
+  enabled: true
+  
+  config:
+    global:
+      smtp_smarthost: 'smtp.gmail.com:587'
+      smtp_from: 'alerts@your-domain.com'
+      smtp_auth_username: '${SMTP_USERNAME}'
+      smtp_auth_password: '${SMTP_PASSWORD}'
+      slack_api_url: '${SLACK_WEBHOOK_URL}'
+      pagerduty_url: 'https://events.pagerduty.com/v2/enqueue'
+    
+    route:
+      group_by: ['alertname', 'namespace', 'severity']
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 12h
+      receiver: 'default'
+      routes:
+        - match:
+            severity: critical
+          receiver: 'pagerduty-critical'
+          continue: true
+        - match:
+            severity: warning
+          receiver: 'slack-warnings'
+          continue: true
+        - match:
+            namespace: production
+          receiver: 'production-alerts'
+    
+    receivers:
+      - name: 'default'
+        email_configs:
+          - to: 'oncall@your-domain.com'
+            send_resolved: true
+      
+      - name: 'pagerduty-critical'
+        pagerduty_configs:
+          - service_key: '${PAGERDUTY_SERVICE_KEY}'
+            severity: critical
+            description: '{{ .GroupLabels.alertname }}'
+      
+      - name: 'slack-warnings'
+        slack_configs:
+          - channel: '#alerts'
+            send_resolved: true
+            title: '{{ .GroupLabels.alertname }}'
+            text: '{{ range .Alerts }}{{ .Annotations.summary }}{{ end }}'
+      
+      - name: 'production-alerts'
+        email_configs:
+          - to: 'production-oncall@your-domain.com'
+            send_resolved: true
+    
+    inhibit_rules:
+      - source_match:
+          severity: 'critical'
+        target_match:
+          severity: 'warning'
+        equal: ['alertname', 'namespace']
+  
+  alertmanagerSpec:
+    replicas: 2
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+
+# =============================================================================
+# Prometheus Operator 配置
+# =============================================================================
+prometheusOperator:
+  enabled: true
+  
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  
+  # 啟用 admission webhook
+  admissionWebhooks:
+    enabled: true
+    patch:
+      enabled: true
+
+# =============================================================================
+# kube-state-metrics 配置
+# =============================================================================
+kubeStateMetrics:
+  enabled: true
+  
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+
+# =============================================================================
+# Node Exporter 配置
+# =============================================================================
+nodeExporter:
+  enabled: true
+  
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+# =============================================================================
+# 默認規則配置
+# =============================================================================
+defaultRules:
+  create: true
+  rules:
+    alertmanager: true
+    etcd: true
+    configReloaders: true
+    general: true
+    k8s: true
+    kubeApiserverAvailability: true
+    kubeApiserverBurnrate: true
+    kubeApiserverHistogram: true
+    kubeApiserverSlos: true
+    kubeControllerManager: true
+    kubelet: true
+    kubeProxy: true
+    kubePrometheusGeneral: true
+    kubePrometheusNodeRecording: true
+    kubernetesApps: true
+    kubernetesResources: true
+    kubernetesStorage: true
+    kubernetesSystem: true
+    kubeSchedulerAlerting: true
+    kubeSchedulerRecording: true
+    kubeStateMetrics: true
+    network: true
+    node: true
+    nodeExporterAlerting: true
+    nodeExporterRecording: true
+    prometheus: true
+    prometheusOperator: true

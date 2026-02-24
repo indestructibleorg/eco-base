@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+data:
+  # 應用程式並行處理限制
+  application.instanceLabelKey: argocd.argoproj.io/instance
+  
+  # 資源並行處理限制
+  controller.repo.server.timeout.seconds: "300"
+  controller.status.processors: "20"
+  controller.operation.processors: "10"
+  
+  # 啟用 Webhook (用於 GitHub 觸發)
+  webhook.github.secret: "$GITHUB_WEBHOOK_SECRET"  # 將由腳本替換
+  
+  # 健康檢查配置
+  resource.customizations.health.apps_Deployment: |
+    hs = {}
+    if obj.status ~= nil then
+      if obj.status.conditions ~= nil then
+        for i, condition in ipairs(obj.status.conditions) do
+          if condition.type == "Available" and condition.status == "False" then
+            hs.status = "Degraded"
+            hs.message = condition.message
+            return hs
+          end
+          if condition.type == "Available" and condition.status == "True" then
+            hs.status = "Healthy"
+            hs.message = condition.message
+            return hs
+          end
+        end
+      end
+    end
+    hs.status = "Progressing"
+    hs.message = "Waiting for deployment"
+    return hs
+  
+  # 資源排除 (不管理的資源)
+  resource.exclusions: |
+    - apiGroups:
+      - cilium.io
+      kinds:
+      - CiliumIdentity
+      clusters:
+      - "*"
+  
+  # Kustomize 配置
+  kustomize.buildOptions: --enable-helm
+  
+  # Helm 配置
+  helm.repositories: |
+    - name: stable
+      url: https://charts.helm.sh/stable
+    - name: prometheus-community
+      url: https://prometheus-community.github.io/helm-charts
+    - name: grafana
+      url: https://grafana.github.io/helm-charts
+    - name: jetstack
+      url: https://charts.jetstack.io
+    - name: ingress-nginx
+      url: https://kubernetes.github.io/ingress-nginx
+    - name: argo
+      url: https://argoproj.github.io/argo-helm

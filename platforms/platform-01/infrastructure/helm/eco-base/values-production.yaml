@@ -1,0 +1,250 @@
+# =============================================================================
+# Eco-Base Helm Chart - Production Environment Values
+# =============================================================================
+
+global:
+  environment: production
+  domain: your-domain.com  # 替換為您的域名
+  tls:
+    enabled: true
+    issuer: letsencrypt-prod
+
+# =============================================================================
+# API 服務 - Production 配置
+# =============================================================================
+api:
+  replicaCount: 3
+  
+  image:
+    repository: us-central1-docker.pkg.dev/YOUR_PROJECT/eco-base/api
+    tag: stable  # 使用經過測試的穩定版本
+    pullPolicy: Always
+  
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+  
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 20
+    targetCPUUtilizationPercentage: 60
+    targetMemoryUtilizationPercentage: 70
+  
+  # Pod 中斷預算
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 2
+  
+  env:
+    - name: LOG_LEVEL
+      value: "info"
+    - name: ENVIRONMENT
+      value: "production"
+    - name: SUPABASE_URL
+      value: "https://your-project.supabase.co"  # 替換
+    - name: REDIS_HOST
+      value: "eco-base-redis-master"
+    - name: RATE_LIMIT_ENABLED
+      value: "true"
+    - name: RATE_LIMIT_REQUESTS_PER_MINUTE
+      value: "100"
+  
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/rate-limit: "1000"
+      nginx.ingress.kubernetes.io/rate-limit-window: "1m"
+    hosts:
+      - host: api.your-domain.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: api-tls
+        hosts:
+          - api.your-domain.com
+
+# =============================================================================
+# Web 前端 - Production 配置
+# =============================================================================
+web:
+  replicaCount: 3
+  
+  image:
+    repository: us-central1-docker.pkg.dev/YOUR_PROJECT/eco-base/web
+    tag: stable
+    pullPolicy: Always
+  
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 60
+  
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 2
+  
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/enable-cors: "true"
+      nginx.ingress.kubernetes.io/cors-allow-origin: "https://your-domain.com"
+    hosts:
+      - host: your-domain.com
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: web-tls
+        hosts:
+          - your-domain.com
+          - www.your-domain.com
+
+# =============================================================================
+# AI 推理服務 - Production 配置
+# =============================================================================
+aiInference:
+  enabled: true
+  replicaCount: 2  # 高可用
+  
+  image:
+    repository: us-central1-docker.pkg.dev/YOUR_PROJECT/eco-base/ai-inference
+    tag: stable
+    pullPolicy: Always
+  
+  resources:
+    requests:
+      cpu: 2000m
+      memory: 8Gi
+      nvidia.com/gpu: 1
+    limits:
+      cpu: 8000m
+      memory: 32Gi
+      nvidia.com/gpu: 1
+  
+  nodeSelector:
+    node-type: gpu
+  
+  tolerations:
+    - key: nvidia.com/gpu
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
+  
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - ai-inference
+          topologyKey: kubernetes.io/hostname
+  
+  env:
+    - name: MODEL_PATH
+      value: "/models"
+    - name: BATCH_SIZE
+      value: "4"  # 生產環境更大的批次
+    - name: MAX_CONCURRENT_REQUESTS
+      value: "10"
+  
+  persistence:
+    enabled: true
+    storageClass: premium-rwo  # 使用 SSD
+    size: 200Gi
+
+# =============================================================================
+# Redis - Production 配置
+# =============================================================================
+redis:
+  enabled: true
+  
+  architecture: replication  # 使用主從複製
+  
+  auth:
+    enabled: true
+    existingSecret: redis-credentials
+  
+  master:
+    persistence:
+      enabled: true
+      storageClass: premium-rwo
+      size: 20Gi
+    resources:
+      requests:
+        cpu: 500m
+        memory: 1Gi
+      limits:
+        cpu: 2000m
+        memory: 4Gi
+  
+  replica:
+    replicaCount: 2
+    persistence:
+      enabled: true
+      storageClass: premium-rwo
+      size: 20Gi
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: 1000m
+        memory: 2Gi
+
+# =============================================================================
+# 網路策略 - Production 嚴格模式
+# =============================================================================
+networkPolicy:
+  enabled: true
+  
+  api:
+    ingress:
+      - from:
+          - namespaceSelector:
+              matchLabels:
+                name: ingress-nginx
+        ports:
+          - protocol: TCP
+            port: 8000
+    egress:
+      - to:
+          - namespaceSelector: {}
+        ports:
+          - protocol: TCP
+            port: 53
+          - protocol: UDP
+            port: 53
+      - to: []  # 只允許訪問 Supabase (外部)
+        ports:
+          - protocol: TCP
+            port: 443
+      - to:
+          - podSelector:
+              matchLabels:
+                app.kubernetes.io/name: redis
+        ports:
+          - protocol: TCP
+            port: 6379

@@ -1,0 +1,22 @@
+system:
+  name: "autonomous-closed-loop"
+  version: "3.0.0"
+  environment: "production"
+  
+logging:
+  level: "INFO"
+  format: "json"
+  output: "stdout"
+
+metrics:
+  enabled: true
+  backend: "prometheus"
+  interval: 15
+
+phases:
+  phase1:
+    enabled: true
+  phase2:
+    enabled: true
+  phase3:
+    enabled: true

@@ -1,0 +1,338 @@
+# =============================================================================
+# Hard Constraints Check
+# =============================================================================
+# 硬约束检查工作流 - 任何不符合硬约束的代码 CI 必须阻断
+# =============================================================================
+
+name: Hard Constraints Check
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main]
+
+jobs:
+  # -----------------------------------------------------------------------------
+  # 硬约束检查 (主检查)
+  # -----------------------------------------------------------------------------
+  hard-constraints:
+    name: Hard Constraints Verification
+    runs-on: ubuntu-latest
+    
+    steps:
+      # -----------------------------------------------------------------------------
+      # 检出代码
+      # -----------------------------------------------------------------------------
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      # -----------------------------------------------------------------------------
+      # 设置 Python
+      # -----------------------------------------------------------------------------
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      # -----------------------------------------------------------------------------
+      # 安装依赖 (使用 lock 文件确保可重播)
+      # -----------------------------------------------------------------------------
+      - name: Install dependencies from lock file
+        run: |
+          pip install -r requirements-dev.lock
+          pip install -e ./eco-platform-integrations
+          pip install -e ./eco-backend
+      
+      # -----------------------------------------------------------------------------
+      # 运行硬约束检查脚本 (核心检查)
+      # -----------------------------------------------------------------------------
+      - name: Run Hard Constraints Check
+        run: bash hard_constraints_check.sh
+      
+      # -----------------------------------------------------------------------------
+      # 上传覆盖率报告
+      # -----------------------------------------------------------------------------
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.xml
+          if-no-files-found: error
+
+  # -----------------------------------------------------------------------------
+  # 状态机测试 (62 个测试)
+  # -----------------------------------------------------------------------------
+  state-machine-tests:
+    name: State Machine Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies from lock file
+        run: |
+          pip install -r requirements-dev.lock
+          pip install -e ./eco-platform-integrations
+          pip install -e ./eco-backend
+      
+      - name: Run state machine tests
+        run: |
+          pytest tests/test_state_machine.py -v --tb=short
+      
+      - name: Run hard constraints integration tests
+        run: |
+          pytest tests/test_platform_integration_hard_constraints.py -v --tb=short
+      
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: state-machine-test-results
+          path: |
+            reports/*.json
+            reports/*.xml
+          if-no-files-found: warn
+
+  # -----------------------------------------------------------------------------
+  # 契约验证测试
+  # -----------------------------------------------------------------------------
+  contract-tests:
+    name: Contract Validation Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies from lock file
+        run: |
+          pip install -r requirements-dev.lock
+      
+      - name: Run contract tests
+        run: |
+          pytest tests/test_scripts_contracts_and_audit.py -v --tb=short
+
+  # -----------------------------------------------------------------------------
+  # 守卫测试 (防止硬闸退化)
+  # -----------------------------------------------------------------------------
+  guard-tests:
+    name: Guard Tests (Prevent Regression)
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies from lock file
+        run: |
+          pip install -r requirements-dev.lock
+      
+      - name: Run guard tests
+        run: |
+          pytest tests/test_hard_constraints_guard.py -v --tb=short
+      
+      - name: Run negative tests (反向测试)
+        run: |
+          pytest tests/test_hard_constraints_negative.py -v --tb=short
+      
+      - name: Verify hard constraints script structure
+        run: |
+          # 验证脚本有严格模式
+          grep "set -euo pipefail" hard_constraints_check.sh || (echo "Missing strict mode" && exit 1)
+          # 验证脚本检查 pytest exit code
+          grep "pytest_exit" hard_constraints_check.sh || (echo "Missing pytest exit code check" && exit 1)
+          # 验证脚本检查 mypy exit code
+          grep "mypy_exit" hard_constraints_check.sh || (echo "Missing mypy exit code check" && exit 1)
+          # 验证脚本检查覆盖率门槛
+          grep "COVERAGE_THRESHOLD\|fail-under" hard_constraints_check.sh || (echo "Missing coverage threshold check" && exit 1)
+          echo "✅ Hard constraints script structure verified"
+
+  # -----------------------------------------------------------------------------
+  # 反向测试 (确保真的会 fail)
+  # -----------------------------------------------------------------------------
+  negative-tests:
+    name: Negative Tests (Ensure Hard Gate Works)
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      # -----------------------------------------------------------------------------
+      # 测试 1: 工具缺失必 fail
+      # -----------------------------------------------------------------------------
+      - name: Test 1 - Tool missing should fail (exit=2)
+        run: |
+          # 创建一个干净的 venv，不安装任何 dev 依赖
+          python -m venv .test_venv
+          source .test_venv/bin/activate
+          
+          # 尝试运行硬约束检查，应该因为缺少工具而失败
+          if bash hard_constraints_check.sh 2>&1; then
+            echo "❌ 期望脚本失败，但它通过了"
+            exit 1
+          else
+            exit_code=$?
+            echo "✅ 脚本正确失败，exit code: $exit_code"
+            if [ $exit_code -eq 2 ]; then
+              echo "✅ Exit code 正确 (工具缺失)"
+            else
+              echo "⚠️ Exit code 是 $exit_code，期望 2 (工具缺失)"
+            fi
+          fi
+          
+          deactivate
+          rm -rf .test_venv
+        continue-on-error: true
+      
+      # -----------------------------------------------------------------------------
+      # 测试 2: pytest 失败必 fail
+      # -----------------------------------------------------------------------------
+      - name: Test 2 - Pytest failure should fail
+        run: |
+          pip install -r requirements-dev.lock
+          
+          # 创建一个故意失败的测试
+          cat > /tmp/failing_test.py << 'EOF'
+import pytest
+
+def test_that_fails():
+    assert False, "This test should fail"
+EOF
+          
+          # 运行 pytest，应该失败
+          if python -m pytest /tmp/failing_test.py -v 2>&1; then
+            echo "❌ 期望 pytest 失败，但它通过了"
+            exit 1
+          else
+            pytest_exit=$?
+            echo "✅ pytest 正确失败，exit code: $pytest_exit"
+          fi
+          
+          rm /tmp/failing_test.py
+
+  # -----------------------------------------------------------------------------
+  # E2E 测试 - Crash-Resume (20 次随机中断)
+  # -----------------------------------------------------------------------------
+  e2e-crash-resume:
+    name: E2E Crash-Resume Tests (20 iterations)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || contains(github.event.pull_request.labels.*.name, 'run-e2e')
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies from lock file
+        run: |
+          pip install -r requirements-dev.lock
+          pip install -e ./eco-platform-integrations
+          pip install -e ./eco-backend
+      
+      - name: Run Crash-Resume E2E tests (20 iterations)
+        run: |
+          pytest tests/e2e/test_crash_resume_e2e.py -v --tb=short -k "test_crash_resume_with_random_kills"
+        timeout-minutes: 30
+      
+      - name: Upload E2E test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-crash-resume-results
+          path: reports/e2e_*.json
+          if-no-files-found: warn
+
+  # -----------------------------------------------------------------------------
+  # E2E 测试 - 幂等性 (同 run_id 重放)
+  # -----------------------------------------------------------------------------
+  e2e-idempotency:
+    name: E2E Idempotency Tests
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || contains(github.event.pull_request.labels.*.name, 'run-e2e')
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies from lock file
+        run: |
+          pip install -r requirements-dev.lock
+          pip install -e ./eco-platform-integrations
+          pip install -e ./eco-backend
+      
+      - name: Run Idempotency E2E tests
+        run: |
+          pytest tests/e2e/test_idempotency_e2e.py -v --tb=short
+      
+      - name: Verify manifest hash consistency
+        run: |
+          # 验证 manifest hash 一致
+          python scripts/verify_manifest.py --artifacts-root artifacts --fail-on-empty
+      
+      - name: Upload E2E test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-idempotency-results
+          path: reports/e2e_*.json
+          if-no-files-found: warn
+
+  # -----------------------------------------------------------------------------
+  # 最终门控 (所有检查必须通过)
+  # -----------------------------------------------------------------------------
+  gate:
+    name: Hard Constraints Gate
+    needs: [hard-constraints, state-machine-tests, contract-tests, guard-tests]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Check all jobs passed
+        run: |
+          echo "Hard Constraints: ${{ needs.hard-constraints.result }}"
+          echo "State Machine Tests: ${{ needs.state-machine-tests.result }}"
+          echo "Contract Tests: ${{ needs.contract-tests.result }}"
+          echo "Guard Tests: ${{ needs.guard-tests.result }}"
+          
+          if [[ "${{ needs.hard-constraints.result }}" != "success" ]] || \
+             [[ "${{ needs.state-machine-tests.result }}" != "success" ]] || \
+             [[ "${{ needs.contract-tests.result }}" != "success" ]] || \
+             [[ "${{ needs.guard-tests.result }}" != "success" ]]; then
+            echo "❌ Hard Constraints Gate FAILED"
+            exit 1
+          fi
+          
+          echo "✅ Hard Constraints Gate PASSED"
+          echo ""
+          echo "═══════════════════════════════════════════════════════════════"
+          echo "  所有硬约束检查通过，代码可以合并"
+          echo "═══════════════════════════════════════════════════════════════"

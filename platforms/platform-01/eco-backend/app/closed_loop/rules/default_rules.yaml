@@ -1,0 +1,297 @@
+# =============================================================================
+# Default Closed Loop Rules
+# =============================================================================
+# 默認閉環規則配置
+# 
+# 使用說明:
+# 1. 規則按優先級排序 (數字越小優先級越高)
+# 2. 每個規則有冷卻時間，防止頻繁觸發
+# 3. 動作可以設置延遲和是否需要人工審批
+# =============================================================================
+
+rules:
+  # ==========================================================================
+  # 高延遲自動擴容
+  # ==========================================================================
+  - name: auto_scale_on_high_latency
+    description: Automatically scale up when request latency exceeds threshold
+    enabled: true
+    priority: 100
+    cooldown_minutes: 10
+    
+    condition:
+      and:
+        - field: metrics.http_request_duration_seconds_p99
+          operator: ">"
+          value: 2.0
+        - field: metrics.http_requests_per_second
+          operator: ">"
+          value: 100
+    
+    actions:
+      - type: scale_up
+        parameters:
+          namespace: default
+          deployment: eco-backend
+          replicas_delta: 2
+          min_replicas: 2
+          max_replicas: 10
+        delay_seconds: 0
+        require_approval: false
+      
+      - type: notify
+        parameters:
+          channel: slack
+          message: "High latency detected, scaling up eco-backend"
+        delay_seconds: 0
+        require_approval: false
+
+  # ==========================================================================
+  # 高錯誤率重啟 Pod
+  # ==========================================================================
+  - name: restart_pod_on_high_error_rate
+    description: Restart pods when error rate exceeds threshold
+    enabled: true
+    priority: 50
+    cooldown_minutes: 5
+    
+    condition:
+      field: metrics.http_error_rate
+      operator: ">"
+      value: 0.1
+    
+    actions:
+      - type: restart_pod
+        parameters:
+          namespace: default
+          label_selector: app=eco-backend
+        delay_seconds: 30
+        require_approval: true
+
+  # ==========================================================================
+  # 提供者故障切換
+  # ==========================================================================
+  - name: switch_provider_on_failure
+    description: Switch to backup provider when primary fails
+    enabled: true
+    priority: 75
+    cooldown_minutes: 15
+    
+    condition:
+      or:
+        - field: metrics.provider_error_rate
+          operator: ">"
+          value: 0.5
+        - field: metrics.provider_latency_p99
+          operator: ">"
+          value: 5.0
+    
+    actions:
+      - type: switch_provider
+        parameters:
+          domain: cognitive
+          new_provider: delta-cognitive
+        delay_seconds: 0
+        require_approval: false
+      
+      - type: notify
+        parameters:
+          channel: slack
+          message: "Switched cognitive provider due to failures"
+        delay_seconds: 0
+        require_approval: false
+
+  # ==========================================================================
+  # 內存使用過高清理緩存
+  # ==========================================================================
+  - name: clear_cache_on_high_memory
+    description: Clear cache when memory usage is high
+    enabled: true
+    priority: 80
+    cooldown_minutes: 3
+    
+    condition:
+      field: metrics.memory_usage_percent
+      operator: ">"
+      value: 85
+    
+    actions:
+      - type: clear_cache
+        parameters:
+          pattern: "*"
+        delay_seconds: 0
+        require_approval: false
+
+  # ==========================================================================
+  # 熔斷器觸發降級
+  # ==========================================================================
+  - name: enable_circuit_breaker_on_failures
+    description: Enable circuit breaker when failure rate is high
+    enabled: true
+    priority: 25
+    cooldown_minutes: 10
+    
+    condition:
+      and:
+        - field: metrics.failure_rate
+          operator: ">"
+          value: 0.3
+        - field: metrics.request_count
+          operator: ">"
+          value: 50
+    
+    actions:
+      - type: enable_circuit_breaker
+        parameters:
+          provider: gamma-cognitive
+        delay_seconds: 0
+        require_approval: false
+
+  # ==========================================================================
+  # 數據庫連接池耗盡擴容
+  # ==========================================================================
+  - name: scale_on_db_connection_pool_exhaustion
+    description: Scale up when database connection pool is near exhaustion
+    enabled: true
+    priority: 90
+    cooldown_minutes: 20
+    
+    condition:
+      field: metrics.db_connection_pool_usage
+      operator: ">"
+      value: 0.8
+    
+    actions:
+      - type: scale_up
+        parameters:
+          namespace: default
+          deployment: eco-backend
+          replicas_delta: 1
+          max_replicas: 20
+        delay_seconds: 0
+        require_approval: true
+
+  # ==========================================================================
+  # 磁盤空間不足告警
+  # ==========================================================================
+  - name: alert_on_low_disk_space
+    description: Send alert when disk space is low
+    enabled: true
+    priority: 30
+    cooldown_minutes: 60
+    
+    condition:
+      field: metrics.disk_usage_percent
+      operator: ">"
+      value: 85
+    
+    actions:
+      - type: notify
+        parameters:
+          channel: pagerduty
+          severity: critical
+          message: "Disk space is critically low"
+        delay_seconds: 0
+        require_approval: false
+
+  # ==========================================================================
+  # CPU 使用率過高擴容
+  # ==========================================================================
+  - name: scale_on_high_cpu
+    description: Scale up when CPU usage is consistently high
+    enabled: true
+    priority: 85
+    cooldown_minutes: 10
+    
+    condition:
+      and:
+        - field: metrics.cpu_usage_percent
+          operator: ">"
+          value: 80
+        - field: metrics.duration_minutes
+          operator: ">"
+          value: 5
+    
+    actions:
+      - type: scale_up
+        parameters:
+          namespace: default
+          deployment: eco-backend
+          replicas_delta: 2
+          max_replicas: 15
+        delay_seconds: 60
+        require_approval: false
+
+  # ==========================================================================
+  # 緩存命中率過低清理
+  # ==========================================================================
+  - name: clear_cache_on_low_hit_rate
+    description: Clear cache when hit rate is consistently low
+    enabled: true
+    priority: 70
+    cooldown_minutes: 30
+    
+    condition:
+      field: metrics.cache_hit_rate
+      operator: "<"
+      value: 0.5
+    
+    actions:
+      - type: clear_cache
+        parameters:
+          pattern: "*"
+        delay_seconds: 0
+        require_approval: false
+
+  # ==========================================================================
+  # 請求隊列積壓擴容
+  # ==========================================================================
+  - name: scale_on_request_queue_backlog
+    description: Scale up when request queue is backing up
+    enabled: true
+    priority: 95
+    cooldown_minutes: 5
+    
+    condition:
+      field: metrics.request_queue_length
+      operator: ">"
+      value: 100
+    
+    actions:
+      - type: scale_up
+        parameters:
+          namespace: default
+          deployment: eco-backend
+          replicas_delta: 3
+          max_replicas: 20
+        delay_seconds: 0
+        require_approval: false
+
+  # ==========================================================================
+  # 部署失敗自動回滾
+  # ==========================================================================
+  - name: rollback_on_deployment_failure
+    description: Automatically rollback failed deployment
+    enabled: true
+    priority: 10
+    cooldown_minutes: 30
+    
+    condition:
+      field: deployment.status
+      operator: "=="
+      value: "failed"
+    
+    actions:
+      - type: rollback_deployment
+        parameters:
+          namespace: default
+          deployment: eco-backend
+        delay_seconds: 60
+        require_approval: true
+      
+      - type: notify
+        parameters:
+          channel: slack
+          message: "Deployment failed, rollback initiated"
+        delay_seconds: 0
+        require_approval: false

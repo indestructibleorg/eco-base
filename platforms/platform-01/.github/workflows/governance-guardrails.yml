@@ -1,0 +1,287 @@
+# =============================================================================
+# Governance Guardrails
+# =============================================================================
+# 治理护栏：确保硬约束体系不会被绕过
+# - 每次 PR 都验证
+# - main 分支定期自检
+# - 检测分支保护规则漂移
+# =============================================================================
+
+name: Hard Constraints
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+  schedule:
+    - cron: "0 2 * * *"  # daily drift check
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  # -----------------------------------------------------------------------------
+  # 硬约束检查 (核心检查)
+  # -----------------------------------------------------------------------------
+  hard-constraints:
+    name: hard-constraints (ubuntu-latest)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dev deps (locked)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.lock
+          pip install -e ./eco-platform-integrations
+          pip install -e ./eco-backend
+
+      - name: Run hard constraints
+        run: |
+          bash hard_constraints_check.sh
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.xml
+          if-no-files-found: error
+
+      - name: Upload mypy report
+        uses: actions/upload-artifact@v4
+        with:
+          name: mypy-report
+          path: mypy_report.txt
+          if-no-files-found: warn
+
+  # -----------------------------------------------------------------------------
+  # 漂移检测 (检测分支保护规则是否被篡改)
+  # -----------------------------------------------------------------------------
+  drift-check:
+    name: drift-check (ubuntu-latest)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      administration: read  # for branch protection read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install gh + jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+          gh --version
+
+      - name: Verify branch protection drift
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          bash scripts/verify_branch_protection.sh .github/branch-protection.json .github/required-checks.json
+
+  # -----------------------------------------------------------------------------
+  # 状态机测试
+  # -----------------------------------------------------------------------------
+  state-machine-tests:
+    name: state-machine-tests (ubuntu-latest)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dev deps (locked)
+        run: |
+          pip install -r requirements-dev.lock
+          pip install -e ./eco-platform-integrations
+          pip install -e ./eco-backend
+
+      - name: Run state machine tests
+        run: |
+          pytest tests/test_state_machine.py -v --tb=short
+
+      - name: Run hard constraints integration tests
+        run: |
+          pytest tests/test_platform_integration_hard_constraints.py -v --tb=short
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: state-machine-test-results
+          path: |
+            reports/*.json
+            reports/*.xml
+          if-no-files-found: warn
+
+  # -----------------------------------------------------------------------------
+  # 契约验证测试
+  # -----------------------------------------------------------------------------
+  contract-tests:
+    name: contract-tests (ubuntu-latest)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dev deps (locked)
+        run: |
+          pip install -r requirements-dev.lock
+
+      - name: Run contract tests
+        run: |
+          pytest tests/test_scripts_contracts_and_audit.py -v --tb=short
+
+  # -----------------------------------------------------------------------------
+  # 守卫测试 (防止硬闸退化)
+  # -----------------------------------------------------------------------------
+  guard-tests:
+    name: guard-tests (ubuntu-latest)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dev deps (locked)
+        run: |
+          pip install -r requirements-dev.lock
+
+      - name: Run guard tests
+        run: |
+          pytest tests/test_hard_constraints_guard.py -v --tb=short
+
+      - name: Run negative tests
+        run: |
+          pytest tests/test_hard_constraints_negative.py -v --tb=short
+
+      - name: Verify hard constraints script structure
+        run: |
+          grep "set -euo pipefail" hard_constraints_check.sh || (echo "Missing strict mode" && exit 1)
+          grep "pytest_exit" hard_constraints_check.sh || (echo "Missing pytest exit code check" && exit 1)
+          grep "mypy_exit" hard_constraints_check.sh || (echo "Missing mypy exit code check" && exit 1)
+          grep "COVERAGE_THRESHOLD\|fail-under" hard_constraints_check.sh || (echo "Missing coverage threshold check" && exit 1)
+          echo "✅ Hard constraints script structure verified"
+
+  # -----------------------------------------------------------------------------
+  # E2E 测试 - Crash-Resume (20 次随机中断)
+  # -----------------------------------------------------------------------------
+  e2e-crash-resume:
+    name: e2e-crash-resume (ubuntu-latest)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || contains(github.event.pull_request.labels.*.name, 'run-e2e')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dev deps (locked)
+        run: |
+          pip install -r requirements-dev.lock
+          pip install -e ./eco-platform-integrations
+          pip install -e ./eco-backend
+
+      - name: Run Crash-Resume E2E tests (20 iterations)
+        run: |
+          pytest tests/e2e/test_crash_resume_e2e.py -v --tb=short -k "test_crash_resume_with_random_kills"
+        timeout-minutes: 30
+
+      - name: Upload E2E test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-crash-resume-results
+          path: reports/e2e_*.json
+          if-no-files-found: warn
+
+  # -----------------------------------------------------------------------------
+  # E2E 测试 - 幂等性 (同 run_id 重放)
+  # -----------------------------------------------------------------------------
+  e2e-idempotency:
+    name: e2e-idempotency (ubuntu-latest)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || contains(github.event.pull_request.labels.*.name, 'run-e2e')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dev deps (locked)
+        run: |
+          pip install -r requirements-dev.lock
+          pip install -e ./eco-platform-integrations
+          pip install -e ./eco-backend
+
+      - name: Run Idempotency E2E tests
+        run: |
+          pytest tests/e2e/test_idempotency_e2e.py -v --tb=short
+
+      - name: Verify manifest hash consistency
+        run: |
+          python scripts/verify_manifest.py --artifacts-root artifacts --fail-on-empty
+
+      - name: Upload E2E test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-idempotency-results
+          path: reports/e2e_*.json
+          if-no-files-found: warn
+
+  # -----------------------------------------------------------------------------
+  # 最终门控 (所有检查必须通过)
+  # -----------------------------------------------------------------------------
+  gate:
+    name: gate (ubuntu-latest)
+    needs: [hard-constraints, drift-check, state-machine-tests, contract-tests, guard-tests]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Check all jobs passed
+        run: |
+          echo "Hard Constraints: ${{ needs.hard-constraints.result }}"
+          echo "Drift Check: ${{ needs.drift-check.result }}"
+          echo "State Machine Tests: ${{ needs.state-machine-tests.result }}"
+          echo "Contract Tests: ${{ needs.contract-tests.result }}"
+          echo "Guard Tests: ${{ needs.guard-tests.result }}"
+
+          if [[ "${{ needs.hard-constraints.result }}" != "success" ]] || \
+             [[ "${{ needs.drift-check.result }}" != "success" ]] || \
+             [[ "${{ needs.state-machine-tests.result }}" != "success" ]] || \
+             [[ "${{ needs.contract-tests.result }}" != "success" ]] || \
+             [[ "${{ needs.guard-tests.result }}" != "success" ]]; then
+            echo "❌ Hard Constraints Gate FAILED"
+            exit 1
+          fi
+
+          echo "✅ Hard Constraints Gate PASSED"
+          echo ""
+          echo "═══════════════════════════════════════════════════════════════"
+          echo "  所有硬约束检查通过，代码可以合并"
+          echo "═══════════════════════════════════════════════════════════════"

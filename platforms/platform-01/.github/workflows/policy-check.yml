@@ -1,0 +1,130 @@
+# Policy & Contract Validation
+# 契約驗證與狀態機測試 - 每次 PR 必跑
+name: Policy Check
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main]
+
+jobs:
+  contract-validation:
+    runs-on: ubuntu-latest
+    name: Contract & Schema Validation
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install jsonschema semver
+      
+      - name: Validate Contracts (JSON Schema)
+        run: |
+          python scripts/validate_contracts.py \
+            --schemas-dir schemas/ \
+            --artifacts-glob "artifacts/*.json" \
+            --fail-on-missing
+      
+      - name: Verify Required Artifacts
+        run: |
+          python scripts/verify_artifacts_required.py \
+            --artifacts-dir artifacts/ \
+            --strict
+      
+      - name: Verify Manifest Hash
+        run: |
+          python scripts/verify_manifest.py \
+            --manifest artifacts/manifest.json \
+            --verify
+      
+      - name: Upload Contract Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: contract-validation-report
+          path: reports/contract_validation.json
+
+  state-machine-test:
+    runs-on: ubuntu-latest
+    name: State Machine Invariant Tests
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install pytest pytest-json-report
+      
+      - name: Run State Machine Tests
+        run: |
+          pytest tests/test_state_machine.py \
+            -v \
+            --json-report \
+            --json-report-file=reports/state_machine_report.json
+      
+      - name: Verify State Coverage
+        run: |
+          # 確保所有狀態都被測試覆蓋
+          python -c "
+          import json
+          with open('reports/state_machine_report.json') as f:
+              data = json.load(f)
+          
+          # 檢查測試是否全部通過
+          if data['summary']['failed'] > 0:
+              print('❌ State machine tests failed')
+              exit(1)
+          
+          # 檢查是否覆蓋所有狀態轉換
+          states_covered = set()
+          for test in data['tests']:
+              if 'state_transition' in test['nodeid']:
+                  # 提取狀態名
+                  import re
+                  matches = re.findall(r'(PENDING|PLANNED|EXECUTING|VERIFYING|SUCCEEDED|FAILED|ROLLING_BACK|ROLLED_BACK)', test['nodeid'])
+                  states_covered.update(matches)
+          
+          required_states = {'PENDING', 'PLANNED', 'EXECUTING', 'VERIFYING', 'SUCCEEDED', 'FAILED', 'ROLLING_BACK', 'ROLLED_BACK'}
+          missing = required_states - states_covered
+          
+          if missing:
+              print(f'⚠️  Missing state coverage: {missing}')
+          else:
+              print('✅ All states covered')
+          "
+      
+      - name: Upload State Machine Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: state-machine-report
+          path: reports/state_machine_report.json
+
+  policy-gate:
+    runs-on: ubuntu-latest
+    name: Policy Gate (All Checks Must Pass)
+    needs: [contract-validation, state-machine-test]
+    if: always()
+    steps:
+      - name: Check All Jobs Passed
+        run: |
+          echo "Contract Validation: ${{ needs.contract-validation.result }}"
+          echo "State Machine Test: ${{ needs.state-machine-test.result }}"
+          
+          if [[ "${{ needs.contract-validation.result }}" != "success" ]] || \
+             [[ "${{ needs.state-machine-test.result }}" != "success" ]]; then
+            echo "❌ Policy Gate FAILED - 契約或狀態機測試未通過"
+            exit 1
+          fi
+          
+          echo "✅ Policy Gate PASSED - 所有檢查通過"

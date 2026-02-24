@@ -1,0 +1,11 @@
+# =============================================================================
+# Eco-Backend Kubernetes Namespace
+# =============================================================================
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: eco-backend
+  labels:
+    app: eco-backend
+    environment: production

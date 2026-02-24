@@ -1,0 +1,72 @@
+# =============================================================================
+# Terraform Variables - Production Environment
+# =============================================================================
+# 複製此文件為 terraform.tfvars 並填入您的實際值
+# cp terraform.tfvars.example terraform.tfvars
+# =============================================================================
+
+# GCP 專案配置
+# 您的 GCP 專案 ID (可在 GCP Console 右上角查看)
+gcp_project_id = "YOUR_GCP_PROJECT_ID"
+
+# GCP 區域 (建議選擇離您的用戶最近的區域)
+gcp_region = "us-central1"
+
+# 集群名稱
+cluster_name = "eco-base-production"
+
+# Kubernetes 版本
+kubernetes_version = "1.29"
+
+# =============================================================================
+# 網路配置 (通常使用默認值即可)
+# =============================================================================
+
+subnet_cidr   = "10.0.0.0/20"
+pods_cidr     = "10.4.0.0/14"
+services_cidr = "10.8.0.0/20"
+master_cidr   = "172.16.0.0/28"
+
+# 授權網路 (限制誰可以訪問 GKE Master API)
+# 強烈建議配置您的辦公室 IP 或 VPN IP
+authorized_networks = [
+  {
+    name = "office"
+    cidr = "YOUR_OFFICE_IP/32"  # 替換為您的辦公室 IP
+  },
+  {
+    name = "vpn"
+    cidr = "YOUR_VPN_CIDR"      # 替換為您的 VPN CIDR
+  }
+]
+
+# =============================================================================
+# 節點池配置
+# =============================================================================
+
+# 系統節點池 (運行 kube-system、監控等)
+system_node_count   = 2
+system_machine_type = "e2-standard-4"
+
+# 通用工作負載節點池
+general_min_nodes    = 2
+general_max_nodes    = 10
+general_machine_type = "e2-standard-8"
+
+# =============================================================================
+# GPU 節點池配置 (AI 推理工作負載)
+# =============================================================================
+
+enable_gpu_pool = true
+gpu_min_nodes   = 0
+gpu_max_nodes   = 4
+gpu_machine_type = "n1-standard-8"
+gpu_type         = "nvidia-tesla-t4"  # 或 "nvidia-tesla-a100" 等
+gpu_count        = 1
+
+# =============================================================================
+# 維護窗口 (UTC 時間)
+# =============================================================================
+
+maintenance_start_time = "2024-01-01T02:00:00Z"  # 週六 02:00 UTC
+maintenance_end_time   = "2024-01-01T06:00:00Z"  # 週日 06:00 UTC
