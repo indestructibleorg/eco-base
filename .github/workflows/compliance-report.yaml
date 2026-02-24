@@ -248,6 +248,7 @@ jobs:
       env:
         SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
         SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        REPORT_PERIOD: ${{ steps.period.outputs.period }}
       run: |
         # Persist key metrics to Supabase for >90-day audit window
         # GitHub API only retains 90 days of workflow history; Supabase provides
@@ -314,8 +315,6 @@ jobs:
         except Exception as e:
             print(f'⚠️  Supabase persistence error: {e}')
         PYEOF
-      env:
-        REPORT_PERIOD: ${{ steps.period.outputs.period }}
     - name: Upload compliance artifacts
       uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08  # v4.6.2
       if: always()

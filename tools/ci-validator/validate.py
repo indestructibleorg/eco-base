@@ -466,7 +466,41 @@ def validate_workflow_syntax(repo: Path) -> list[dict]:
                     "continue-on-error is prohibited — failures must halt the pipeline",
                     line=i, auto_fixable=True, fix_strategy="remove-continue-on-error",
                 ))
-
+        # Check for invalid permission keys (GitHub Actions only supports specific keys)
+        VALID_PERMISSIONS = {
+            'actions', 'attestations', 'checks', 'contents', 'deployments',
+            'discussions', 'id-token', 'issues', 'packages', 'pages',
+            'pull-requests', 'repository-projects', 'security-events', 'statuses',
+        }
+        try:
+            import yaml as _yaml
+            data = _yaml.safe_load(content)
+            if isinstance(data, dict):
+                perms = data.get('permissions', {})
+                if isinstance(perms, dict):
+                    for k in perms:
+                        if k not in VALID_PERMISSIONS:
+                            findings.append(finding(
+                                Category.WORKFLOW_SYNTAX, Severity.ERROR, rel,
+                                f"Invalid permission key '{k}' — GitHub Actions does not support it. "
+                                f"Valid keys: {', '.join(sorted(VALID_PERMISSIONS))}",
+                                auto_fixable=True, fix_strategy="remove-invalid-permission",
+                            ))
+                jobs_data = data.get('jobs', {})
+                if isinstance(jobs_data, dict):
+                    for jname, jdata in jobs_data.items():
+                        if isinstance(jdata, dict):
+                            jperms = jdata.get('permissions', {})
+                            if isinstance(jperms, dict):
+                                for k in jperms:
+                                    if k not in VALID_PERMISSIONS:
+                                        findings.append(finding(
+                                            Category.WORKFLOW_SYNTAX, Severity.ERROR, rel,
+                                            f"Invalid permission key '{k}' in job '{jname}'",
+                                            auto_fixable=True, fix_strategy="remove-invalid-permission",
+                                        ))
+        except Exception:
+            pass  # YAML parse errors caught by validate_yaml_syntax
     return findings
 
 

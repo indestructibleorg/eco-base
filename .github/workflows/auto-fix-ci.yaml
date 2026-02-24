@@ -26,7 +26,6 @@ permissions:
   issues: write
   pull-requests: write
   actions: read
-  workflows: write  # Required to push fixes to .github/workflows/ files
 
 jobs:
   detect-and-fix:

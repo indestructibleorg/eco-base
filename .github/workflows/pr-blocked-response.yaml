@@ -47,7 +47,6 @@ permissions:
   checks: read
   statuses: read
   actions: read
-  workflows: write  # Required to push .circleci/config.yml auto-fix
 
 jobs:
   respond:
