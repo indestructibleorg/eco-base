@@ -59,3 +59,4 @@ def test_engine_classify_marks_skipped_required_as_pending():
     assert summary["any_required_pending"] is True
     assert summary["any_required_failed"] is False
     assert "lint" in summary["unexpected_skips"]
+    assert "test" in summary["missing_required"]

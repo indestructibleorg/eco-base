@@ -470,6 +470,7 @@ def classify_check_runs(check_runs: list[dict]) -> dict:
         "any_required_pending": False,
         "any_required_failed": False,
         "unexpected_skips": [],
+        "missing_required": [],
     }
 
     for run in check_runs:
@@ -506,6 +507,7 @@ def classify_check_runs(check_runs: list[dict]) -> dict:
     if missing_required:
         summary["any_required_pending"] = True
         summary["all_required_pass"] = False
+        summary["missing_required"] = sorted(missing_required)
 
     return summary
 

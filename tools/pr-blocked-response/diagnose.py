@@ -356,7 +356,7 @@ def retrigger_ci(pr_num, head_sha, failed_check_names):
         if (
             run.get("name") in failed_check_names and
             status == "completed" and
-            conclusion in ("failure", "error", "timed_out", "cancelled", "skipped", "action_required")
+            conclusion in ("failure", "timed_out", "cancelled", "skipped", "action_required")
         ):
             result = gh_api(f"/repos/{REPO}/check-runs/{run['id']}/rerequest", method="POST")
             if not result.get("_http_error"):
@@ -564,7 +564,9 @@ def process_pr(pr_num, pr_title, pr_branch, head_sha, merge_status, labels):
         if skipped_required:
             print(f"  → Required checks skipped ({sorted(skipped_required)}). Re-triggering...")
             retrigger_ci(pr_num, head_sha, skipped_required)
-        print(f"  → CI running ({pending}). Enabling auto-merge...")
+            print(f"  → Re-trigger requested for skipped required checks. Enabling auto-merge...")
+        else:
+            print(f"  → CI running ({pending}). Enabling auto-merge...")
         enable_auto_merge(pr_num)
         return
 
