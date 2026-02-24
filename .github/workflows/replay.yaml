@@ -55,9 +55,9 @@ jobs:
     name: "Replay PR #${{ inputs.pr_number }}"
     runs-on: ubuntu-latest
     outputs:
-      action: ${{ steps.governance.outputs.action }}
-      outcome: ${{ steps.governance.outputs.outcome }}
-      audit_hash: ${{ steps.governance.outputs.audit_hash }}
+      action: ${{ steps.extract.outputs.action }}
+      outcome: ${{ steps.extract.outputs.outcome }}
+      audit_hash: ${{ steps.extract.outputs.audit_hash }}
 
     steps:
       - name: Checkout
@@ -76,27 +76,25 @@ jobs:
           path: artifacts/replay/
 
       - name: Run governance engine
-        id: governance
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           DRY_RUN: ${{ inputs.dry_run }}
           ARTIFACTS_DIR: artifacts
         run: |
+          DRY_FLAG=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            DRY_FLAG="--dry-run"
+          fi
           python3 tools/autoecops-governance/engine.py \
             --pr ${{ inputs.pr_number }} \
-            ${{ inputs.dry_run == 'true' && '--dry-run' || '' }}
+            $DRY_FLAG
 
-          # Extract outputs from audit file
-          AUDIT_FILE="artifacts/audit/pr-${{ inputs.pr_number }}-audit.json"
-          if [ -f "$AUDIT_FILE" ]; then
-            ACTION=$(python3 -c "import json; d=json.load(open('$AUDIT_FILE')); print(d.get('properties',[{}])[2].get('value','NONE'))" 2>/dev/null || echo "NONE")
-            OUTCOME=$(python3 -c "import json; d=json.load(open('$AUDIT_FILE')); print(d.get('properties',[{}])[3].get('value','unknown'))" 2>/dev/null || echo "unknown")
-            AUDIT_HASH=$(python3 -c "import json; d=json.load(open('$AUDIT_FILE')); print(d.get('audit',{}).get('audit_hash','')[:16])" 2>/dev/null || echo "")
-            echo "action=$ACTION" >> "$GITHUB_OUTPUT"
-            echo "outcome=$OUTCOME" >> "$GITHUB_OUTPUT"
-            echo "audit_hash=$AUDIT_HASH" >> "$GITHUB_OUTPUT"
-          fi
+      - name: Extract audit outputs
+        id: extract
+        run: |
+          python3 tools/autoecops-governance/extract_audit_outputs.py \
+            "artifacts/audit/pr-${{ inputs.pr_number }}-audit.json"
 
       - name: Upload governance artifacts
         if: always()
@@ -115,8 +113,8 @@ jobs:
           echo "|-------|-------|" >> "$GITHUB_STEP_SUMMARY"
           echo "| PR | #${{ inputs.pr_number }} |" >> "$GITHUB_STEP_SUMMARY"
           echo "| Dry Run | ${{ inputs.dry_run }} |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| Action | ${{ steps.governance.outputs.action }} |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| Outcome | ${{ steps.governance.outputs.outcome }} |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| Audit Hash | \`${{ steps.governance.outputs.audit_hash }}\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Action | ${{ steps.extract.outputs.action }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Outcome | ${{ steps.extract.outputs.outcome }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Audit Hash | \`${{ steps.extract.outputs.audit_hash }}\` |" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "Artifacts uploaded: \`governance-pr-${{ inputs.pr_number }}-${{ github.run_id }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "Artifacts: \`governance-pr-${{ inputs.pr_number }}-${{ github.run_id }}\`" >> "$GITHUB_STEP_SUMMARY"
