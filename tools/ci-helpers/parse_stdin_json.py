@@ -8,7 +8,8 @@ For ArgoCD responses:
   curl ... | python3 tools/ci-helpers/parse_stdin_json.py status.sync.status+status.health.status Unknown|Unknown
   (Use + to join multiple paths with |)
 """
-import json, sys
+import json
+import sys
 
 
 def get_nested(data, path, default=""):

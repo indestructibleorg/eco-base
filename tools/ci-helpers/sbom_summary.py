@@ -5,7 +5,8 @@ Usage:
   python3 tools/ci-helpers/sbom_summary.py <sbom_file>
   python3 tools/ci-helpers/sbom_summary.py <sbom_file> --count-only
 """
-import json, sys
+import json
+import sys
 
 
 def main():

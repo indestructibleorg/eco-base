@@ -7,7 +7,8 @@ Usage (check mode - exits 1 on failure):
 Usage (report mode - prints results, always exits 0):
   conftest test file.yaml --output json | python3 tools/ci-helpers/parse_conftest.py --report
 """
-import json, sys
+import json
+import sys
 
 
 def main():

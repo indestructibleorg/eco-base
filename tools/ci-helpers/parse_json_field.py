@@ -8,7 +8,8 @@ Examples:
   python3 tools/ci-helpers/parse_json_field.py report.json fixed 0
   python3 tools/ci-helpers/parse_json_field.py sbom.json components.__len__ 0
 """
-import json, sys
+import json
+import sys
 
 
 def get_nested(data, path, default=None):

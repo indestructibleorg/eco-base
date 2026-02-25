@@ -4,7 +4,8 @@
 Usage:
   python3 tools/ci-helpers/count_vulns.py /tmp/python-audit.json
 """
-import json, sys
+import json
+import sys
 
 
 def main():
