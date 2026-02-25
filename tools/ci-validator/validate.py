@@ -314,8 +314,8 @@ def validate_dockerfile_paths(repo: Path) -> list[dict]:
                 df_name = m.group(2).strip()
                 df_path = f"{ctx}/{df_name}" if ctx != "." else df_name
                 build_contexts[df_path] = ctx
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"[ci-validator] Warning: failed to read or parse docker-compose file '{cf}': {e}", file=sys.stderr)
 
     # Source 3: Shell build scripts — pattern: -f <dockerfile> <context> (same as workflows)
     scripts_dir = repo / "scripts"
@@ -328,8 +328,8 @@ def validate_dockerfile_paths(repo: Path) -> list[dict]:
                     ctx = m.group(2).strip()
                     if ctx and not ctx.startswith("-"):
                         build_contexts[df_path] = ctx
-            except Exception:
-                pass
+            except Exception as e:
+                print(f"[ci-validator] Warning: failed to read or parse build script '{script}': {e}", file=sys.stderr)
 
     for df in dockerfiles:
         content = df.read_text()
