@@ -32,3 +32,13 @@ jobs:
           echo "Validator tool not found, skipping..."
         fi
         echo "error_count=$VALIDATOR_EXIT_CODE" >> "$GITHUB_OUTPUT"
+
+  # ================================================================
+  # Gate 2: Security & Compliance (Optional, can be expanded)
+  # ================================================================
+  security:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Security Placeholder
+        run: echo "Running security scans..."
