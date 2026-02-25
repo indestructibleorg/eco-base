@@ -1,0 +1,177 @@
+---
+# Policy 1: Disallow latest tag
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: disallow-latest-tag
+  annotations:
+    policies.kyverno.io/title: Disallow Latest Tag
+    policies.kyverno.io/category: Supply Chain Security
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/description: >-
+      Prohibits use of 'latest' image tag in all ECO platform namespaces.
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: require-image-tag
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+              namespaces:
+                - platform-01
+                - platform-02
+                - platform-03
+                - infra
+                - eco-production
+      validate:
+        message: "Image tag 'latest' is not allowed. Specify an explicit version tag."
+        pattern:
+          spec:
+            containers:
+              - image: "!*:latest"
+            =(initContainers):
+              - image: "!*:latest"
+---
+# Policy 2: Require resource limits
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-resource-limits
+  annotations:
+    policies.kyverno.io/title: Require Resource Limits
+    policies.kyverno.io/category: Resource Management
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/description: >-
+      All containers in ECO platform namespaces must define CPU and memory limits.
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: validate-resources
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+              namespaces:
+                - platform-01
+                - platform-02
+                - platform-03
+                - infra
+      validate:
+        message: "CPU and memory limits are required for all containers."
+        pattern:
+          spec:
+            containers:
+              - resources:
+                  limits:
+                    cpu: "?*"
+                    memory: "?*"
+---
+# Policy 3: Disallow privileged containers
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: disallow-privileged-containers
+  annotations:
+    policies.kyverno.io/title: Disallow Privileged Containers
+    policies.kyverno.io/category: Pod Security
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/description: >-
+      Privileged containers are not allowed in ECO platform namespaces.
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: privileged-containers
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+              namespaces:
+                - platform-01
+                - platform-02
+                - platform-03
+                - infra
+                - eco-production
+      validate:
+        message: "Privileged containers are not allowed."
+        pattern:
+          spec:
+            =(initContainers):
+              - =(securityContext):
+                  =(privileged): "false"
+            containers:
+              - =(securityContext):
+                  =(privileged): "false"
+---
+# Policy 4: Require non-root user
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-non-root-user
+  annotations:
+    policies.kyverno.io/title: Require Non-Root User
+    policies.kyverno.io/category: Pod Security
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/description: >-
+      Containers must not run as root in ECO platform namespaces.
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+    - name: check-runasnonroot
+      match:
+        any:
+          - resources:
+              kinds: [Pod]
+              namespaces:
+                - platform-01
+                - platform-02
+                - platform-03
+                - infra
+      validate:
+        message: "Containers must not run as root. Set runAsNonRoot: true."
+        anyPattern:
+          - spec:
+              securityContext:
+                runAsNonRoot: true
+          - spec:
+              containers:
+                - securityContext:
+                    runAsNonRoot: true
+---
+# Policy 5: Require ECO labels
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-eco-labels
+  annotations:
+    policies.kyverno.io/title: Require ECO Platform Labels
+    policies.kyverno.io/category: Governance
+    policies.kyverno.io/severity: low
+    policies.kyverno.io/description: >-
+      All workloads in ECO namespaces must have app, version, and eco.platform labels.
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+    - name: check-labels
+      match:
+        any:
+          - resources:
+              kinds: [Deployment, StatefulSet, DaemonSet]
+              namespaces:
+                - platform-01
+                - platform-02
+                - platform-03
+                - infra
+      validate:
+        message: "Labels 'app', 'version', and 'eco.platform' are required."
+        pattern:
+          metadata:
+            labels:
+              app: "?*"
+              version: "?*"
+              eco.platform: "?*"

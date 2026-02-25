@@ -1,0 +1,91 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: eco-platforms
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - platform: eco-core
+            namespace: infra
+          - platform: eco-govops
+            namespace: platform-01
+          - platform: eco-dataops
+            namespace: platform-02
+          - platform: eco-observops
+            namespace: platform-03
+          - platform: eco-seccompops
+            namespace: platform-01
+          - platform: eco-superai
+            namespace: platform-02
+  template:
+    metadata:
+      name: "{{platform}}"
+      namespace: argocd
+      annotations:
+        argocd.argoproj.io/sync-wave: "0"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/indestructibleorg/eco-base
+        targetRevision: main
+        path: "platforms/{{platform}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{namespace}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+          allowEmpty: false
+        syncOptions:
+          - CreateNamespace=true
+          - PrunePropagationPolicy=foreground
+          - PruneLast=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: eco-infra-tools
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - tool: argo-events
+            namespace: argo-events
+          - tool: tekton
+            namespace: tekton-pipelines
+          - tool: harbor
+            namespace: harbor
+          - tool: monitoring
+            namespace: monitoring
+  template:
+    metadata:
+      name: "infra-{{tool}}"
+      namespace: argocd
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/indestructibleorg/eco-base
+        targetRevision: main
+        path: "gitops/infra/{{tool}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{namespace}}"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        retry:
+          limit: 3
+          backoff:
+            duration: 10s
+            factor: 2
+            maxDuration: 1m
