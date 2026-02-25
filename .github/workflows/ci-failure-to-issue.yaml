@@ -2,7 +2,7 @@ name: Centralized CI Failure Diagnostics
 
 on:
   workflow_run:
-    workflows: [".github/workflows/ci.yaml"]
+    workflows: [".github/workflows/ci.yaml", "YAML Governance Lint", ".github/workflows/auto-sync-deploy.yaml"]
     types: [completed]
   workflow_dispatch:
 
@@ -24,10 +24,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           RUN_ID: ${{ github.event.workflow_run.id || 'manual' }}
+          TRIGGER_WORKFLOW: ${{ github.event.workflow_run.name || 'Manual' }}
         run: |
           if [ "$RUN_ID" == "manual" ]; then
-            # 如果是手動觸發，獲取最近一個失敗的 CI Run
-            RUN_ID=$(gh run list --repo $REPO --workflow ".github/workflows/ci.yaml" --status failure --limit 1 --json databaseId --jq '.[0].databaseId')
+            # 如果是手動觸發，獲取最近一個失敗的 CI Run (優先檢查 YAML Lint)
+            RUN_ID=$(gh run list --repo $REPO --status failure --limit 1 --json databaseId --jq '.[0].databaseId')
             if [ -z "$RUN_ID" ]; then
               echo "No failed CI runs found. Exiting."
               exit 0
@@ -38,12 +39,12 @@ jobs:
           FAILED_JOBS=$(gh api /repos/$REPO/actions/runs/$RUN_ID/jobs --jq '[.jobs[] | select(.conclusion=="failure") | {name: .name, id: .id, url: .html_url}]')
 
           if [ "$(echo "$FAILED_JOBS" | jq '. | length')" -eq 0 ]; then
-            echo "No failed jobs found in metadata. Exiting."
+            echo "No failed jobs found in metadata for Run $RUN_ID. Exiting."
             exit 0
           fi
 
-          REPORT_TITLE="[CI Health Report] Failures in Run for PR #${PR_NUMBER} (Run ID: ${RUN_ID})"
-          REPORT_BODY="## 集中化 CI 失敗診斷報告\n\n- **觸發來源**: PR #${PR_NUMBER}\n- **Workflow Run**: [View Run](https://github.com/$REPO/actions/runs/$RUN_ID)\n- **診斷時間**: $(date -u +"%Y-%m-%dT%H:%M:%SZ")\n\n### 失敗閘門摘要\n\n| Gate Name | Status | View Logs |\n|---|---|---|"
+          REPORT_TITLE="[CI Health Report] Failures in $TRIGGER_WORKFLOW (Run ID: ${RUN_ID})"
+          REPORT_BODY="## 集中化 CI 失敗診斷報告\n\n- **觸發來源**: $TRIGGER_WORKFLOW (PR #${PR_NUMBER})\n- **Workflow Run**: [View Run](https://github.com/$REPO/actions/runs/$RUN_ID)\n- **診斷時間**: $(date -u +"%Y-%m-%dT%H:%M:%SZ")\n\n### 失敗閘門摘要\n\n| Gate Name | Status | View Logs |\n|---|---|---|"
 
           FAILURE_DETAILS=""
 
