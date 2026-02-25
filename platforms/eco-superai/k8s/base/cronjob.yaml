@@ -1,148 +1,171 @@
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: superai-db-backup
-  namespace: eco-superai
-  labels:
-    app.kubernetes.io/name: superai-platform
-    app.kubernetes.io/component: backup
-spec:
-  schedule: "0 2 * * *"
-  timeZone: "UTC"
-  concurrencyPolicy: Forbid
-  successfulJobsHistoryLimit: 3
-  failedJobsHistoryLimit: 3
-  startingDeadlineSeconds: 600
-  jobTemplate:
-    spec:
-      backoffLimit: 2
-      activeDeadlineSeconds: 1800
-      template:
-        metadata:
-          labels:
-            app.kubernetes.io/name: superai-platform
-            app.kubernetes.io/component: backup
-        spec:
-          restartPolicy: OnFailure
-          serviceAccountName: superai-worker
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 1000
-            runAsGroup: 1000
-          containers:
-            - name: db-backup
-              image: postgres:16-alpine
-              command:
-                - /bin/sh
-                - -c
-                - |
-                  set -euo pipefail
-                  TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-                  BACKUP_FILE="/backups/superai_db_${TIMESTAMP}.sql.gz"
-                  echo "[backup] Starting database backup..."
-                  pg_dump -h "${DB_HOST}" -U "${DB_USER}" -d "${DB_NAME}" \
-                    --no-owner --no-privileges --clean --if-exists \
-                    | gzip > "${BACKUP_FILE}"
-                  FILESIZE=$(stat -f%z "${BACKUP_FILE}" 2>/dev/null || stat -c%s "${BACKUP_FILE}")
-                  echo "[backup] Completed: ${BACKUP_FILE} (${FILESIZE} bytes)"
-                  # Prune backups older than 30 days
-                  find /backups -name "superai_db_*.sql.gz" -mtime +30 -delete
-                  echo "[backup] Pruned old backups"
-              env:
-                - name: DB_HOST
-                  value: "postgres.superai"
-                - name: DB_NAME
-                  value: "superai_db"
-                - name: DB_USER
-                  valueFrom:
-                    secretKeyRef:
-                      name: superai-db-credentials
-                      key: POSTGRES_USER
-                - name: PGPASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: superai-db-credentials
-                      key: POSTGRES_PASSWORD
-              resources:
-                requests:
-                  cpu: 100m
-                  memory: 256Mi
-                limits:
-                  cpu: 500m
-                  memory: 512Mi
-              volumeMounts:
-                - name: backup-storage
-                  mountPath: /backups
-          volumes:
-            - name: backup-storage
-              persistentVolumeClaim:
-                claimName: superai-backup-pvc
 ---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: superai-cleanup
-  namespace: eco-superai
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/cronjob/superai-db-backup
+    eco-base/urn: urn:eco-base:k8s:core:cronjob:superai-db-backup:sha256-eb1272e4e5e8ad09fb5d6c7d6e27d50ccc9fb63a5b35482038e664d8fe603e75
   labels:
+    app.kubernetes.io/component: backup
+    app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: superai-platform
-    app.kubernetes.io/component: maintenance
+    app.kubernetes.io/part-of: eco-base
+    app.kubernetes.io/version: 1.0.0
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
+  name: superai-db-backup
+  namespace: eco-superai
 spec:
-  schedule: "30 3 * * *"
-  timeZone: "UTC"
   concurrencyPolicy: Forbid
-  successfulJobsHistoryLimit: 3
-  failedJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
   jobTemplate:
     spec:
-      backoffLimit: 1
-      activeDeadlineSeconds: 900
+      activeDeadlineSeconds: 1800
+      backoffLimit: 2
       template:
         metadata:
           labels:
+            app.kubernetes.io/component: backup
             app.kubernetes.io/name: superai-platform
-            app.kubernetes.io/component: maintenance
         spec:
+          containers:
+          - command:
+            - /bin/sh
+            - -c
+            - "set -euo pipefail\nTIMESTAMP=$(date +%Y%m%d_%H%M%S)\nBACKUP_FILE=\"\
+              /backups/superai_db_${TIMESTAMP}.sql.gz\"\necho \"[backup] Starting\
+              \ database backup...\"\npg_dump -h \"${DB_HOST}\" -U \"${DB_USER}\"\
+              \ -d \"${DB_NAME}\" \\\n  --no-owner --no-privileges --clean --if-exists\
+              \ \\\n  | gzip > \"${BACKUP_FILE}\"\nFILESIZE=$(stat -f%z \"${BACKUP_FILE}\"\
+              \ 2>/dev/null || stat -c%s \"${BACKUP_FILE}\")\necho \"[backup] Completed:\
+              \ ${BACKUP_FILE} (${FILESIZE} bytes)\"\n# Prune backups older than 30\
+              \ days\nfind /backups -name \"superai_db_*.sql.gz\" -mtime +30 -delete\n\
+              echo \"[backup] Pruned old backups\"\n"
+            env:
+            - name: DB_HOST
+              value: postgres.superai
+            - name: DB_NAME
+              value: superai_db
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_USER
+                  name: superai-db-credentials
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: superai-db-credentials
+            image: postgres:16-alpine
+            name: db-backup
+            resources:
+              limits:
+                cpu: 500m
+                memory: 512Mi
+              requests:
+                cpu: 100m
+                memory: 256Mi
+            volumeMounts:
+            - mountPath: /backups
+              name: backup-storage
           restartPolicy: OnFailure
+          securityContext:
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
           serviceAccountName: superai-worker
+          volumes:
+          - name: backup-storage
+            persistentVolumeClaim:
+              claimName: superai-backup-pvc
+  schedule: 0 2 * * *
+  startingDeadlineSeconds: 600
+  successfulJobsHistoryLimit: 3
+  timeZone: UTC
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/cronjob/superai-cleanup
+    eco-base/urn: urn:eco-base:k8s:core:cronjob:superai-cleanup:sha256-6faaad32eaeb50fdbeb01e20f039d3dbe401fd5238bfcc9c4dbbcd9629d57f1f
+  labels:
+    app.kubernetes.io/component: maintenance
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/part-of: eco-base
+    app.kubernetes.io/version: 1.0.0
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
+  name: superai-cleanup
+  namespace: eco-superai
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 900
+      backoffLimit: 1
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/component: maintenance
+            app.kubernetes.io/name: superai-platform
+        spec:
+          containers:
+          - command:
+            - python
+            - -c
+            - 'import asyncio
+
+              from src.infrastructure.tasks.worker import cleanup_expired_jobs
+
+              result = cleanup_expired_jobs()
+
+              print(f"Cleanup result: {result}")
+
+              '
+            envFrom:
+            - configMapRef:
+                name: superai-config
+            - secretRef:
+                name: superai-secrets
+            image: ghcr.io/indestructibleautoops/superai-platform:latest
+            name: cleanup
+            resources:
+              limits:
+                cpu: 200m
+                memory: 256Mi
+              requests:
+                cpu: 50m
+                memory: 128Mi
+          restartPolicy: OnFailure
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
-          containers:
-            - name: cleanup
-              image: ghcr.io/indestructibleautoops/superai-platform:latest
-              command:
-                - python
-                - -c
-                - |
-                  import asyncio
-                  from src.infrastructure.tasks.worker import cleanup_expired_jobs
-                  result = cleanup_expired_jobs()
-                  print(f"Cleanup result: {result}")
-              envFrom:
-                - configMapRef:
-                    name: superai-config
-                - secretRef:
-                    name: superai-secrets
-              resources:
-                requests:
-                  cpu: 50m
-                  memory: 128Mi
-                limits:
-                  cpu: 200m
-                  memory: 256Mi
+          serviceAccountName: superai-worker
+  schedule: 30 3 * * *
+  successfulJobsHistoryLimit: 3
+  timeZone: UTC
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  labels:
+    app.kubernetes.io/component: backup
+    app.kubernetes.io/name: superai-platform
   name: superai-backup-pvc
   namespace: eco-superai
-  labels:
-    app.kubernetes.io/name: superai-platform
-    app.kubernetes.io/component: backup
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: standard
+  - ReadWriteOnce
   resources:
     requests:
       storage: 10Gi
+  storageClassName: standard

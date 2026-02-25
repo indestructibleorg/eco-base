@@ -1,20 +1,31 @@
+---
 apiVersion: v1
+data:
+  DATAOPS_DB_HOST: dataops-postgres
+  DATAOPS_DB_NAME: dataops
+  DATAOPS_DB_PORT: '5432'
+  DATAOPS_ENV: production
+  DATAOPS_EVIDENCE_MODE: strict
+  DATAOPS_LOG_FORMAT: json
+  DATAOPS_LOG_LEVEL: INFO
+  DATAOPS_PLATFORM_DATAOPS_REDIS_URL: redis://dataops-redis:6379/0
+  DATAOPS_REPLAY_MODE: continuous
 kind: ConfigMap
 metadata:
-  name: dataops-config
-  namespace: eco-dataops
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/configmap/dataops-config
+    eco-base/urn: urn:eco-base:k8s:core:configmap:dataops-config:sha256-edf9473121104475e620376f4bf782b9eb3e6f5f5386e52917635562329294ce
   labels:
+    app.kubernetes.io/component: config
+    app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: dataops-platform
     app.kubernetes.io/part-of: eco-base
-    app.kubernetes.io/component: config
-    governance.io/managed: "true"
-data:
-  DATAOPS_ENV: "production"
-  DATAOPS_LOG_LEVEL: "INFO"
-  DATAOPS_LOG_FORMAT: "json"
-  DATAOPS_DB_HOST: "dataops-postgres"
-  DATAOPS_DB_PORT: "5432"
-  DATAOPS_DB_NAME: "dataops"
-  DATAOPS_PLATFORM_DATAOPS_REDIS_URL: "redis://dataops-redis:6379/0"
-  DATAOPS_EVIDENCE_MODE: "strict"
-  DATAOPS_REPLAY_MODE: "continuous"
+    app.kubernetes.io/version: 1.0.0
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
+    governance.io/managed: 'true'
+  name: dataops-config
+  namespace: eco-dataops

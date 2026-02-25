@@ -1,92 +1,113 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/deployment/dataops-engine
+    eco-base/urn: urn:eco-base:k8s:core:deployment:dataops-engine:sha256-1f59089117899004399521f2056d9876c335dcc24f807f5428d3f71027553afb
+  labels:
+    app.kubernetes.io/component: api
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: dataops-engine
+    app.kubernetes.io/part-of: dataops-platform
+    app.kubernetes.io/version: 1.0.0
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
   name: dataops-engine
   namespace: eco-dataops
-  labels:
-    app.kubernetes.io/name: dataops-engine
-    app.kubernetes.io/component: api
-    app.kubernetes.io/part-of: dataops-platform
 spec:
   replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/name: dataops-engine
   strategy:
-    type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: dataops-engine
         app.kubernetes.io/component: api
+        app.kubernetes.io/name: dataops-engine
     spec:
-      serviceAccountName: dataops
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: dataops-config
+        - secretRef:
+            name: dataops-secrets
+        image: dataops-platform:latest
+        livenessProbe:
+          httpGet:
+            path: /livez
+            port: http
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          timeoutSeconds: 5
+        name: dataops-engine
+        ports:
+        - containerPort: 8093
+          name: http
+          protocol: TCP
+        - containerPort: 9093
+          name: metrics
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: '1'
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 256Mi
+        volumeMounts:
+        - mountPath: /app/evidence
+          name: evidence-store
+        - mountPath: /app/snapshots
+          name: snapshots
       securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-      containers:
-        - name: dataops-engine
-          image: dataops-platform:latest
-          ports:
-            - name: http
-              containerPort: 8093
-              protocol: TCP
-            - name: metrics
-              containerPort: 9093
-              protocol: TCP
-          envFrom:
-            - configMapRef:
-                name: dataops-config
-            - secretRef:
-                name: dataops-secrets
-          resources:
-            requests:
-              cpu: 250m
-              memory: 256Mi
-            limits:
-              cpu: "1"
-              memory: 512Mi
-          livenessProbe:
-            httpGet:
-              path: /livez
-              port: http
-            initialDelaySeconds: 15
-            periodSeconds: 20
-            timeoutSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /healthz
-              port: http
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 5
-          volumeMounts:
-            - name: evidence-store
-              mountPath: /app/evidence
-            - name: snapshots
-              mountPath: /app/snapshots
+      serviceAccountName: dataops
       volumes:
-        - name: evidence-store
-          persistentVolumeClaim:
-            claimName: dataops-evidence
-        - name: snapshots
-          persistentVolumeClaim:
-            claimName: dataops-snapshots
+      - name: evidence-store
+        persistentVolumeClaim:
+          claimName: dataops-evidence
+      - name: snapshots
+        persistentVolumeClaim:
+          claimName: dataops-snapshots
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/deployment/dataops-pipeline
+    eco-base/urn: urn:eco-base:k8s:core:deployment:dataops-pipeline:sha256-7b3d0de74276a6dc00f53d8a8b7834df2174a954588f22cd3bd6b632c19cd1ea
+  labels:
+    app.kubernetes.io/component: worker
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: dataops-pipeline
+    app.kubernetes.io/part-of: dataops-platform
+    app.kubernetes.io/version: 1.0.0
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
   name: dataops-pipeline
   namespace: eco-dataops
-  labels:
-    app.kubernetes.io/name: dataops-pipeline
-    app.kubernetes.io/component: worker
-    app.kubernetes.io/part-of: dataops-platform
 spec:
   replicas: 1
   selector:
@@ -95,39 +116,52 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: dataops-pipeline
         app.kubernetes.io/component: worker
+        app.kubernetes.io/name: dataops-pipeline
     spec:
-      serviceAccountName: dataops
+      containers:
+      - command:
+        - python
+        - -m
+        - engines.evidence_pipeline.engine
+        envFrom:
+        - configMapRef:
+            name: dataops-config
+        - secretRef:
+            name: dataops-secrets
+        image: dataops-platform:latest
+        name: dataops-pipeline
+        resources:
+          limits:
+            cpu: 500m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
-      containers:
-        - name: dataops-pipeline
-          image: dataops-platform:latest
-          command: ["python", "-m", "engines.evidence_pipeline.engine"]
-          envFrom:
-            - configMapRef:
-                name: dataops-config
-            - secretRef:
-                name: dataops-secrets
-          resources:
-            requests:
-              cpu: 100m
-              memory: 128Mi
-            limits:
-              cpu: 500m
-              memory: 256Mi
+      serviceAccountName: dataops
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/deployment/dataops-anomaly
+    eco-base/urn: urn:eco-base:k8s:core:deployment:dataops-anomaly:sha256-16b6b10d906d263c206a7eceab4e89673237f840136860a3f76ecc7e3c7bac6e
+  labels:
+    app.kubernetes.io/component: worker
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: dataops-anomaly
+    app.kubernetes.io/part-of: dataops-platform
+    app.kubernetes.io/version: 1.0.0
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
   name: dataops-anomaly
   namespace: eco-dataops
-  labels:
-    app.kubernetes.io/name: dataops-anomaly
-    app.kubernetes.io/component: worker
-    app.kubernetes.io/part-of: dataops-platform
 spec:
   replicas: 1
   selector:
@@ -136,26 +170,29 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: dataops-anomaly
         app.kubernetes.io/component: worker
+        app.kubernetes.io/name: dataops-anomaly
     spec:
-      serviceAccountName: dataops
+      containers:
+      - command:
+        - python
+        - -m
+        - engines.anomaly_detector.engine
+        envFrom:
+        - configMapRef:
+            name: dataops-config
+        - secretRef:
+            name: dataops-secrets
+        image: dataops-platform:latest
+        name: dataops-anomaly
+        resources:
+          limits:
+            cpu: '1'
+            memory: 1Gi
+          requests:
+            cpu: 250m
+            memory: 256Mi
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
-      containers:
-        - name: dataops-anomaly
-          image: dataops-platform:latest
-          command: ["python", "-m", "engines.anomaly_detector.engine"]
-          envFrom:
-            - configMapRef:
-                name: dataops-config
-            - secretRef:
-                name: dataops-secrets
-          resources:
-            requests:
-              cpu: 250m
-              memory: 256Mi
-            limits:
-              cpu: "1"
-              memory: 1Gi
+      serviceAccountName: dataops
