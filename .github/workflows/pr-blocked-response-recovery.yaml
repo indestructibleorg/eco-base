@@ -180,7 +180,7 @@ jobs:
               core.info(`Wrote recovery metrics artifact: ${artifactPath}`);
               const summaryPath = path.join(artifactDir, 'recovery-summary.json');
               let summary = {
-                summary_version: "1.3.0",
+                summary_version: "1.4.0",
                 schema: "eco-base/recovery-summary/v1",
                 schema_url: "eco-base://schemas/recovery-summary/v1",
                 generated_at: new Date().toISOString(),
@@ -217,6 +217,13 @@ jobs:
                   manual_intervention_count_above: 0,
                 },
                 refresh_interval_seconds: 900,
+                implementation_config: {
+                  auto_approve_workflow_run: true,
+                  auto_redispatch_blocked_response: true,
+                  auto_update_behind_draft_branch: true,
+                  signed_autofix_commit_enabled: true,
+                  recovery_metrics_artifact_enabled: true,
+                },
               };
               if (fs.existsSync(summaryPath)) {
                 try {
@@ -237,7 +244,7 @@ jobs:
                 error_summary: metrics.error_summary,
               });
               summary.generated_at = metrics.generated_at;
-              summary.summary_version = "1.3.0";
+              summary.summary_version = "1.4.0";
               summary.schema = summary.schema || "eco-base/recovery-summary/v1";
               summary.schema_url = summary.schema_url || "eco-base://schemas/recovery-summary/v1";
               summary.total_events = Number(summary.total_events || 0) + 1;
@@ -272,6 +279,13 @@ jobs:
                 manual_intervention_count_above: 0,
               };
               summary.refresh_interval_seconds = summary.refresh_interval_seconds || 900;
+              summary.implementation_config = summary.implementation_config || {
+                auto_approve_workflow_run: true,
+                auto_redispatch_blocked_response: true,
+                auto_update_behind_draft_branch: true,
+                signed_autofix_commit_enabled: true,
+                recovery_metrics_artifact_enabled: true,
+              };
               summary.prs[prKey] = {
                 pr_number: prNumber,
                 latest_run_id: run.id,
