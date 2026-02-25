@@ -6,10 +6,10 @@ Used by dora-metrics.yaml to prevent duplicate SLO breach issues.
 """
 import json
 import os
-import urllib.request
-import urllib.error
-from datetime import datetime, timezone, timedelta
 import re
+import urllib.error
+import urllib.request
+from datetime import datetime, timedelta, timezone
 
 token = os.environ["GITHUB_TOKEN"]
 repo = os.environ["GITHUB_REPOSITORY"]
