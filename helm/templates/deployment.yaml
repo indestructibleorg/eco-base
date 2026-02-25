@@ -4,7 +4,7 @@ metadata:
   name: {{ include "eco.fullname" . }}
   namespace: {{ .Values.namespace | default "eco-base" }}
   labels:
-    {{- include "eco.labels" . | nindent 4 }}
+  {{- include "eco.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount | default 2 }}
   selector:
@@ -17,12 +17,12 @@ spec:
       maxUnavailable: 0
   template:
     metadata:
-      labels:
-        {{- include "eco.selectorLabels" . | nindent 8 }}
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "{{ .Values.service.port | default 8001 }}"
-        prometheus.io/path: "/metrics"
+  labels:
+  {{- include "eco.selectorLabels" . | nindent 8 }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "{{ .Values.service.port | default 8001 }}"
+    prometheus.io/path: "/metrics"
     spec:
       serviceAccountName: {{ include "eco.fullname" . }}
       securityContext:

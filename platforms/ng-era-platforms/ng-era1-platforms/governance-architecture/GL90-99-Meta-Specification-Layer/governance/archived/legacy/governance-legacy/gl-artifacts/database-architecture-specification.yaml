@@ -17,11 +17,11 @@ metadata:
   owner: data-team
   layer: "GL20-29"
   tags:
-    - database
-    - architecture
-    - data-model
-    - schema
-    - persistence
+  - database
+  - architecture
+  - data-model
+  - schema
+  - persistence
   annotations:
     governance.machinenativeops.io/initiative: "INIT-2026-Q1-001"
     governance.machinenativeops.io/priority: "P0"

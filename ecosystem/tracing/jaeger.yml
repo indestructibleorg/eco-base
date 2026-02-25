@@ -19,8 +19,8 @@ spec:
       app: jaeger
   template:
     metadata:
-      labels:
-        app: jaeger
+  labels:
+    app: jaeger
     spec:
       containers:
       - name: jaeger

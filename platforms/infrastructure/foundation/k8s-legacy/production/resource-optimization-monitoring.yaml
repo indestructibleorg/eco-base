@@ -128,5 +128,5 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: resource-optimization-config
-  namespace: production
+    name: resource-optimization-config
+    namespace: production

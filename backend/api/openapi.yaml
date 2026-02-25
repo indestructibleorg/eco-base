@@ -22,7 +22,6 @@ servers:
     description: Local development (AI service)
   - url: https://api.autoecoops.io
     description: Production
-
 tags:
   - name: Health
     description: Liveness and readiness probes

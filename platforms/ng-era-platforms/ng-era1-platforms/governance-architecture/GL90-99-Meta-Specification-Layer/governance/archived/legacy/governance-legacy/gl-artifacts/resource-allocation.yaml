@@ -17,9 +17,9 @@ metadata:
   owner: operations-team
   layer: "GL10-29"
   tags:
-    - operational
-    - resources
-    - allocation
+  - operational
+  - resources
+  - allocation
   annotations:
     governance.machinenativeops.io/fiscal-year: "FY2025"
     governance.machinenativeops.io/approval-status: "approved"

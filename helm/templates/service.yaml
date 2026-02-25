@@ -4,7 +4,7 @@ metadata:
   name: {{ include "eco.fullname" . }}
   namespace: {{ .Values.namespace | default "eco-base" }}
   labels:
-    {{- include "eco.labels" . | nindent 4 }}
+  {{- include "eco.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type | default "ClusterIP" }}
   ports:

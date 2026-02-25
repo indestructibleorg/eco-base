@@ -83,5 +83,5 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: argocd-notifications-cm
-  namespace: argocd
+    name: argocd-notifications-cm
+    namespace: argocd

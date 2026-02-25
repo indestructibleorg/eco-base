@@ -5,7 +5,7 @@ metadata:
   name: {{ include "eco.fullname" . }}
   namespace: {{ .Values.namespace | default "eco-base" }}
   labels:
-    {{- include "eco.labels" . | nindent 4 }}
+  {{- include "eco.labels" . | nindent 4 }}
 spec:
   {{- if .Values.podDisruptionBudget.minAvailable }}
   minAvailable: {{ .Values.podDisruptionBudget.minAvailable }}

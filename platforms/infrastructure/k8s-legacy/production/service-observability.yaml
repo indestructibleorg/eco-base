@@ -38,8 +38,8 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: istio-custom-metrics
-  namespace: istio-system
+    name: istio-custom-metrics
+    namespace: istio-system
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -51,8 +51,8 @@ metadata:
     app.kubernetes.io/name: istio-pilot
     eco-base/governance: aligned
     eco-base/part-of: eco-base
-  name: istio-custom-metrics-monitor
-  namespace: istio-system
+    name: istio-custom-metrics-monitor
+    namespace: istio-system
 spec:
   endpoints:
   - interval: 15s
@@ -108,8 +108,8 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     grafana_dashboard: '1'
-  name: service-mesh-dashboard
-  namespace: istio-system
+    name: service-mesh-dashboard
+    namespace: istio-system
 ---
 apiVersion: telemetry.istio.io/v1alpha1
 kind: Telemetry
@@ -117,8 +117,8 @@ metadata:
   annotations:
     eco-base/uri: eco-base://platform/resource/infrastructure/k8s-legacy/production/service-observability.yaml
     eco-base/urn: urn:eco-base:platform:resource:infrastructure:k8s-legacy:production:service-observability.yaml
-  name: mesh-default
-  namespace: istio-system
+    name: mesh-default
+    namespace: istio-system
 spec:
   accessLogging:
   - providers:

@@ -17,9 +17,9 @@ metadata:
   owner: engineering-team
   layer: "GL30-49"
   tags:
-    - execution
-    - project
-    - development
+  - execution
+  - project
+  - development
   annotations:
     governance.machinenativeops.io/initiative: "INIT-2025-Q1-003"
     governance.machinenativeops.io/priority: "P1"

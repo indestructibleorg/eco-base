@@ -195,8 +195,8 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: istio
-  namespace: istio-system
+    name: istio
+    namespace: istio-system
 ---
 apiVersion: v1
 data:
@@ -223,5 +223,5 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: multi-cluster-health-config
-  namespace: production
+    name: multi-cluster-health-config
+    namespace: production

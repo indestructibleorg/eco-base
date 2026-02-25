@@ -37,7 +37,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: coherence-monitor
         annotations:
-          summary: "Quantum naming coherence below threshold"
+            summary: "Quantum naming coherence below threshold"
           description: "Quantum naming coherence is {{ $value }}, below threshold of 0.999"
           runbook: "/repair/quantum-realignment-v4"
           quantum_protocol: "surface_code_correction"
@@ -53,7 +53,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: coherence-trend
         annotations:
-          summary: "Quantum coherence degradation detected"
+            summary: "Quantum coherence degradation detected"
           description: "Quantum coherence is degrading at rate {{ $value }}"
           runbook: "/repair/quantum-stabilization-v3"
           impact: "Medium - Potential quantum instability"
@@ -69,7 +69,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: entanglement-monitor
         annotations:
-          summary: "Quantum entanglement strength below threshold"
+            summary: "Quantum entanglement strength below threshold"
           description: "Entanglement strength is {{ $value }}, below threshold of 0.95"
           runbook: "/repair/quantum-entanglement-v3"
           quantum_protocol: "re-entanglement_procedure"
@@ -85,7 +85,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: entanglement-monitor
         annotations:
-          summary: "Critical quantum entanglement loss"
+            summary: "Critical quantum entanglement loss"
           description: "Entanglement strength critically low at {{ $value }}"
           runbook: "/repair/quantum-re-entanglement-v4"
           impact: "Critical - Quantum state isolation"
@@ -101,7 +101,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: entropy-monitor
         annotations:
-          summary: "High quantum conflict entropy detected"
+            summary: "High quantum conflict entropy detected"
           description: "Conflict entropy is {{ $value }}, above threshold of 0.1"
           runbook: "/repair/quantum-conflict-resolution-v5"
           impact: "Medium - Increased quantum uncertainty"
@@ -116,7 +116,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: entropy-monitor
         annotations:
-          summary: "Critical quantum conflict entropy"
+            summary: "Critical quantum conflict entropy"
           description: "Conflict entropy critically high at {{ $value }}"
           runbook: "/repair/quantum-decoherence-control-v4"
           impact: "Critical - Quantum system instability"
@@ -132,7 +132,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: decoherence-monitor
         annotations:
-          summary: "High quantum decoherence rate"
+            summary: "High quantum decoherence rate"
           description: "Decoherence rate is {{ $value }}, above threshold of 0.001"
           runbook: "/repair/quantum-decoherence-control-v4"
           impact: "Medium - Accelerated quantum information loss"
@@ -147,7 +147,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: decoherence-monitor
         annotations:
-          summary: "Critical quantum decoherence rate"
+            summary: "Critical quantum decoherence rate"
           description: "Decoherence rate critically high at {{ $value }}"
           runbook: "/repair/quantum-emergency-stabilization-v5"
           impact: "Critical - Imminent quantum collapse"
@@ -163,7 +163,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: violation-monitor
         annotations:
-          summary: "Quantum naming violations detected"
+            summary: "Quantum naming violations detected"
           description: "{{ $value }} quantum naming violations detected"
           runbook: "/repair/quantum-violation-resolution-v5"
           quantum_protocol: "violation_quantum_correction"
@@ -179,7 +179,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: violation-monitor
         annotations:
-          summary: "High quantum naming violation rate"
+            summary: "High quantum naming violation rate"
           description: "Naming violation rate is {{ $value }}/second"
           runbook: "/repair/quantum-policy-enforcement-v4"
           impact: "Medium - Policy compliance degradation"
@@ -199,7 +199,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: state-monitor
         annotations:
-          summary: "Quantum state imbalance detected"
+            summary: "Quantum state imbalance detected"
           description: "Decoherent states ratio is {{ $value }}, above threshold of 0.1"
           runbook: "/repair/quantum-state-rebalancing-v3"
           impact: "Medium - Quantum state distribution imbalance"
@@ -218,7 +218,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: state-monitor
         annotations:
-          summary: "Quantum state collapse detected"
+            summary: "Quantum state collapse detected"
           description: "Decoherent states ratio critically high at {{ $value }}"
           runbook: "/repair/quantum-emergency-recovery-v5"
           impact: "Critical - Quantum system collapse"
@@ -234,7 +234,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: bell-test
         annotations:
-          summary: "Bell inequality violation detected"
+            summary: "Bell inequality violation detected"
           description: "Bell inequality value {{ $value }} below classical threshold"
           runbook: "/repair/quantum-bell-validation-v3"
           impact: "Medium - Quantum correlation verification needed"
@@ -249,7 +249,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: bell-test
         annotations:
-          summary: "Critical Bell inequality violation"
+            summary: "Critical Bell inequality violation"
           description: "Bell inequality value critically low at {{ $value }}"
           runbook: "/repair/quantum-correlation-restoration-v4"
           impact: "Critical - Quantum correlation lost"
@@ -265,7 +265,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: performance-monitor
         annotations:
-          summary: "High quantum circuit latency"
+            summary: "High quantum circuit latency"
           description: "Quantum circuit execution time {{ $value }}s above threshold"
           runbook: "/repair/quantum-performance-optimization-v3"
           impact: "Medium - Performance degradation"
@@ -280,7 +280,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: error-monitor
         annotations:
-          summary: "High quantum circuit error rate"
+            summary: "High quantum circuit error rate"
           description: "Quantum circuit error rate {{ $value }} above threshold"
           runbook: "/repair/quantum-error-correction-v4"
           impact: "Medium - Increased quantum errors"
@@ -296,7 +296,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: resource-monitor
         annotations:
-          summary: "Quantum qubit exhaustion imminent"
+            summary: "Quantum qubit exhaustion imminent"
           description: "Qubit utilization {{ $value | humanizePercentage }} above 90%"
           runbook: "/repair/quantum-resource-scaling-v3"
           impact: "Medium - Resource constraint"
@@ -311,7 +311,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: resource-monitor
         annotations:
-          summary: "Critical quantum resource starvation"
+            summary: "Critical quantum resource starvation"
           description: "Qubit utilization critically high at {{ $value | humanizePercentage }}"
           runbook: "/repair/quantum-emergency-scaling-v4"
           impact: "Critical - Resource exhaustion"
@@ -327,7 +327,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: health-monitor
         annotations:
-          summary: "Quantum naming governance service down"
+            summary: "Quantum naming governance service down"
           description: "Quantum naming governance service is unresponsive"
           runbook: "/repair/quantum-service-recovery-v4"
           impact: "Critical - Service unavailable"
@@ -346,7 +346,7 @@ groups:
           service: quantum-naming-governance
           app.kubernetes.io/component: health-monitor
         annotations:
-          summary: "Quantum service degradation"
+            summary: "Quantum service degradation"
           description: "Error rate {{ $value | humanizePercentage }} above 5%"
           runbook: "/repair/quantum-service-optimization-v3"
           impact: "Medium - Service performance degraded"

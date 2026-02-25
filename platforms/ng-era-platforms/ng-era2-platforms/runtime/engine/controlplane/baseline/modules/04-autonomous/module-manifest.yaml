@@ -102,7 +102,7 @@ semantic_mappings:
 
   maintainers:
     - "MachineNativeOps Team"
-  tags:
+tags:
     - "autonomous"
     - "self-healing"
     - "edge"

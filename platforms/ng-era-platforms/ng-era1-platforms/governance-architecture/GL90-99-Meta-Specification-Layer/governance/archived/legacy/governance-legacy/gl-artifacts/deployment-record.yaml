@@ -17,9 +17,9 @@ metadata:
   owner: platform-team
   layer: "GL30-49"
   tags:
-    - execution
-    - deployment
-    - release
+  - execution
+  - deployment
+  - release
   annotations:
     governance.machinenativeops.io/release: "v1.0.0"
     governance.machinenativeops.io/environment: "production"

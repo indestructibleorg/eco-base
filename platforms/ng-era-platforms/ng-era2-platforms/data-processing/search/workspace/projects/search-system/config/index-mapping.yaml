@@ -67,8 +67,7 @@ index:
       content:
         type: text
         analyzer: custom_text_analyzer
-      
-      tags:
+tags:
         type: keyword
       
       category:

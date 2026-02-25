@@ -30,8 +30,8 @@ metadata:
     eco-base/owner: eco-system
     eco-base/part-of: eco-base
     eco-base/platform: core
-  name: machine-native-ops
-  namespace: platform-03
+    name: machine-native-ops
+    namespace: platform-03
 spec:
   externalTrafficPolicy: Local
   ports:
@@ -76,8 +76,8 @@ metadata:
     eco-base/owner: eco-system
     eco-base/part-of: eco-base
     eco-base/platform: core
-  name: machine-native-ops-api
-  namespace: platform-03
+    name: machine-native-ops-api
+    namespace: platform-03
 spec:
   ports:
   - name: http
@@ -111,8 +111,8 @@ metadata:
     eco-base/owner: eco-system
     eco-base/part-of: eco-base
     eco-base/platform: core
-  name: machine-native-ops-worker
-  namespace: platform-03
+    name: machine-native-ops-worker
+    namespace: platform-03
 spec:
   clusterIP: None
   ports:
@@ -143,8 +143,8 @@ metadata:
     eco-base/owner: eco-system
     eco-base/part-of: eco-base
     eco-base/platform: core
-  name: redis-cluster
-  namespace: platform-03
+    name: redis-cluster
+    namespace: platform-03
 spec:
   ports:
   - name: redis
@@ -180,8 +180,8 @@ metadata:
     eco-base/owner: eco-system
     eco-base/part-of: eco-base
     eco-base/platform: core
-  name: postgres
-  namespace: platform-03
+    name: postgres
+    namespace: platform-03
 spec:
   ports:
   - name: postgres
@@ -215,8 +215,8 @@ metadata:
     eco-base/owner: eco-system
     eco-base/part-of: eco-base
     eco-base/platform: core
-  name: monitoring
-  namespace: monitoring
+    name: monitoring
+    namespace: monitoring
 spec:
   externalTrafficPolicy: Local
   ports:
@@ -240,8 +240,8 @@ metadata:
     eco-base/governance: aligned
     eco-base/part-of: eco-base
     release: prometheus
-  name: machine-native-ops
-  namespace: platform-03
+    name: machine-native-ops
+    namespace: platform-03
 spec:
   endpoints:
   - interval: 30s
@@ -260,8 +260,8 @@ metadata:
     eco-base/governance: aligned
     eco-base/part-of: eco-base
     release: prometheus
-  name: machine-native-ops-api
-  namespace: platform-03
+    name: machine-native-ops-api
+    namespace: platform-03
 spec:
   endpoints:
   - interval: 15s
@@ -280,8 +280,8 @@ metadata:
     eco-base/governance: aligned
     eco-base/part-of: eco-base
     release: prometheus
-  name: machine-native-ops-worker
-  namespace: platform-03
+    name: machine-native-ops-worker
+    namespace: platform-03
 spec:
   endpoints:
   - interval: 60s
@@ -300,8 +300,8 @@ metadata:
     eco-base/governance: aligned
     eco-base/part-of: eco-base
     release: prometheus
-  name: redis-cluster
-  namespace: platform-03
+    name: redis-cluster
+    namespace: platform-03
 spec:
   endpoints:
   - interval: 30s
@@ -320,8 +320,8 @@ metadata:
     eco-base/governance: aligned
     eco-base/part-of: eco-base
     release: prometheus
-  name: postgres
-  namespace: platform-03
+    name: postgres
+    namespace: platform-03
 spec:
   endpoints:
   - interval: 30s

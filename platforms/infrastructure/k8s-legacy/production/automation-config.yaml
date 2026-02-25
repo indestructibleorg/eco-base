@@ -181,5 +181,5 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     environment: production
-  name: automation-config
-  namespace: production
+    name: automation-config
+    namespace: production

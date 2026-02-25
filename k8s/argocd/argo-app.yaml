@@ -14,12 +14,12 @@ metadata:
     app.kubernetes.io/part-of: eco-base
     app.kubernetes.io/managed-by: argocd
   annotations:
-    # Governance traceability
-    eco-base/uri: "eco-base://k8s/argocd/application/production"
-    eco-base/owner: "platform-team"
-    eco-base/compliance: "soc2,zero-trust,gitops"
+  # Governance traceability
+  eco-base/uri: "eco-base://k8s/argocd/application/production"
+  eco-base/owner: "platform-team"
+  eco-base/compliance: "soc2,zero-trust,gitops"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+  - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
 

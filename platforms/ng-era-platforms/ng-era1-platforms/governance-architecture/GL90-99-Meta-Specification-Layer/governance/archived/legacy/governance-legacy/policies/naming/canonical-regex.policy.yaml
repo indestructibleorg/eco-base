@@ -273,59 +273,59 @@ examples:
       apiVersion: v1
       kind: Namespace
       metadata:
-        name: "team-frontend-prod"
-    expected: "PASS"
-    reason: "符合 team-domain-env 模式"
+  name: "team-frontend-prod"
+  expected: "PASS"
+  reason: "符合 team-domain-env 模式"
 
   # 示例 2: 拒絕大寫命名
   - description: "拒絕 Team-Frontend-Prod 命名"
-    resource:
+  resource:
       apiVersion: v1
       kind: Namespace
       metadata:
-        name: "Team-Frontend-Prod"
-    expected: "FAIL"
-    reason: "包含大寫字母，違反 VAL-002"
+  name: "Team-Frontend-Prod"
+  expected: "FAIL"
+  reason: "包含大寫字母，違反 VAL-002"
 
   # 示例 3: 拒絕底線命名
   - description: "拒絕 team_frontend_prod 命名"
-    resource:
+  resource:
       apiVersion: v1
       kind: Namespace
       metadata:
-        name: "team_frontend_prod"
-    expected: "FAIL"
-    reason: "使用底線而非破折號，違反 VAL-002"
+  name: "team_frontend_prod"
+  expected: "FAIL"
+  reason: "使用底線而非破折號，違反 VAL-002"
 
   # 示例 4: 拒絕保留關鍵字
   - description: "拒絕 team-core-prod 命名"
-    resource:
+  resource:
       apiVersion: v1
       kind: Namespace
       metadata:
-        name: "team-core-prod"
-    expected: "FAIL"
-    reason: "包含保留關鍵字 'core'，違反 VAL-004"
+  name: "team-core-prod"
+  expected: "FAIL"
+  reason: "包含保留關鍵字 'core'，違反 VAL-004"
 
   # 示例 5: 多租戶模式
   - description: "驗證 tenant-payment-prod-uswest 命名"
-    resource:
+  resource:
       apiVersion: v1
       kind: Namespace
       metadata:
-        name: "tenant-payment-prod-uswest"
-    expected: "PASS"
-    reason: "符合 tenant-workload-env-region 模式"
+  name: "tenant-payment-prod-uswest"
+  expected: "PASS"
+  reason: "符合 tenant-workload-env-region 模式"
 
   # 示例 6: 版本共存模式
   - description: "驗證 prod-api-v2 命名"
-    resource:
+  resource:
       apiVersion: v1
       kind: Namespace
       metadata:
-        name: "prod-api-v2"
-    expected: "PASS"
-    reason: "符合 env-app-version 模式"
+  name: "prod-api-v2"
+  expected: "PASS"
+  reason: "符合 env-app-version 模式"
 
 # 測試命令
 testing:

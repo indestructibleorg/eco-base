@@ -510,8 +510,8 @@ spec:
       app: grafana
   template:
     metadata:
-      labels:
-        app: grafana
+  labels:
+    app: grafana
     spec:
       containers:
       - name: grafana

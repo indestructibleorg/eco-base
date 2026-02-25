@@ -19,10 +19,10 @@ metadata:
   owner: governance-committee
   layer: "GL00-09"
   tags:
-    - strategic
-    - charter
-    - governance
-    - core
+  - strategic
+  - charter
+  - governance
+  - core
   annotations:
     governance.machinenativeops.io/classification: "internal"
     governance.machinenativeops.io/review-cycle: "annual"

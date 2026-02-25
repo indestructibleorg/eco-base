@@ -20,8 +20,8 @@ metadata:
     eco-base/platform: core
     environment: production
     test-type: health-check
-  name: dr-health-check
-  namespace: production
+    name: dr-health-check
+    namespace: production
 spec:
   concurrencyPolicy: Forbid
   failedJobsHistoryLimit: 3
@@ -107,8 +107,8 @@ metadata:
     eco-base/platform: core
     environment: production
     test-type: backup-verification
-  name: dr-backup-verification
-  namespace: production
+    name: dr-backup-verification
+    namespace: production
 spec:
   concurrencyPolicy: Forbid
   failedJobsHistoryLimit: 3

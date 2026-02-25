@@ -52,346 +52,299 @@ spec:
       urn: "urn:machinenativeops:module:config-manager:v1"
       
       metadata:
-        author: "MachineNativeOps Team"
-        license: "MIT"
-        repository: "https://github.com/MachineNativeOps/MachineNativeOps"
-        documentation: "docs/modules/config-manager.md"
-        
-      technical:
-        language: "python"
-        runtime: "python3.11"
-        entrypoint: "/opt/machinenativenops/modules/config-manager/main.py"
-        config_file: "config/config-manager.yaml"
-        
-      dependencies: []
-      
-      provides:
-        - "config_validation"
-        - "config_loading"
-        - "config_watching"
-        
-      requires: []
-    
+  author: "MachineNativeOps Team"
+  license: "MIT"
+  repository: "https://github.com/MachineNativeOps/MachineNativeOps"
+  documentation: "docs/modules/config-manager.md"
+    technical:
+  language: "python"
+  runtime: "python3.11"
+  entrypoint: "/opt/machinenativenops/modules/config-manager/main.py"
+  config_file: "config/config-manager.yaml"
+    dependencies: []
+    provides:
+  - "config_validation"
+  - "config_loading"
+  - "config_watching"
+    requires: []
     # 2. 日誌服務
-    - id: "logging-service"
-      name: "logging-service"
-      display_name: "Logging Service"
-      version: "1.0.0"
-      description: "Centralized logging and audit trail service"
-      category: "core"
-      tier: "core"
-      status: "active"
-      urn: "urn:machinenativeops:module:logging-service:v1"
-      
-      metadata:
-        author: "MachineNativeOps Team"
-        license: "MIT"
-        repository: "https://github.com/MachineNativeOps/MachineNativeOps"
-        documentation: "docs/modules/logging-service.md"
-        
-      technical:
-        language: "python"
-        runtime: "python3.11"
-        entrypoint: "/opt/machinenativenops/modules/logging-service/main.py"
-        config_file: "config/logging-service.yaml"
-        
-      dependencies:
-        - module_id: "config-manager"
-          version: ">=1.0.0"
-          optional: false
-          
-      provides:
-        - "structured_logging"
-        - "log_aggregation"
-        - "log_rotation"
-        
-      requires:
-        - "config_validation"
-    
+  - id: "logging-service"
+  name: "logging-service"
+  display_name: "Logging Service"
+  version: "1.0.0"
+  description: "Centralized logging and audit trail service"
+  category: "core"
+  tier: "core"
+  status: "active"
+  urn: "urn:machinenativeops:module:logging-service:v1"
+        metadata:
+  author: "MachineNativeOps Team"
+  license: "MIT"
+  repository: "https://github.com/MachineNativeOps/MachineNativeOps"
+  documentation: "docs/modules/logging-service.md"
+    technical:
+  language: "python"
+  runtime: "python3.11"
+  entrypoint: "/opt/machinenativenops/modules/logging-service/main.py"
+  config_file: "config/logging-service.yaml"
+    dependencies:
+  - module_id: "config-manager"
+  version: ">=1.0.0"
+  optional: false
+    provides:
+  - "structured_logging"
+  - "log_aggregation"
+  - "log_rotation"
+    requires:
+  - "config_validation"
     # 3. 治理引擎
-    - id: "governance-engine"
-      name: "governance-engine"
-      display_name: "Governance Engine"
-      version: "1.0.0"
-      description: "Core governance and policy enforcement engine"
-      category: "governance"
-      tier: "core"
-      status: "active"
-      urn: "urn:machinenativeops:module:governance-engine:v1"
-      
-      metadata:
-        author: "MachineNativeOps Team"
-        license: "MIT"
-        repository: "https://github.com/MachineNativeOps/MachineNativeOps"
-        documentation: "docs/modules/governance-engine.md"
-        
-      technical:
-        language: "python"
-        runtime: "python3.11"
-        entrypoint: "/opt/machinenativenops/modules/governance-engine/main.py"
-        config_file: "config/governance-engine.yaml"
-        
-      dependencies:
-        - module_id: "config-manager"
-          version: ">=1.0.0"
-          optional: false
-        - module_id: "logging-service"
-          version: ">=1.0.0"
-          optional: false
-        - module_id: "database-connector"
-          version: ">=1.0.0"
-          optional: false
-          
-      provides:
-        - "policy_enforcement"
-        - "rbac_management"
-        - "audit_logging"
-        
-      requires:
-        - "config_validation"
-        - "structured_logging"
-        - "database_access"
-    
+  - id: "governance-engine"
+  name: "governance-engine"
+  display_name: "Governance Engine"
+  version: "1.0.0"
+  description: "Core governance and policy enforcement engine"
+  category: "governance"
+  tier: "core"
+  status: "active"
+  urn: "urn:machinenativeops:module:governance-engine:v1"
+        metadata:
+  author: "MachineNativeOps Team"
+  license: "MIT"
+  repository: "https://github.com/MachineNativeOps/MachineNativeOps"
+  documentation: "docs/modules/governance-engine.md"
+    technical:
+  language: "python"
+  runtime: "python3.11"
+  entrypoint: "/opt/machinenativenops/modules/governance-engine/main.py"
+  config_file: "config/governance-engine.yaml"
+    dependencies:
+  - module_id: "config-manager"
+  version: ">=1.0.0"
+  optional: false
+  - module_id: "logging-service"
+  version: ">=1.0.0"
+  optional: false
+  - module_id: "database-connector"
+  version: ">=1.0.0"
+  optional: false
+    provides:
+  - "policy_enforcement"
+  - "rbac_management"
+  - "audit_logging"
+    requires:
+  - "config_validation"
+  - "structured_logging"
+  - "database_access"
     # 4. 信任管理器
-    - id: "trust-manager"
-      name: "trust-manager"
-      display_name: "Trust Manager"
-      version: "1.0.0"
-      description: "Trust chain and certificate management system"
-      category: "security"
-      tier: "security"
-      status: "active"
-      urn: "urn:machinenativeops:module:trust-manager:v1"
-      
-      metadata:
-        author: "MachineNativeOps Team"
-        license: "MIT"
-        repository: "https://github.com/MachineNativeOps/MachineNativeOps"
-        documentation: "docs/modules/trust-manager.md"
-        
-      technical:
-        language: "python"
-        runtime: "python3.11"
-        entrypoint: "/opt/machinenativenops/modules/trust-manager/main.py"
-        config_file: "config/trust-manager.yaml"
-        
-      dependencies:
-        - module_id: "config-manager"
-          version: ">=1.0.0"
-          optional: false
-        - module_id: "crypto-provider"
-          version: ">=1.0.0"
-          optional: false
-        - module_id: "storage-backend"
-          version: ">=1.0.0"
-          optional: false
-          
-      provides:
-        - "certificate_management"
-        - "trust_chain_validation"
-        - "key_rotation"
-        
-      requires:
-        - "config_validation"
-        - "cryptographic_operations"
-        - "secure_storage"
-    
+  - id: "trust-manager"
+  name: "trust-manager"
+  display_name: "Trust Manager"
+  version: "1.0.0"
+  description: "Trust chain and certificate management system"
+  category: "security"
+  tier: "security"
+  status: "active"
+  urn: "urn:machinenativeops:module:trust-manager:v1"
+        metadata:
+  author: "MachineNativeOps Team"
+  license: "MIT"
+  repository: "https://github.com/MachineNativeOps/MachineNativeOps"
+  documentation: "docs/modules/trust-manager.md"
+    technical:
+  language: "python"
+  runtime: "python3.11"
+  entrypoint: "/opt/machinenativenops/modules/trust-manager/main.py"
+  config_file: "config/trust-manager.yaml"
+    dependencies:
+  - module_id: "config-manager"
+  version: ">=1.0.0"
+  optional: false
+  - module_id: "crypto-provider"
+  version: ">=1.0.0"
+  optional: false
+  - module_id: "storage-backend"
+  version: ">=1.0.0"
+  optional: false
+    provides:
+  - "certificate_management"
+  - "trust_chain_validation"
+  - "key_rotation"
+    requires:
+  - "config_validation"
+  - "cryptographic_operations"
+  - "secure_storage"
     # 5. 來源追溯器
-    - id: "provenance-tracker"
-      name: "provenance-tracker"
-      display_name: "Provenance Tracker"
-      version: "1.0.0"
-      description: "Audit trail and provenance tracking system"
-      category: "audit"
-      tier: "core"
-      status: "active"
-      urn: "urn:machinenativeops:module:provenance-tracker:v1"
-      
-      metadata:
-        author: "MachineNativeOps Team"
-        license: "MIT"
-        repository: "https://github.com/MachineNativeOps/MachineNativeOps"
-        documentation: "docs/modules/provenance-tracker.md"
-        
-      technical:
-        language: "python"
-        runtime: "python3.11"
-        entrypoint: "/opt/machinenativenops/modules/provenance-tracker/main.py"
-        config_file: "config/provenance-tracker.yaml"
-        
-      dependencies:
-        - module_id: "config-manager"
-          version: ">=1.0.0"
-          optional: false
-        - module_id: "logging-service"
-          version: ">=1.0.0"
-          optional: false
-        - module_id: "database-connector"
-          version: ">=1.0.0"
-          optional: false
-          
-      provides:
-        - "audit_trail"
-        - "provenance_tracking"
-        - "event_sourcing"
-        
-      requires:
-        - "config_validation"
-        - "structured_logging"
-        - "database_access"
-    
+  - id: "provenance-tracker"
+  name: "provenance-tracker"
+  display_name: "Provenance Tracker"
+  version: "1.0.0"
+  description: "Audit trail and provenance tracking system"
+  category: "audit"
+  tier: "core"
+  status: "active"
+  urn: "urn:machinenativeops:module:provenance-tracker:v1"
+        metadata:
+  author: "MachineNativeOps Team"
+  license: "MIT"
+  repository: "https://github.com/MachineNativeOps/MachineNativeOps"
+  documentation: "docs/modules/provenance-tracker.md"
+    technical:
+  language: "python"
+  runtime: "python3.11"
+  entrypoint: "/opt/machinenativenops/modules/provenance-tracker/main.py"
+  config_file: "config/provenance-tracker.yaml"
+    dependencies:
+  - module_id: "config-manager"
+  version: ">=1.0.0"
+  optional: false
+  - module_id: "logging-service"
+  version: ">=1.0.0"
+  optional: false
+  - module_id: "database-connector"
+  version: ">=1.0.0"
+  optional: false
+    provides:
+  - "audit_trail"
+  - "provenance_tracking"
+  - "event_sourcing"
+    requires:
+  - "config_validation"
+  - "structured_logging"
+  - "database_access"
     # 6. 完整性驗證器
-    - id: "integrity-validator"
-      name: "integrity-validator"
-      display_name: "Integrity Validator"
-      version: "1.0.0"
-      description: "Hash verification and integrity checking system"
-      category: "security"
-      tier: "security"
-      status: "active"
-      urn: "urn:machinenativeops:module:integrity-validator:v1"
-      
-      metadata:
-        author: "MachineNativeOps Team"
-        license: "MIT"
-        repository: "https://github.com/MachineNativeOps/MachineNativeOps"
-        documentation: "docs/modules/integrity-validator.md"
-        
-      technical:
-        language: "python"
-        runtime: "python3.11"
-        entrypoint: "/opt/machinenativenops/modules/integrity-validator/main.py"
-        config_file: "config/integrity-validator.yaml"
-        
-      dependencies:
-        - module_id: "config-manager"
-          version: ">=1.0.0"
-          optional: false
-        - module_id: "crypto-provider"
-          version: ">=1.0.0"
-          optional: false
-          
-      provides:
-        - "hash_verification"
-        - "integrity_checking"
-        - "tamper_detection"
-        
-      requires:
-        - "config_validation"
-        - "cryptographic_operations"
-    
+  - id: "integrity-validator"
+  name: "integrity-validator"
+  display_name: "Integrity Validator"
+  version: "1.0.0"
+  description: "Hash verification and integrity checking system"
+  category: "security"
+  tier: "security"
+  status: "active"
+  urn: "urn:machinenativeops:module:integrity-validator:v1"
+        metadata:
+  author: "MachineNativeOps Team"
+  license: "MIT"
+  repository: "https://github.com/MachineNativeOps/MachineNativeOps"
+  documentation: "docs/modules/integrity-validator.md"
+    technical:
+  language: "python"
+  runtime: "python3.11"
+  entrypoint: "/opt/machinenativenops/modules/integrity-validator/main.py"
+  config_file: "config/integrity-validator.yaml"
+    dependencies:
+  - module_id: "config-manager"
+  version: ">=1.0.0"
+  optional: false
+  - module_id: "crypto-provider"
+  version: ">=1.0.0"
+  optional: false
+    provides:
+  - "hash_verification"
+  - "integrity_checking"
+  - "tamper_detection"
+    requires:
+  - "config_validation"
+  - "cryptographic_operations"
     # 7. 超級執行引擎
-    - id: "super-execution-engine"
-      name: "super-execution-engine"
-      display_name: "Super Execution Engine"
-      version: "1.0.0"
-      description: "Workflow orchestration and execution engine"
-      category: "execution"
-      tier: "core"
-      status: "active"
-      urn: "urn:machinenativeops:module:super-execution-engine:v1"
-      
-      metadata:
-        author: "MachineNativeOps Team"
-        license: "MIT"
-        repository: "https://github.com/MachineNativeOps/MachineNativeOps"
-        documentation: "docs/modules/super-execution-engine.md"
-        
-      technical:
-        language: "python"
-        runtime: "python3.11"
-        entrypoint: "/opt/machinenativenops/modules/super-execution-engine/main.py"
-        config_file: "config/super-execution-engine.yaml"
-        
-      dependencies:
-        - module_id: "config-manager"
-          version: ">=1.0.0"
-          optional: false
-        - module_id: "logging-service"
-          version: ">=1.0.0"
-          optional: false
-        - module_id: "governance-engine"
-          version: ">=1.0.0"
-          optional: false
-          
-      provides:
-        - "workflow_orchestration"
-        - "task_scheduling"
-        - "execution_monitoring"
-        
-      requires:
-        - "config_validation"
-        - "structured_logging"
-        - "policy_enforcement"
-    
+  - id: "super-execution-engine"
+  name: "super-execution-engine"
+  display_name: "Super Execution Engine"
+  version: "1.0.0"
+  description: "Workflow orchestration and execution engine"
+  category: "execution"
+  tier: "core"
+  status: "active"
+  urn: "urn:machinenativeops:module:super-execution-engine:v1"
+        metadata:
+  author: "MachineNativeOps Team"
+  license: "MIT"
+  repository: "https://github.com/MachineNativeOps/MachineNativeOps"
+  documentation: "docs/modules/super-execution-engine.md"
+    technical:
+  language: "python"
+  runtime: "python3.11"
+  entrypoint: "/opt/machinenativenops/modules/super-execution-engine/main.py"
+  config_file: "config/super-execution-engine.yaml"
+    dependencies:
+  - module_id: "config-manager"
+  version: ">=1.0.0"
+  optional: false
+  - module_id: "logging-service"
+  version: ">=1.0.0"
+  optional: false
+  - module_id: "governance-engine"
+  version: ">=1.0.0"
+  optional: false
+    provides:
+  - "workflow_orchestration"
+  - "task_scheduling"
+  - "execution_monitoring"
+    requires:
+  - "config_validation"
+  - "structured_logging"
+  - "policy_enforcement"
     # 8. 監控服務
-    - id: "monitoring-service"
-      name: "monitoring-service"
-      display_name: "Monitoring Service"
-      version: "1.0.0"
-      description: "System monitoring and metrics collection service"
-      category: "monitoring"
-      tier: "monitoring"
-      status: "active"
-      urn: "urn:machinenativeops:module:monitoring-service:v1"
-      
-      metadata:
-        author: "MachineNativeOps Team"
-        license: "MIT"
-        repository: "https://github.com/MachineNativeOps/MachineNativeOps"
-        documentation: "docs/modules/monitoring-service.md"
-        
-      technical:
-        language: "python"
-        runtime: "python3.11"
-        entrypoint: "/opt/machinenativenops/modules/monitoring-service/main.py"
-        config_file: "config/monitoring-service.yaml"
-        
-      dependencies:
-        - module_id: "config-manager"
-          version: ">=1.0.0"
-          optional: false
-        - module_id: "logging-service"
-          version: ">=1.0.0"
-          optional: false
-          
-      provides:
-        - "metrics_collection"
-        - "health_monitoring"
-        - "alerting"
-        
-      requires:
-        - "config_validation"
-        - "structured_logging"
+  - id: "monitoring-service"
+  name: "monitoring-service"
+  display_name: "Monitoring Service"
+  version: "1.0.0"
+  description: "System monitoring and metrics collection service"
+  category: "monitoring"
+  tier: "monitoring"
+  status: "active"
+  urn: "urn:machinenativeops:module:monitoring-service:v1"
+        metadata:
+  author: "MachineNativeOps Team"
+  license: "MIT"
+  repository: "https://github.com/MachineNativeOps/MachineNativeOps"
+  documentation: "docs/modules/monitoring-service.md"
+    technical:
+  language: "python"
+  runtime: "python3.11"
+  entrypoint: "/opt/machinenativenops/modules/monitoring-service/main.py"
+  config_file: "config/monitoring-service.yaml"
+    dependencies:
+  - module_id: "config-manager"
+  version: ">=1.0.0"
+  optional: false
+  - module_id: "logging-service"
+  version: ">=1.0.0"
+  optional: false
+    provides:
+  - "metrics_collection"
+  - "health_monitoring"
+  - "alerting"
+    requires:
+  - "config_validation"
+  - "structured_logging"
 
   # === 依賴圖 ===
   dependency_graph:
-    description: "模組依賴關係圖（拓撲排序）"
-    load_order:
-      - "config-manager"
-      - "logging-service"
-      - "crypto-provider"
-      - "storage-backend"
-      - "database-connector"
-      - "trust-manager"
-      - "integrity-validator"
-      - "governance-engine"
-      - "provenance-tracker"
-      - "super-execution-engine"
-      - "monitoring-service"
-    
+  description: "模組依賴關係圖（拓撲排序）"
+  load_order:
+  - "config-manager"
+  - "logging-service"
+  - "crypto-provider"
+  - "storage-backend"
+  - "database-connector"
+  - "trust-manager"
+  - "integrity-validator"
+  - "governance-engine"
+  - "provenance-tracker"
+  - "super-execution-engine"
+  - "monitoring-service"
     cycles_detected: false
-    max_depth: 3
+  max_depth: 3
 
   # === 驗證規則 ===
   validation:
-    enabled: true
-    rules:
-      - "所有模組 ID 必須唯一"
-      - "所有 URN 必須唯一"
-      - "所有依賴必須可解析"
-      - "不可有循環依賴"
-      - "版本號必須符合 semver"
+  enabled: true
+  rules:
+  - "所有模組 ID 必須唯一"
+  - "所有 URN 必須唯一"
+  - "所有依賴必須可解析"
+  - "不可有循環依賴"
+  - "版本號必須符合 semver"
 
 # === 狀態 ===
 status:

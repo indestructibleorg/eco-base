@@ -112,7 +112,7 @@ data:
               severity: warning
               service: supabase
             annotations:
-              summary: "Supabase database CPU usage is high"
+                summary: "Supabase database CPU usage is high"
               description: "Database CPU usage is {{ $value }}% for project {{ $labels.project }}"
 
           - alert: SupabaseCriticalCPUUsage
@@ -122,7 +122,7 @@ data:
               severity: critical
               service: supabase
             annotations:
-              summary: "Supabase database CPU usage is critical"
+                summary: "Supabase database CPU usage is critical"
               description: "Database CPU usage is {{ $value }}% for project {{ $labels.project }}"
 
           - alert: SupabaseHighMemoryUsage
@@ -132,7 +132,7 @@ data:
               severity: warning
               service: supabase
             annotations:
-              summary: "Supabase database memory usage is high"
+                summary: "Supabase database memory usage is high"
               description: "Database memory usage is {{ $value }}% for project {{ $labels.project }}"
 
           - alert: SupabaseDiskSpaceLow
@@ -142,7 +142,7 @@ data:
               severity: warning
               service: supabase
             annotations:
-              summary: "Supabase database disk space is low"
+                summary: "Supabase database disk space is low"
               description: "Database disk usage is {{ $value }}% for project {{ $labels.project }}"
 
           - alert: SupabaseDiskSpaceCritical
@@ -152,7 +152,7 @@ data:
               severity: critical
               service: supabase
             annotations:
-              summary: "Supabase database disk space is critical"
+                summary: "Supabase database disk space is critical"
               description: "Database disk usage is {{ $value }}% for project {{ $labels.project }}"
 
           - alert: SupabaseConnectionPoolHigh
@@ -162,7 +162,7 @@ data:
               severity: warning
               service: supabase
             annotations:
-              summary: "Supabase connection pool is high"
+                summary: "Supabase connection pool is high"
               description: "Connection pool usage is {{ $value | humanizePercentage }} for project {{ $labels.project }}"
 
           - alert: SupabaseConnectionPoolCritical
@@ -172,7 +172,7 @@ data:
               severity: critical
               service: supabase
             annotations:
-              summary: "Supabase connection pool is critical"
+                summary: "Supabase connection pool is critical"
               description: "Connection pool usage is {{ $value | humanizePercentage }} for project {{ $labels.project }}"
 
           - alert: SupabaseLongRunningQuery
@@ -182,7 +182,7 @@ data:
               severity: warning
               service: supabase
             annotations:
-              summary: "Supabase has long-running queries"
+                summary: "Supabase has long-running queries"
               description: "99th percentile query duration is {{ $value }}s for project {{ $labels.project }}"
 
           - alert: SupabaseReplicationLag
@@ -192,7 +192,7 @@ data:
               severity: warning
               service: supabase
             annotations:
-              summary: "Supabase replication lag is high"
+                summary: "Supabase replication lag is high"
               description: "Replication lag is {{ $value }}s for project {{ $labels.project }}"
 
           - alert: SupabaseWALSizeHigh
@@ -202,7 +202,7 @@ data:
               severity: warning
               service: supabase
             annotations:
-              summary: "Supabase WAL size is high"
+                summary: "Supabase WAL size is high"
               description: "WAL size is {{ $value | humanize }} for project {{ $labels.project }}"
 
       - name: supabase_api
@@ -215,7 +215,7 @@ data:
               severity: warning
               service: supabase
             annotations:
-              summary: "Supabase API error rate is high"
+                summary: "Supabase API error rate is high"
               description: "API error rate is {{ $value | humanizePercentage }} for project {{ $labels.project }}"
 
           - alert: SupabaseHighLatency
@@ -225,7 +225,7 @@ data:
               severity: warning
               service: supabase
             annotations:
-              summary: "Supabase API latency is high"
+                summary: "Supabase API latency is high"
               description: "99th percentile API latency is {{ $value }}s for project {{ $labels.project }}"
 
 ---
@@ -248,8 +248,8 @@ spec:
       app: prometheus
   template:
     metadata:
-      labels:
-        app: prometheus
+  labels:
+    app: prometheus
     spec:
       containers:
       - name: prometheus

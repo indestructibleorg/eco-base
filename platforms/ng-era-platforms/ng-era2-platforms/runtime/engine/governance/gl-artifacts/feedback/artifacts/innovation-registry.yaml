@@ -19,9 +19,9 @@ metadata:
   owner: innovation-team
   layer: "GL60-80"
   tags:
-    - extended
-    - innovation
-    - research
+  - extended
+  - innovation
+  - research
   annotations:
     governance.machinenativeops.io/innovation-cycle: "quarterly"
 spec:

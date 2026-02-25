@@ -17,9 +17,9 @@ metadata:
   owner: observability-team
   layer: "GL50-59"
   tags:
-    - observability
-    - alerts
-    - monitoring
+  - observability
+  - alerts
+  - monitoring
   annotations:
     governance.machinenativeops.io/alertmanager-compatible: "true"
     governance.machinenativeops.io/pagerduty-integration: "enabled"

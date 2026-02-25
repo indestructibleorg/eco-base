@@ -19,8 +19,8 @@ metadata:
     eco-base/owner: eco-system
     eco-base/part-of: eco-base
     eco-base/platform: core
-  name: postgres-backup
-  namespace: platform-03
+    name: postgres-backup
+    namespace: platform-03
 spec:
   concurrencyPolicy: Forbid
   failedJobsHistoryLimit: 3
@@ -114,8 +114,8 @@ metadata:
     eco-base/owner: eco-system
     eco-base/part-of: eco-base
     eco-base/platform: core
-  name: redis-backup
-  namespace: platform-03
+    name: redis-backup
+    namespace: platform-03
 spec:
   concurrencyPolicy: Forbid
   failedJobsHistoryLimit: 5
@@ -207,8 +207,8 @@ metadata:
     eco-base/owner: eco-system
     eco-base/part-of: eco-base
     eco-base/platform: core
-  name: config-backup
-  namespace: platform-03
+    name: config-backup
+    namespace: platform-03
 spec:
   concurrencyPolicy: Forbid
   failedJobsHistoryLimit: 10
@@ -308,8 +308,8 @@ metadata:
     eco-base/owner: eco-system
     eco-base/part-of: eco-base
     eco-base/platform: core
-  name: backup-validation
-  namespace: platform-03
+    name: backup-validation
+    namespace: platform-03
 spec:
   concurrencyPolicy: Forbid
   failedJobsHistoryLimit: 7
@@ -388,8 +388,8 @@ metadata:
   annotations:
     eco-base/uri: eco-base://platform/resource/infrastructure/foundation/k8s-legacy/disaster-recovery/jobs/database-backup-jobs.yaml
     eco-base/urn: urn:eco-base:platform:resource:infrastructure:foundation:k8s-legacy:disaster-recovery:jobs:database-backup-jobs.yaml
-  name: backup-service-account
-  namespace: platform-03
+    name: backup-service-account
+    namespace: platform-03
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -397,8 +397,8 @@ metadata:
   annotations:
     eco-base/uri: eco-base://platform/resource/infrastructure/foundation/k8s-legacy/disaster-recovery/jobs/database-backup-jobs.yaml
     eco-base/urn: urn:eco-base:platform:resource:infrastructure:foundation:k8s-legacy:disaster-recovery:jobs:database-backup-jobs.yaml
-  name: backup-role
-  namespace: platform-03
+    name: backup-role
+    namespace: platform-03
 rules:
 - apiGroups:
   - ''

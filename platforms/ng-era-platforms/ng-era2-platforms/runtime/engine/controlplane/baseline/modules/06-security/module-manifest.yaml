@@ -129,7 +129,7 @@ semantic_mappings:
 
   maintainers:
     - "MachineNativeOps Team"
-  tags:
+tags:
     - "security"
     - "supply-chain"
     - "slsa"

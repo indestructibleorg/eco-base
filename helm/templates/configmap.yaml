@@ -4,7 +4,7 @@ metadata:
   name: {{ include "eco.fullname" . }}-config
   namespace: {{ .Values.namespace | default "eco-base" }}
   labels:
-    {{- include "eco.labels" . | nindent 4 }}
+  {{- include "eco.labels" . | nindent 4 }}
 data:
   ECO_ENVIRONMENT: {{ .Values.env.ECO_ENVIRONMENT | default "production" | quote }}
   ECO_LOG_LEVEL: {{ .Values.env.ECO_LOG_LEVEL | default "INFO" | quote }}

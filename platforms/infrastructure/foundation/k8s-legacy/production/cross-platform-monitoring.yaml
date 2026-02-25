@@ -377,77 +377,77 @@ data:
     kind: ConfigMap
 metadata:
   name: grafana-dashboards
-      namespace: monitoring
-    data:
-      machine-native-ops-dashboard.json: |
-        {
-          "dashboard": {
-            "title": "MachineNativeOps - Cross-Platform Monitoring",
-            "panels": [
-              {
-                "title": "Request Rate",
-                "targets": [
-                  {
-                    "expr": "sum(rate(http_requests_total{service=&quot;machine-native-ops&quot;}[5m]))",
-                    "legendFormat": "{{method}} {{path}}"
-                  }
-                ],
-                "type": "graph"
-              },
-              {
-                "title": "Request Latency",
-                "targets": [
-                  {
-                    "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{service=&quot;machine-native-ops&quot;}[5m])) by (le))",
-                    "legendFormat": "P95"
-                  },
-                  {
-                    "expr": "histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket{service=&quot;machine-native-ops&quot;}[5m])) by (le))",
-                    "legendFormat": "P99"
-                  }
-                ],
-                "type": "graph"
-              },
-              {
-                "title": "Error Rate",
-                "targets": [
-                  {
-                    "expr": "sum(rate(http_requests_total{service=&quot;machine-native-ops&quot;,status=~&quot;5..&quot;}[5m])) / sum(rate(http_requests_total{service=&quot;machine-native-ops&quot;}[5m])) * 100",
-                    "legendFormat": "Error Rate %"
-                  }
-                ],
-                "type": "gauge"
-              },
-              {
-                "title": "Active Connections",
-                "targets": [
-                  {
-                    "expr": "active_connections{service=&quot;machine-native-ops&quot;}",
-                    "legendFormat": "{{type}}"
-                  }
-                ],
-                "type": "graph"
-              },
-              {
-                "title": "CPU Utilization",
-                "targets": [
-                  {
-                    "expr": "rate(process_cpu_seconds_total{service=&quot;machine-native-ops&quot;}[5m]) * 100",
-                    "legendFormat": "CPU %"
-                  }
-                ],
-                "type": "graph"
-              },
-              {
-                "title": "Memory Utilization",
-                "targets": [
-                  {
-                    "expr": "process_resident_memory_bytes{service=&quot;machine-native-ops&quot;} / 1024 / 1024",
-                    "legendFormat": "Memory MB"
-                  }
-                ],
-                "type": "graph"
-              }
-            ]
-          }
-        }
+  namespace: monitoring
+  data:
+  machine-native-ops-dashboard.json: |
+  {
+  "dashboard": {
+  "title": "MachineNativeOps - Cross-Platform Monitoring",
+  "panels": [
+  {
+  "title": "Request Rate",
+  "targets": [
+  {
+  "expr": "sum(rate(http_requests_total{service=&quot;machine-native-ops&quot;}[5m]))",
+  "legendFormat": "{{method}} {{path}}"
+  }
+  ],
+  "type": "graph"
+  },
+  {
+  "title": "Request Latency",
+  "targets": [
+  {
+  "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{service=&quot;machine-native-ops&quot;}[5m])) by (le))",
+  "legendFormat": "P95"
+  },
+  {
+  "expr": "histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket{service=&quot;machine-native-ops&quot;}[5m])) by (le))",
+  "legendFormat": "P99"
+  }
+  ],
+  "type": "graph"
+  },
+  {
+  "title": "Error Rate",
+  "targets": [
+  {
+  "expr": "sum(rate(http_requests_total{service=&quot;machine-native-ops&quot;,status=~&quot;5..&quot;}[5m])) / sum(rate(http_requests_total{service=&quot;machine-native-ops&quot;}[5m])) * 100",
+  "legendFormat": "Error Rate %"
+  }
+  ],
+  "type": "gauge"
+  },
+  {
+  "title": "Active Connections",
+  "targets": [
+  {
+  "expr": "active_connections{service=&quot;machine-native-ops&quot;}",
+  "legendFormat": "{{type}}"
+  }
+  ],
+  "type": "graph"
+  },
+  {
+  "title": "CPU Utilization",
+  "targets": [
+  {
+  "expr": "rate(process_cpu_seconds_total{service=&quot;machine-native-ops&quot;}[5m]) * 100",
+  "legendFormat": "CPU %"
+  }
+  ],
+  "type": "graph"
+  },
+  {
+  "title": "Memory Utilization",
+  "targets": [
+  {
+  "expr": "process_resident_memory_bytes{service=&quot;machine-native-ops&quot;} / 1024 / 1024",
+  "legendFormat": "Memory MB"
+  }
+  ],
+  "type": "graph"
+  }
+  ]
+  }
+  }

@@ -16,7 +16,7 @@ metadata:
   created_at: "2025-01-18T00:00:00Z"
   owner: governance-team
   description: |
-    定義GL00-99各層級Artifacts的標準模板，確保治理文件的一致性與可組合性
+  定義GL00-99各層級Artifacts的標準模板，確保治理文件的一致性與可組合性
 # =============================================================================
 # 通用Artifact基礎模板
 # =============================================================================
@@ -68,15 +68,15 @@ GL00-09_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: VisionStatement
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        updated_at: "{{ updated_at }}"
-        owner: {{ owner }}
-        layer: "GL00-09"
-        tags:
-          - strategic
-          - vision
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  updated_at: "{{ updated_at }}"
+  owner: {{ owner }}
+  layer: "GL00-09"
+  tags:
+  - strategic
+  - vision
       spec:
         vision:
           statement: "{{ vision_statement }}"
@@ -126,13 +126,13 @@ GL00-09_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: StrategicObjectives
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL00-09"
-        fiscal_year: "{{ fiscal_year }}"
-        quarter: "{{ quarter }}"  # optional, for quarterly OKRs
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL00-09"
+  fiscal_year: "{{ fiscal_year }}"
+  quarter: "{{ quarter }}"  # optional, for quarterly OKRs
       spec:
         objectives:
           {{#each objectives}}
@@ -198,12 +198,12 @@ GL00-09_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: GovernanceCharter
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL00-09"
-        effective_date: "{{ effective_date }}"
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL00-09"
+  effective_date: "{{ effective_date }}"
       spec:
         preamble:
           purpose: "{{ preamble_purpose }}"
@@ -275,11 +275,11 @@ GL00-09_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: RiskRegister
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL00-09"
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL00-09"
       spec:
         risk_appetite:
           overall_appetite: "{{ overall_appetite }}"  # conservative, moderate, aggressive
@@ -360,12 +360,12 @@ GL10-29_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: OperationalPlan
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL10-29"
-        period: "{{ period }}"  # e.g., "2025-Q1", "2025"
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL10-29"
+  period: "{{ period }}"  # e.g., "2025-Q1", "2025"
       spec:
         alignment:
           strategic_objectives:
@@ -449,13 +449,13 @@ GL10-29_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: StandardOperatingProcedure
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL10-29"
-        category: "{{ category }}"
-        effective_date: "{{ effective_date }}"
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL10-29"
+  category: "{{ category }}"
+  effective_date: "{{ effective_date }}"
       spec:
         overview:
           purpose: "{{ purpose }}"
@@ -536,12 +536,12 @@ GL10-29_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: ResourceAllocation
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL10-29"
-        period: "{{ period }}"
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL10-29"
+  period: "{{ period }}"
       spec:
         budget:
           total: {{ total_budget }}
@@ -599,12 +599,12 @@ GL30-49_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: ProjectPlan
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL30-49"
-        project_code: "{{ project_code }}"
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL30-49"
+  project_code: "{{ project_code }}"
       spec:
         overview:
           title: "{{ project_title }}"
@@ -695,13 +695,13 @@ GL30-49_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: TestReport
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL30-49"
-        project: "{{ project }}"
-        build: "{{ build_number }}"
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL30-49"
+  project: "{{ project }}"
+  build: "{{ build_number }}"
       spec:
         summary:
           total_tests: {{ total_tests }}
@@ -752,12 +752,12 @@ GL30-49_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: DeploymentRecord
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL30-49"
-        deployment_id: "{{ deployment_id }}"
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL30-49"
+  deployment_id: "{{ deployment_id }}"
       spec:
         release:
           version: "{{ release_version }}"
@@ -824,11 +824,11 @@ GL50-59_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: MetricsDefinition
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL50-59"
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL50-59"
       spec:
         metrics:
           {{#each metrics}}
@@ -877,11 +877,11 @@ GL50-59_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: AlertRules
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL50-59"
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL50-59"
       spec:
         rules:
           {{#each rules}}
@@ -900,7 +900,7 @@ GL50-59_templates:
               {{ @key }}: "{{ this }}"
               {{/each}}
             annotations:
-              summary: "{{ this.annotations.summary }}"
+                summary: "{{ this.annotations.summary }}"
               description: "{{ this.annotations.description }}"
               runbook: "{{ this.annotations.runbook }}"
             notification:
@@ -928,12 +928,12 @@ GL50-59_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: SLOReport
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL50-59"
-        period: "{{ period }}"
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL50-59"
+  period: "{{ period }}"
       spec:
         slos:
           {{#each slos}}
@@ -980,12 +980,12 @@ GL60-80_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: ABTestDesign
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL60-80"
-        experiment_id: "{{ experiment_id }}"
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL60-80"
+  experiment_id: "{{ experiment_id }}"
       spec:
         hypothesis:
           statement: "{{ hypothesis_statement }}"
@@ -1052,12 +1052,12 @@ GL60-80_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: ModelRetrainingLog
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL60-80"
-        model_id: "{{ model_id }}"
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL60-80"
+  model_id: "{{ model_id }}"
       spec:
         model:
           name: "{{ model_name }}"
@@ -1117,12 +1117,12 @@ GL81-83_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: InnovationExperiment
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL81-83"
-        experiment_id: "{{ experiment_id }}"
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL81-83"
+  experiment_id: "{{ experiment_id }}"
       spec:
         overview:
           title: "{{ title }}"
@@ -1200,11 +1200,11 @@ GL90-99_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: MetaSpecification
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL90-99"
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL90-99"
       spec:
         overview:
           purpose: "{{ purpose }}"
@@ -1274,12 +1274,12 @@ GL90-99_templates:
       apiVersion: governance.machinenativeops.io/v2
       kind: ValidationReport
       metadata:
-        name: {{ name }}
-        version: "{{ version }}"
-        created_at: "{{ created_at }}"
-        owner: {{ owner }}
-        layer: "GL90-99"
-        validation_run_id: "{{ validation_run_id }}"
+  name: {{ name }}
+  version: "{{ version }}"
+  created_at: "{{ created_at }}"
+  owner: {{ owner }}
+  layer: "GL90-99"
+  validation_run_id: "{{ validation_run_id }}"
       spec:
         scope:
           artifacts_validated: {{ artifacts_validated }}

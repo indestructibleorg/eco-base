@@ -31,8 +31,8 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: jaeger-enhanced-config
-  namespace: istio-system
+    name: jaeger-enhanced-config
+    namespace: istio-system
 ---
 apiVersion: v1
 data:
@@ -56,8 +56,8 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: tracing-context-config
-  namespace: istio-system
+    name: tracing-context-config
+    namespace: istio-system
 ---
 apiVersion: v1
 data:
@@ -87,8 +87,8 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: trace-retention-config
-  namespace: istio-system
+    name: trace-retention-config
+    namespace: istio-system
 ---
 apiVersion: telemetry.istio.io/v1alpha1
 kind: Telemetry
@@ -96,8 +96,8 @@ metadata:
   annotations:
     eco-base/uri: eco-base://platform/resource/infrastructure/foundation/k8s-legacy/production/enhanced-tracing.yaml
     eco-base/urn: urn:eco-base:platform:resource:infrastructure:foundation:k8s-legacy:production:enhanced-tracing.yaml
-  name: enhanced-tracing
-  namespace: istio-system
+    name: enhanced-tracing
+    namespace: istio-system
 spec:
   accessLogging:
   - filter:

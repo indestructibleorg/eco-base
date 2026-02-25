@@ -19,9 +19,9 @@ metadata:
   owner: operations-team
   layer: "GL10-29"
   tags:
-    - operational
-    - plan
-    - quarterly
+  - operational
+  - plan
+  - quarterly
   annotations:
     governance.machinenativeops.io/period: "2025-Q1"
     governance.machinenativeops.io/strategic-alignment: "OBJ-2025-001,OBJ-2025-002"

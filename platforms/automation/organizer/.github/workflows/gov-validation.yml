@@ -33,25 +33,21 @@ jobs:
 metadata:
   name: ""
   description: ""
-  labels: {}
+  labels:
 
-      
-      - name: Install GL Engine Dependencies
-        run: |
-          cd ../engine
-          npm ci
-          
-      - name: Run GL Schema Validation
-        run: |
-          npx ts-node ../engine/governance/gl_engine.ts validate --strict
-          
-      - name: Generate Governance Event Stream
-        if: failure()
-        run: |
-          npx ts-node ../engine/governance/events_writer.ts --event-type=validation_failure
-          
-      - name: Block on GL Violations
-        run: |
-          echo "GL Unified Charter Activated - Validation Failed"
-          exit 1
-        if: failure()
+    - name: Install GL Engine Dependencies
+  run: |
+  cd ../engine
+  npm ci
+    - name: Run GL Schema Validation
+  run: |
+  npx ts-node ../engine/governance/gl_engine.ts validate --strict
+    - name: Generate Governance Event Stream
+  if: failure()
+  run: |
+  npx ts-node ../engine/governance/events_writer.ts --event-type=validation_failure
+    - name: Block on GL Violations
+  run: |
+  echo "GL Unified Charter Activated - Validation Failed"
+  exit 1
+  if: failure()

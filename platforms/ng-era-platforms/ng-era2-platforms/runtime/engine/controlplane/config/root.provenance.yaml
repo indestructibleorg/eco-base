@@ -4,16 +4,16 @@ kind: RootProvenanceConfig
 metadata:
   annotations:
     machinenativeops.io/description: Root layer provenance, metadata and audit trail
-      configuration
-    machinenativeops.io/last-modified: '2025-12-20T22:00:00Z'
+  configuration
+  machinenativeops.io/last-modified: '2025-12-20T22:00:00Z'
   labels:
     eco-base/governance: aligned
     eco-base/part-of: eco-base
     machinenativeops.io/component: provenance-configuration
     machinenativeops.io/tier: provenance
     machinenativeops.io/version: v1.0.0
-  name: provenance-baseline-config
-  namespace: machinenativenops-provenance
+    name: provenance-baseline-config
+    namespace: machinenativenops-provenance
 spec:
   audit_trails:
   - access_control:
@@ -550,5 +550,5 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: provenance-schema
-  namespace: machinenativenops-provenance
+    name: provenance-schema
+    namespace: machinenativenops-provenance

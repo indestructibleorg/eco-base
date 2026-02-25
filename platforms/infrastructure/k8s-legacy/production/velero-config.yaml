@@ -10,7 +10,7 @@ metadata:
     eco-base/governance: aligned
     eco-base/part-of: eco-base
     environment: production
-  name: velero
+    name: velero
 ---
 apiVersion: v1
 kind: Secret
@@ -32,8 +32,8 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     environment: production
-  name: velero-s3-credentials
-  namespace: velero
+    name: velero-s3-credentials
+    namespace: velero
 stringData:
   cloud: '[default]
 
@@ -55,8 +55,8 @@ metadata:
     eco-base/governance: aligned
     eco-base/part-of: eco-base
     environment: production
-  name: default
-  namespace: velero
+    name: default
+    namespace: velero
 spec:
   accessMode: ReadWrite
   config:
@@ -79,8 +79,8 @@ metadata:
     eco-base/governance: aligned
     eco-base/part-of: eco-base
     environment: production
-  name: default
-  namespace: velero
+    name: default
+    namespace: velero
 spec:
   config:
     region: us-east-1
@@ -97,8 +97,8 @@ metadata:
     eco-base/governance: aligned
     eco-base/part-of: eco-base
     environment: production
-  name: daily-cluster-backup
-  namespace: velero
+    name: daily-cluster-backup
+    namespace: velero
 spec:
   schedule: 0 2 * * *
   template:
@@ -144,8 +144,8 @@ metadata:
     eco-base/governance: aligned
     eco-base/part-of: eco-base
     environment: production
-  name: hourly-incremental-backup
-  namespace: velero
+    name: hourly-incremental-backup
+    namespace: velero
 spec:
   schedule: 0 * * * *
   template:
@@ -180,8 +180,8 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     environment: production
-  name: postgres-backup
-  namespace: production
+    name: postgres-backup
+    namespace: production
 spec:
   jobTemplate:
     spec:
@@ -247,8 +247,8 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     environment: production
-  name: redis-backup
-  namespace: production
+    name: redis-backup
+    namespace: production
 spec:
   jobTemplate:
     spec:

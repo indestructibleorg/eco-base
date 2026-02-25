@@ -73,7 +73,7 @@ properties:
         type: string
       project:
         type: string
-      tags:
+tags:
         type: object
         additionalProperties:
           type: string

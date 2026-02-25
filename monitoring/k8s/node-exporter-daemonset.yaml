@@ -11,8 +11,8 @@ spec:
       app: node-exporter
   template:
     metadata:
-      labels:
-        app: node-exporter
+  labels:
+    app: node-exporter
     spec:
       hostNetwork: true
       hostPID: true

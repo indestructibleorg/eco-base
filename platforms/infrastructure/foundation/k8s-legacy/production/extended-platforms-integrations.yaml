@@ -228,5 +228,5 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: extended-platforms-integrations
-  namespace: production
+    name: extended-platforms-integrations
+    namespace: production

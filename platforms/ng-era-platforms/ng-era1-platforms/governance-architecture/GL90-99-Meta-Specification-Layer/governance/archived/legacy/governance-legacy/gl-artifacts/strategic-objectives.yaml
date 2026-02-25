@@ -17,9 +17,9 @@ metadata:
   owner: governance-team
   layer: "GL00-09"
   tags:
-    - strategic
-    - okr
-    - objectives
+  - strategic
+  - okr
+  - objectives
   annotations:
     governance.machinenativeops.io/period: "2025-Q1-Q4"
     governance.machinenativeops.io/review-cycle: "quarterly"

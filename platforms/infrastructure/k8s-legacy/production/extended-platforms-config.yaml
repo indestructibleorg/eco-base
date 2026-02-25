@@ -203,5 +203,5 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: extended-platforms-config
-  namespace: production
+    name: extended-platforms-config
+    namespace: production

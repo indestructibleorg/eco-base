@@ -19,9 +19,9 @@ metadata:
   owner: feedback-team
   layer: "GL60-80"
   tags:
-    - feedback
-    - continuous-improvement
-    - analytics
+  - feedback
+  - continuous-improvement
+  - analytics
   annotations:
     governance.machinenativeops.io/feedback-cycle: "continuous"
     governance.machinenativeops.io/ml-enabled: "true"

@@ -31,6 +31,6 @@ maintainers:
   - name: MachineNativeOps Team
     email: team@machinenativeops.com
 icon: https://raw.githubusercontent.com/MachineNativeOps/machine-native-ops/main/docs/logo.png
-annotations:
+  annotations:
   category: Infrastructure
   licenses: Apache-2.0

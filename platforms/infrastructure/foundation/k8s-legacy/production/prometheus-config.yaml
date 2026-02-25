@@ -75,8 +75,8 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     environment: production
-  name: prometheus-config
-  namespace: monitoring
+    name: prometheus-config
+    namespace: monitoring
 ---
 apiVersion: v1
 data:
@@ -168,5 +168,5 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     environment: production
-  name: prometheus-alerts
-  namespace: monitoring
+    name: prometheus-alerts
+    namespace: monitoring

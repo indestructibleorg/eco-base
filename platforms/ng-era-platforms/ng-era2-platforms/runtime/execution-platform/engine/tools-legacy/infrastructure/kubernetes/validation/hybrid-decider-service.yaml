@@ -19,8 +19,8 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     version: v1.0.0
-  name: hybrid-decider-service
-  namespace: gl-runtime-verification
+    name: hybrid-decider-service
+    namespace: gl-runtime-verification
 spec:
   ports:
   - name: http
@@ -59,8 +59,8 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     version: v1.0.0
-  name: hybrid-decider
-  namespace: gl-runtime-verification
+    name: hybrid-decider
+    namespace: gl-runtime-verification
 spec:
   replicas: 2
   selector:
@@ -73,14 +73,14 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      annotations:
-        prometheus.io/port: '8081'
-        prometheus.io/scrape: 'true'
-      labels:
-        app.kubernetes.io/name: hybrid-decider
-        eco-base/governance: aligned
-        eco-base/part-of: eco-base
-        version: v1.0.0
+  annotations:
+    prometheus.io/port: '8081'
+    prometheus.io/scrape: 'true'
+  labels:
+    app.kubernetes.io/name: hybrid-decider
+    eco-base/governance: aligned
+    eco-base/part-of: eco-base
+    version: v1.0.0
     spec:
       affinity:
         podAntiAffinity:
@@ -183,43 +183,43 @@ metadata:
     eco-base/owner: eco-system
     eco-base/part-of: eco-base
     eco-base/platform: core
-  name: hybrid-decider-config
-  namespace: gl-runtime-verification
+    name: hybrid-decider-config
+    namespace: gl-runtime-verification
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   behavior:
-    scaleDown:
-      policies:
-      - periodSeconds: 60
-        type: Percent
-        value: 10
-      stabilizationWindowSeconds: 300
-    scaleUp:
-      policies:
-      - periodSeconds: 15
-        type: Percent
-        value: 100
-      - periodSeconds: 15
-        type: Pods
-        value: 4
-      selectPolicy: Max
-      stabilizationWindowSeconds: 0
+  scaleDown:
+  policies:
+  - periodSeconds: 60
+  type: Percent
+  value: 10
+  stabilizationWindowSeconds: 300
+  scaleUp:
+  policies:
+  - periodSeconds: 15
+  type: Percent
+  value: 100
+  - periodSeconds: 15
+  type: Pods
+  value: 4
+  selectPolicy: Max
+  stabilizationWindowSeconds: 0
   maxReplicas: 10
   metrics:
   - resource:
-      name: cpu
-      target:
-        averageUtilization: 70
-        type: Utilization
-    type: Resource
+  name: cpu
+  target:
+  averageUtilization: 70
+  type: Utilization
+  type: Resource
   - resource:
-      name: memory
-      target:
-        averageUtilization: 80
-        type: Utilization
-    type: Resource
+  name: memory
+  target:
+  averageUtilization: 80
+  type: Utilization
+  type: Resource
   minReplicas: 2
   name: hybrid-decider
 spec:

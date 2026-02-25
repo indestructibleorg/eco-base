@@ -19,8 +19,8 @@ spec:
       app: consul
   template:
     metadata:
-      labels:
-        app: consul
+  labels:
+    app: consul
     spec:
       containers:
       - name: consul

@@ -136,28 +136,25 @@ spec:
           message: "Namespaces must have network policies"
           pattern:
             metadata:
-              labels:
-                eco-base/part-of: eco-base
-                eco-base/governance: aligned
-                pod-security.kubernetes.io/enforce: restricted
-              annotations:
-                kubernetes.io/metadata.name: ".*"
-                
-  exceptions:
-    - name: system-namespace-exception
-      namespaces:
-        - kube-system
-        - kube-public
-        - kube-node-lease
-      reason: "System namespaces require privileged access"
-      expires: "2025-12-31"
-      
-  reporting:
-    enabled: true
-    violations:
-      severity: warning
-      notify: true
-      
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+    pod-security.kubernetes.io/enforce: restricted
+  annotations:
+    kubernetes.io/metadata.name: ".*"
+    exceptions:
+  - name: system-namespace-exception
+  namespaces:
+  - kube-system
+  - kube-public
+  - kube-node-lease
+  reason: "System namespaces require privileged access"
+  expires: "2025-12-31"
+    reporting:
+  enabled: true
+  violations:
+  severity: warning
+  notify: true
     compliance:
-      target: 95%
-      window: 24h
+  target: 95%
+  window: 24h

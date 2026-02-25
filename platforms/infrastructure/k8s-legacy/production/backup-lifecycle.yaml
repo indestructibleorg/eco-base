@@ -55,8 +55,8 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: backup-lifecycle-config
-  namespace: velero
+    name: backup-lifecycle-config
+    namespace: velero
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -75,8 +75,8 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: backup-lifecycle-manager
-  namespace: velero
+    name: backup-lifecycle-manager
+    namespace: velero
 spec:
   failedJobsHistoryLimit: 1
   jobTemplate:
@@ -135,8 +135,8 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: backup-notification-config
-  namespace: velero
+    name: backup-notification-config
+    namespace: velero
 stringData:
   email-from: backups@machine-native-ops.com
   email-smtp-port: '587'

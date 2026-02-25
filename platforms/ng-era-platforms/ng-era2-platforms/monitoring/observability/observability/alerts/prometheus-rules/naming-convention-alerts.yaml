@@ -8,10 +8,10 @@ metadata:
     eco-base/governance: aligned
     app.kubernetes.io/name: prometheus-operator
     app.kubernetes.io/component: rules
-    # @ECO-governed
-    # @ECO-layer: GL50-59
-    # @ECO-semantic: naming-alerts
-    # @ECO-audit-trail: ../../../../governance/GL_SEMANTIC_ANCHOR.json
+  # @ECO-governed
+  # @ECO-layer: GL50-59
+  # @ECO-semantic: naming-alerts
+  # @ECO-audit-trail: ../../../../governance/GL_SEMANTIC_ANCHOR.json
 
 spec:
   groups:

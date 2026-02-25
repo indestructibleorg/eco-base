@@ -151,15 +151,15 @@ spec:
       - "api-spec-validator"
 
   metadata:
-    version: "v1.0.0"
-    owner: "backend-team"
-    reviewDate: "2025-12-17"
-    nextReviewDate: "2026-06-17"
+  version: "v1.0.0"
+  owner: "backend-team"
+  reviewDate: "2025-12-17"
+  nextReviewDate: "2026-06-17"
 
   references:
-    - title: "RESTful API Design Best Practices"
-      url: "https://restfulapi.net/"
-    - title: "Microsoft REST API Guidelines"
-      url: "https://github.com/microsoft/api-guidelines"
-    - title: "Google API Design Guide"
-      url: "https://cloud.google.com/apis/design"
+  - title: "RESTful API Design Best Practices"
+  url: "https://restfulapi.net/"
+  - title: "Microsoft REST API Guidelines"
+  url: "https://github.com/microsoft/api-guidelines"
+  - title: "Google API Design Guide"
+  url: "https://cloud.google.com/apis/design"

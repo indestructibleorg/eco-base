@@ -5,8 +5,8 @@ metadata:
   name: {{ include "eco.fullname" . }}
   namespace: {{ .Values.namespace | default "eco-base" }}
   labels:
-    {{- include "eco.labels" . | nindent 4 }}
-    release: prometheus
+  {{- include "eco.labels" . | nindent 4 }}
+  release: prometheus
 spec:
   selector:
     matchLabels:

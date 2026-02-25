@@ -20,8 +20,8 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     tier: backend
-  name: machine-native-ops
-  namespace: platform-03
+    name: machine-native-ops
+    namespace: platform-03
 spec:
   replicas: 9
   selector:
@@ -34,17 +34,17 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      annotations:
-        prometheus.io/path: /metrics
-        prometheus.io/port: '9090'
-        prometheus.io/scrape: 'true'
-      labels:
-        app.kubernetes.io/component: application
-        app.kubernetes.io/name: machine-native-ops
-        eco-base/governance: aligned
-        eco-base/part-of: eco-base
-        tier: backend
-        version: v1.0.0
+  annotations:
+    prometheus.io/path: /metrics
+    prometheus.io/port: '9090'
+    prometheus.io/scrape: 'true'
+  labels:
+    app.kubernetes.io/component: application
+    app.kubernetes.io/name: machine-native-ops
+    eco-base/governance: aligned
+    eco-base/part-of: eco-base
+    tier: backend
+    version: v1.0.0
     spec:
       affinity:
         nodeAffinity:
@@ -201,8 +201,8 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     tier: backend
-  name: machine-native-ops-api
-  namespace: platform-03
+    name: machine-native-ops-api
+    namespace: platform-03
 spec:
   replicas: 6
   selector:
@@ -215,17 +215,17 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      annotations:
-        prometheus.io/path: /metrics
-        prometheus.io/port: '9090'
-        prometheus.io/scrape: 'true'
-      labels:
-        app.kubernetes.io/component: api
-        app.kubernetes.io/name: machine-native-ops-api
-        eco-base/governance: aligned
-        eco-base/part-of: eco-base
-        tier: backend
-        version: v1.0.0
+  annotations:
+    prometheus.io/path: /metrics
+    prometheus.io/port: '9090'
+    prometheus.io/scrape: 'true'
+  labels:
+    app.kubernetes.io/component: api
+    app.kubernetes.io/name: machine-native-ops-api
+    eco-base/governance: aligned
+    eco-base/part-of: eco-base
+    tier: backend
+    version: v1.0.0
     spec:
       affinity:
         nodeAffinity:
@@ -344,8 +344,8 @@ metadata:
     eco-base/platform: core
     tier: backend
     type: background
-  name: machine-native-ops-worker
-  namespace: platform-03
+    name: machine-native-ops-worker
+    namespace: platform-03
 spec:
   replicas: 6
   selector:
@@ -358,14 +358,14 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      labels:
-        app.kubernetes.io/component: worker
-        app.kubernetes.io/name: machine-native-ops-worker
-        eco-base/governance: aligned
-        eco-base/part-of: eco-base
-        tier: backend
-        type: background
-        version: v1.0.0
+  labels:
+    app.kubernetes.io/component: worker
+    app.kubernetes.io/name: machine-native-ops-worker
+    eco-base/governance: aligned
+    eco-base/part-of: eco-base
+    tier: backend
+    type: background
+    version: v1.0.0
     spec:
       affinity:
         nodeAffinity:

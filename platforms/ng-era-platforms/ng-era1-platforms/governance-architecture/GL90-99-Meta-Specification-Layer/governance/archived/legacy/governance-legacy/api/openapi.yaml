@@ -43,7 +43,6 @@ servers:
     description: Quantum API v4.0.0
   - url: http://localhost:8080
     description: Local development
-
 tags:
   - name: naming
     description: Naming generation and validation operations
@@ -61,7 +60,7 @@ tags:
 paths:
   /naming/generate:
     post:
-      tags:
+tags:
         - naming
       summary: Generate standardized resource name
       description: Generates a standardized resource name based on governance rules
@@ -94,7 +93,7 @@ paths:
 
   /naming/validate:
     post:
-      tags:
+tags:
         - validation
       summary: Validate resource name
       description: Validates a resource name against governance rules
@@ -121,7 +120,7 @@ paths:
 
   /naming/batch-validate:
     post:
-      tags:
+tags:
         - validation
       summary: Batch validate resource names
       description: Validates multiple resource names in a single request
@@ -142,7 +141,7 @@ paths:
 
   /repair/auto:
     post:
-      tags:
+tags:
         - repair
       summary: Auto-repair naming violations
       description: Automatically repairs naming violations using intelligent algorithms
@@ -169,7 +168,7 @@ paths:
 
   /migration/analyze:
     post:
-      tags:
+tags:
         - migration
       summary: Analyze migration requirements
       description: Analyzes resources and provides migration recommendations
@@ -190,7 +189,7 @@ paths:
 
   /migration/execute:
     post:
-      tags:
+tags:
         - migration
       summary: Execute migration
       description: Executes resource migration with rollback support
@@ -211,7 +210,7 @@ paths:
 
   /quantum/validate:
     post:
-      tags:
+tags:
         - quantum
       summary: Quantum-enhanced validation
       description: Validates resource names using quantum algorithms
@@ -234,7 +233,7 @@ paths:
 
   /quantum/metrics:
     get:
-      tags:
+tags:
         - quantum
         - monitoring
       summary: Get quantum metrics
@@ -252,7 +251,7 @@ paths:
 
   /health:
     get:
-      tags:
+tags:
         - monitoring
       summary: Health check
       description: Returns service health status
@@ -267,7 +266,7 @@ paths:
 
   /metrics:
     get:
-      tags:
+tags:
         - monitoring
       summary: Get metrics
       description: Returns Prometheus-compatible metrics

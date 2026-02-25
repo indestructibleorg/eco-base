@@ -14,10 +14,10 @@ metadata:
   created: "2024-01-15T10:30:00Z"
   quantum_signature: "qkd-sha3-512:axiom-v9"
   compliance_standards:
-    - "ISO-8000-115"
-    - "RFC-7579"
-    - "SLSAv1-NAMING"
-    - "NIST-SP-800-207"
+  - "ISO-8000-115"
+  - "RFC-7579"
+  - "SLSAv1-NAMING"
+  - "NIST-SP-800-207"
 
 quantum_configuration:
   quantum_backend: "ibm_quantum_falcon"
@@ -148,21 +148,21 @@ quantum_observability:
       expr: "naming_coherence_quantum < 0.999"
       severity: "critical"
       annotations:
-        runbook: "/repair/quantum-realignment-v4"
+          runbook: "/repair/quantum-realignment-v4"
         quantum_protocol: "surface_code_correction"
         
     - name: "QuantumEntanglementWeak"
       expr: "entanglement_strength < 0.95"
       severity: "warning"
       annotations:
-        runbook: "/repair/quantum-entanglement-v3"
+          runbook: "/repair/quantum-entanglement-v3"
         quantum_protocol: "re-entanglement_procedure"
         
     - name: "QuantumNamingViolation"
       expr: "naming_violations_quantum > 0"
       severity: "critical"
       annotations:
-        runbook: "/repair/quantum-violation-resolution-v5"
+          runbook: "/repair/quantum-violation-resolution-v5"
         quantum_protocol: "violation_quantum_correction"
 
   grafana_dashboards:

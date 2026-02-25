@@ -132,5 +132,5 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: platform-agnostic-config
-  namespace: production
+    name: platform-agnostic-config
+    namespace: production

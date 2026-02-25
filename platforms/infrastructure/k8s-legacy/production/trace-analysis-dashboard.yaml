@@ -65,8 +65,8 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     grafana_dashboard: '1'
-  name: trace-analysis-dashboard
-  namespace: istio-system
+    name: trace-analysis-dashboard
+    namespace: istio-system
 ---
 apiVersion: v1
 data:
@@ -110,8 +110,8 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: trace-analysis-alerts
-  namespace: istio-system
+    name: trace-analysis-alerts
+    namespace: istio-system
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -130,8 +130,8 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: trace-analysis-report
-  namespace: istio-system
+    name: trace-analysis-report
+    namespace: istio-system
 spec:
   failedJobsHistoryLimit: 1
   jobTemplate:

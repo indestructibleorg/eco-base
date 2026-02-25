@@ -17,9 +17,9 @@ metadata:
   owner: standards-team
   layer: "GL90-99"
   tags:
-    - meta-spec
-    - standards
-    - governance
+  - meta-spec
+  - standards
+  - governance
   annotations:
     governance.machinenativeops.io/authority: "governance-committee"
     governance.machinenativeops.io/binding: "mandatory"

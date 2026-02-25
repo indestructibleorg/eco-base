@@ -36,5 +36,5 @@ metadata:
     eco-base/owner: eco-system
     eco-base/part-of: eco-base
     eco-base/platform: core
-  name: quantumflow-config
-  namespace: quantumflow
+    name: quantumflow-config
+    namespace: quantumflow

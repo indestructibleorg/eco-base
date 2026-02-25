@@ -101,7 +101,7 @@ semantic_mappings:
 
   maintainers:
     - "MachineNativeOps Team"
-  tags:
+tags:
     - "governance"
     - "policy"
     - "semantic"

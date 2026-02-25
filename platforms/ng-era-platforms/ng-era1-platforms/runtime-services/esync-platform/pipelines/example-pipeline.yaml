@@ -52,7 +52,6 @@ labels:
     alerts:
       webhook: "${SLACK_WEBHOOK_URL}"
       on_failure: true
-
-  tags:
+tags:
     project: data-unification
     environment: production

@@ -23,8 +23,8 @@ metadata:
     gl.semantic/component-type: semantic-engine
     platform: gl-platform-services
     version: v1.0.0
-  name: gl-spec-core
-  namespace: gl-platform-spec-core
+    name: gl-spec-core
+    namespace: gl-platform-spec-core
 spec:
   replicas: 3
   selector:
@@ -38,16 +38,16 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      annotations:
-        prometheus.io/path: /metrics
-        prometheus.io/port: '9090'
-        prometheus.io/scrape: 'true'
-      labels:
-        app.kubernetes.io/name: spec-core
-        eco-base/governance: aligned
-        eco-base/part-of: eco-base
-        gl.platform/semantic.core: 'true'
-        version: v1.0.0
+  annotations:
+    prometheus.io/path: /metrics
+    prometheus.io/port: '9090'
+    prometheus.io/scrape: 'true'
+  labels:
+    app.kubernetes.io/name: spec-core
+    eco-base/governance: aligned
+    eco-base/part-of: eco-base
+    gl.platform/semantic.core: 'true'
+    version: v1.0.0
     spec:
       affinity:
         nodeAffinity:

@@ -73,8 +73,8 @@ metadata:
     environment: dev
     managed-by: gl-platform
     version: 1.0.0
-  name: alertmanager
-  namespace: monitoring
+    name: alertmanager
+    namespace: monitoring
 ---
 apiVersion: v1
 kind: Secret
@@ -93,8 +93,8 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: alertmanager-secrets
-  namespace: monitoring
+    name: alertmanager-secrets
+    namespace: monitoring
 stringData:
   pagerduty-service-key: ${PAGERDUTY_SERVICE_KEY}
   slack-webhook-id: ${SLACK_WEBHOOK_ID}

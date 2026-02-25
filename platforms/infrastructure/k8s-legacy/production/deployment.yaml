@@ -20,8 +20,8 @@ metadata:
     eco-base/platform: core
     environment: production
     version: v1
-  name: machine-native-ops
-  namespace: production
+    name: machine-native-ops
+    namespace: production
 spec:
   replicas: 3
   selector:
@@ -35,16 +35,16 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      annotations:
-        prometheus.io/path: /metrics
-        prometheus.io/port: '8000'
-        prometheus.io/scrape: 'true'
-      labels:
-        app.kubernetes.io/name: machine-native-ops
-        eco-base/governance: aligned
-        eco-base/part-of: eco-base
-        environment: production
-        version: v1
+  annotations:
+    prometheus.io/path: /metrics
+    prometheus.io/port: '8000'
+    prometheus.io/scrape: 'true'
+  labels:
+    app.kubernetes.io/name: machine-native-ops
+    eco-base/governance: aligned
+    eco-base/part-of: eco-base
+    environment: production
+    version: v1
     spec:
       affinity:
         podAntiAffinity:
@@ -188,8 +188,8 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     environment: production
-  name: machine-native-ops
-  namespace: production
+    name: machine-native-ops
+    namespace: production
 spec:
   ports:
   - name: http
@@ -213,36 +213,36 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   behavior:
-    scaleDown:
-      policies:
-      - periodSeconds: 60
-        type: Percent
-        value: 10
-      stabilizationWindowSeconds: 300
-    scaleUp:
-      policies:
-      - periodSeconds: 60
-        type: Percent
-        value: 50
-      - periodSeconds: 60
-        type: Pods
-        value: 2
-      selectPolicy: Max
-      stabilizationWindowSeconds: 0
+  scaleDown:
+  policies:
+  - periodSeconds: 60
+  type: Percent
+  value: 10
+  stabilizationWindowSeconds: 300
+  scaleUp:
+  policies:
+  - periodSeconds: 60
+  type: Percent
+  value: 50
+  - periodSeconds: 60
+  type: Pods
+  value: 2
+  selectPolicy: Max
+  stabilizationWindowSeconds: 0
   maxReplicas: 10
   metrics:
   - resource:
-      name: cpu
-      target:
-        averageUtilization: 70
-        type: Utilization
-    type: Resource
+  name: cpu
+  target:
+  averageUtilization: 70
+  type: Utilization
+  type: Resource
   - resource:
-      name: memory
-      target:
-        averageUtilization: 80
-        type: Utilization
-    type: Resource
+  name: memory
+  target:
+  averageUtilization: 80
+  type: Utilization
+  type: Resource
   minReplicas: 3
   name: machine-native-ops
 spec:

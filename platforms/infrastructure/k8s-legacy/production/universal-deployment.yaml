@@ -20,7 +20,7 @@ data:
     kind: Deployment
 metadata:
   name: machine-native-ops
-      namespace: production
+  namespace: production
     spec:
       replicas: ${REPLICAS:-3}
       selector:

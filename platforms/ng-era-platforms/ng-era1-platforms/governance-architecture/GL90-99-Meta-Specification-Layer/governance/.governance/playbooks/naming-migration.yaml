@@ -100,7 +100,7 @@ spec:
           kind: MigrationPlan
 metadata:
   name: naming-migration-$(date +%Y%m%d)
-            createdAt: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+  createdAt: $(date -u +%Y-%m-%dT%H:%M:%SZ)
           spec:
             dryRun: true
             batches: []

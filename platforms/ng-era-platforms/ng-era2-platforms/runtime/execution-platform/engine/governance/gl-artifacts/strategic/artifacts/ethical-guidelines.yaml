@@ -12,7 +12,7 @@ kind: EthicalGuidelines
   updated_at: "2025-01-18T00:00:00Z"
   owner: governance-committee
   layer: "GL00-09"
-  tags:
+tags:
     - strategic
     - ethics
     - compliance

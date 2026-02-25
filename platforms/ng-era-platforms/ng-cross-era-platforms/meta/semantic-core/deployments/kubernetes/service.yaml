@@ -22,8 +22,8 @@ metadata:
     eco-base/platform: core
     gl.service/semantic.core: 'true'
     platform: gl-platform-services
-  name: gl-spec-core-service
-  namespace: gl-platform-spec-core
+    name: gl-spec-core-service
+    namespace: gl-platform-spec-core
 spec:
   ports:
   - name: http
@@ -65,8 +65,8 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     platform: gl-platform-services
-  name: gl-spec-core-external
-  namespace: gl-platform-spec-core
+    name: gl-spec-core-external
+    namespace: gl-platform-spec-core
 spec:
   ports:
   - name: https

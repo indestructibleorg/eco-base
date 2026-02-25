@@ -58,5 +58,5 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     environment: production
-  name: alertmanager-config
-  namespace: monitoring
+    name: alertmanager-config
+    namespace: monitoring

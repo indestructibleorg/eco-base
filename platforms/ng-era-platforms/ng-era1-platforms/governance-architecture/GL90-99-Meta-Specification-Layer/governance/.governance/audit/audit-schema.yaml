@@ -193,18 +193,18 @@ spec:
     kind: Deployment
 metadata:
   name: "app-backend"
-    namespace: "production"
-    previousState:
-      name: "app-backend"
-    newState:
-      name: "prod-app-backend-deploy-v1.0.0"
+  namespace: "production"
+  previousState:
+  name: "app-backend"
+  newState:
+  name: "prod-app-backend-deploy-v1.0.0"
   governance:
-    level: 3
-    charterVersion: "5.0"
-    policyViolations: []
+  level: 3
+  charterVersion: "5.0"
+  policyViolations: []
   signature:
-    algorithm: sha256
-    value: "abc123..."
+  algorithm: sha256
+  value: "abc123..."
 
 ---
 # Audit Query Examples

@@ -32,8 +32,8 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     environment: production
-  name: jaeger-config
-  namespace: production
+    name: jaeger-config
+    namespace: production
 ---
 apiVersion: v1
 data:
@@ -64,5 +64,5 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     environment: production
-  name: tracing-config
-  namespace: production
+    name: tracing-config
+    namespace: production

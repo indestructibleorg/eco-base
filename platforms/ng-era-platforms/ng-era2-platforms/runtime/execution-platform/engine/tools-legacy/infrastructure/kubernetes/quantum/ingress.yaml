@@ -21,8 +21,8 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: quantumflow-ingress
-  namespace: quantumflow
+    name: quantumflow-ingress
+    namespace: quantumflow
 spec:
   rules:
   - host: quantumflow.example.com

@@ -142,5 +142,5 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: cross-platform-storage-config
-  namespace: production
+    name: cross-platform-storage-config
+    namespace: production

@@ -398,61 +398,61 @@ examples:
       apiVersion: v1
       kind: Namespace
       metadata:
-        name: "team-frontend-prod"
-        labels:
-          eco-base/part-of: eco-base
-          eco-base/governance: aligned
-          environment: "prod"
-          tenant: "platform-team"
-          team: "frontend-team"
-          app.kubernetes.io/managed-by: "helm"
+  name: "team-frontend-prod"
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+    environment: "prod"
+    tenant: "platform-team"
+    team: "frontend-team"
+    app.kubernetes.io/managed-by: "helm"
     expected: "PASS"
 
   # 示例 2: 缺少環境標籤
   - description: "缺少 environment 標籤"
-    resource:
+  resource:
       apiVersion: v1
       kind: Namespace
       metadata:
-        name: "team-frontend-prod"
-        labels:
-          eco-base/part-of: eco-base
-          eco-base/governance: aligned
-          tenant: "platform-team"
+  name: "team-frontend-prod"
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+    tenant: "platform-team"
     expected: "FAIL"
     violation: "LABEL-001"
 
   # 示例 3: 環境標籤值錯誤
   - description: "environment 標籤值不合法"
-    resource:
+  resource:
       apiVersion: v1
       kind: Namespace
       metadata:
-        name: "team-frontend-prod"
-        labels:
-          eco-base/part-of: eco-base
-          eco-base/governance: aligned
-          environment: "production"  # 應該是 'prod'
-          tenant: "platform-team"
+  name: "team-frontend-prod"
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+    environment: "production"  # 應該是 'prod'
+    tenant: "platform-team"
     expected: "FAIL"
     violation: "environment label value invalid"
 
   # 示例 4: 合規的 Deployment
   - description: "合規的 Deployment"
-    resource:
+  resource:
       apiVersion: apps/v1
       kind: Deployment
       metadata:
-        name: "frontend-api"
-        namespace: "team-frontend-prod"
-        labels:
-          eco-base/part-of: eco-base
-          eco-base/governance: aligned
-          environment: "prod"
-          app.kubernetes.io/name: "frontend-api"
-          app.kubernetes.io/managed-by: "helm"
-          app.kubernetes.io/version: "v1.2.3"
-          team: "frontend-team"
+  name: "frontend-api"
+  namespace: "team-frontend-prod"
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+    environment: "prod"
+    app.kubernetes.io/name: "frontend-api"
+    app.kubernetes.io/managed-by: "helm"
+    app.kubernetes.io/version: "v1.2.3"
+    team: "frontend-team"
       spec:
         replicas: 3
         selector:
@@ -466,9 +466,9 @@ examples:
       apiVersion: v1
       kind: Namespace
       metadata:
-        name: "kube-system"
-    expected: "PASS"
-    reason: "系統命名空間在豁免列表中"
+  name: "kube-system"
+  expected: "PASS"
+  reason: "系統命名空間在豁免列表中"
 
 # 測試命令
 testing:

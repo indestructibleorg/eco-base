@@ -19,9 +19,9 @@ metadata:
   owner: observability-team
   layer: "GL50-59"
   tags:
-    - observability
-    - metrics
-    - monitoring
+  - observability
+  - metrics
+  - monitoring
   annotations:
     governance.machinenativeops.io/prometheus-compatible: "true"
     governance.machinenativeops.io/grafana-dashboard: "gl-governance"

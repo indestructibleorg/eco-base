@@ -19,9 +19,9 @@ metadata:
   owner: integration-team
   layer: "GL81-83"
   tags:
-    - extended
-    - integration
-    - external
+  - extended
+  - integration
+  - external
   annotations:
     governance.machinenativeops.io/integration-type: "external"
 spec:

@@ -18,8 +18,8 @@ metadata:
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: circleci-agent
-  namespace: circleci-runner
+    name: circleci-agent
+    namespace: circleci-runner
 spec:
   replicas: 1
   selector:
@@ -28,9 +28,9 @@ spec:
       component: agent
   template:
     metadata:
-      labels:
-        app: circleci-runner
-        component: agent
+  labels:
+    app: circleci-runner
+    component: agent
     spec:
       containers:
       - env:

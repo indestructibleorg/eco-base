@@ -17,9 +17,9 @@ metadata:
   owner: governance-committee
   layer: "GL00-09"
   tags:
-    - strategic
-    - stakeholders
-    - governance
+  - strategic
+  - stakeholders
+  - governance
   annotations:
     governance.machinenativeops.io/review-cycle: "quarterly"
     governance.machinenativeops.io/last-review: "2025-01-22"

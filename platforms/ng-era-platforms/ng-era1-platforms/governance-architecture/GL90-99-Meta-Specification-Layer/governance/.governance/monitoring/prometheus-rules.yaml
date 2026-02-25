@@ -8,8 +8,8 @@ metadata:
     eco-base/governance: aligned
     eco-base/part-of: eco-base
     gl.governance.level: '3'
-  name: gl-naming-governance-alerts
-  namespace: gl-monitoring
+    name: gl-naming-governance-alerts
+    namespace: gl-monitoring
 spec:
   groups:
   - interval: 60s
@@ -208,5 +208,5 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     grafana_dashboard: '1'
-  name: gl-grafana-dashboards
-  namespace: gl-monitoring
+    name: gl-grafana-dashboards
+    namespace: gl-monitoring

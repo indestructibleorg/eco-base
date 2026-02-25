@@ -17,11 +17,11 @@ metadata:
   owner: architecture-team
   layer: "GL00-09"
   tags:
-    - architecture
-    - frontend
-    - backend
-    - api-first
-    - separation-of-concerns
+  - architecture
+  - frontend
+  - backend
+  - api-first
+  - separation-of-concerns
   annotations:
     governance.machinenativeops.io/initiative: "INIT-2026-Q1-001"
     governance.machinenativeops.io/priority: "P0"

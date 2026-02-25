@@ -5,7 +5,7 @@ metadata:
   name: {{ include "eco.fullname" . }}
   namespace: {{ .Values.namespace | default "eco-base" }}
   labels:
-    {{- include "eco.labels" . | nindent 4 }}
+  {{- include "eco.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -15,29 +15,29 @@ metadata:
   minReplicas: {{ .Values.autoscaling.minReplicas | default 2 }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas | default 10 }}
   metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage | default 70 }}
-    - type: Resource
-      resource:
-        name: memory
-        target:
-          type: Utilization
-          averageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage | default 80 }}
+  - type: Resource
+  resource:
+  name: cpu
+  target:
+  type: Utilization
+  averageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage | default 70 }}
+  - type: Resource
+  resource:
+  name: memory
+  target:
+  type: Utilization
+  averageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage | default 80 }}
   behavior:
-    scaleUp:
-      stabilizationWindowSeconds: 60
-      policies:
-        - type: Pods
-          value: 2
-          periodSeconds: 60
-    scaleDown:
-      stabilizationWindowSeconds: 300
-      policies:
-        - type: Pods
-          value: 1
-          periodSeconds: 120
+  scaleUp:
+  stabilizationWindowSeconds: 60
+  policies:
+  - type: Pods
+  value: 2
+  periodSeconds: 60
+  scaleDown:
+  stabilizationWindowSeconds: 300
+  policies:
+  - type: Pods
+  value: 1
+  periodSeconds: 120
 {{- end }}

@@ -46,24 +46,24 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/governance: aligned
 
-      tls:
-        enabled: false
-      sniffer:
-        enabled: false
-        sniffOnStart: true
-      storageType: filesystem
-      maxDocCount: 100000
-      maxSpanAge: 72h
-      timeout: 60s
-      username: ""
-      password: ""
-      tlsSkipVerify: true
-    pluginStorage:
-      enabled: false
-      type: ""
-      host: ""
-      port: ""
-      path: ""
+  tls:
+  enabled: false
+  sniffer:
+  enabled: false
+  sniffOnStart: true
+  storageType: filesystem
+  maxDocCount: 100000
+  maxSpanAge: 72h
+  timeout: 60s
+  username: ""
+  password: ""
+  tlsSkipVerify: true
+  pluginStorage:
+  enabled: false
+  type: ""
+  host: ""
+  port: ""
+  path: ""
 
 # Provision data store
 provisionDataStore:
@@ -110,7 +110,7 @@ agent:
   annotations: {}
   service:
     annotations: {}
-    type: ClusterIP
+      type: ClusterIP
     # Service headless is required for agent
     headless: true
     ports:
@@ -190,7 +190,7 @@ collector:
   annotations: {}
   service:
     annotations: {}
-    type: ClusterIP
+      type: ClusterIP
     ports:
       grpc:
         enabled: true
@@ -279,7 +279,7 @@ query:
   annotations: {}
   service:
     annotations: {}
-    type: ClusterIP
+      type: ClusterIP
     ports:
       http-query:
         enabled: true

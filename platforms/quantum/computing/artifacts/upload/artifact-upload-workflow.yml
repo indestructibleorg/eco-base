@@ -75,20 +75,18 @@ spec:
       - generate-report
       
   metadata:
-    capture:
-      - git-commit
-      - author
-      - timestamp
-      - branch
-      - pr-number
-      
+  capture:
+  - git-commit
+  - author
+  - timestamp
+  - branch
+  - pr-number
     enrich:
-      - gl-version
-      - tier
-      - environment
-      
-  reporting:
-    enabled: true
-    format: json
-    output: artifacts/upload-reports
-    retention: 90d
+  - gl-version
+  - tier
+  - environment
+    reporting:
+  enabled: true
+  format: json
+  output: artifacts/upload-reports
+  retention: 90d

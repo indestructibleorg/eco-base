@@ -19,8 +19,8 @@ metadata:
     eco-base/part-of: eco-base
     eco-base/platform: core
     version: v1.0.0
-  name: dynamic-validator-core
-  namespace: gl-runtime-verification
+    name: dynamic-validator-core
+    namespace: gl-runtime-verification
 spec:
   replicas: 3
   selector:
@@ -33,15 +33,15 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      annotations:
-        prometheus.io/path: /metrics
-        prometheus.io/port: '8080'
-        prometheus.io/scrape: 'true'
-      labels:
-        app.kubernetes.io/name: dynamic-validator
-        eco-base/governance: aligned
-        eco-base/part-of: eco-base
-        version: v1.0.0
+  annotations:
+    prometheus.io/path: /metrics
+    prometheus.io/port: '8080'
+    prometheus.io/scrape: 'true'
+  labels:
+    app.kubernetes.io/name: dynamic-validator
+    eco-base/governance: aligned
+    eco-base/part-of: eco-base
+    version: v1.0.0
     spec:
       affinity:
         podAntiAffinity:
@@ -157,8 +157,8 @@ metadata:
     eco-base/owner: eco-system
     eco-base/part-of: eco-base
     eco-base/platform: core
-  name: dynamic-validator-service
-  namespace: gl-runtime-verification
+    name: dynamic-validator-service
+    namespace: gl-runtime-verification
 spec:
   ports:
   - name: http
@@ -202,8 +202,8 @@ metadata:
     eco-base/owner: eco-system
     eco-base/part-of: eco-base
     eco-base/platform: core
-  name: validation-system-config
-  namespace: gl-runtime-verification
+    name: validation-system-config
+    namespace: gl-runtime-verification
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -212,8 +212,8 @@ metadata:
     app.kubernetes.io/name: validation-system
     eco-base/governance: aligned
     eco-base/part-of: eco-base
-  name: evidence-storage-pvc
-  namespace: gl-runtime-verification
+    name: evidence-storage-pvc
+    namespace: gl-runtime-verification
 spec:
   accessModes:
   - ReadWriteOnce

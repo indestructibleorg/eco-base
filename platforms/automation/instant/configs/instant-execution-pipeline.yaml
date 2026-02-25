@@ -15,9 +15,8 @@ version: 1.0.0
 description: AI-powered 3-stage instant execution pipeline for zero-touch deployment
 
 # Pipeline metadata
-
-  updated_at: "2025-12-08"
-  tags:
+updated_at: "2025-12-08"
+tags:
     - ai-powered
     - instant-execution
     - zero-touch

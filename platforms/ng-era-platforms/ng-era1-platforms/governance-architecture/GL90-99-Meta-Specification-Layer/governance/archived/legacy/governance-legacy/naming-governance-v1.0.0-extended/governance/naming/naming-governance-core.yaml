@@ -19,11 +19,11 @@ metadata:
   version: v1.0.0-rc7
   description: "MachineNativeOps 命名治理核心配置 - 機器可讀規範實現"
   compliance: 
-    - ISO-8000-115
-    - RFC-7579
-    - SLSAv1-NAMING
-    - NIST-800-53-Rev5
-    - CIS-Kubernetes-Benchmark
+  - ISO-8000-115
+  - RFC-7579
+  - SLSAv1-NAMING
+  - NIST-800-53-Rev5
+  - CIS-Kubernetes-Benchmark
   machineReadable: true
   autoDeploy: true
   quantumEnhanced: false

@@ -17,9 +17,9 @@ metadata:
   owner: governance-team
   layer: "GL00-09"
   tags:
-    - strategic
-    - vision
-    - core
+  - strategic
+  - vision
+  - core
   annotations:
     governance.machinenativeops.io/review-cycle: "annual"
     governance.machinenativeops.io/last-review: "2025-01-18"
