@@ -1,0 +1,120 @@
+# @GL-governed
+# @GL-layer: governance
+# @GL-semantic: github-actions-naming-check
+# @GL-audit-trail: ../../engine/governance/GL_SEMANTIC_ANCHOR.json
+# 
+# GL Unified Architecture Governance Framework Activated
+
+---
+name: Naming Governance Validation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  validate-naming:
+    name: Validate Resource Naming
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+metadata:
+  name: ""
+  description: ""
+  labels: {}
+
+      
+      - name: Install dependencies
+        run: |
+          pip install pyyaml jsonschema
+      
+      - name: Run governance validation
+        run: |
+          python tools/python/governance_agent.py validate-all
+        continue-on-error: false
+      
+      - name: Generate validation report
+        if: always()
+        run: |
+          python tools/python/governance_agent.py report > validation-report.json
+      
+      - name: Upload validation report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: validation-report
+          path: validation-report.json
+  
+  check-naming-compliance:
+    name: Check Naming Compliance
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Validate YAML files
+        run: |
+          # Find all YAML files and validate naming
+          find . -name "*.yaml" -o -name "*.yml" | while read file; do
+            echo "Validating: $file"
+            # Extract resource names and validate
+            grep -h "name:" "$file" | sed 's/.*name: *//' | while read name; do
+              python tools/python/governance_agent.py validate "$name" "generic" "prod" || true
+            done
+          done
+      
+      - name: Check environment prefixes
+        run: |
+          # Ensure resource names have appropriate environment prefixes
+          grep -r "name:" k8s/ --include="*.yaml" | while read line; do
+            name=$(echo "$line" | sed 's/.*name: *//')
+            if [[ ! $name =~ ^(dev|staging|prod)- ]]; then
+              echo "ERROR: Missing environment prefix: $name"
+              exit 1
+            fi
+          done
+  
+  generate-naming-report:
+    name: Generate Naming Compliance Report
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install pyyaml jsonschema
+      
+      - name: Generate compliance report
+        run: |
+          python tools/python/governance_agent.py report --format json > compliance-report.json
+          python tools/python/governance_agent.py report --format markdown > compliance-report.md
+      
+      - name: Comment PR with report
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('compliance-report.md', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            })

@@ -1,0 +1,128 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "file_path": "engine/interfaces-fix.d.ts",
+  "file_type": ".ts",
+  "file_hash": "210942dbf37a4ff5e9726740e6086fd4bbe2b91b90d2acda86d293d5730633c0",
+  "gl_layer": "ECO-30-EXECUTION",
+  "semantic_anchor": "ECO-30-EXEC-TYPEDEF",
+  "etl_status": "SUCCESS",
+  "es_index_status": "READY",
+  "issues": [
+    {
+      "type": "gl_marker_missing",
+      "severity": "MEDIUM",
+      "message": "No GL governance markers found in file",
+      "file_path": "engine/interfaces-fix.d.ts",
+      "recommendation": "Add GL layer annotation comment at file header"
+    },
+    {
+      "type": "semantic_manifest_missing",
+      "severity": "LOW",
+      "message": "No semantic manifest reference found",
+      "file_path": "engine/interfaces-fix.d.ts",
+      "recommendation": "Add semantic anchor annotation"
+    },
+    {
+      "type": "type_error",
+      "severity": "MEDIUM",
+      "message": "Found 10 uses of 'any' type",
+      "file_path": "engine/interfaces-fix.d.ts",
+      "recommendation": "Replace 'any' with specific types for better type safety"
+    },
+    {
+      "type": "metadata_missing",
+      "severity": "LOW",
+      "message": "No JSDoc documentation found",
+      "file_path": "engine/interfaces-fix.d.ts",
+      "recommendation": "Add JSDoc comments for public APIs"
+    }
+  ],
+  "metadata": {
+    "has_jsdoc": false,
+    "has_exports": true,
+    "has_imports": false,
+    "has_interfaces": true,
+    "has_types": false,
+    "has_classes": false,
+    "has_functions": false,
+    "has_tests": false,
+    "has_readme_reference": false,
+    "has_license": false,
+    "typescript_strict": false
+  },
+  "governance_events": [
+    {
+      "event_id": "dc80d9a29b66e571",
+      "timestamp": "2026-01-24T11:18:49.135141",
+      "event_type": "ETL_START",
+      "source_file": "engine/interfaces-fix.d.ts",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TYPEDEF",
+      "status": "STARTED",
+      "details": {
+        "phase": "extract"
+      },
+      "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+    },
+    {
+      "event_id": "1bce94c51b8c6c23",
+      "timestamp": "2026-01-24T11:18:49.135194",
+      "event_type": "ETL_EXTRACT",
+      "source_file": "engine/interfaces-fix.d.ts",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TYPEDEF",
+      "status": "SUCCESS",
+      "details": {
+        "size_bytes": 2451,
+        "line_count": 104
+      },
+      "evidence_hash": "ec4eca17ce21bfcaa0d2d8318ca14a1dc0b2bfe4cbc90a6fe99824fda57ebce4"
+    },
+    {
+      "event_id": "3043697538d59bc9",
+      "timestamp": "2026-01-24T11:18:49.135335",
+      "event_type": "ETL_TRANSFORM",
+      "source_file": "engine/interfaces-fix.d.ts",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TYPEDEF",
+      "status": "SUCCESS",
+      "details": {
+        "issues_count": 4,
+        "gl_compliant": true
+      },
+      "evidence_hash": "ea23b1235e0e094f74b6463d7f68e330b5dc99342185ab5e17cfc1a30e56342c"
+    },
+    {
+      "event_id": "8ddd97bc62663c12",
+      "timestamp": "2026-01-24T11:18:49.135348",
+      "event_type": "ETL_LOAD",
+      "source_file": "engine/interfaces-fix.d.ts",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TYPEDEF",
+      "status": "SUCCESS",
+      "details": {
+        "index": "gl-aep-engine-audit"
+      },
+      "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+    }
+  ],
+  "timestamp": "2026-01-24T11:18:49.135359",
+  "execution_time_ms": 0,
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "engine_interfaces-fix.d.ts_audit",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

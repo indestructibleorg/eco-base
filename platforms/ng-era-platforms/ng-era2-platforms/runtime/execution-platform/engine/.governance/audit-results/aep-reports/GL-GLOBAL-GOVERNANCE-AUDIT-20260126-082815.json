@@ -1,0 +1,1344 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "gl_unified_charter": "ACTIVATED",
+  "execution_id": "20260126_082815",
+  "execution_timestamp": "2026-01-26T08:28:15.466934+00:00",
+  "root_path": "ns-root",
+  "summary": {
+    "total_files": 731,
+    "total_issues": 362,
+    "total_governance_events": 1463,
+    "gl_marker_coverage_percent": 97.81,
+    "metadata_coverage_percent": 76.33,
+    "files_with_errors": 0
+  },
+  "issues_by_severity": {
+    "MEDIUM": 190,
+    "LOW": 172
+  },
+  "issues_by_category": {
+    "metadata_missing": 173,
+    "naming_inconsistent": 173,
+    "gl_marker_missing": 16
+  },
+  "files_by_type": {
+    "markdown": 139,
+    "python": 98,
+    "yaml": 189,
+    "unknown": 7,
+    "text": 9,
+    "shell": 11,
+    "json": 14,
+    "typescript": 262,
+    "javascript": 2
+  },
+  "critical_issues": [],
+  "high_issues": [],
+  "medium_issues": [
+    {
+      "issue_id": "ISS-20260126_082815-000000",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/README.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000001",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/RESTRUCTURE-SUMMARY.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000002",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/ACTION_PLAN_PRIORITY_MATRIX.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000003",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/ADDITIONAL-SYSTEMS-REPORT.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000004",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/ANALYSIS_EXECUTION_SUMMARY.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000005",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/BEST_PRACTICES_IMPLEMENTATION_PLAN.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000006",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/COMPREHENSIVE-DELIVERY-REPORT.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000007",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/COMPREHENSIVE-INTEGRATION-STRATEGY.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000008",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/COMPREHENSIVE_ANALYSIS_REPORT.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000009",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/DEPLOYMENT-GUIDE.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000010",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/DEVELOPER-GUIDE.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000011",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/DISASTER-RECOVERY-PLAN.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000012",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/GOVERNANCE-LAYER-REPORT.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000013",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/IMPLEMENTATION_STATUS.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000014",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/INTEGRATION_GUIDE.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000015",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/NAMESPACES ANALYSIS.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000016",
+      "category": "naming_inconsistent",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/NAMESPACES ANALYSIS.md",
+      "line_number": null,
+      "description": "Filename contains spaces: 'NAMESPACES ANALYSIS.md'",
+      "suggestion": "Replace spaces with hyphens or underscores",
+      "evidence": {
+        "current_name": "NAMESPACES ANALYSIS.md"
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000018",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/OPERATIONS-MANUAL.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000019",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/REGISTRY-COMPLETION-REPORT.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000020",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/ROOT_IMPLEMENTATION_PLAN.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000021",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/SCHEMA-SYSTEM-REPORT.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000022",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/SECURITY-AUDIT-REPORT.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000023",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/SECURITY-LAYER-REPORT.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000024",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/TAXONOMY_COMPLETION_REPORT.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000025",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/TAXONOMY_COMPLIANCE.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000026",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/TAXONOMY_MANIFESTO.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000027",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/TECHNICAL_IMPROVEMENT_SPECIFICATIONS.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000028",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/VERIFICATION_REPORT.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000029",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/todo-phase3-final.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000031",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/todo-phase6-7.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000033",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/docs/todo.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000035",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/DEPLOYMENT_GUIDE.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000036",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/IMPLEMENTATION_SUMMARY.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000037",
+      "category": "gl_marker_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/LICENSE",
+      "line_number": null,
+      "description": "No GL governance markers found",
+      "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+      "evidence": {
+        "searched_patterns": [
+          "@gl-layer\\s+(\\S+)",
+          "@gl-module\\s+(\\S+)",
+          "@gl-semantic-anchor\\s+(\\S+)"
+        ]
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000038",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/LICENSE",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000039",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/PROJECT_SUMMARY.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000040",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/README.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000041",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/adk-architecture-blueprint.md",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000043",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/adk-package-config.yaml",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [
+          "version",
+          "name",
+          "description"
+        ],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000044",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/config/logging.yaml",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [
+          "version",
+          "name"
+        ],
+        "missing_fields": [
+          "description"
+        ],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000045",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/config/policies.yaml",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [
+          "name",
+          "description"
+        ],
+        "missing_fields": [
+          "version"
+        ],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000046",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/config/settings.yaml",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [
+          "version",
+          "name"
+        ],
+        "missing_fields": [
+          "description"
+        ],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000047",
+      "category": "gl_marker_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/namespaces-adk.txt",
+      "line_number": null,
+      "description": "No GL governance markers found",
+      "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+      "evidence": {
+        "searched_patterns": [
+          "@gl-layer\\s+(\\S+)",
+          "@gl-module\\s+(\\S+)",
+          "@gl-semantic-anchor\\s+(\\S+)"
+        ]
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000048",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/namespaces-adk.txt",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000049",
+      "category": "gl_marker_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/requirements.txt",
+      "line_number": null,
+      "description": "No GL governance markers found",
+      "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+      "evidence": {
+        "searched_patterns": [
+          "@gl-layer\\s+(\\S+)",
+          "@gl-module\\s+(\\S+)",
+          "@gl-semantic-anchor\\s+(\\S+)"
+        ]
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000050",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/requirements.txt",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000051",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/scripts/restart_agents.sh",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000052",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/scripts/start_agents.sh",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000053",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/scripts/status_agents.sh",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    },
+    {
+      "issue_id": "ISS-20260126_082815-000054",
+      "category": "metadata_missing",
+      "severity": "MEDIUM",
+      "file_path": "ns-root/namespaces-adk/scripts/stop_agents.sh",
+      "line_number": null,
+      "description": "No metadata found in file",
+      "suggestion": "Add metadata header with version, name, description",
+      "evidence": {
+        "has_metadata": false,
+        "metadata_fields": [],
+        "missing_fields": [],
+        "issues": []
+      }
+    }
+  ],
+  "migration_suggestions": [
+    {
+      "current_path": "README.md",
+      "suggested_path": "docs/README.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "RESTRUCTURE-SUMMARY.md",
+      "suggested_path": "docs/RESTRUCTURE-SUMMARY.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "docs/SCHEMA-SYSTEM-REPORT.md",
+      "suggested_path": "schemas/SCHEMA-SYSTEM-REPORT.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "docs/TAXONOMY_MANIFESTO.md",
+      "suggested_path": "manifests/TAXONOMY_MANIFESTO.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "docs/TECHNICAL_IMPROVEMENT_SPECIFICATIONS.md",
+      "suggested_path": "tests/TECHNICAL_IMPROVEMENT_SPECIFICATIONS.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "governance_layer/__init__.py",
+      "suggested_path": "src/__init__.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "governance_layer/auth_manager.py",
+      "suggested_path": "src/auth_manager.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "governance_layer/compliance_checker.py",
+      "suggested_path": "src/compliance_checker.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "governance_layer/policy_engine.py",
+      "suggested_path": "policies/policy_engine.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespace_registry/__init__.py",
+      "suggested_path": "src/__init__.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespace_registry/cache.py",
+      "suggested_path": "src/cache.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespace_registry/registry.yaml",
+      "suggested_path": "config/registry.yaml",
+      "file_type": "yaml"
+    },
+    {
+      "current_path": "namespace_registry/registry_manager.py",
+      "suggested_path": "src/registry_manager.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespace_registry/schema_validator.py",
+      "suggested_path": "schemas/schema_validator.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespace_registry/validator.py",
+      "suggested_path": "src/validator.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/DEPLOYMENT_GUIDE.md",
+      "suggested_path": "docs/DEPLOYMENT_GUIDE.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-adk/IMPLEMENTATION_SUMMARY.md",
+      "suggested_path": "docs/IMPLEMENTATION_SUMMARY.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-adk/PROJECT_SUMMARY.md",
+      "suggested_path": "docs/PROJECT_SUMMARY.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-adk/README.md",
+      "suggested_path": "docs/README.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-adk/adk/__init__.py",
+      "suggested_path": "src/__init__.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/core/__init__.py",
+      "suggested_path": "src/__init__.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/core/agent_runtime.py",
+      "suggested_path": "src/agent_runtime.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/core/context_manager.py",
+      "suggested_path": "src/context_manager.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/core/error_handling.py",
+      "suggested_path": "src/error_handling.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/core/event_bus.py",
+      "suggested_path": "src/event_bus.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/core/memory_manager.py",
+      "suggested_path": "src/memory_manager.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/core/plugin_manager.py",
+      "suggested_path": "src/plugin_manager.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/core/sandbox.py",
+      "suggested_path": "src/sandbox.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/core/workflow_orchestrator.py",
+      "suggested_path": "src/workflow_orchestrator.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/data/__init__.py",
+      "suggested_path": "src/__init__.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/governance/__init__.py",
+      "suggested_path": "src/__init__.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/governance/ari_index.py",
+      "suggested_path": "src/ari_index.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/governance/audit_trail.py",
+      "suggested_path": "src/audit_trail.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/governance/conformance_engine.py",
+      "suggested_path": "src/conformance_engine.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/governance/containment.py",
+      "suggested_path": "src/containment.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/governance/drift_detection.py",
+      "suggested_path": "src/drift_detection.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/governance/mi9_runtime.py",
+      "suggested_path": "src/mi9_runtime.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/mcp/__init__.py",
+      "suggested_path": "src/__init__.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/mcp/a2a_client.py",
+      "suggested_path": "src/a2a_client.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/mcp/mcp_client.py",
+      "suggested_path": "src/mcp_client.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/mcp/mcp_security.py",
+      "suggested_path": "src/mcp_security.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/mcp/tool_router.py",
+      "suggested_path": "src/tool_router.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/mcp/tool_schemas.py",
+      "suggested_path": "schemas/tool_schemas.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/observability/__init__.py",
+      "suggested_path": "src/__init__.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/observability/event_schema.py",
+      "suggested_path": "schemas/event_schema.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/observability/logging.py",
+      "suggested_path": "src/logging.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/observability/metrics.py",
+      "suggested_path": "src/metrics.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/observability/tracing.py",
+      "suggested_path": "src/tracing.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/plugins/__init__.py",
+      "suggested_path": "src/__init__.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/plugins/memory_plugins/__init__.py",
+      "suggested_path": "src/__init__.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/plugins/sdk_integrations/__init__.py",
+      "suggested_path": "src/__init__.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/plugins/tool_plugins/__init__.py",
+      "suggested_path": "src/__init__.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/plugins/workflow_plugins/__init__.py",
+      "suggested_path": "src/__init__.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/sdk/__init__.py",
+      "suggested_path": "src/__init__.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/security/__init__.py",
+      "suggested_path": "src/__init__.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/security/a2a_auth.py",
+      "suggested_path": "src/a2a_auth.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/security/auth.py",
+      "suggested_path": "src/auth.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/security/permissioning.py",
+      "suggested_path": "src/permissioning.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/security/pii_filter.py",
+      "suggested_path": "src/pii_filter.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk/taxonomy_integration.py",
+      "suggested_path": "src/taxonomy_integration.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/adk-architecture-blueprint.md",
+      "suggested_path": "docs/adk-architecture-blueprint.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-adk/adk-package-config.yaml",
+      "suggested_path": "config/adk-package-config.yaml",
+      "file_type": "yaml"
+    },
+    {
+      "current_path": "namespaces-adk/config/logging.yaml",
+      "suggested_path": "config/logging.yaml",
+      "file_type": "yaml"
+    },
+    {
+      "current_path": "namespaces-adk/config/policies.yaml",
+      "suggested_path": "policies/policies.yaml",
+      "file_type": "yaml"
+    },
+    {
+      "current_path": "namespaces-adk/config/settings.yaml",
+      "suggested_path": "config/settings.yaml",
+      "file_type": "yaml"
+    },
+    {
+      "current_path": "namespaces-adk/governance_agents/artifact_generation_agent.py",
+      "suggested_path": "src/artifact_generation_agent.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/governance_agents/cicd_repair_agent.py",
+      "suggested_path": "src/cicd_repair_agent.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/governance_agents/dag_maintenance_agent.py",
+      "suggested_path": "src/dag_maintenance_agent.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/governance_agents/gitops_workflow_agent.py",
+      "suggested_path": "src/gitops_workflow_agent.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/scripts/restart_agents.sh",
+      "suggested_path": "scripts/restart_agents.sh",
+      "file_type": "shell"
+    },
+    {
+      "current_path": "namespaces-adk/scripts/start_agents.sh",
+      "suggested_path": "scripts/start_agents.sh",
+      "file_type": "shell"
+    },
+    {
+      "current_path": "namespaces-adk/scripts/status_agents.sh",
+      "suggested_path": "scripts/status_agents.sh",
+      "file_type": "shell"
+    },
+    {
+      "current_path": "namespaces-adk/scripts/stop_agents.sh",
+      "suggested_path": "scripts/stop_agents.sh",
+      "file_type": "shell"
+    },
+    {
+      "current_path": "namespaces-adk/tests/conftest.py",
+      "suggested_path": "tests/conftest.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/tests/integration/test_agent_workflows.py",
+      "suggested_path": "tests/test_agent_workflows.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/tests/pytest.ini",
+      "suggested_path": "tests/pytest.ini",
+      "file_type": "unknown"
+    },
+    {
+      "current_path": "namespaces-adk/tests/unit/test_dag_maintenance_agent.py",
+      "suggested_path": "tests/test_dag_maintenance_agent.py",
+      "file_type": "python"
+    },
+    {
+      "current_path": "namespaces-adk/todo.md",
+      "suggested_path": "docs/todo.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/CHANGELOG.md",
+      "suggested_path": "docs/CHANGELOG.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/CONTRIBUTING.md",
+      "suggested_path": "docs/CONTRIBUTING.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/README.md",
+      "suggested_path": "docs/README.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/ROOT-CLEANUP-COMPLETION.md",
+      "suggested_path": "docs/ROOT-CLEANUP-COMPLETION.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/categories.yaml",
+      "suggested_path": "config/categories.yaml",
+      "file_type": "yaml"
+    },
+    {
+      "current_path": "namespaces-mcp/config/conversion.yaml",
+      "suggested_path": "config/conversion.yaml",
+      "file_type": "yaml"
+    },
+    {
+      "current_path": "namespaces-mcp/config/governance.yaml",
+      "suggested_path": "config/governance.yaml",
+      "file_type": "yaml"
+    },
+    {
+      "current_path": "namespaces-mcp/config/mcp-rules.yaml",
+      "suggested_path": "config/mcp-rules.yaml",
+      "file_type": "yaml"
+    },
+    {
+      "current_path": "namespaces-mcp/docs/API_REFERENCE.md",
+      "suggested_path": "docs/API_REFERENCE.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/docs/ARCHITECTURE.md",
+      "suggested_path": "docs/ARCHITECTURE.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/docs/KNOWLEDGE_INDEX.yaml",
+      "suggested_path": "config/KNOWLEDGE_INDEX.yaml",
+      "file_type": "yaml"
+    },
+    {
+      "current_path": "namespaces-mcp/docs/PERFORMANCE_TUNING.md",
+      "suggested_path": "docs/PERFORMANCE_TUNING.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/docs/PROJECT-SUMMARY.md",
+      "suggested_path": "docs/PROJECT-SUMMARY.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/docs/README.md",
+      "suggested_path": "docs/README.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/docs/STRUCTURE-ANALYSIS.md",
+      "suggested_path": "docs/STRUCTURE-ANALYSIS.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/docs/architecture.md",
+      "suggested_path": "docs/architecture.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/docs/reports/MCP-CURRENT-STATUS.md",
+      "suggested_path": "docs/MCP-CURRENT-STATUS.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/docs/reports/MCP-FINAL-STATUS.md",
+      "suggested_path": "docs/MCP-FINAL-STATUS.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/docs/reports/MCP-LEVEL1-IMPLEMENTATION-PLAN.md",
+      "suggested_path": "docs/MCP-LEVEL1-IMPLEMENTATION-PLAN.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/docs/reports/MCP-MODULARIZATION-PLAN.md",
+      "suggested_path": "docs/MCP-MODULARIZATION-PLAN.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/docs/reports/MCP-MODULARIZATION-PROGRESS.md",
+      "suggested_path": "docs/MCP-MODULARIZATION-PROGRESS.md",
+      "file_type": "markdown"
+    },
+    {
+      "current_path": "namespaces-mcp/docs/reports/MCP-OVERALL-PROGRESS.md",
+      "suggested_path": "docs/MCP-OVERALL-PROGRESS.md",
+      "file_type": "markdown"
+    }
+  ],
+  "governance_event_summary": {
+    "total_events": 1463,
+    "event_types": [
+      "FILE_AUDIT_START",
+      "FULL_AUDIT_START",
+      "FILE_AUDIT_COMPLETE"
+    ]
+  },
+  "best_practice_recommendations": [
+    {
+      "priority": "LOW",
+      "category": "naming",
+      "title": "Standardize File Naming",
+      "description": "173 files have naming convention issues",
+      "action": "Rename files to follow kebab-case for configs, snake_case for Python"
+    }
+  ],
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "ECO-GLOBAL-GOVERNANCE-AUDIT-20260126_082815",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

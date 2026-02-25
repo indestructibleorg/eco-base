@@ -1,0 +1,110 @@
+#!/usr/bin/env python3
+"""
+GL Layer Check CLI - 快速查詢檔案/目錄的 GL 層級
+Usage: ./gl-check <path>
+"""
+
+import sys
+import os
+import re
+
+GL_LAYERS = {
+    "00-strategic": "GL00-09 Strategic (戰略層)",
+    "10-operational": "GL10-29 Operational (運營層)",
+    "30-execution": "GL30-49 Execution (執行層)",
+    "50-observability": "GL50-59 Observability (觀測層)",
+    "60-feedback": "GL60-80 Feedback (回饋層)",
+    "81-extended": "GL81-83 Extended (擴展層)",
+    "90-meta": "GL90-99 Meta (元規範層)",
+}
+
+PATH_MAPPINGS = {
+    r"^src/": "GL30-49 Execution",
+    r"^scripts/": "GL30-49 Execution",
+    r"^config/": "GL10-29 Operational",
+    r"^governance/": "GL00-09 Strategic",
+    r"^gl/": "GL Architecture",
+    r"^docs/": "GL10-29 Operational",
+    r"^tests/": "GL50-59 Observability",
+    r"^\.github/workflows/": "GL30-49 Execution",
+    r"^monitoring/": "GL50-59 Observability",
+    r"^tools/": "GL30-49 Execution",
+}
+
+def get_gl_layer(path):
+    """Determine GL layer for a given path"""
+    path = path.lstrip("./")
+    
+    # Check if path is within gl/ directory
+    if path.startswith("gl/"):
+        for layer_dir, layer_name in GL_LAYERS.items():
+            if f"gl/{layer_dir}" in path:
+                return layer_name
+        if "gl/architecture" in path:
+            return "GL Architecture Core"
+        return "GL (unclassified)"
+    
+    # Check path mappings
+    for pattern, layer in PATH_MAPPINGS.items():
+        if re.match(pattern, path):
+            return layer
+    
+    return "Unclassified (consider adding GL-Layer annotation)"
+
+def check_annotation(filepath):
+    """Check if file has GL-Layer annotation"""
+    if not os.path.isfile(filepath):
+        return None
+    
+    try:
+        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read(2000)  # Read first 2000 chars
+            match = re.search(r'GL-Layer:\s*(GL\d{2}-\d{2})', content)
+            if match:
+                return match.group(1)
+    except:
+        pass
+    return None
+
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: gl-check <path>")
+        print("\nExamples:")
+        print("  gl-check src/core/")
+        print("  gl-check scripts/deploy.py")
+        print("  gl-check .")
+        sys.exit(1)
+    
+    path = sys.argv[1]
+    
+    if os.path.isfile(path):
+        annotation = check_annotation(path)
+        layer = get_gl_layer(path)
+        print(f"📁 {path}")
+        print(f"   └─ GL Layer: {layer}")
+        if annotation:
+            print(f"   └─ Annotation: {annotation}")
+    elif os.path.isdir(path):
+        layer = get_gl_layer(path)
+        print(f"📂 {path}")
+        print(f"   └─ GL Layer: {layer}")
+        
+        # List files in directory
+        try:
+            files = os.listdir(path)[:10]
+            if files:
+                print(f"   └─ Contents ({len(files)} items shown):")
+                for f in files:
+                    filepath = os.path.join(path, f)
+                    annotation = check_annotation(filepath) if os.path.isfile(filepath) else None
+                    marker = "📄" if os.path.isfile(filepath) else "📁"
+                    ann_str = f" [{annotation}]" if annotation else ""
+                    print(f"      {marker} {f}{ann_str}")
+        except:
+            pass
+    else:
+        print(f"❌ Path not found: {path}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()

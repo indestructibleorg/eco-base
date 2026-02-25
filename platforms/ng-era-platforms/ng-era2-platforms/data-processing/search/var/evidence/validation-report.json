@@ -1,0 +1,64 @@
+# @ECO-governed
+# @ECO-layer: GL00-09
+# @ECO-semantic: general-component
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL00_09-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "validation_results": {
+    "timestamp": "2026-01-23T00:59:45.067898",
+    "root_path": "/workspace/machine-native-ops/elasticsearch-search-system",
+    "passed": true,
+    "errors": [],
+    "warnings": [
+      "File name suggestion: /workspace/machine-native-ops/elasticsearch-search-system/controlplane/evidence-chain.json",
+      "File name suggestion: /workspace/machine-native-ops/elasticsearch-search-system/root-policy/evidence-chain.json",
+      "File name suggestion: /workspace/machine-native-ops/elasticsearch-search-system/root-policy/naming-convention/naming-registry.yaml",
+      "File name suggestion: /workspace/machine-native-ops/elasticsearch-search-system/workspace/evidence-chain.json",
+      "File name suggestion: /workspace/machine-native-ops/elasticsearch-search-system/workspace/projects/search-system/config/search-config.yaml",
+      "File name suggestion: /workspace/machine-native-ops/elasticsearch-search-system/workspace/projects/search-system/config/index-mapping.yaml"
+    ],
+    "valid_files": [
+      "/workspace/machine-native-ops/elasticsearch-search-system/workspace/projects",
+      "/workspace/machine-native-ops/elasticsearch-search-system/var/evidence",
+      "/workspace/machine-native-ops/elasticsearch-search-system/controlplane",
+      "/workspace/machine-native-ops/elasticsearch-search-system/root-policy",
+      "/workspace/machine-native-ops/elasticsearch-search-system/tools"
+    ],
+    "evidence_chain_length": 1
+  },
+  "evidence_chain": [
+    {
+      "timestamp": "2026-01-23T00:59:45.067919",
+      "validator": "search-structure-validator",
+      "operation": "validation_start",
+      "details": {
+        "root_path": "/workspace/machine-native-ops/elasticsearch-search-system"
+      },
+      "hash": "b942fc2f4a797b33f5251bf6930af687c6979117417cd14de0c2a1034b8b0da9"
+    },
+    {
+      "timestamp": "2026-01-23T00:59:45.069035",
+      "validator": "search-structure-validator",
+      "operation": "validation_complete",
+      "details": {
+        "passed": true,
+        "errors": 0,
+        "warnings": 6
+      },
+      "hash": "35b343282836ad76622e6fcc54680a35d2559399c2fcdd818dda0ba3d03eff89"
+    }
+  ],
+  "_GL": {
+    "governed": true,
+    "layer": "search",
+    "semantic": "validation-report",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

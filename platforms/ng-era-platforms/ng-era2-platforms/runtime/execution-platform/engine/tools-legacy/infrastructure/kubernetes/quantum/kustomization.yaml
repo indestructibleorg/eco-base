@@ -1,0 +1,29 @@
+# @ECO-layer: GQS-L0
+# @ECO-governed
+# @ECO-layer: governance
+# @ECO-semantic: kustomization
+# @ECO-audit-trail: ../../engine/governance/GL_SEMANTIC_ANCHOR.json
+# 
+# GL Unified Architecture Governance Framework Activated
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: quantumflow
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - secret.yaml
+  - pvc.yaml
+  - backend-deployment.yaml
+  - frontend-deployment.yaml
+  - backend-service.yaml
+  - frontend-service.yaml
+  - ingress.yaml
+  - hpa.yaml
+
+commonLabels:
+  app.kubernetes.io/name: quantumflow
+  app.kubernetes.io/version: "1.0.0"
+

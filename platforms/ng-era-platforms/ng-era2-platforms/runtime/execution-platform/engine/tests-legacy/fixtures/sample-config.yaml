@@ -1,0 +1,61 @@
+# @ECO-governed
+# @ECO-layer: governance
+# @ECO-semantic: sample_config
+# @ECO-audit-trail: ../../engine/governance/GL_SEMANTIC_ANCHOR.json
+# 
+# GL Unified Architecture Governance Framework Activated
+
+# Sample Configuration for Testing
+version: "1.0.0"
+environment: test
+
+logging:
+  level: DEBUG
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: /tmp/test.log
+
+database:
+  host: localhost
+  port: 5432
+  name: test_db
+  user: test_user
+  password: test_password
+
+api:
+  host: localhost
+  port: 8080
+  timeout: 30
+  retry_attempts: 3
+
+features:
+  enable_caching: true
+  enable_metrics: true
+  enable_tracing: false
+  max_connections: 100
+
+governance:
+  enabled: true
+  validation_strict: true
+  enforce_naming_conventions: true
+  require_artifact_version: true
+
+namespaces:
+  allowed_prefixes:
+    - auth-
+    - user-
+    - common-
+    - api-
+  max_count: 100
+
+artifacts:
+  max_size_mb: 100
+  allowed_types:
+    - service
+    - component
+    - library
+    - tool
+    - system
+  require_metadata:
+  annotations:
+    eco-base/urn: "urn:eco-base:platform:resource:ng-era-platforms:ng-era2-platforms:runtime:execution-platform:engine:tests-legacy:fixtures:sample-config.yaml"
+    eco-base/uri: "eco-base://platform/resource/ng-era-platforms/ng-era2-platforms/runtime/execution-platform/engine/tests-legacy/fixtures/sample-config.yaml" true

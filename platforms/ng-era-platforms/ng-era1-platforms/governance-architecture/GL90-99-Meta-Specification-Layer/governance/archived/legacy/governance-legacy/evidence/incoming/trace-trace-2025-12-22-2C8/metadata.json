@@ -1,0 +1,18 @@
+{
+  "bundleMetadata": {
+    "traceId": "trace-2025-12-22-2C8",
+    "createdAt": "2025-12-22T17:49:42.941273+00:00",
+    "artifact": {
+      "name": "axiom-hft-quantum",
+      "version": "v1.0.0",
+      "type": "container-image",
+      "digest": "sha256:abc123..."
+    },
+    "creator": "governance-system@machinenativeops.io",
+    "stages": 7,
+    "complianceScore": 100.0,
+    "finalHash": "e69c9e1846280c76aa877ba6e8a9e2b1ed3c39fe0cdc46930cf762844e32d8427deeb572552fb6ed1833f5e079fd12e8117a130aeb18a0e8d216bb84bc8c8dce",
+    "immutable": true,
+    "retention": "7y"
+  }
+}

@@ -1,0 +1,130 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "file_path": "engine/artifacts/artifact_manager.ts",
+  "file_hash": "3e855e1d6b5b7c3b8d165ed73fa393b8d179e67b4044fd19397833ddd669bb29",
+  "audit_timestamp": "2026-01-26T02:05:57.111949+00:00",
+  "etl_status": "success",
+  "es_index_status": "indexed",
+  "metadata": {},
+  "execution_time_ms": 1,
+  "issues": [
+    {
+      "issue_id": "ISS-0001",
+      "type": "gl_marker_missing",
+      "severity": "P1",
+      "title": "GL 治理標記缺失",
+      "description": "檔案 engine/artifacts/artifact_manager.ts 缺少 GL Unified Architecture Governance Framework 標記",
+      "line_number": null,
+      "suggestion": "在檔案開頭添加 '// GL Unified Architecture Governance Framework Activated' 或 '@gl-governed' 標記",
+      "auto_fixable": true
+    },
+    {
+      "issue_id": "ISS-0002",
+      "type": "metadata_missing",
+      "severity": "P2",
+      "title": "Metadata 缺失",
+      "description": "缺少以下 metadata: version, status, author, last_updated",
+      "line_number": null,
+      "suggestion": "添加缺失的 metadata 欄位: version, status, author, last_updated",
+      "auto_fixable": false
+    },
+    {
+      "issue_id": "ISS-0003",
+      "type": "type_error",
+      "severity": "P2",
+      "title": "使用 any 類型",
+      "description": "發現 7 處使用 'any' 類型",
+      "line_number": 32,
+      "suggestion": "使用具體類型替代 'any' 以提高類型安全性",
+      "auto_fixable": false
+    },
+    {
+      "issue_id": "ISS-0004",
+      "type": "pipeline_error",
+      "severity": "P3",
+      "title": "Console 輸出",
+      "description": "發現 1 處 console 輸出",
+      "line_number": null,
+      "suggestion": "使用正式的 logging 機制替代 console 輸出",
+      "auto_fixable": true
+    },
+    {
+      "issue_id": "ISS-0005",
+      "type": "semantic_manifest_missing",
+      "severity": "P2",
+      "title": "Semantic Manifest 缺失",
+      "description": "檔案缺少語意標記或模組描述",
+      "line_number": null,
+      "suggestion": "添加 @module 和 @description JSDoc 標記",
+      "auto_fixable": true
+    }
+  ],
+  "governance_events": [
+    {
+      "event_id": "evt-0028",
+      "timestamp": "2026-01-26T02:05:57.110230+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/artifacts/artifact_manager.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "8e7a78967a1c52bd"
+    },
+    {
+      "event_id": "evt-0029",
+      "timestamp": "2026-01-26T02:05:57.111911+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/artifacts/artifact_manager.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 5
+      },
+      "hash": "93bb0e51fb7d452b"
+    },
+    {
+      "event_id": "evt-0030",
+      "timestamp": "2026-01-26T02:05:57.111924+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/artifacts/artifact_manager.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "c5feb2a6a086edca"
+    },
+    {
+      "event_id": "evt-0031",
+      "timestamp": "2026-01-26T02:05:57.111944+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/artifacts/artifact_manager.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "3e855e1d6b5b7c3b"
+      },
+      "hash": "dcd155a0389e3643"
+    }
+  ],
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "engine_artifacts_artifact_manager.ts",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

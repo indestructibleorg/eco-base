@@ -1,0 +1,43 @@
+# @ECO-layer: GQS-L0
+# @ECO-governed
+# @ECO-layer: governance
+# @ECO-semantic: ingress
+# @ECO-audit-trail: ../../engine/governance/GL_SEMANTIC_ANCHOR.json
+# 
+# GL Unified Architecture Governance Framework Activated
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: quantumflow-ingress
+  namespace: quantumflow
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+spec:
+  tls:
+  - hosts:
+    - quantumflow.example.com
+    secretName: quantumflow-tls
+  rules:
+  - host: quantumflow.example.com
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: quantumflow-backend
+            port:
+              number: 8000
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: quantumflow-frontend
+            port:
+              number: 80
+

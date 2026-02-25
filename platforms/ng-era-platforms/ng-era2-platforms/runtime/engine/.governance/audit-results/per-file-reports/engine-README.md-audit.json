@@ -1,0 +1,106 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "file_path": "engine/README.md",
+  "file_type": ".md",
+  "file_hash": "e0ad2f26809396a9efaf1fcd83a16b9cf6136c9d35b4c29540ceb961b70f1670",
+  "gl_layer": "ECO-30-EXECUTION",
+  "semantic_anchor": "ECO-90-META-DOC",
+  "etl_status": "SUCCESS",
+  "es_index_status": "READY",
+  "issues": [
+    {
+      "type": "gl_marker_missing",
+      "severity": "MEDIUM",
+      "message": "No GL governance markers found in file",
+      "file_path": "engine/README.md",
+      "recommendation": "Add GL layer annotation comment at file header"
+    }
+  ],
+  "metadata": {
+    "has_jsdoc": false,
+    "has_exports": false,
+    "has_imports": true,
+    "has_interfaces": false,
+    "has_types": false,
+    "has_classes": false,
+    "has_functions": false,
+    "has_tests": false,
+    "has_readme_reference": true,
+    "has_license": true
+  },
+  "governance_events": [
+    {
+      "event_id": "3c7020eedaebf213",
+      "timestamp": "2026-01-24T11:18:49.127975",
+      "event_type": "ETL_START",
+      "source_file": "engine/README.md",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-90-META-DOC",
+      "status": "STARTED",
+      "details": {
+        "phase": "extract"
+      },
+      "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+    },
+    {
+      "event_id": "98aa1c7d2cb3f131",
+      "timestamp": "2026-01-24T11:18:49.128091",
+      "event_type": "ETL_EXTRACT",
+      "source_file": "engine/README.md",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-90-META-DOC",
+      "status": "SUCCESS",
+      "details": {
+        "size_bytes": 4360,
+        "line_count": 162
+      },
+      "evidence_hash": "b98e4cac38a6cf6c5fff9e9e35d3ee72bbbb360014bdcfa1e4b0c6a4dd1cfeb9"
+    },
+    {
+      "event_id": "3e9ad225287b70aa",
+      "timestamp": "2026-01-24T11:18:49.128328",
+      "event_type": "ETL_TRANSFORM",
+      "source_file": "engine/README.md",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-90-META-DOC",
+      "status": "SUCCESS",
+      "details": {
+        "issues_count": 1,
+        "gl_compliant": true
+      },
+      "evidence_hash": "8a61cc1804475f1116325ae620157c1b9ca4150054a1f2510b90bef6910cf484"
+    },
+    {
+      "event_id": "4d7ec1bcfcf05555",
+      "timestamp": "2026-01-24T11:18:49.128351",
+      "event_type": "ETL_LOAD",
+      "source_file": "engine/README.md",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-90-META-DOC",
+      "status": "SUCCESS",
+      "details": {
+        "index": "gl-aep-engine-audit"
+      },
+      "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+    }
+  ],
+  "timestamp": "2026-01-24T11:18:49.128364",
+  "execution_time_ms": 0,
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "engine_README.md_audit",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

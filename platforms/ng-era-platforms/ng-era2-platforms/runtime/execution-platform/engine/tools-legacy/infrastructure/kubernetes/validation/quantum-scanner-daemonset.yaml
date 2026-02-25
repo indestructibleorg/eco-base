@@ -1,0 +1,198 @@
+# @ECO-layer: GQS-L0
+# @ECO-governed
+# @ECO-layer: governance
+# @ECO-semantic: quantum-scanner-daemonset
+# @ECO-audit-trail: ../../engine/governance/GL_SEMANTIC_ANCHOR.json
+# 
+# GL Unified Architecture Governance Framework Activated
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: quantum-scanner
+  namespace: gl-runtime-verification
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+    app.kubernetes.io/name: validation-system
+    app.kubernetes.io/component: quantum-scanner
+    version: v1.0.0
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: quantum-scanner
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+        app.kubernetes.io/name: quantum-scanner
+        version: v1.0.0
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+    spec:
+      serviceAccountName: validation-system-sa
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+          effect: NoSchedule
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+        - name: scanner
+          image: ghcr.io/machinenativeops/quantum-scanner:v1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: metrics
+              containerPort: 8081
+              protocol: TCP
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: QUANTUM_BACKEND
+              value: "ibm_kyiv"
+            - name: SCAN_INTERVAL
+              value: "30s"
+            - name: COHERENCE_SAMPLING_RATE
+              value: "100ms"
+            - name: FEATURE_METRICS
+              value: "coherence,entanglement,fidelity"
+          volumeMounts:
+            - name: config
+              mountPath: /etc/quantum-scanner
+              readOnly: true
+            - name: host-proc
+              mountPath: /host/proc
+              readOnly: true
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 20
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+      volumes:
+        - name: config
+          configMap:
+            name: quantum-scanner-config
+        - name: host-proc
+          hostPath:
+            path: /proc
+            type: Directory
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: quantum-scanner-config
+  namespace: gl-runtime-verification
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+    app.kubernetes.io/name: validation-system
+    app.kubernetes.io/component: quantum-scanner
+data:
+  scanner-config.yaml: |
+    apiVersion: v1
+    kind: ScannerConfig
+    spec:
+      backends:
+        primary: ibm_kyiv
+        fallback:
+          - google_bristlecone
+          - rigetti_aspen
+      scanning:
+        interval: 30s
+        timeout: 10s
+        parallel_jobs: 4
+      metrics:
+        - name: coherence
+          threshold: 0.78
+          alert_below: true
+        - name: entanglement
+          threshold: 0.85
+          alert_below: true
+        - name: fidelity
+          threshold: 0.95
+          alert_below: true
+      features:
+        extraction_depth: 8
+        shots: 1024
+        error_mitigation: true
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: validation-system-sa
+  namespace: gl-runtime-verification
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+    app.kubernetes.io/name: validation-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: quantum-scanner-role
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+    app.kubernetes.io/name: validation-system
+rules:
+  - apiGroups: [""]
+    resources: ["nodes", "pods"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["metrics.k8s.io"]
+    resources: ["nodes", "pods"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: quantum-scanner-binding
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+    app.kubernetes.io/name: validation-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: quantum-scanner-role
+subjects:
+  - kind: ServiceAccount
+    name: validation-system-sa
+    namespace: gl-runtime-verification

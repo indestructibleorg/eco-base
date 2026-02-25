@@ -1,0 +1,745 @@
+apiVersion: registry.gl/v1
+kind: PlatformRegistry
+metadata:
+  annotations:
+    eco-base/urn: "urn:eco-base:platform:resource:registry:platform-registry:gov-platform-registry.yaml"
+    eco-base/uri: "eco-base://platform/resource/registry/platform-registry/gov-platform-registry.yaml"
+  name: gov-platform-registry
+  version: "1.0.0"
+  description: "GL 平台註冊表 - 所有平台的 manifest 註冊中心"
+  lastUpdated: "2025-01-20"
+
+spec:
+  # 平台註冊表
+  platforms:
+    # === 契約平台（31 個） ===
+    - platformId: gl.ai.gpt-platform
+      name: "GPT AI 模型平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "data-synchronization"
+        - "api-gateway"
+        - "model-inference"
+        - "chat-completion"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.ai.gpt-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven", "pull-based"]
+      extensions: []
+
+    - platformId: gl.ai.claude-platform
+      name: "Claude AI 代理平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "data-synchronization"
+        - "agent-orchestration"
+        - "document-analysis"
+        - "code-generation"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.ai.claude-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.ai.deepseek-platform
+      name: "DeepSeek 混合專家模型平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "data-synchronization"
+        - "moe-inference"
+        - "distributed-computing"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.ai.deepseek-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.ai.blackbox-platform
+      name: "Blackbox AI 平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "data-synchronization"
+        - "model-inference"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.ai.blackbox-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.ai.agent-platform
+      name: "AI 代理平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "agent-orchestration"
+        - "task-execution"
+        - "tool-calling"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.ai.agent-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.ai.unified-platform
+      name: "統一 AI 平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "data-synchronization"
+        - "multi-model-inference"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.ai.unified-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.ai.realtime-platform
+      name: "即時 AI 平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "realtime-inference"
+        - "stream-processing"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.ai.realtime-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.ai.slack-platform
+      name: "Slack AI 整合平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "slack-integration"
+        - "message-processing"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.ai.slack-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.ai.csdn-platform
+      name: "CSDN AI 平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "data-synchronization"
+        - "content-analysis"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.ai.csdn-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.runtime.core-platform
+      name: "核心執行時平台"
+      version: "1.0.0"
+      type: core
+      capabilities:
+        - "service-discovery"
+        - "task-execution"
+        - "resource-management"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: core
+      location: platforms/
+      manifestPath: "platforms/gl.runtime.core-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.runtime.sync-platform
+      name: "同步執行時平台"
+      version: "1.0.0"
+      type: core
+      capabilities:
+        - "service-discovery"
+        - "data-synchronization"
+        - "event-processing"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: core
+      location: platforms/
+      manifestPath: "platforms/gl.runtime.sync-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.runtime.quantum-platform
+      name: "量子運算平台"
+      version: "1.0.0"
+      type: core
+      capabilities:
+        - "service-discovery"
+        - "quantum-computing"
+        - "circuit-simulation"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: core
+      location: platforms/
+      manifestPath: "platforms/gl.runtime.quantum-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.runtime.build-platform
+      name: "建置系統平台"
+      version: "1.0.0"
+      type: core
+      capabilities:
+        - "service-discovery"
+        - "build-automation"
+        - "ci-cd"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: core
+      location: platforms/
+      manifestPath: "platforms/gl.runtime.build-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.dev.iac-platform
+      name: "基礎設施即代碼平台"
+      version: "1.0.0"
+      type: core
+      capabilities:
+        - "service-discovery"
+        - "infrastructure-as-code"
+        - "terraform-integration"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: core
+      location: platforms/
+      manifestPath: "platforms/gl.dev.iac-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.dev.review-platform
+      name: "代碼審查平台"
+      version: "1.0.0"
+      type: core
+      capabilities:
+        - "service-discovery"
+        - "code-review"
+        - "quality-check"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: core
+      location: platforms/
+      manifestPath: "platforms/gl.dev.review-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.ide.copilot-platform
+      name: "GitHub Copilot 平台"
+      version: "1.0.0"
+      type: core
+      capabilities:
+        - "service-discovery"
+        - "code-completion"
+        - "copilot-integration"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: core
+      location: platforms/
+      manifestPath: "platforms/gl.ide.copilot-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.ide.vscode-platform
+      name: "VSCode 擴展平台"
+      version: "1.0.0"
+      type: core
+      capabilities:
+        - "service-discovery"
+        - "extension-management"
+        - "vscode-integration"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: core
+      location: platforms/
+      manifestPath: "platforms/gl.ide.vscode-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.ide.replit-platform
+      name: "Replit 平台"
+      version: "1.0.0"
+      type: core
+      capabilities:
+        - "service-discovery"
+        - "collaborative-editing"
+        - "replit-integration"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: core
+      location: platforms/
+      manifestPath: "platforms/gl.ide.replit-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.ide.preview-platform
+      name: "代碼預覽平台"
+      version: "1.0.0"
+      type: core
+      capabilities:
+        - "service-discovery"
+        - "live-preview"
+        - "code-rendering"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: core
+      location: platforms/
+      manifestPath: "platforms/gl.ide.preview-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.mcp.multimodal-platform
+      name: "多模態 MCP 平台"
+      version: "1.0.0"
+      type: core
+      capabilities:
+        - "service-discovery"
+        - "multimodal-processing"
+        - "mcp-protocol"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: core
+      location: platforms/
+      manifestPath: "platforms/gl.mcp.multimodal-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.mcp.cursor-platform
+      name: "Cursor AI 平台"
+      version: "1.0.0"
+      type: core
+      capabilities:
+        - "service-discovery"
+        - "cursor-integration"
+        - "ai-assisted-coding"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: core
+      location: platforms/
+      manifestPath: "platforms/gl.mcp.cursor-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.api.supabase-platform
+      name: "Supabase API 平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "data-synchronization"
+        - "api-gateway"
+        - "supabase-integration"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.api.supabase-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.api.notion-platform
+      name: "Notion API 平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "notion-integration"
+        - "workspace-management"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.api.notion-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.db.planetscale-platform
+      name: "PlanetScale 資料庫平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "database-management"
+        - "planetscale-integration"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.db.planetscale-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.design.figma-platform
+      name: "Figma 設計平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "figma-integration"
+        - "design-sync"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.design.figma-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.design.sketch-platform
+      name: "Sketch 組件平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "sketch-integration"
+        - "component-management"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.design.sketch-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.doc.gitbook-platform
+      name: "GitBook 文件平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "gitbook-integration"
+        - "documentation-management"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.doc.gitbook-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.edge.vercel-platform
+      name: "Vercel 邊緣平台"
+      version: "1.0.0"
+      type: edge
+      capabilities:
+        - "service-discovery"
+        - "edge-deployment"
+        - "vercel-integration"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: edge
+      location: platforms/
+      manifestPath: "platforms/gl.edge.vercel-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.web.wix-platform
+      name: "Wix 網站平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "wix-integration"
+        - "website-management"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.web.wix-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.edu.sololearn-platform
+      name: "SoloLearn 教育平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "sololearn-integration"
+        - "education-management"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.edu.sololearn-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+    - platformId: gl.bot.poe-platform
+      name: "Poe 機器人平台"
+      version: "1.0.0"
+      type: cloud
+      capabilities:
+        - "service-discovery"
+        - "poe-integration"
+        - "bot-management"
+      governance:
+        - "gov-enterprise-architecture"
+        - "gov-boundary-enforcement"
+        - "gov-meta-specifications"
+        - "gov-extension-framework"
+      status: active
+      template: cloud
+      location: platforms/
+      manifestPath: "platforms/gl.bot.poe-platform/manifest.yaml"
+      dependencies: []
+      coordination:
+        enabled: true
+        protocols: ["event-driven"]
+      extensions: []
+
+  # 統計信息
+  statistics:
+    totalPlatforms: 31
+    contractPlatforms: 31
+    customPlatforms: 0
+    activePlatforms: 31
+    experimentalPlatforms: 0
+    deprecatedPlatforms: 0
+    duplicatePlatforms: 0
+    complianceRate: 100.0%

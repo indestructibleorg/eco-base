@@ -1,0 +1,153 @@
+# @ECO-governed
+# @ECO-layer: GL00-09
+# @ECO-semantic: general-component
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL00_09-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "timestamp": "2026-01-23T00:59:49.626205+00:00",
+  "repo_root": "/workspace/machine-native-ops",
+  "root_path": "/workspace/machine-native-ops/root",
+  "semantic_root_version": "1.0.0",
+  "file_metadata": [
+    {
+      "file": ".root.gates.map.yaml",
+      "exists": true,
+      "size": 14905,
+      "modified": "2026-01-23T00:57:55.317740+00:00"
+    },
+    {
+      "file": ".root.init.d/00-init.sh",
+      "exists": true,
+      "size": 4120,
+      "modified": "2026-01-23T00:57:55.317740+00:00"
+    },
+    {
+      "file": ".root.init.d/01-semantic-root-init.sh",
+      "exists": true,
+      "size": 10784,
+      "modified": "2026-01-23T00:57:55.317740+00:00"
+    },
+    {
+      "file": ".root.init.d/02-modules-init.sh",
+      "exists": true,
+      "size": 3398,
+      "modified": "2026-01-23T00:57:55.317740+00:00"
+    },
+    {
+      "file": ".root.init.d/03-governance-init.sh",
+      "exists": true,
+      "size": 3637,
+      "modified": "2026-01-23T00:57:55.317740+00:00"
+    },
+    {
+      "file": ".root.init.d/04-trust-init.sh",
+      "exists": true,
+      "size": 2947,
+      "modified": "2026-01-23T00:57:55.317740+00:00"
+    },
+    {
+      "file": ".root.init.d/05-provenance-init.sh",
+      "exists": true,
+      "size": 2423,
+      "modified": "2026-01-23T00:57:55.317740+00:00"
+    },
+    {
+      "file": ".root.init.d/06-integrity-init.sh",
+      "exists": true,
+      "size": 3050,
+      "modified": "2026-01-23T00:57:55.317740+00:00"
+    },
+    {
+      "file": ".root.init.d/99-finalize.sh",
+      "exists": true,
+      "size": 4951,
+      "modified": "2026-01-23T00:57:55.317740+00:00"
+    },
+    {
+      "file": ".root.jobs/concept-registry.json",
+      "exists": true,
+      "size": 6771,
+      "modified": "2026-01-23T00:59:37.153745+00:00"
+    },
+    {
+      "file": ".root.jobs/semantic-root-attestations/initial-attestation.yaml",
+      "exists": true,
+      "size": 838,
+      "modified": "2026-01-23T00:59:37.233745+00:00"
+    },
+    {
+      "file": ".root.jobs/validation-rules.json",
+      "exists": true,
+      "size": 854,
+      "modified": "2026-01-23T00:59:37.205745+00:00"
+    },
+    {
+      "file": ".root.semantic-root.yaml",
+      "exists": true,
+      "size": 15034,
+      "modified": "2026-01-23T00:57:55.317740+00:00"
+    },
+    {
+      "file": "ROOT_DIRECTORY_DESIGN_REPORT.md",
+      "exists": true,
+      "size": 6049,
+      "modified": "2026-01-23T00:57:55.317740+00:00"
+    }
+  ],
+  "script_results": [
+    {
+      "file": ".root.init.d/00-init.sh",
+      "status": "executed",
+      "output": "🚀 [00-init] Starting root layer initialization...\n📋 [00-init] Setting up environment...\n✅ [00-init] Environment setup complete\n   - Root: /workspace/machine-native-ops\n   - Controlplane: /workspace/machine-native-ops/controlplane\n   - Semantic Root: /workspace/machine-native-ops/root/.root.semantic-root.yaml\n🔍 [00-init] Validating semantic root...\n✅ Semantic root structure valid\n📁 [00-init] Creating required directories...\n✅ [00-init] Directories created\n🔧 [00-init] Checking required tools...\n   ✅ cat\n   ✅ grep\n   ✅ sed\n   ✅ awk\n   ✅ find\n   ✅ python3\n   ✅ git\n✅ [00-init] Tools check complete\n🔒 [00-init] Setting permissions...\n✅ [00-init] Permissions set\n✅ [00-init] Root layer initialization complete\n   Timestamp: 2026-01-23T00:59:48Z"
+    },
+    {
+      "file": ".root.init.d/01-semantic-root-init.sh",
+      "status": "executed",
+      "output": "🌳 [01-semantic-root-init] Initializing semantic root...\n📋 [01-semantic-root-init] Loading semantic root configuration...\n   Path: /workspace/machine-native-ops/root/.root.semantic-root.yaml\n   Version: 1.0.0\n🔍 [01-semantic-root-init] Checking semantic root consistency...\n   ✅ Drift detection enabled\n   📊 Drift threshold: 1.0%\n   ✅ Semantic root is consistent\n📚 [01-semantic-root-init] Initializing concept registry...\n   ✅ Concept registry initialized\n   📊 Base concepts: 7\n   📊 Derived concepts: 2\n   📁 Registry: /workspace/machine-native-ops/root/.root.jobs/concept-registry.json\n✅ [01-semantic-root-init] Initializing validation rules...\n   ✅ Validation rules initialized\n   📁 Rules: /workspace/machine-native-ops/root/.root.jobs/validation-rules.json\n📜 [01-semantic-root-init] Generating initial attestation...\n   ✅ Initial attestation generated\n   📁 Attestation: /workspace/machine-native-ops/root/.root.jobs/semantic-root-attestations/initial-attestation.yaml\n✅ [01-semantic-root-init] Semantic root initialization complete\n   Semantic Root Version: 1.0.0\n   Timestamp: 2026-01-23T00:59:48Z"
+    },
+    {
+      "file": ".root.init.d/02-modules-init.sh",
+      "status": "executed",
+      "output": "🔧 [02-modules-init] Initializing modules...\n📋 [02-modules-init] Loading modules configuration...\n   Path: /workspace/machine-native-ops/controlplane/config/root.modules.yaml\n   Total modules: 9\n   ✅ Modules registry initialized\n   📊 Total modules: 9\n   📊 Enabled modules: 9\n   📊 Disabled modules: 0\n   📁 Registry: /workspace/machine-native-ops/root/.root.jobs/modules-registry.json\n✅ [02-modules-init] Modules initialization complete\n   Timestamp: 2026-01-23T00:59:48Z"
+    },
+    {
+      "file": ".root.init.d/03-governance-init.sh",
+      "status": "executed",
+      "output": "🏛️  [03-governance-init] Initializing governance...\n📋 [03-governance-init] Loading governance configuration...\n   Path: /workspace/machine-native-ops/controlplane/config/root.governance.yaml\n   Total roles: 5\n   Total policies: 3\n   ✅ Governance registry initialized\n   📊 Total roles: 5\n   📊 Total policies: 3\n   📁 Registry: /workspace/machine-native-ops/root/.root.jobs/governance-registry.json\n✅ [03-governance-init] Governance initialization complete\n   Timestamp: 2026-01-23T00:59:49Z"
+    },
+    {
+      "file": ".root.init.d/04-trust-init.sh",
+      "status": "executed",
+      "output": "🔒 [04-trust-init] Initializing trust chain...\n📋 [04-trust-init] Loading trust configuration...\n   Path: /workspace/machine-native-ops/controlplane/config/root.trust.yaml\n   ✅ Trust registry initialized\n   📊 Certificates: 0\n   📁 Registry: /workspace/machine-native-ops/root/.root.jobs/trust-registry.json\n✅ [04-trust-init] Trust chain initialization complete\n   Timestamp: 2026-01-23T00:59:49Z"
+    },
+    {
+      "file": ".root.init.d/05-provenance-init.sh",
+      "status": "executed",
+      "output": "📜 [05-provenance-init] Initializing provenance...\n📋 [05-provenance-init] Loading provenance configuration...\n   Path: /workspace/machine-native-ops/controlplane/config/root.provenance.yaml\n   ✅ Provenance registry initialized\n   📁 Registry: /workspace/machine-native-ops/root/.root.jobs/provenance-registry.json\n✅ [05-provenance-init] Provenance initialization complete\n   Timestamp: 2026-01-23T00:59:49Z"
+    },
+    {
+      "file": ".root.init.d/06-integrity-init.sh",
+      "status": "failed",
+      "output": "🛡️  [06-integrity-init] Initializing integrity...\n📋 [06-integrity-init] Loading integrity configuration...\n   Path: /workspace/machine-native-ops/controlplane/config/root.integrity.yaml\n   ❌ Error initializing integrity registry: 'list' object has no attribute 'get'",
+      "return_code": 1
+    },
+    {
+      "file": ".root.init.d/99-finalize.sh",
+      "status": "executed",
+      "output": "🎉 [99-finalize] Finalizing root layer initialization...\n📋 [99-finalize] Checking initialization status...\n   ✅ Environment Setup: Script exists\n   ✅ Semantic Root: Script exists\n   ✅ Modules: Script exists\n   ✅ Governance: Script exists\n   ✅ Trust Chain: Script exists\n   ✅ Provenance: Script exists\n   ✅ Integrity: Script exists\n\n📁 [99-finalize] Checking runtime artifacts...\n   ✅ Concept Registry: Exists\n   ✅ Validation Rules: Exists\n   ✅ Initial Attestation: Exists\n\n📊 [99-finalize] Initialization Summary:\n   Total scripts: 7\n   Completed: 7\n   Failed: 0\n   ✅ Final attestation generated\n   📁 Attestation: /workspace/machine-native-ops/root/.root.jobs/final-attestation.yaml\n\n✅ [99-finalize] Root layer initialization complete!\n   Semantic Root: v1.0.0\n   Initialized: 2026-01-23T00:59:49Z\n\n🎉 Root layer is ready for operation!"
+    }
+  ],
+  "_GL": {
+    "governed": true,
+    "layer": "search",
+    "semantic": "root-file-run",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

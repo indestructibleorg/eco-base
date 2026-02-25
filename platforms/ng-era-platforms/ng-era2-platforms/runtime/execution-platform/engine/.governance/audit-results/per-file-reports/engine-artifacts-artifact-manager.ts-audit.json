@@ -1,0 +1,121 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "file_path": "engine/artifacts/artifact_manager.ts",
+  "file_type": ".ts",
+  "file_hash": "3e855e1d6b5b7c3b8d165ed73fa393b8d179e67b4044fd19397833ddd669bb29",
+  "gl_layer": "ECO-30-EXECUTION",
+  "semantic_anchor": "ECO-30-EXEC-TS",
+  "etl_status": "SUCCESS",
+  "es_index_status": "READY",
+  "issues": [
+    {
+      "type": "gl_marker_missing",
+      "severity": "MEDIUM",
+      "message": "No GL governance markers found in file",
+      "file_path": "engine/artifacts/artifact_manager.ts",
+      "recommendation": "Add GL layer annotation comment at file header"
+    },
+    {
+      "type": "semantic_manifest_missing",
+      "severity": "LOW",
+      "message": "No semantic manifest reference found",
+      "file_path": "engine/artifacts/artifact_manager.ts",
+      "recommendation": "Add semantic anchor annotation"
+    },
+    {
+      "type": "type_error",
+      "severity": "MEDIUM",
+      "message": "Found 7 uses of 'any' type",
+      "file_path": "engine/artifacts/artifact_manager.ts",
+      "recommendation": "Replace 'any' with specific types for better type safety"
+    }
+  ],
+  "metadata": {
+    "has_jsdoc": true,
+    "has_exports": true,
+    "has_imports": true,
+    "has_interfaces": false,
+    "has_types": true,
+    "has_classes": true,
+    "has_functions": true,
+    "has_tests": false,
+    "has_readme_reference": false,
+    "has_license": false,
+    "typescript_strict": false
+  },
+  "governance_events": [
+    {
+      "event_id": "b07fc142f18907e8",
+      "timestamp": "2026-01-24T11:18:49.129694",
+      "event_type": "ETL_START",
+      "source_file": "engine/artifacts/artifact_manager.ts",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "status": "STARTED",
+      "details": {
+        "phase": "extract"
+      },
+      "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+    },
+    {
+      "event_id": "d06f2d781d047cad",
+      "timestamp": "2026-01-24T11:18:49.129777",
+      "event_type": "ETL_EXTRACT",
+      "source_file": "engine/artifacts/artifact_manager.ts",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "status": "SUCCESS",
+      "details": {
+        "size_bytes": 9411,
+        "line_count": 396
+      },
+      "evidence_hash": "efb30101cc93116bb422703a23f4b38a8aebb2a3126d9d2e50051d29ec26fc75"
+    },
+    {
+      "event_id": "b18c9a606efcbdea",
+      "timestamp": "2026-01-24T11:18:49.130200",
+      "event_type": "ETL_TRANSFORM",
+      "source_file": "engine/artifacts/artifact_manager.ts",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "status": "SUCCESS",
+      "details": {
+        "issues_count": 3,
+        "gl_compliant": true
+      },
+      "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+    },
+    {
+      "event_id": "0abc12f4e9c86717",
+      "timestamp": "2026-01-24T11:18:49.130217",
+      "event_type": "ETL_LOAD",
+      "source_file": "engine/artifacts/artifact_manager.ts",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "status": "SUCCESS",
+      "details": {
+        "index": "gl-aep-engine-audit"
+      },
+      "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+    }
+  ],
+  "timestamp": "2026-01-24T11:18:49.130228",
+  "execution_time_ms": 0,
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "engine_artifacts_artifact_manager.ts_audit",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

@@ -1,0 +1,34 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "id": "GL14-metrics-dashboard",
+  "gllevel": "GL14",
+  "name": "GL14-metrics-dashboard",
+  "createdat": "$TIMESTAMP",
+  "immutable": true,
+  "language": "zh-TW",
+  "semanticterms": [
+    "Metrics",
+    "Monitoring"
+  ],
+  "functionaldimensions": [
+    "Process Optimization"
+  ],
+  "path": "metrics/GL14-metrics-dashboard.json",
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "GL14-metrics-dashboard",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

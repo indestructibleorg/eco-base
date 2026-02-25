@@ -1,0 +1,195 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: archive-tools
+# @ECO-audit-trail: ../../engine/gl-platform.governance/GL_SEMANTIC_ANCHOR.json
+#
+# GL Unified Architecture Governance Framework Activated
+#
+# @ECO-governed
+# @ECO-layer: gl-platform.governance
+# @ECO-semantic: validate-phase1
+# @ECO-audit-trail: ../../engine/gl-platform.governance/GL_SEMANTIC_ANCHOR.json
+#
+#!/usr/bin/env python3
+"""
+Phase 1 Deliverables Validator
+Validates that all Phase 1 (Deconstruction) deliverables are present and correctly formatted.
+Usage:
+    python3 tools/refactor/validate-phase1.py --deliverables-path <path>
+"""
+# MNGA-002: Import organization needs review
+import argparse
+import json
+import sys
+from pathlib import Path
+from typing import Dict, List, Tuple
+try:
+    import yaml
+except ImportError:
+    print("❌ PyYAML not installed. Install with: pip install pyyaml")
+    sys.exit(1)
+class Phase1Validator:
+    """Validator for Phase 1 deliverables."""
+    REQUIRED_DELIVERABLES = {
+        "repo_structure_map.yaml": {
+            "type": "yaml",
+            "description": "Repository structure mapping",
+            "required_keys": ["version", "timestamp", "structure"],
+        },
+        "dependency_graph.json": {
+            "type": "json",
+            "description": "Module dependency analysis",
+            "required_keys": ["modules", "dependencies"],
+        },
+        "violations_report.md": {
+            "type": "markdown",
+            "description": "Architecture violations report",
+            "min_size": 100,
+        },
+        "legacy_assets_index.yaml": {
+            "type": "yaml",
+            "description": "Legacy assets catalog",
+            "required_keys": ["assets", "version"],
+        },
+        "priority_matrix.yaml": {
+            "type": "yaml",
+            "description": "Problem prioritization matrix",
+            "required_keys": ["p0_items", "p1_items", "p2_items"],
+        },
+    }
+    def __init__(self, deliverables_path: str):
+        self.deliverables_path = Path(deliverables_path)
+        self.errors: List[str] = []
+        self.warnings: List[str] = []
+        self.passed: List[str] = []
+    def validate(self) -> Tuple[bool, Dict]:
+        """Run all validations."""
+        print(f"🔍 Validating Phase 1 deliverables at: {self.deliverables_path}")
+        print("")
+        # Check directory exists
+        if not self.deliverables_path.exists():
+            self.errors.append(
+                f"Deliverables directory not found: {self.deliverables_path}"
+            )
+            return False, self._get_report()
+        # Validate each deliverable
+        for filename, spec in self.REQUIRED_DELIVERABLES.items():
+            self._validate_deliverable(filename, spec)
+        # Print summary
+        self._print_summary()
+        # Return results
+        success = len(self.errors) == 0
+        return success, self._get_report()
+    def _validate_deliverable(self, filename: str, spec: Dict):
+        """Validate a single deliverable."""
+        filepath = self.deliverables_path / filename
+        # Check existence
+        if not filepath.exists():
+            self.errors.append(f"Missing deliverable: {filename}")
+            print(f"❌ {filename} - Not found")
+            return
+        # Check file size
+        file_size = filepath.stat().st_size
+        min_size = spec.get("min_size", 0)
+        if file_size < min_size:
+            self.warnings.append(
+                f"{filename} is smaller than expected ({file_size} < {min_size} bytes)"
+            )
+        # Validate content based on type
+        file_type = spec.get("type")
+        try:
+            if file_type == "yaml":
+                self._validate_yaml(filepath, spec)
+            elif file_type == "json":
+                self._validate_json(filepath, spec)
+            elif file_type == "markdown":
+                self._validate_markdown(filepath, spec)
+            self.passed.append(filename)
+            print(f"✓ {filename} - Valid")
+        except Exception as e:
+            self.errors.append(f"{filename}: {str(e)}")
+            print(f"❌ {filename} - {str(e)}")
+    def _validate_yaml(self, filepath: Path, spec: Dict):
+        """Validate YAML file."""
+        with open(filepath, "r") as f:
+            data = yaml.safe_load(f)
+        if data is None:
+            raise ValueError("Empty YAML file")
+        # Check required keys
+        required_keys = spec.get("required_keys", [])
+        for key in required_keys:
+            if key not in data:
+                raise ValueError(f"Missing required key: {key}")
+    def _validate_json(self, filepath: Path, spec: Dict):
+        """Validate JSON file."""
+        with open(filepath, "r") as f:
+            data = json.load(f)
+        # Check required keys
+        required_keys = spec.get("required_keys", [])
+        for key in required_keys:
+            if key not in data:
+                raise ValueError(f"Missing required key: {key}")
+    def _validate_markdown(self, filepath: Path, spec: Dict):
+        """Validate Markdown file."""
+        with open(filepath, "r") as f:
+            content = f.read()
+        if len(content.strip()) == 0:
+            raise ValueError("Empty Markdown file")
+        # Check for basic markdown structure (headers)
+        if not any(line.startswith("#") for line in content.split("\n")):
+            self.warnings.append(f"{filepath.name}: No markdown headers found")
+    def _print_summary(self):
+        """Print validation summary."""
+        print("")
+        print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+        print("📊 Validation Summary")
+        print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+        print(f"✓ Passed: {len(self.passed)}")
+        print(f"⚠ Warnings: {len(self.warnings)}")
+        print(f"❌ Errors: {len(self.errors)}")
+        print("")
+        if self.warnings:
+            print("Warnings:")
+            for warning in self.warnings:
+                print(f"  ⚠ {warning}")
+            print("")
+        if self.errors:
+            print("Errors:")
+            for error in self.errors:
+                print(f"  ❌ {error}")
+            print("")
+    def _get_report(self) -> Dict:
+        """Get validation report."""
+        return {
+            "phase": 1,
+            "deliverables_path": str(self.deliverables_path),
+            "passed": self.passed,
+            "warnings": self.warnings,
+            "errors": self.errors,
+            "success": len(self.errors) == 0,
+        }
+def main():
+    parser = argparse.ArgumentParser(
+        description="Validate Phase 1 (Deconstruction) deliverables"
+    )
+    parser.add_argument(
+        "--deliverables-path",
+        required=True,
+        help="Path to Phase 1 deliverables directory",
+    )
+    parser.add_argument(
+        "--output", help="Output validation report to file (JSON format)"
+    )
+    args = parser.parse_args()
+    # Run validation
+    validator = Phase1Validator(args.deliverables_path)
+    success, report = validator.validate()
+    # Save report if requested
+    if args.output:
+        with open(args.output, "w") as f:
+            json.dump(report, f, indent=2)
+        print(f"📄 Report saved to: {args.output}")
+    # Exit with appropriate code
+    sys.exit(0 if success else 1)
+if __name__ == "__main__":
+    main()

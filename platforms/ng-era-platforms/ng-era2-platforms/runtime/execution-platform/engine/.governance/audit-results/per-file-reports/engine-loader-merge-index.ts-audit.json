@@ -1,0 +1,121 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "file_path": "engine/loader/merge_index.ts",
+  "file_type": ".ts",
+  "file_hash": "4cf6e9f6597c55801ea2559b2e77987c18265456f793e5f9f304749bd6886f3c",
+  "gl_layer": "ECO-30-EXECUTION",
+  "semantic_anchor": "ECO-30-EXEC-TS",
+  "etl_status": "SUCCESS",
+  "es_index_status": "READY",
+  "issues": [
+    {
+      "type": "gl_marker_missing",
+      "severity": "MEDIUM",
+      "message": "No GL governance markers found in file",
+      "file_path": "engine/loader/merge_index.ts",
+      "recommendation": "Add GL layer annotation comment at file header"
+    },
+    {
+      "type": "semantic_manifest_missing",
+      "severity": "LOW",
+      "message": "No semantic manifest reference found",
+      "file_path": "engine/loader/merge_index.ts",
+      "recommendation": "Add semantic anchor annotation"
+    },
+    {
+      "type": "type_error",
+      "severity": "MEDIUM",
+      "message": "Found 8 uses of 'any' type",
+      "file_path": "engine/loader/merge_index.ts",
+      "recommendation": "Replace 'any' with specific types for better type safety"
+    }
+  ],
+  "metadata": {
+    "has_jsdoc": true,
+    "has_exports": true,
+    "has_imports": true,
+    "has_interfaces": false,
+    "has_types": true,
+    "has_classes": true,
+    "has_functions": true,
+    "has_tests": false,
+    "has_readme_reference": false,
+    "has_license": false,
+    "typescript_strict": false
+  },
+  "governance_events": [
+    {
+      "event_id": "028188137993421d",
+      "timestamp": "2026-01-24T11:18:49.136749",
+      "event_type": "ETL_START",
+      "source_file": "engine/loader/merge_index.ts",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "status": "STARTED",
+      "details": {
+        "phase": "extract"
+      },
+      "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+    },
+    {
+      "event_id": "ac86605f4ea32fb8",
+      "timestamp": "2026-01-24T11:18:49.136814",
+      "event_type": "ETL_EXTRACT",
+      "source_file": "engine/loader/merge_index.ts",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "status": "SUCCESS",
+      "details": {
+        "size_bytes": 6427,
+        "line_count": 234
+      },
+      "evidence_hash": "195ea3a686ae6ad5e4238960206cc935292b9b2085daaa3f484c8bccba2fba52"
+    },
+    {
+      "event_id": "e59c53ea2e40f9ba",
+      "timestamp": "2026-01-24T11:18:49.137123",
+      "event_type": "ETL_TRANSFORM",
+      "source_file": "engine/loader/merge_index.ts",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "status": "SUCCESS",
+      "details": {
+        "issues_count": 3,
+        "gl_compliant": true
+      },
+      "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+    },
+    {
+      "event_id": "bec6ae89c15444fb",
+      "timestamp": "2026-01-24T11:18:49.137141",
+      "event_type": "ETL_LOAD",
+      "source_file": "engine/loader/merge_index.ts",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "status": "SUCCESS",
+      "details": {
+        "index": "gl-aep-engine-audit"
+      },
+      "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+    }
+  ],
+  "timestamp": "2026-01-24T11:18:49.137152",
+  "execution_time_ms": 0,
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "engine_loader_merge_index.ts_audit",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

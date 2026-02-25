@@ -1,0 +1,916 @@
+# @ECO-governed
+# @ECO-layer: GL00-09
+# @ECO-semantic: general-component
+# @ECO-audit-trail: gov-enterprise-architecture/governance/audit-trails/GL00_09-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gov-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gov-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://machine-native-ops.ai/schemas/instant-execution-manifest/v1.0.0",
+  "title": "INSTANT Execution Manifest Schema",
+  "description": "Machine-executable schema for INSTANT execution standard validation",
+  "type": "object",
+  "required": [
+    "metadata",
+    "principles",
+    "event_system",
+    "latency_tiers",
+    "state_system",
+    "agent_system",
+    "pipeline",
+    "verification"
+  ],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": [
+        "name",
+        "version",
+        "status",
+        "execution_mode",
+        "commitments"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "const": "instant-execution-manifest"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "PRODUCTION_READY",
+            "BETA",
+            "ALPHA"
+          ]
+        },
+        "execution_mode": {
+          "type": "string",
+          "const": "FULLY_AUTONOMOUS"
+        },
+        "commitments": {
+          "type": "object",
+          "required": [
+            "stack_completion_time",
+            "human_intervention",
+            "agent_parallelism",
+            "commercial_value"
+          ],
+          "properties": {
+            "stack_completion_time": {
+              "type": "string",
+              "pattern": "^<\\d+min$"
+            },
+            "human_intervention": {
+              "type": "integer",
+              "const": 0
+            },
+            "agent_parallelism": {
+              "type": "string",
+              "pattern": "^\\d+-\\d+$"
+            },
+            "commercial_value": {
+              "type": "string",
+              "const": "INSTANT"
+            }
+          }
+        }
+      }
+    },
+    "principles": {
+      "type": "object",
+      "required": [
+        "ai_autonomous_evolution",
+        "instant_delivery",
+        "zero_latency",
+        "binary_state"
+      ],
+      "properties": {
+        "ai_autonomous_evolution": {
+          "$ref": "#/definitions/principle"
+        },
+        "instant_delivery": {
+          "$ref": "#/definitions/principle"
+        },
+        "zero_latency": {
+          "$ref": "#/definitions/principle"
+        },
+        "binary_state": {
+          "$ref": "#/definitions/principle"
+        }
+      }
+    },
+    "event_system": {
+      "type": "object",
+      "required": [
+        "event_types",
+        "event_loop"
+      ],
+      "properties": {
+        "event_types": {
+          "type": "object",
+          "minProperties": 5,
+          "patternProperties": {
+            "^[a-z_]+$": {
+              "$ref": "#/definitions/event_type"
+            }
+          }
+        },
+        "event_loop": {
+          "type": "object",
+          "required": [
+            "steps",
+            "total_loop_time",
+            "loop_type"
+          ],
+          "properties": {
+            "steps": {
+              "type": "array",
+              "minItems": 9,
+              "items": {
+                "$ref": "#/definitions/loop_step"
+              }
+            },
+            "total_loop_time": {
+              "type": "string",
+              "pattern": "^<\\d+(\\.\\d+)?s$"
+            },
+            "loop_type": {
+              "type": "string",
+              "const": "CONTINUOUS"
+            }
+          }
+        }
+      }
+    },
+    "latency_tiers": {
+      "type": "object",
+      "required": [
+        "tier_1_instant_decision",
+        "tier_2_instant_execution",
+        "tier_3_full_stack"
+      ],
+      "properties": {
+        "tier_1_instant_decision": {
+          "$ref": "#/definitions/latency_tier"
+        },
+        "tier_2_instant_execution": {
+          "$ref": "#/definitions/latency_tier"
+        },
+        "tier_3_full_stack": {
+          "$ref": "#/definitions/latency_tier"
+        }
+      }
+    },
+    "state_system": {
+      "type": "object",
+      "required": [
+        "primary_states",
+        "state_transitions"
+      ],
+      "properties": {
+        "primary_states": {
+          "type": "object",
+          "required": [
+            "realized",
+            "unrealized"
+          ],
+          "properties": {
+            "realized": {
+              "$ref": "#/definitions/state_definition"
+            },
+            "unrealized": {
+              "type": "object",
+              "required": [
+                "description",
+                "sub_states"
+              ],
+              "properties": {
+                "description": {
+                  "type": "string"
+                },
+                "sub_states": {
+                  "type": "object",
+                  "required": [
+                    "blocked",
+                    "invalid",
+                    "failed",
+                    "unrealizable"
+                  ],
+                  "properties": {
+                    "blocked": {
+                      "$ref": "#/definitions/sub_state"
+                    },
+                    "invalid": {
+                      "$ref": "#/definitions/sub_state"
+                    },
+                    "failed": {
+                      "$ref": "#/definitions/sub_state"
+                    },
+                    "unrealizable": {
+                      "$ref": "#/definitions/sub_state"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "state_transitions": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "$ref": "#/definitions/state_transition"
+          }
+        }
+      }
+    },
+    "agent_system": {
+      "type": "object",
+      "required": [
+        "parallelism",
+        "agent_types",
+        "collaboration_protocol",
+        "performance_targets"
+      ],
+      "properties": {
+        "parallelism": {
+          "type": "object",
+          "required": [
+            "min_agents",
+            "max_agents",
+            "optimal_agents",
+            "scaling_strategy"
+          ],
+          "properties": {
+            "min_agents": {
+              "type": "integer",
+              "minimum": 64
+            },
+            "max_agents": {
+              "type": "integer",
+              "maximum": 256
+            },
+            "optimal_agents": {
+              "type": "integer",
+              "minimum": 64,
+              "maximum": 256
+            },
+            "scaling_strategy": {
+              "type": "string",
+              "enum": [
+                "DYNAMIC",
+                "STATIC"
+              ]
+            }
+          }
+        },
+        "agent_types": {
+          "type": "object",
+          "minProperties": 5,
+          "patternProperties": {
+            "^[a-z_]+_agents$": {
+              "$ref": "#/definitions/agent_type"
+            }
+          }
+        },
+        "collaboration_protocol": {
+          "$ref": "#/definitions/collaboration_protocol"
+        },
+        "performance_targets": {
+          "$ref": "#/definitions/performance_targets"
+        }
+      }
+    },
+    "pipeline": {
+      "type": "object",
+      "required": [
+        "name",
+        "type",
+        "mode",
+        "stages",
+        "total_pipeline_time",
+        "success_rate_target",
+        "auto_recovery_rate"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "const": "CLOSED_LOOP"
+        },
+        "mode": {
+          "type": "string",
+          "const": "CONTINUOUS"
+        },
+        "stages": {
+          "type": "object",
+          "minProperties": 9,
+          "patternProperties": {
+            "^stage_\\d+_[a-z_]+$": {
+              "$ref": "#/definitions/pipeline_stage"
+            }
+          }
+        },
+        "total_pipeline_time": {
+          "type": "string",
+          "pattern": "^<\\d+(\\.\\d+)?s$"
+        },
+        "success_rate_target": {
+          "type": "string",
+          "pattern": "^>\\d+%$"
+        },
+        "auto_recovery_rate": {
+          "type": "string",
+          "pattern": "^>\\d+%$"
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "required": [
+        "execution_time",
+        "autonomy",
+        "parallelism",
+        "state_clarity"
+      ],
+      "properties": {
+        "execution_time": {
+          "type": "object",
+          "minProperties": 3,
+          "patternProperties": {
+            "^[a-z_]+$": {
+              "$ref": "#/definitions/verification_condition"
+            }
+          }
+        },
+        "autonomy": {
+          "type": "object",
+          "minProperties": 3,
+          "patternProperties": {
+            "^[a-z_]+$": {
+              "$ref": "#/definitions/verification_condition"
+            }
+          }
+        },
+        "parallelism": {
+          "type": "object",
+          "minProperties": 2,
+          "patternProperties": {
+            "^[a-z_]+$": {
+              "$ref": "#/definitions/verification_condition"
+            }
+          }
+        },
+        "state_clarity": {
+          "type": "object",
+          "minProperties": 2,
+          "patternProperties": {
+            "^[a-z_]+$": {
+              "$ref": "#/definitions/verification_condition"
+            }
+          }
+        }
+      }
+    },
+    "ci_cd": {
+      "$ref": "#/definitions/ci_cd_config"
+    },
+    "governance": {
+      "$ref": "#/definitions/governance_config"
+    },
+    "commercial_value": {
+      "$ref": "#/definitions/commercial_value_config"
+    },
+    "implementation": {
+      "$ref": "#/definitions/implementation_config"
+    },
+    "success_criteria": {
+      "$ref": "#/definitions/success_criteria_config"
+    }
+  },
+  "definitions": {
+    "principle": {
+      "type": "object",
+      "required": [
+        "description",
+        "verification",
+        "metrics"
+      ],
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 10
+        },
+        "verification": {
+          "type": "string",
+          "minLength": 10
+        },
+        "metrics": {
+          "type": "object",
+          "minProperties": 1,
+          "patternProperties": {
+            "^[a-z_]+$": {
+              "type": [
+                "string",
+                "number"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "event_type": {
+      "type": "object",
+      "required": [
+        "description",
+        "trigger",
+        "latency_tier",
+        "scope",
+        "actions"
+      ],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "trigger": {
+          "type": "string"
+        },
+        "latency_tier": {
+          "type": "string",
+          "pattern": "^<\\d+ms$"
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "GLOBAL",
+            "LOCAL",
+            "DAG",
+            "GOVERNANCE",
+            "FULL_STACK",
+            "OPTIMIZATION",
+            "SECURITY",
+            "INFRASTRUCTURE"
+          ]
+        },
+        "actions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "loop_step": {
+      "type": "object",
+      "required": [
+        "step",
+        "name",
+        "latency",
+        "description"
+      ],
+      "properties": {
+        "step": {
+          "type": "string",
+          "pattern": "^\\d+_[a-z_]+$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "latency": {
+          "type": "string",
+          "pattern": "^<\\d+ms$"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "latency_tier": {
+      "type": "object",
+      "required": [
+        "threshold",
+        "description",
+        "applicable_to",
+        "verification"
+      ],
+      "properties": {
+        "threshold": {
+          "type": "string",
+          "pattern": "^<\\d+(\\.\\d+)?(ms|s)$"
+        },
+        "description": {
+          "type": "string"
+        },
+        "applicable_to": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "verification": {
+          "type": "object",
+          "required": [
+            "p50",
+            "p95",
+            "p99"
+          ],
+          "properties": {
+            "p50": {
+              "type": "string",
+              "pattern": "^<\\d+(\\.\\d+)?(ms|s)$"
+            },
+            "p95": {
+              "type": "string",
+              "pattern": "^<\\d+(\\.\\d+)?(ms|s)$"
+            },
+            "p99": {
+              "type": "string",
+              "pattern": "^<\\d+(\\.\\d+)?(ms|s)$"
+            }
+          }
+        }
+      }
+    },
+    "state_definition": {
+      "type": "object",
+      "required": [
+        "description",
+        "verification"
+      ],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "verification": {
+          "type": "string"
+        },
+        "metrics": {
+          "type": "object"
+        }
+      }
+    },
+    "sub_state": {
+      "type": "object",
+      "required": [
+        "description",
+        "resolution",
+        "latency",
+        "actions"
+      ],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "resolution": {
+          "type": "string"
+        },
+        "latency": {
+          "type": "string",
+          "pattern": "^<\\d+ms$"
+        },
+        "actions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "state_transition": {
+      "type": "object",
+      "required": [
+        "from",
+        "to",
+        "trigger",
+        "latency"
+      ],
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "trigger": {
+          "type": "string"
+        },
+        "latency": {
+          "type": "string",
+          "pattern": "^<\\d+(\\.\\d+)?(ms|s)$"
+        }
+      }
+    },
+    "agent_type": {
+      "type": "object",
+      "required": [
+        "count",
+        "responsibility",
+        "latency"
+      ],
+      "properties": {
+        "count": {
+          "type": "string",
+          "pattern": "^\\d+-\\d+$"
+        },
+        "responsibility": {
+          "type": "string"
+        },
+        "latency": {
+          "type": "string",
+          "pattern": "^<\\d+ms$"
+        }
+      }
+    },
+    "collaboration_protocol": {
+      "type": "object",
+      "required": [
+        "communication",
+        "coordination",
+        "conflict_resolution",
+        "load_balancing",
+        "fault_tolerance"
+      ],
+      "properties": {
+        "communication": {
+          "type": "string"
+        },
+        "coordination": {
+          "type": "string"
+        },
+        "conflict_resolution": {
+          "type": "string"
+        },
+        "load_balancing": {
+          "type": "string"
+        },
+        "fault_tolerance": {
+          "type": "string"
+        }
+      }
+    },
+    "performance_targets": {
+      "type": "object",
+      "required": [
+        "agent_utilization",
+        "parallel_efficiency",
+        "coordination_overhead",
+        "recovery_time"
+      ],
+      "properties": {
+        "agent_utilization": {
+          "type": "string",
+          "pattern": "^>\\d+%$"
+        },
+        "parallel_efficiency": {
+          "type": "string",
+          "pattern": "^>\\d+%$"
+        },
+        "coordination_overhead": {
+          "type": "string",
+          "pattern": "^<\\d+%$"
+        },
+        "recovery_time": {
+          "type": "string",
+          "pattern": "^<\\d+ms$"
+        }
+      }
+    },
+    "pipeline_stage": {
+      "type": "object",
+      "required": [
+        "name",
+        "latency",
+        "inputs",
+        "outputs",
+        "agents"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "latency": {
+          "type": "string",
+          "pattern": "^<\\d+ms$"
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "agents": {
+          "type": "string"
+        },
+        "autonomy": {
+          "type": "string"
+        },
+        "parallelism": {
+          "type": "string"
+        },
+        "checks": {
+          "type": "array"
+        },
+        "conditions": {
+          "type": "object"
+        },
+        "actions": {
+          "type": "array"
+        },
+        "collect": {
+          "type": "array"
+        }
+      }
+    },
+    "verification_condition": {
+      "type": "object",
+      "required": [
+        "condition",
+        "measurement",
+        "verification_method"
+      ],
+      "properties": {
+        "condition": {
+          "type": "string"
+        },
+        "measurement": {
+          "type": "string"
+        },
+        "verification_method": {
+          "type": "string"
+        },
+        "expected_value": {
+          "type": [
+            "string",
+            "number"
+          ]
+        }
+      }
+    },
+    "ci_cd_config": {
+      "type": "object",
+      "required": [
+        "validation_pipeline",
+        "enforcement"
+      ],
+      "properties": {
+        "validation_pipeline": {
+          "type": "object"
+        },
+        "enforcement": {
+          "type": "object"
+        }
+      }
+    },
+    "governance_config": {
+      "type": "object",
+      "required": [
+        "responsibility_matrix",
+        "decision_boundaries",
+        "conflict_resolution"
+      ],
+      "properties": {
+        "responsibility_matrix": {
+          "type": "object"
+        },
+        "decision_boundaries": {
+          "type": "object"
+        },
+        "conflict_resolution": {
+          "type": "array"
+        }
+      }
+    },
+    "commercial_value_config": {
+      "type": "object",
+      "required": [
+        "competitive_advantage",
+        "cost_efficiency",
+        "quality_assurance"
+      ],
+      "properties": {
+        "competitive_advantage": {
+          "type": "object"
+        },
+        "cost_efficiency": {
+          "type": "object"
+        },
+        "quality_assurance": {
+          "type": "object"
+        }
+      }
+    },
+    "implementation_config": {
+      "type": "object",
+      "patternProperties": {
+        "^phase_\\d+_[a-z_]+$": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "task",
+              "status",
+              "latency"
+            ],
+            "properties": {
+              "task": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "REALIZED",
+                  "IN_PROGRESS",
+                  "PENDING",
+                  "BLOCKED"
+                ]
+              },
+              "latency": {
+                "type": "string",
+                "pattern": "^<\\d+(\\.\\d+)?(ms|s|min)$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "success_criteria_config": {
+      "type": "object",
+      "required": [
+        "must_have",
+        "performance",
+        "quality"
+      ],
+      "properties": {
+        "must_have": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/criterion"
+          }
+        },
+        "performance": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/criterion"
+          }
+        },
+        "quality": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/criterion"
+          }
+        }
+      }
+    },
+    "criterion": {
+      "type": "object",
+      "required": [
+        "criterion",
+        "verification",
+        "status"
+      ],
+      "properties": {
+        "criterion": {
+          "type": "string"
+        },
+        "verification": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "MUST_ACHIEVE",
+            "ACHIEVED",
+            "IN_PROGRESS"
+          ]
+        }
+      }
+    }
+  },
+  "_GL": {
+    "governed": true,
+    "layer": "data",
+    "semantic": "INSTANT-EXECUTION-MANIFEST.schema",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

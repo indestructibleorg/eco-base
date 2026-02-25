@@ -1,0 +1,54 @@
+# @ECO-governed
+# @ECO-layer: GL30-49
+# @ECO-semantic: execution-script
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL30_49-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "root": true,
+  "env": {
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-console": "off",
+    "no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "no-var": "error",
+    "prefer-const": "error",
+    "eqeqeq": [
+      "error",
+      "always"
+    ],
+    "curly": [
+      "error",
+      "all"
+    ]
+  },
+  "ignorePatterns": [
+    "node_modules/"
+  ],
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": ".eslintrc",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

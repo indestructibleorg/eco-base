@@ -1,0 +1,121 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: test
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "file_path": "engine/tests/normalizer/env_merger.test.ts",
+  "file_type": ".ts",
+  "file_hash": "a2683bc146ba901f7277183ce963ca7f530732f5c2098564d95e5a0d6a37342b",
+  "gl_layer": "ECO-50-OBSERVABILITY",
+  "semantic_anchor": "ECO-30-EXEC-TS",
+  "etl_status": "SUCCESS",
+  "es_index_status": "READY",
+  "issues": [
+    {
+      "type": "gl_marker_missing",
+      "severity": "MEDIUM",
+      "message": "No GL governance markers found in file",
+      "file_path": "engine/tests/normalizer/env_merger.test.ts",
+      "recommendation": "Add GL layer annotation comment at file header"
+    },
+    {
+      "type": "semantic_manifest_missing",
+      "severity": "LOW",
+      "message": "No semantic manifest reference found",
+      "file_path": "engine/tests/normalizer/env_merger.test.ts",
+      "recommendation": "Add semantic anchor annotation"
+    },
+    {
+      "type": "metadata_missing",
+      "severity": "LOW",
+      "message": "No JSDoc documentation found",
+      "file_path": "engine/tests/normalizer/env_merger.test.ts",
+      "recommendation": "Add JSDoc comments for public APIs"
+    }
+  ],
+  "metadata": {
+    "has_jsdoc": false,
+    "has_exports": false,
+    "has_imports": true,
+    "has_interfaces": false,
+    "has_types": false,
+    "has_classes": false,
+    "has_functions": true,
+    "has_tests": true,
+    "has_readme_reference": false,
+    "has_license": false,
+    "typescript_strict": false
+  },
+  "governance_events": [
+    {
+      "event_id": "cd4d6b5e4f1a90be",
+      "timestamp": "2026-01-24T11:18:49.150450",
+      "event_type": "ETL_START",
+      "source_file": "engine/tests/normalizer/env_merger.test.ts",
+      "gl_layer": "ECO-50-OBSERVABILITY",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "status": "STARTED",
+      "details": {
+        "phase": "extract"
+      },
+      "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+    },
+    {
+      "event_id": "0fbc35438919fc85",
+      "timestamp": "2026-01-24T11:18:49.150496",
+      "event_type": "ETL_EXTRACT",
+      "source_file": "engine/tests/normalizer/env_merger.test.ts",
+      "gl_layer": "ECO-50-OBSERVABILITY",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "status": "SUCCESS",
+      "details": {
+        "size_bytes": 1584,
+        "line_count": 49
+      },
+      "evidence_hash": "db3a8ba69c34d351471008a07633c9ffd42e91df89878d68d788914329f5bf6b"
+    },
+    {
+      "event_id": "7d806c0e860b975e",
+      "timestamp": "2026-01-24T11:18:49.150583",
+      "event_type": "ETL_TRANSFORM",
+      "source_file": "engine/tests/normalizer/env_merger.test.ts",
+      "gl_layer": "ECO-50-OBSERVABILITY",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "status": "SUCCESS",
+      "details": {
+        "issues_count": 3,
+        "gl_compliant": true
+      },
+      "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+    },
+    {
+      "event_id": "896a340959bc64dd",
+      "timestamp": "2026-01-24T11:18:49.150596",
+      "event_type": "ETL_LOAD",
+      "source_file": "engine/tests/normalizer/env_merger.test.ts",
+      "gl_layer": "ECO-50-OBSERVABILITY",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "status": "SUCCESS",
+      "details": {
+        "index": "gl-aep-engine-audit"
+      },
+      "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+    }
+  ],
+  "timestamp": "2026-01-24T11:18:49.150606",
+  "execution_time_ms": 0,
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "engine_tests_normalizer_env_merger.test.ts_audit",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

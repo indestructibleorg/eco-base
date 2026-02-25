@@ -1,0 +1,274 @@
+# @ECO-layer: GQS-L0
+# @ECO-governed
+# @ECO-layer: GL00-09
+# @ECO-semantic: general-component
+# @ECO-audit-trail: gov-enterprise-architecture/governance/audit-trails/GL00_09-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gov-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gov-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+apiVersion: servicemesh.machinenativeops.io/v1
+kind: ServiceMeshConfiguration
+metadata:
+  annotations:
+    eco-base/urn: "urn:eco-base:platform:resource:quantum:infrastructure:service-mesh:istio-config.yaml"
+    eco-base/uri: "eco-base://platform/resource/quantum/infrastructure/service-mesh/istio-config.yaml"
+  name: gov-quantum-service-mesh
+  namespace: infrastructure
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+    gov-version: v10.0.0
+    tier: quantum-servicemesh
+spec:
+  enabled: true
+  
+  istio:
+    enabled: true
+    version: "1.19.0"
+    
+    namespace: istio-system
+    profile: default
+    
+    components:
+      pilot:
+        enabled: true
+        k8s:
+          replicas: 2
+          resources:
+            requests:
+              cpu: 500m
+              memory: 2048Mi
+            limits:
+              cpu: 1000m
+              memory: 4096Mi
+              
+      istiodRemote:
+        enabled: false
+        
+      globalProxy:
+        enabled: true
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+            
+  meshPolicy:
+    mode: STRICT
+    mtls:
+      enabled: true
+      type: STRICT
+      
+    trafficPolicy:
+      - name: gov-quantum-api-policy
+        target:
+          namespace: gov-quantum-prod
+          
+        tls:
+          mode: ISTIO_MUTUAL
+          
+        portLevelMtls:
+          - port:
+              number: 8080
+            mode: ISTIO_MUTUAL
+            
+  virtualServices:
+    - name: gov-quantum-api
+      namespace: gov-quantum-prod
+      
+      hosts:
+        - "api.gov-quantum.machinenativeops.com"
+        
+      gateways:
+        - gov-quantum-gateway
+        
+      http:
+        - match:
+            - uri:
+                prefix: /api/v1
+          route:
+            - destination:
+                host: gov-quantum-api
+                subset: v1
+              weight: 90
+            - destination:
+                host: gov-quantum-api
+                subset: v2
+              weight: 10
+              
+        - fault:
+            delay:
+              percentage:
+                value: 0.1
+              fixedDelay: 5s
+          match:
+            - headers:
+                x-fault-injection:
+                  exact: "true"
+          route:
+            - destination:
+                host: gov-quantum-api
+                
+    - name: gov-quantum-webhook
+      namespace: gov-quantum-prod
+      
+      hosts:
+        - "webhook.gov-quantum.machinenativeops.com"
+        
+      gateways:
+        - gov-quantum-gateway
+        
+      http:
+        - match:
+            - uri:
+                prefix: /webhooks
+          route:
+            - destination:
+                host: gov-quantum-webhook
+                subset: v1
+          timeout: 30s
+          
+  destinationRules:
+    - name: gov-quantum-api
+      namespace: gov-quantum-prod
+      
+      host: gov-quantum-api
+      
+      trafficPolicy:
+        loadBalancer:
+          simple: LEAST_CONN
+          
+        connectionPool:
+          tcp:
+            maxConnections: 100
+            connectTimeout: 30s
+            tcpKeepalive:
+              time: 7200s
+              interval: 75s
+              
+      subsets:
+        - name: v1
+          labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+            version: v1.0.0
+        - name: v2
+          labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+            version: v1.1.0
+            
+    - name: gov-quantum-worker
+      namespace: gov-quantum-prod
+      
+      host: gov-quantum-worker
+      
+      trafficPolicy:
+        loadBalancer:
+          simple: ROUND_ROBIN
+          
+  gateways:
+    - name: gov-quantum-gateway
+      namespace: istio-system
+      
+      selector:
+        istio: ingressgateway
+        
+      servers:
+        - port:
+            number: 80
+            name: http
+            protocol: HTTP
+          hosts:
+            - "gov-quantum.machinenativeops.com"
+            - "api.gov-quantum.machinenativeops.com"
+            - "webhook.gov-quantum.machinenativeops.com"
+          tls:
+            httpsRedirect: true
+            
+        - port:
+            number: 443
+            name: https
+            protocol: HTTPS
+          hosts:
+            - "gov-quantum.machinenativeops.com"
+            - "api.gov-quantum.machinenativeops.com"
+            - "webhook.gov-quantum.machinenativeops.com"
+          tls:
+            mode: SIMPLE
+            credentialName: gov-quantum-tls-cert
+            
+  authorizationPolicies:
+    - name: gov-quantum-api-allow
+      namespace: gov-quantum-prod
+      
+      action: ALLOW
+      
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: gov-quantum-api
+          
+      rules:
+        - from:
+            - source:
+                principals:
+                  - cluster.local/ns/istio-system/sa/istio-ingressgateway
+          to:
+            - operation:
+                methods: ["GET", "POST", "PUT", "DELETE"]
+                
+    - name: gov-quantum-deny-all
+      namespace: gov-quantum-prod
+      
+      action: DENY
+      
+      rules:
+        - {}
+        
+  requestAuthentications:
+    - name: gov-quantum-jwt-auth
+      namespace: gov-quantum-prod
+      
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: gov-quantum-api
+          
+      jwtRules:
+        - issuer: "https://auth.machinenativeops.com"
+          jwks: "https://auth.machinenativeops.com/.well-known/jwks.json"
+          outputPayloadToHeader: x-jwt-payload
+          
+  telemetry:
+    v2:
+      metadataExchange:
+        enabled: true
+        
+      prometheus:
+        enabled: true
+        
+      accessLogging:
+        - providers:
+            - name: envoy
+              envoyAccessLogService:
+                logName: accesslog
+                service:
+                  host: "otel-collector.observability.svc.cluster.local"
+                  port: 443
+                  
+      stackdriver:
+        enabled: false
+        logging: false
+        monitoring: false
+        
+      tracing:
+        - providers:
+            - name: otel
+              tracing:
+                port: 4317
+                host: otel-collector.observability.svc.cluster.local
+                sampling: 10.0

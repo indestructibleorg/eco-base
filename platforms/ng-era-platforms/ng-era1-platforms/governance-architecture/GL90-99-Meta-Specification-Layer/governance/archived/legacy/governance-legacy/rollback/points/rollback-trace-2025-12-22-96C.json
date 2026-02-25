@@ -1,0 +1,54 @@
+{
+  "trace_id": "trace-2025-12-22-96C",
+  "version": "v1.0.0",
+  "created_at": "2025-12-22T17:50:45.581069+00:00",
+  "components": [
+    {
+      "name": "axiom-hft-quantum",
+      "version": "v1.0.0",
+      "type": "container-image",
+      "digest": "sha256:abc123..."
+    }
+  ],
+  "validation_criteria": [
+    {
+      "name": "health-check",
+      "type": "kubernetes-health",
+      "timeout": "5m",
+      "expectedStatus": "healthy"
+    },
+    {
+      "name": "smoke-test",
+      "type": "api-test",
+      "endpoint": "/health",
+      "expectedResponse": "200 OK"
+    }
+  ],
+  "rollback_plan": {
+    "steps": [
+      {
+        "name": "stop-new-deployment",
+        "action": "scale",
+        "target": "deployment/axiom-hft-quantum-new",
+        "replicas": 0
+      },
+      {
+        "name": "restore-previous-version",
+        "action": "apply",
+        "target": "manifests/v1.0.0/",
+        "evidence": "evidence-bundle-trace-trace-2025-12-22-96C.tar.gz"
+      },
+      {
+        "name": "verify-rollback",
+        "action": "validate",
+        "criteria": "validationCriteria"
+      },
+      {
+        "name": "scale-up",
+        "action": "scale",
+        "target": "deployment/axiom-hft-quantum-v1.0.0",
+        "replicas": 3
+      }
+    ]
+  }
+}

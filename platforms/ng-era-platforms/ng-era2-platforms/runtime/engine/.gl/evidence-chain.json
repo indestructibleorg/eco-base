@@ -1,0 +1,107 @@
+# @ECO-governed
+# @ECO-layer: GL30-49
+# @ECO-semantic: general-component
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL30_49-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "gl_version": "1.0",
+  "chain_id": "ECO-AEP-ENGINE-EVIDENCE-CHAIN",
+  "module": "aep-engine",
+  "created": "2026-01-24T12:15:00Z",
+  "updated": "2026-01-24T12:15:00Z",
+  "root_anchor": {
+    "id": "ECO-30-EXEC-AEP-ENGINE",
+    "layer": "ECO-30-EXECUTION",
+    "hash": "sha256:aep-engine-root"
+  },
+  "attestations": [
+    {
+      "id": "ATT-001",
+      "type": "MODULE_REGISTERED",
+      "timestamp": "2026-01-24T12:15:00Z",
+      "anchor": "ECO-30-EXEC-AEP-ENGINE",
+      "status": "VERIFIED"
+    },
+    {
+      "id": "ATT-002",
+      "type": "SEMANTIC_ANCHORS_DEFINED",
+      "timestamp": "2026-01-24T12:15:00Z",
+      "anchor": "ECO-90-META-ANCHORS",
+      "status": "VERIFIED",
+      "count": 12
+    },
+    {
+      "id": "ATT-003",
+      "type": "GOVERNANCE_MARKERS_ADDED",
+      "timestamp": "2026-01-24T12:15:00Z",
+      "anchor": "ECO-10-GOV-ENGINE",
+      "status": "VERIFIED",
+      "files_count": 44
+    }
+  ],
+  "subsystems": {
+    "artifacts": {
+      "anchor": "ECO-30-EXEC-ARTIFACTS",
+      "files": 3,
+      "status": "REGISTERED"
+    },
+    "executor": {
+      "anchor": "ECO-30-EXEC-EXECUTOR",
+      "files": 3,
+      "status": "REGISTERED"
+    },
+    "governance": {
+      "anchor": "ECO-10-GOV-ENGINE",
+      "files": 4,
+      "status": "REGISTERED"
+    },
+    "loader": {
+      "anchor": "ECO-30-EXEC-LOADER",
+      "files": 3,
+      "status": "REGISTERED"
+    },
+    "normalizer": {
+      "anchor": "ECO-30-EXEC-NORMALIZER",
+      "files": 3,
+      "status": "REGISTERED"
+    },
+    "parser": {
+      "anchor": "ECO-30-EXEC-PARSER",
+      "files": 3,
+      "status": "REGISTERED"
+    },
+    "renderer": {
+      "anchor": "ECO-30-EXEC-RENDERER",
+      "files": 3,
+      "status": "REGISTERED"
+    },
+    "validator": {
+      "anchor": "ECO-30-EXEC-VALIDATOR",
+      "files": 3,
+      "status": "REGISTERED"
+    },
+    "tests": {
+      "anchor": "ECO-50-TEST-ENGINE",
+      "files": 6,
+      "status": "REGISTERED"
+    }
+  },
+  "verification": {
+    "consistency": true,
+    "reversibility": true,
+    "provability": true
+  },
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "evidence-chain",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

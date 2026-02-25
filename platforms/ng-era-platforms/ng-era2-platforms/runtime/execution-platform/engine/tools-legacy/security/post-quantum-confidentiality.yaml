@@ -1,0 +1,89 @@
+# @ECO-layer: GQS-L0
+# @ECO-governed
+# @ECO-layer: governance
+# @ECO-semantic: post-quantum-confidentiality
+# @ECO-audit-trail: ../../engine/governance/GL_SEMANTIC_ANCHOR.json
+# 
+# GL Unified Architecture Governance Framework Activated
+
+# MachineNativeOps Post-Quantum Confidentiality Protection
+# Layer 2: NIST PQC Compliant Encryption
+
+apiVersion: security.machinenativeops/v1
+kind: PostQuantumConfidentiality
+metadata:
+  annotations:
+    eco-base/urn: "urn:eco-base:platform:resource:ng-era-platforms:ng-era2-platforms:runtime:execution-platform:engine:tools-legacy:security:post-quantum-confidentiality.yaml"
+    eco-base/uri: "eco-base://platform/resource/ng-era-platforms/ng-era2-platforms/runtime/execution-platform/engine/tools-legacy/security/post-quantum-confidentiality.yaml"
+  name: post-quantum-confidentiality
+  namespace: security
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+    layer: layer-2
+    nist.pqc: level-5-plus
+    crypto.agility: enabled
+
+spec:
+  encryptionAlgorithms:
+    symmetric:
+      primary: AES-256-GCM
+      secondary: ChaCha20-Poly1305
+      tertiary: Threefish-1024
+      mode: authenticated_encryption
+      
+    asymmetric:
+      keyEncapsulation: CRYSTALS-Kyber-1024
+      digitalSignatures: Falcon-1024
+      keyExchange: ML-KEM-1024
+      backup: Dilithium-5
+  
+  keyManagement:
+    generation: quantum_enhanced_hsm
+    distribution: quantum_key_distribution
+    
+    rotation:
+      symmetric: 24h
+      asymmetric: 7d
+      rootKeys: 90d
+      automated: true
+      
+    storage:
+      primary: hashicorp_vault_enterprise
+      secondary: aws_kms_quantum_safe
+      tertiary: azure_key_vault_managed_hsm
+      replication: 3
+  
+  multiLayerEncryption:
+    layers:
+      - layer: application
+        algorithm: AES-256-GCM
+        keySource: ephemeral_quantum
+        keyDerivation: HKDF-SHA3-512
+        
+      - layer: transport
+        algorithm: CRYSTALS-Kyber-1024
+        keySource: qkd_network
+        protocol: TLS_1.3_quantum
+        
+      - layer: storage
+        algorithm: ML-KEM-1024
+        keySource: hardware_hsm
+        encryptionMode: authenticated
+    
+    nesting: cascade_encryption
+    independentKeys: true
+    zeroKnowledgeProof: true
+
+  quantumResistance:
+    nistLevel: 5
+    migrationReady: true
+    hybridDeployment: false
+    cryptoAgility: true
+    futureProof: true
+    
+  complianceStandards:
+    - FIPS_140_3_Level_4
+    - NIST_PQC_Round_4
+    - Common_Criteria_EAL7
+    - ISO_IEC_19790

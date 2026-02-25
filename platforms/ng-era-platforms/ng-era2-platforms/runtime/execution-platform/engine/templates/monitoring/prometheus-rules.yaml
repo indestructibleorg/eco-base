@@ -1,0 +1,149 @@
+# @ECO-governed
+# @ECO-layer: governance
+# @ECO-semantic: prometheus-rules
+# @ECO-audit-trail: ../../engine/governance/GL_SEMANTIC_ANCHOR.json
+# 
+# GL Unified Architecture Governance Framework Activated
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: naming-governance-alerts
+  namespace: monitoring
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+    app.kubernetes.io/name: naming-governance
+    release: prometheus
+spec:
+  groups:
+    - name: naming_governance.compliance
+      rules:
+        - alert: NamingAdoptionRateLow
+          expr: naming_governance_adoption_rate < 0.75
+          for: 5m
+          labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+            severity: critical
+            app.kubernetes.io/component: naming-governance
+          annotations:
+            summary: "Naming standard adoption rate is critically low"
+            description: "Adoption rate is {{ $value }}%, below critical threshold of 75%"
+            runbook: "https://docs.example.com/runbooks/adoption-drop"
+        
+        - alert: NamingComplianceRateDegraded
+          expr: naming_governance_compliance_rate < 0.90
+          for: 10m
+          labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+            severity: warning
+            app.kubernetes.io/component: naming-governance
+          annotations:
+            summary: "Naming compliance rate has degraded"
+            description: "Compliance rate is {{ $value }}%, below threshold of 90%"
+        
+        - alert: NamingComplianceRateCritical
+          expr: naming_governance_compliance_rate < 0.85
+          for: 10m
+          labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+            severity: critical
+            app.kubernetes.io/component: naming-governance
+          annotations:
+            summary: "Naming compliance rate is critically low"
+            description: "Compliance rate is {{ $value }}%, below critical threshold of 85%"
+    
+    - name: naming_governance.quality
+      rules:
+        - alert: NamingViolationsSpike
+          expr: rate(naming_governance_violations_total[1h]) > 20
+          for: 5m
+          labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+            severity: high
+            app.kubernetes.io/component: naming-governance
+          annotations:
+            summary: "Spike in naming violations detected"
+            description: "{{ $value }} violations in the last hour"
+        
+        - alert: NamingConflictsHigh
+          expr: naming_governance_conflicts_total > 5
+          for: 15m
+          labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+            severity: warning
+            app.kubernetes.io/component: naming-governance
+          annotations:
+            summary: "High number of naming conflicts"
+            description: "{{ $value }} naming conflicts detected"
+        
+        - alert: NamingConsistencyLow
+          expr: naming_governance_consistency_score < 80
+          for: 30m
+          labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+            severity: warning
+            app.kubernetes.io/component: naming-governance
+          annotations:
+            summary: "Naming consistency score is low"
+            description: "Consistency score is {{ $value }}, below threshold of 80"
+    
+    - name: naming_governance.operations
+      rules:
+        - alert: NamingValidationLatencyHigh
+          expr: naming_governance_validation_duration_seconds > 5
+          for: 10m
+          labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+            severity: warning
+            app.kubernetes.io/component: naming-governance
+          annotations:
+            summary: "Naming validation latency is high"
+            description: "Validation taking {{ $value }}s, above threshold of 5s"
+        
+        - alert: NamingValidationFailed
+          expr: rate(naming_governance_validation_failures_total[5m]) > 0.1
+          for: 5m
+          labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+            severity: error
+            app.kubernetes.io/component: naming-governance
+          annotations:
+            summary: "Naming validation failures detected"
+            description: "Validation failure rate is {{ $value }}"
+    
+    - name: naming_governance.security
+      rules:
+        - alert: SecurityNamingViolation
+          expr: naming_governance_security_violations_total > 0
+          for: 1m
+          labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+            severity: critical
+            app.kubernetes.io/component: naming-governance
+          annotations:
+            summary: "Security naming violation detected"
+            description: "{{ $value }} security-related naming violations"
+            runbook: "https://docs.example.com/runbooks/security-violation"
+        
+        - alert: ProdConfigDriftDetected
+          expr: naming_governance_config_drift{env="prod"} > 0
+          for: 1m
+          labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+            severity: critical
+            app.kubernetes.io/component: naming-governance
+          annotations:
+            summary: "Production config drift detected"
+            description: "{{ $value }} resources have drifted from naming standards"

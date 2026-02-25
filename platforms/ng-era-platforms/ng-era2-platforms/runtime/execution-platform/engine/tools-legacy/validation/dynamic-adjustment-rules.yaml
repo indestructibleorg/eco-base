@@ -1,0 +1,138 @@
+# @ECO-governed
+# @ECO-layer: governance
+# @ECO-semantic: dynamic-adjustment-rules
+# @ECO-audit-trail: ../../engine/governance/GL_SEMANTIC_ANCHOR.json
+# 
+# GL Unified Architecture Governance Framework Activated
+
+apiVersion: validation.machinenativeops/v1
+kind: DynamicAdjustmentPolicy
+metadata:
+  annotations:
+    eco-base/urn: "urn:eco-base:platform:resource:ng-era-platforms:ng-era2-platforms:runtime:execution-platform:engine:tools-legacy:validation:dynamic-adjustment-rules.yaml"
+    eco-base/uri: "eco-base://platform/resource/ng-era-platforms/ng-era2-platforms/runtime/execution-platform/engine/tools-legacy/validation/dynamic-adjustment-rules.yaml"
+  name: dynamic-adjustment-rules
+  namespace: gl-runtime-verification
+  version: v1.0.0
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+    app.kubernetes.io/name: validation-system
+    app.kubernetes.io/component: dynamic-controller
+spec:
+  # 動態調整規則
+  rules:
+    - name: high_quantum_noise
+      description: "量子噪聲過高時調整經典/量子權重平衡"
+      condition: "quantum_noise > 0.15"
+      priority: 1
+      actions:
+        - action: shift_weight
+          parameters:
+            classicWeight: "+0.12"
+            quantumWeight: "-0.12"
+        - action: rotate_backend
+          parameters:
+            priority:
+              - google_bristlecone
+              - ibm_kyiv
+              - rigetti_aspen
+        - action: notify
+          parameters:
+            channel: ops-alerts
+            severity: warning
+
+    - name: high_latency
+      description: "驗證延遲過高時啟用降級模式"
+      condition: "validation_latency > 500ms"
+      priority: 2
+      actions:
+        - action: enable_fallback
+          parameters:
+            classicMode: aggressive
+            quantumMode: lightweight
+        - action: adjust_circuit_depth
+          parameters:
+            maxDepth: 8
+        - action: log
+          parameters:
+            level: warning
+            message: "High latency detected, switching to fallback mode"
+
+    - name: low_coherence
+      description: "相干性不足時觸發重新校準"
+      condition: "coherence_time < 0.78"
+      priority: 1
+      actions:
+        - action: increase_sampling
+          parameters:
+            rate: "20ms"
+            duration: "30s"
+        - action: trigger_recalibration
+          parameters:
+            method: vqe_reoptimization
+        - action: notify
+          parameters:
+            channel: quantum-ops
+            severity: high
+
+    - name: error_rate_spike
+      description: "錯誤率突升時啟用保守模式"
+      condition: "error_rate > 0.05"
+      priority: 1
+      actions:
+        - action: enable_conservative_mode
+          parameters:
+            classic_only: false
+            reduced_depth: true
+        - action: increase_shots
+          parameters:
+            multiplier: 2
+        - action: alert
+          parameters:
+            channel: incident-response
+            severity: critical
+
+    - name: optimal_conditions
+      description: "最優條件下啟用高性能模式"
+      condition: "quantum_noise < 0.08 AND coherence_time > 0.85"
+      priority: 3
+      actions:
+        - action: enable_high_performance
+          parameters:
+            maxCircuitDepth: 16
+            quantumWeight: 0.65
+        - action: log
+          parameters:
+            level: info
+            message: "Optimal conditions detected, enabling high-performance mode"
+
+  # 閾值配置
+  thresholds:
+    quantum_noise:
+      warning: 0.12
+      critical: 0.20
+    validation_latency:
+      warning: 400ms
+      critical: 800ms
+    coherence_time:
+      warning: 0.78
+      critical: 0.70
+    error_rate:
+      warning: 0.03
+      critical: 0.08
+
+  # 調整策略
+  adjustment_strategy:
+    algorithm: exponential_backoff
+    initial_interval: "10s"
+    max_interval: "5m"
+    multiplier: 1.5
+    max_retries: 5
+
+  # 監控配置
+  monitoring:
+    metrics_endpoint: /metrics
+    health_endpoint: /health
+    sampling_interval: "5s"
+    aggregation_window: "1m"

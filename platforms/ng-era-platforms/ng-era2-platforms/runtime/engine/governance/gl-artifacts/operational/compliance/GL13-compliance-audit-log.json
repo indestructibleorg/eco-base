@@ -1,0 +1,37 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "id": "GL13-compliance-audit-log",
+  "gllevel": "GL13",
+  "name": "GL13-compliance-audit-log",
+  "createdat": "2026-01-21T19:14:06.679783Z",
+  "immutable": true,
+  "language": "zh-TW",
+  "semanticterms": [
+    "Process",
+    "Standard",
+    "Compliance",
+    "Monitoring"
+  ],
+  "functionaldimensions": [
+    "Monitoring",
+    "Operational Supervision"
+  ],
+  "path": "compliance/GL13-compliance-audit-log.json",
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "GL13-compliance-audit-log",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

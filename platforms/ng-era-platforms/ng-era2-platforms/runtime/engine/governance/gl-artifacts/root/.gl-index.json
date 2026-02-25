@@ -1,0 +1,86 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "generated_at": "2025-01-21T00:00:00Z",
+  "root": "GL00",
+  "artifacts": [
+    {
+      "file": "GL00-root-semantic-anchor.json",
+      "id": "GL00-0001",
+      "name": "GL00-root-semantic-anchor",
+      "type": "root",
+      "description": "Root semantic anchor for the entire governance framework",
+      "dependencies": []
+    },
+    {
+      "file": "GL01-risk-registry.json",
+      "id": "GL01-0001",
+      "name": "GL01-risk-registry",
+      "type": "risk",
+      "description": "Comprehensive risk registry with ISO 31000 framework covering 10 major risk categories including Strategic, Operational, Technology, Security, Compliance, Financial, Talent, Reputation, Integration, and Innovation risks with detailed mitigation strategies and ownership",
+      "dependencies": [
+        "GL00-root-semantic-anchor.json"
+      ]
+    },
+    {
+      "file": "GL02-success-metrics.json",
+      "id": "GL02-0001",
+      "name": "GL02-success-metrics",
+      "type": "metrics",
+      "description": "Success metrics dashboard with 12 comprehensive KPIs across Strategic, Customer, Operational, Quality, Technical, Talent, Security, Compliance, Financial, and Innovation categories with targets, thresholds, owners, and automated monitoring",
+      "dependencies": [
+        "GL00-root-semantic-anchor.json"
+      ]
+    },
+    {
+      "file": "GL99-unified-charter.json",
+      "id": "GL99-0001",
+      "name": "GL99-unified-charter",
+      "type": "charter",
+      "description": "Complete unified governance framework with 8 governance principles, 4 governance councils (Executive, Operational, Technical, Risk), 5 governance processes, 7 defined roles, 4-level escalation paths, and continuous evolution framework",
+      "dependencies": [
+        "GL00-root-semantic-anchor.json",
+        "GL01-risk-registry.json",
+        "GL02-success-metrics.json"
+      ]
+    }
+  ],
+  "dag": [
+    {
+      "id": "GL00-root-semantic-anchor",
+      "type": "root",
+      "label": "Root Semantic Anchor"
+    },
+    {
+      "id": "GL01-risk-registry",
+      "type": "risk",
+      "label": "Risk Registry"
+    },
+    {
+      "id": "GL02-success-metrics",
+      "type": "metrics",
+      "label": "Success Metrics"
+    },
+    {
+      "id": "GL99-unified-charter",
+      "type": "charter",
+      "label": "Unified Architecture Governance Framework"
+    }
+  ],
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": ".gl-index",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

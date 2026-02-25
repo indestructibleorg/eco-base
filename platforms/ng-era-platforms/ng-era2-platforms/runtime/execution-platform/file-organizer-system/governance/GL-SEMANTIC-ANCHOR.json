@@ -1,0 +1,37 @@
+{
+  "governance": {
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "1.0.0",
+    "activation": "active"
+  },
+  "semantic": {
+    "anchor": {
+      "id": "ECO-FILE-ORGANIZER-SEMANTIC-ANCHOR",
+      "namespace": "governance.layers.file-organizer",
+      "description": "Semantic anchor for File Organizer System"
+    },
+    "hierarchy": {
+      "levels": [
+        "root",
+        "module",
+        "service",
+        "route",
+        "component"
+      ]
+    },
+    "metadata": {
+      "required": [
+        "@ECO-governed",
+        "@ECO-layer",
+        "@ECO-semantic",
+        "@ECO-audit-trail"
+      ]
+    }
+  },
+  "enforcement": {
+    "strict": true,
+    "continue_on_error": false,
+    "validation_required": true,
+    "audit_trail_required": true
+  }
+}

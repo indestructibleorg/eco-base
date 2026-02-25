@@ -1,0 +1,4 @@
+# Ignore all test result files
+*.xml
+*.json
+*.html

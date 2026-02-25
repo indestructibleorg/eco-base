@@ -1,0 +1,63 @@
+# @ECO-governed
+# @ECO-layer: GL30-49
+# @ECO-semantic: general-component
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL30_49-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GL10 Phase2 Schema",
+  "type": "object",
+  "required": [
+    "id",
+    "gllevel",
+    "name",
+    "createdat",
+    "immutable",
+    "semanticterms",
+    "functionaldimensions"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "gllevel": {
+      "type": "string",
+      "pattern": "^GL1[0-9]$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "createdat": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "immutable": {
+      "type": "boolean"
+    },
+    "semanticterms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "functionaldimensions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "GL10-phase2-schema",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

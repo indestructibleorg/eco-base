@@ -1,0 +1,3 @@
+# @GL-layer: GQS-L0
+# Pure Python Standard Library Only
+# No external dependencies

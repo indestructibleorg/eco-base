@@ -1,0 +1,66 @@
+# @ECO-governed
+# @ECO-layer: governance
+# @ECO-semantic: .gl-manifest
+# @ECO-audit-trail: ../../engine/governance/GL_SEMANTIC_ANCHOR.json
+# 
+# GL Unified Architecture Governance Framework Activated
+
+# GL Semantic Manifest - Validator Subsystem
+# @gl-layer ECO-30-EXECUTION
+# @gl-semantic-anchor ECO-30-EXEC-VALIDATOR
+# GL Unified Architecture Governance Framework Activated
+
+gl_version: "1.0"
+metadata:
+  annotations:
+    eco-base/urn: "urn:eco-base:platform:resource:ng-era-platforms:ng-era2-platforms:runtime:execution-platform:engine:validator:.gl-manifest.yaml"
+    eco-base/uri: "eco-base://platform/resource/ng-era-platforms/ng-era2-platforms/runtime/execution-platform/engine/validator/.gl-manifest.yaml"
+  name: ""
+  description: ""
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned {}
+
+manifest:
+  subsystem: "validator"
+  module: "aep-engine"
+  layer: "ECO-30-EXECUTION"
+  semantic_anchor: "ECO-30-EXEC-VALIDATOR"
+  updated: "2026-01-26"
+
+components:
+  error_reporter:
+    file: "error_reporter.ts"
+    class: "ErrorReporter"
+    description: "Validation error formatting and reporting"
+    version: "1.0.0"
+    exports:
+      - "ErrorReporter"
+    dependencies:
+      - "../interfaces.d"
+
+  module_validator:
+    file: "module_validator.ts"
+    class: "ModuleValidator"
+    description: "Module manifest and schema validation"
+    version: "1.0.0"
+    exports:
+      - "ModuleValidator"
+    dependencies:
+      - "../interfaces.d"
+
+  schema_validator:
+    file: "schema_validator.ts"
+    class: "SchemaValidator"
+    description: "JSON Schema validation with AJV"
+    version: "1.0.0"
+    exports:
+      - "SchemaValidator"
+    dependencies:
+      - "ajv"
+      - "../interfaces.d"
+
+governance:
+  charter_activated: true
+  evidence_required: true
+  audit_compliant: true

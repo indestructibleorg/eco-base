@@ -1,0 +1,190 @@
+# @ECO-layer: GQS-L0
+# @ECO-governed
+# @ECO-layer: GL00-09
+# @ECO-semantic: general-component
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL00_09-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "dashboard": {
+    "title": "GL Quantum Observability Dashboard",
+    "uid": "gl-quantum-observability",
+    "tags": ["gl", "quantum", "observability", "tracing", "metrics", "logs"],
+    "timezone": "browser",
+    "refresh": "30s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Service Health Overview",
+        "type": "stat",
+        "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "avg(up{job=~&quot;gl-quantum.*&quot;})",
+            "legendFormat": "Services Up"
+          }
+        ],
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area"
+        }
+      },
+      {
+        "id": 2,
+        "title": "Request Rate",
+        "type": "graph",
+        "gridPos": {"x": 6, "y": 0, "w": 9, "h": 4},
+        "targets": [
+          {
+            "expr": "sum(rate(gl_quantum_api_requests_total[5m])) by (endpoint)",
+            "legendFormat": "{{ endpoint }}"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Error Rate",
+        "type": "graph",
+        "gridPos": {"x": 15, "y": 0, "w": 9, "h": 4},
+        "targets": [
+          {
+            "expr": "sum(rate(gl_quantum_api_errors_total[5m])) by (endpoint) / sum(rate(gl_quantum_api_requests_total[5m])) by (endpoint)",
+            "legendFormat": "{{ endpoint }}"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Request Latency (P95)",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 4, "w": 12, "h": 4},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, sum(rate(gl_quantum_api_request_duration_seconds_bucket[5m])) by (endpoint, le))",
+            "legendFormat": "{{ endpoint }}"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Trace Throughput",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 4, "w": 12, "h": 4},
+        "targets": [
+          {
+            "expr": "sum(rate(traces_span_created_total[5m])) by (service)",
+            "legendFormat": "{{ service }}"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Workflow Success Rate",
+        "type": "stat",
+        "gridPos": {"x": 0, "y": 8, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "gl_quantum_workflow_success_rate",
+            "legendFormat": "Success Rate"
+          }
+        ],
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area"
+        }
+      },
+      {
+        "id": 7,
+        "title": "Naming Compliance Rate",
+        "type": "stat",
+        "gridPos": {"x": 6, "y": 8, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "gl_quantum_naming_compliance_rate",
+            "legendFormat": "Compliance Rate"
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Security Scan Coverage",
+        "type": "stat",
+        "gridPos": {"x": 12, "y": 8, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "gl_quantum_security_scan_coverage",
+            "legendFormat": "Coverage"
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Cache Hit Rate",
+        "type": "stat",
+        "gridPos": {"x": 18, "y": 8, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "gl_quantum_cache_hit_rate",
+            "legendFormat": "Hit Rate"
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Database Query Duration",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 12, "w": 12, "h": 4},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, sum(rate(gl_quantum_database_query_duration_seconds_bucket[5m])) by (database, table, le))",
+            "legendFormat": "{{ database }}.{{ table }}"
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Resource Utilization",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 12, "w": 12, "h": 4},
+        "targets": [
+          {
+            "expr": "gl_quantum_resource_utilization{resource_type=&quot;cpu&quot;}",
+            "legendFormat": "{{ service_name }} CPU"
+          },
+          {
+            "expr": "gl_quantum_resource_utilization{resource_type=&quot;memory&quot;}",
+            "legendFormat": "{{ service_name }} Memory"
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Log Volume",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 16, "w": 12, "h": 4},
+        "targets": [
+          {
+            "expr": "sum(rate(log_messages_total[5m])) by (level)",
+            "legendFormat": "{{ level }}"
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Active Alerts",
+        "type": "stat",
+        "gridPos": {"x": 12, "y": 16, "w": 12, "h": 4},
+        "targets": [
+          {
+            "expr": "sum(ALERTS{alertstate=&quot;firing&quot;}) by (severity)",
+            "legendFormat": "{{ severity }}"
+          }
+        ]
+      }
+    ]
+  }
+}

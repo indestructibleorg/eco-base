@@ -1,0 +1,4677 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "session_id": "gl-audit-20260126-020557",
+  "total_events": 376,
+  "events": [
+    {
+      "event_id": "evt-0001",
+      "timestamp": "2026-01-26T02:05:57.107025+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "1f0438f194a855fd"
+    },
+    {
+      "event_id": "evt-0002",
+      "timestamp": "2026-01-26T02:05:57.107064+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "aeec227d6b8fcb82"
+    },
+    {
+      "event_id": "evt-0003",
+      "timestamp": "2026-01-26T02:05:57.107212+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 4360,
+        "hash": "e0ad2f26809396a9"
+      },
+      "hash": "a64aff5b1892629f"
+    },
+    {
+      "event_id": "evt-0004",
+      "timestamp": "2026-01-26T02:05:57.107224+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "a4955ca4f9c16d12"
+    },
+    {
+      "event_id": "evt-0005",
+      "timestamp": "2026-01-26T02:05:57.108392+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "f2b7643d29f6a563"
+    },
+    {
+      "event_id": "evt-0006",
+      "timestamp": "2026-01-26T02:05:57.108406+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "11c580a8f4e7391a"
+    },
+    {
+      "event_id": "evt-0007",
+      "timestamp": "2026-01-26T02:05:57.108422+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "e0ad2f26809396a9"
+      },
+      "hash": "d661190df7585597"
+    },
+    {
+      "event_id": "evt-0008",
+      "timestamp": "2026-01-26T02:05:57.108436+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 1
+      },
+      "hash": "d1d774e8fba5e84b"
+    },
+    {
+      "event_id": "evt-0009",
+      "timestamp": "2026-01-26T02:05:57.108449+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/SPEC.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "60a2377eedab654c"
+    },
+    {
+      "event_id": "evt-0010",
+      "timestamp": "2026-01-26T02:05:57.108458+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/SPEC.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "b49793cd557735f3"
+    },
+    {
+      "event_id": "evt-0011",
+      "timestamp": "2026-01-26T02:05:57.108665+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/SPEC.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 12545,
+        "hash": "a74e21942f519859"
+      },
+      "hash": "368ccf3c2f19020e"
+    },
+    {
+      "event_id": "evt-0012",
+      "timestamp": "2026-01-26T02:05:57.108676+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/SPEC.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "7480000f20f80368"
+    },
+    {
+      "event_id": "evt-0013",
+      "timestamp": "2026-01-26T02:05:57.109611+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/SPEC.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "c07fde9e3441653f"
+    },
+    {
+      "event_id": "evt-0014",
+      "timestamp": "2026-01-26T02:05:57.109621+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/SPEC.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "51e20faeaf5d1db5"
+    },
+    {
+      "event_id": "evt-0015",
+      "timestamp": "2026-01-26T02:05:57.109635+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/SPEC.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "a74e21942f519859"
+      },
+      "hash": "78b0453f46b3ad9b"
+    },
+    {
+      "event_id": "evt-0016",
+      "timestamp": "2026-01-26T02:05:57.109646+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/SPEC.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 1
+      },
+      "hash": "1fe94c26cb9c1ccb"
+    },
+    {
+      "event_id": "evt-0017",
+      "timestamp": "2026-01-26T02:05:57.109657+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/artifacts/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "673ec1a01d809e7d"
+    },
+    {
+      "event_id": "evt-0018",
+      "timestamp": "2026-01-26T02:05:57.109665+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/artifacts/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "77f152cba558211e"
+    },
+    {
+      "event_id": "evt-0019",
+      "timestamp": "2026-01-26T02:05:57.109783+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/artifacts/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 1779,
+        "hash": "d56d48288b0daf90"
+      },
+      "hash": "c4e4d76976693f37"
+    },
+    {
+      "event_id": "evt-0020",
+      "timestamp": "2026-01-26T02:05:57.109793+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/artifacts/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "ee80e3affe179a10"
+    },
+    {
+      "event_id": "evt-0021",
+      "timestamp": "2026-01-26T02:05:57.110023+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/artifacts/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "b3f080b12ed5e659"
+    },
+    {
+      "event_id": "evt-0022",
+      "timestamp": "2026-01-26T02:05:57.110034+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/artifacts/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "a771d8e871c031f4"
+    },
+    {
+      "event_id": "evt-0023",
+      "timestamp": "2026-01-26T02:05:57.110047+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/artifacts/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "d56d48288b0daf90"
+      },
+      "hash": "8dbd1b60bc1088f6"
+    },
+    {
+      "event_id": "evt-0024",
+      "timestamp": "2026-01-26T02:05:57.110056+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/artifacts/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 0
+      },
+      "hash": "53256e1cb62c36a6"
+    },
+    {
+      "event_id": "evt-0025",
+      "timestamp": "2026-01-26T02:05:57.110066+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/artifacts/artifact_manager.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "ff3e73ce608d444d"
+    },
+    {
+      "event_id": "evt-0026",
+      "timestamp": "2026-01-26T02:05:57.110074+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/artifacts/artifact_manager.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "64e363f1e76c35bf"
+    },
+    {
+      "event_id": "evt-0027",
+      "timestamp": "2026-01-26T02:05:57.110221+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/artifacts/artifact_manager.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 9411,
+        "hash": "3e855e1d6b5b7c3b"
+      },
+      "hash": "3ab2f1d4eddd54bb"
+    },
+    {
+      "event_id": "evt-0028",
+      "timestamp": "2026-01-26T02:05:57.110230+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/artifacts/artifact_manager.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "8e7a78967a1c52bd"
+    },
+    {
+      "event_id": "evt-0029",
+      "timestamp": "2026-01-26T02:05:57.111911+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/artifacts/artifact_manager.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 5
+      },
+      "hash": "93bb0e51fb7d452b"
+    },
+    {
+      "event_id": "evt-0030",
+      "timestamp": "2026-01-26T02:05:57.111924+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/artifacts/artifact_manager.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "c5feb2a6a086edca"
+    },
+    {
+      "event_id": "evt-0031",
+      "timestamp": "2026-01-26T02:05:57.111944+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/artifacts/artifact_manager.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "3e855e1d6b5b7c3b"
+      },
+      "hash": "dcd155a0389e3643"
+    },
+    {
+      "event_id": "evt-0032",
+      "timestamp": "2026-01-26T02:05:57.111955+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/artifacts/artifact_manager.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 5,
+        "time_ms": 1
+      },
+      "hash": "26e56de623c3178b"
+    },
+    {
+      "event_id": "evt-0033",
+      "timestamp": "2026-01-26T02:05:57.111966+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/artifacts/evidence_chain.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "9529d69cb6c80982"
+    },
+    {
+      "event_id": "evt-0034",
+      "timestamp": "2026-01-26T02:05:57.111975+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/artifacts/evidence_chain.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "c3441b1221f0e8be"
+    },
+    {
+      "event_id": "evt-0035",
+      "timestamp": "2026-01-26T02:05:57.112125+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/artifacts/evidence_chain.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 6834,
+        "hash": "74d67c6493ac111b"
+      },
+      "hash": "9daf109b55f78a0e"
+    },
+    {
+      "event_id": "evt-0036",
+      "timestamp": "2026-01-26T02:05:57.112135+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/artifacts/evidence_chain.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "48466ae18000acbc"
+    },
+    {
+      "event_id": "evt-0037",
+      "timestamp": "2026-01-26T02:05:57.113198+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/artifacts/evidence_chain.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "86f0093c50f71f63"
+    },
+    {
+      "event_id": "evt-0038",
+      "timestamp": "2026-01-26T02:05:57.113209+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/artifacts/evidence_chain.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "b6c2b6003b1a995f"
+    },
+    {
+      "event_id": "evt-0039",
+      "timestamp": "2026-01-26T02:05:57.113223+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/artifacts/evidence_chain.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "74d67c6493ac111b"
+      },
+      "hash": "afff1916a945861e"
+    },
+    {
+      "event_id": "evt-0040",
+      "timestamp": "2026-01-26T02:05:57.113233+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/artifacts/evidence_chain.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 1
+      },
+      "hash": "f6a2b758058cbff2"
+    },
+    {
+      "event_id": "evt-0041",
+      "timestamp": "2026-01-26T02:05:57.113246+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/artifacts/manifest_generator.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "f7bee2fe5ab83eaa"
+    },
+    {
+      "event_id": "evt-0042",
+      "timestamp": "2026-01-26T02:05:57.113255+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/artifacts/manifest_generator.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "8cac2a4a996f47f0"
+    },
+    {
+      "event_id": "evt-0043",
+      "timestamp": "2026-01-26T02:05:57.113399+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/artifacts/manifest_generator.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 9109,
+        "hash": "086c0e80af31a855"
+      },
+      "hash": "9806c6690d27739e"
+    },
+    {
+      "event_id": "evt-0044",
+      "timestamp": "2026-01-26T02:05:57.113408+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/artifacts/manifest_generator.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "90abc554ecc76507"
+    },
+    {
+      "event_id": "evt-0045",
+      "timestamp": "2026-01-26T02:05:57.114664+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/artifacts/manifest_generator.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "fd13f2e7f0412b9e"
+    },
+    {
+      "event_id": "evt-0046",
+      "timestamp": "2026-01-26T02:05:57.114676+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/artifacts/manifest_generator.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "cb41abe7197f8166"
+    },
+    {
+      "event_id": "evt-0047",
+      "timestamp": "2026-01-26T02:05:57.114689+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/artifacts/manifest_generator.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "086c0e80af31a855"
+      },
+      "hash": "8f64eae0ef64e53d"
+    },
+    {
+      "event_id": "evt-0048",
+      "timestamp": "2026-01-26T02:05:57.114699+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/artifacts/manifest_generator.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 1
+      },
+      "hash": "ba012518c1e42736"
+    },
+    {
+      "event_id": "evt-0049",
+      "timestamp": "2026-01-26T02:05:57.114709+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/executor/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "0a677e107656b37c"
+    },
+    {
+      "event_id": "evt-0050",
+      "timestamp": "2026-01-26T02:05:57.114716+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/executor/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "4525269e7f462001"
+    },
+    {
+      "event_id": "evt-0051",
+      "timestamp": "2026-01-26T02:05:57.114858+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/executor/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 1947,
+        "hash": "f603599403e812b2"
+      },
+      "hash": "c3f30a216e9eab78"
+    },
+    {
+      "event_id": "evt-0052",
+      "timestamp": "2026-01-26T02:05:57.114869+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/executor/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "12c9c2fca70ef47c"
+    },
+    {
+      "event_id": "evt-0053",
+      "timestamp": "2026-01-26T02:05:57.115069+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/executor/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "b3615e68b37b19cf"
+    },
+    {
+      "event_id": "evt-0054",
+      "timestamp": "2026-01-26T02:05:57.115077+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/executor/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "c974120d924f7739"
+    },
+    {
+      "event_id": "evt-0055",
+      "timestamp": "2026-01-26T02:05:57.115089+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/executor/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "f603599403e812b2"
+      },
+      "hash": "874e34ec3d68ce19"
+    },
+    {
+      "event_id": "evt-0056",
+      "timestamp": "2026-01-26T02:05:57.115098+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/executor/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 0
+      },
+      "hash": "8c2a672f077bb443"
+    },
+    {
+      "event_id": "evt-0057",
+      "timestamp": "2026-01-26T02:05:57.115107+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/executor/local_executor.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "21444c57ce89d0d9"
+    },
+    {
+      "event_id": "evt-0058",
+      "timestamp": "2026-01-26T02:05:57.115115+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/executor/local_executor.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "f87ae5c3aaec6da5"
+    },
+    {
+      "event_id": "evt-0059",
+      "timestamp": "2026-01-26T02:05:57.115256+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/executor/local_executor.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 9080,
+        "hash": "7e69d945bebbfe50"
+      },
+      "hash": "3b4ecd01d1fbf403"
+    },
+    {
+      "event_id": "evt-0060",
+      "timestamp": "2026-01-26T02:05:57.115265+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/executor/local_executor.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "db15f310f63910cc"
+    },
+    {
+      "event_id": "evt-0061",
+      "timestamp": "2026-01-26T02:05:57.116436+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/executor/local_executor.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "95ffca477a3f5da0"
+    },
+    {
+      "event_id": "evt-0062",
+      "timestamp": "2026-01-26T02:05:57.116445+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/executor/local_executor.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "cf84d8bee8c90bac"
+    },
+    {
+      "event_id": "evt-0063",
+      "timestamp": "2026-01-26T02:05:57.116462+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/executor/local_executor.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "7e69d945bebbfe50"
+      },
+      "hash": "94840ea14f1c7fb1"
+    },
+    {
+      "event_id": "evt-0064",
+      "timestamp": "2026-01-26T02:05:57.116471+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/executor/local_executor.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 1
+      },
+      "hash": "e92300eedabd5f3d"
+    },
+    {
+      "event_id": "evt-0065",
+      "timestamp": "2026-01-26T02:05:57.116481+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/executor/remote_executor.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "9ec10cb15d870eba"
+    },
+    {
+      "event_id": "evt-0066",
+      "timestamp": "2026-01-26T02:05:57.116489+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/executor/remote_executor.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "f2434d4272a442a3"
+    },
+    {
+      "event_id": "evt-0067",
+      "timestamp": "2026-01-26T02:05:57.116612+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/executor/remote_executor.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 6033,
+        "hash": "4bdf0b5d3ca74c89"
+      },
+      "hash": "2bede54ecd86b799"
+    },
+    {
+      "event_id": "evt-0068",
+      "timestamp": "2026-01-26T02:05:57.116621+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/executor/remote_executor.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "b81a81ffa1056fb5"
+    },
+    {
+      "event_id": "evt-0069",
+      "timestamp": "2026-01-26T02:05:57.117442+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/executor/remote_executor.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "76798f9be0f411ab"
+    },
+    {
+      "event_id": "evt-0070",
+      "timestamp": "2026-01-26T02:05:57.117452+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/executor/remote_executor.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "b09bca459754b0ee"
+    },
+    {
+      "event_id": "evt-0071",
+      "timestamp": "2026-01-26T02:05:57.117464+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/executor/remote_executor.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "4bdf0b5d3ca74c89"
+      },
+      "hash": "e5cc4a1a4751834c"
+    },
+    {
+      "event_id": "evt-0072",
+      "timestamp": "2026-01-26T02:05:57.117474+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/executor/remote_executor.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 0
+      },
+      "hash": "913f88fa14e441b5"
+    },
+    {
+      "event_id": "evt-0073",
+      "timestamp": "2026-01-26T02:05:57.117482+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/executor/rollback.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "e844f9fa10276274"
+    },
+    {
+      "event_id": "evt-0074",
+      "timestamp": "2026-01-26T02:05:57.117490+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/executor/rollback.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "8455b564c9078ca0"
+    },
+    {
+      "event_id": "evt-0075",
+      "timestamp": "2026-01-26T02:05:57.118442+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/executor/rollback.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 7738,
+        "hash": "eb74475c23023e09"
+      },
+      "hash": "747ba5563326738c"
+    },
+    {
+      "event_id": "evt-0076",
+      "timestamp": "2026-01-26T02:05:57.118457+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/executor/rollback.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "af55cdf440003a09"
+    },
+    {
+      "event_id": "evt-0077",
+      "timestamp": "2026-01-26T02:05:57.119497+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/executor/rollback.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "c9d94e11834e621a"
+    },
+    {
+      "event_id": "evt-0078",
+      "timestamp": "2026-01-26T02:05:57.119508+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/executor/rollback.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "1d3c258693651366"
+    },
+    {
+      "event_id": "evt-0079",
+      "timestamp": "2026-01-26T02:05:57.119522+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/executor/rollback.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "eb74475c23023e09"
+      },
+      "hash": "a25f6857e978f709"
+    },
+    {
+      "event_id": "evt-0080",
+      "timestamp": "2026-01-26T02:05:57.119531+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/executor/rollback.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 2
+      },
+      "hash": "53af3cc93185d964"
+    },
+    {
+      "event_id": "evt-0081",
+      "timestamp": "2026-01-26T02:05:57.119541+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/governance/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "9a237ae1ed613608"
+    },
+    {
+      "event_id": "evt-0082",
+      "timestamp": "2026-01-26T02:05:57.119549+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/governance/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "64af28ee7e792e17"
+    },
+    {
+      "event_id": "evt-0083",
+      "timestamp": "2026-01-26T02:05:57.119668+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/governance/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 1801,
+        "hash": "05ce1af1174afcf1"
+      },
+      "hash": "507acc8c93bd88bc"
+    },
+    {
+      "event_id": "evt-0084",
+      "timestamp": "2026-01-26T02:05:57.119677+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/governance/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "ec06ccd73d356c06"
+    },
+    {
+      "event_id": "evt-0085",
+      "timestamp": "2026-01-26T02:05:57.119884+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/governance/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "3ce7748bc714434a"
+    },
+    {
+      "event_id": "evt-0086",
+      "timestamp": "2026-01-26T02:05:57.119892+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/governance/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "a14b4dbddcc043cb"
+    },
+    {
+      "event_id": "evt-0087",
+      "timestamp": "2026-01-26T02:05:57.119903+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/governance/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "05ce1af1174afcf1"
+      },
+      "hash": "5c085689d74d6d7f"
+    },
+    {
+      "event_id": "evt-0088",
+      "timestamp": "2026-01-26T02:05:57.119911+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/governance/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 0
+      },
+      "hash": "b04bc0d74eee31e0"
+    },
+    {
+      "event_id": "evt-0089",
+      "timestamp": "2026-01-26T02:05:57.119921+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/governance/anchor_resolver.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "55f481c4ce168e18"
+    },
+    {
+      "event_id": "evt-0090",
+      "timestamp": "2026-01-26T02:05:57.119928+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/governance/anchor_resolver.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "6f48d6103a0d157e"
+    },
+    {
+      "event_id": "evt-0091",
+      "timestamp": "2026-01-26T02:05:57.120064+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/governance/anchor_resolver.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 6557,
+        "hash": "da276bd3f182738a"
+      },
+      "hash": "718a4fc0d17d8730"
+    },
+    {
+      "event_id": "evt-0092",
+      "timestamp": "2026-01-26T02:05:57.120074+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/governance/anchor_resolver.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "5ddd4e9461443d34"
+    },
+    {
+      "event_id": "evt-0093",
+      "timestamp": "2026-01-26T02:05:57.120965+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/governance/anchor_resolver.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "e591cc5d0c7f326f"
+    },
+    {
+      "event_id": "evt-0094",
+      "timestamp": "2026-01-26T02:05:57.120975+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/governance/anchor_resolver.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "e17964da2815b55c"
+    },
+    {
+      "event_id": "evt-0095",
+      "timestamp": "2026-01-26T02:05:57.120988+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/governance/anchor_resolver.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "da276bd3f182738a"
+      },
+      "hash": "d2d6af1748c6a1df"
+    },
+    {
+      "event_id": "evt-0096",
+      "timestamp": "2026-01-26T02:05:57.120997+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/governance/anchor_resolver.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 1
+      },
+      "hash": "24fd6d2cfbf5aca5"
+    },
+    {
+      "event_id": "evt-0097",
+      "timestamp": "2026-01-26T02:05:57.121006+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/governance/events_writer.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "d040ee74804a9944"
+    },
+    {
+      "event_id": "evt-0098",
+      "timestamp": "2026-01-26T02:05:57.121014+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/governance/events_writer.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "5e274d3a91b880f9"
+    },
+    {
+      "event_id": "evt-0099",
+      "timestamp": "2026-01-26T02:05:57.121137+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/governance/events_writer.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 4556,
+        "hash": "e960dae30caf0f3a"
+      },
+      "hash": "3dc8b3cfd9dfbc71"
+    },
+    {
+      "event_id": "evt-0100",
+      "timestamp": "2026-01-26T02:05:57.121146+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/governance/events_writer.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "082a459f61b65648"
+    },
+    {
+      "event_id": "evt-0101",
+      "timestamp": "2026-01-26T02:05:57.121785+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/governance/events_writer.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 3
+      },
+      "hash": "52e4a8af8b842f21"
+    },
+    {
+      "event_id": "evt-0102",
+      "timestamp": "2026-01-26T02:05:57.121793+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/governance/events_writer.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "ca02996eb802b5ad"
+    },
+    {
+      "event_id": "evt-0103",
+      "timestamp": "2026-01-26T02:05:57.121805+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/governance/events_writer.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "e960dae30caf0f3a"
+      },
+      "hash": "642506346a11fab6"
+    },
+    {
+      "event_id": "evt-0104",
+      "timestamp": "2026-01-26T02:05:57.121817+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/governance/events_writer.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 3,
+        "time_ms": 0
+      },
+      "hash": "dad1e51d49e07a78"
+    },
+    {
+      "event_id": "evt-0105",
+      "timestamp": "2026-01-26T02:05:57.121841+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/governance/gl_engine.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "9345d8280a530f7d"
+    },
+    {
+      "event_id": "evt-0106",
+      "timestamp": "2026-01-26T02:05:57.121850+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/governance/gl_engine.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "8c4a190387dcd8d3"
+    },
+    {
+      "event_id": "evt-0107",
+      "timestamp": "2026-01-26T02:05:57.121985+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/governance/gl_engine.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 7847,
+        "hash": "5603f3d1832fcbbd"
+      },
+      "hash": "bc3ca83f88213710"
+    },
+    {
+      "event_id": "evt-0108",
+      "timestamp": "2026-01-26T02:05:57.121994+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/governance/gl_engine.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "a9b6acdc52c93f3a"
+    },
+    {
+      "event_id": "evt-0109",
+      "timestamp": "2026-01-26T02:05:57.123426+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/governance/gl_engine.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "03815db07bf98b0f"
+    },
+    {
+      "event_id": "evt-0110",
+      "timestamp": "2026-01-26T02:05:57.123437+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/governance/gl_engine.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "d8922a888ca8fef8"
+    },
+    {
+      "event_id": "evt-0111",
+      "timestamp": "2026-01-26T02:05:57.123453+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/governance/gl_engine.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "5603f3d1832fcbbd"
+      },
+      "hash": "ffac4b8eefe3df9d"
+    },
+    {
+      "event_id": "evt-0112",
+      "timestamp": "2026-01-26T02:05:57.123462+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/governance/gl_engine.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 1
+      },
+      "hash": "457eafb6015a61eb"
+    },
+    {
+      "event_id": "evt-0113",
+      "timestamp": "2026-01-26T02:05:57.123472+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/governance/rule_evaluator.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "c9d42ec66f256323"
+    },
+    {
+      "event_id": "evt-0114",
+      "timestamp": "2026-01-26T02:05:57.123479+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/governance/rule_evaluator.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "e73e535832cc3c88"
+    },
+    {
+      "event_id": "evt-0115",
+      "timestamp": "2026-01-26T02:05:57.123622+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/governance/rule_evaluator.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 8163,
+        "hash": "e2dcbddd47310969"
+      },
+      "hash": "6cc3618abcac01f9"
+    },
+    {
+      "event_id": "evt-0116",
+      "timestamp": "2026-01-26T02:05:57.123631+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/governance/rule_evaluator.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "fe228ee50ecf8455"
+    },
+    {
+      "event_id": "evt-0117",
+      "timestamp": "2026-01-26T02:05:57.124720+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/governance/rule_evaluator.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "d7964ecc8a624d69"
+    },
+    {
+      "event_id": "evt-0118",
+      "timestamp": "2026-01-26T02:05:57.124730+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/governance/rule_evaluator.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "9dd93642f29fc025"
+    },
+    {
+      "event_id": "evt-0119",
+      "timestamp": "2026-01-26T02:05:57.124742+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/governance/rule_evaluator.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "e2dcbddd47310969"
+      },
+      "hash": "214a5d4ef3c91d64"
+    },
+    {
+      "event_id": "evt-0120",
+      "timestamp": "2026-01-26T02:05:57.124751+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/governance/rule_evaluator.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 1
+      },
+      "hash": "df72207551684917"
+    },
+    {
+      "event_id": "evt-0121",
+      "timestamp": "2026-01-26T02:05:57.124760+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/index.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "6a2a772c9b26ff7f"
+    },
+    {
+      "event_id": "evt-0122",
+      "timestamp": "2026-01-26T02:05:57.124768+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/index.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "0d0afd0b8fa2e538"
+    },
+    {
+      "event_id": "evt-0123",
+      "timestamp": "2026-01-26T02:05:57.124888+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/index.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 1848,
+        "hash": "9b23992f9a253206"
+      },
+      "hash": "cdd7a551a646f903"
+    },
+    {
+      "event_id": "evt-0124",
+      "timestamp": "2026-01-26T02:05:57.124898+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/index.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "fa849630e1daf9ef"
+    },
+    {
+      "event_id": "evt-0125",
+      "timestamp": "2026-01-26T02:05:57.125153+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/index.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "c10fdedb484935da"
+    },
+    {
+      "event_id": "evt-0126",
+      "timestamp": "2026-01-26T02:05:57.125160+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/index.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "6bc3150f18d8a920"
+    },
+    {
+      "event_id": "evt-0127",
+      "timestamp": "2026-01-26T02:05:57.125171+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/index.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "9b23992f9a253206"
+      },
+      "hash": "497a913c827de741"
+    },
+    {
+      "event_id": "evt-0128",
+      "timestamp": "2026-01-26T02:05:57.125180+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/index.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 0
+      },
+      "hash": "105e03fea1c5f462"
+    },
+    {
+      "event_id": "evt-0129",
+      "timestamp": "2026-01-26T02:05:57.125189+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/interfaces-fix.d.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "8cce4cf8657ff6ce"
+    },
+    {
+      "event_id": "evt-0130",
+      "timestamp": "2026-01-26T02:05:57.125197+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/interfaces-fix.d.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "0616fcd328fa42c5"
+    },
+    {
+      "event_id": "evt-0131",
+      "timestamp": "2026-01-26T02:05:57.125302+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/interfaces-fix.d.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 2451,
+        "hash": "210942dbf37a4ff5"
+      },
+      "hash": "30d8a76716da9fc0"
+    },
+    {
+      "event_id": "evt-0132",
+      "timestamp": "2026-01-26T02:05:57.125311+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/interfaces-fix.d.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "52648cbc4286a854"
+    },
+    {
+      "event_id": "evt-0133",
+      "timestamp": "2026-01-26T02:05:57.125685+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/interfaces-fix.d.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 5
+      },
+      "hash": "2bad60c62b09c2f2"
+    },
+    {
+      "event_id": "evt-0134",
+      "timestamp": "2026-01-26T02:05:57.125693+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/interfaces-fix.d.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "88162f3e64831731"
+    },
+    {
+      "event_id": "evt-0135",
+      "timestamp": "2026-01-26T02:05:57.125706+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/interfaces-fix.d.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "210942dbf37a4ff5"
+      },
+      "hash": "0fca9d6e604a3904"
+    },
+    {
+      "event_id": "evt-0136",
+      "timestamp": "2026-01-26T02:05:57.125715+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/interfaces-fix.d.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 5,
+        "time_ms": 0
+      },
+      "hash": "dc6b34263975cec7"
+    },
+    {
+      "event_id": "evt-0137",
+      "timestamp": "2026-01-26T02:05:57.125724+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/interfaces.d.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "6eaf0fdaf4db2834"
+    },
+    {
+      "event_id": "evt-0138",
+      "timestamp": "2026-01-26T02:05:57.125732+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/interfaces.d.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "1afcca4b0b1cbcc7"
+    },
+    {
+      "event_id": "evt-0139",
+      "timestamp": "2026-01-26T02:05:57.125853+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/interfaces.d.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 2530,
+        "hash": "09148695780242e9"
+      },
+      "hash": "841207fce93c2c94"
+    },
+    {
+      "event_id": "evt-0140",
+      "timestamp": "2026-01-26T02:05:57.125863+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/interfaces.d.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "797354552b2ea2e3"
+    },
+    {
+      "event_id": "evt-0141",
+      "timestamp": "2026-01-26T02:05:57.126250+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/interfaces.d.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 5
+      },
+      "hash": "62c4bc32a09e3b62"
+    },
+    {
+      "event_id": "evt-0142",
+      "timestamp": "2026-01-26T02:05:57.126259+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/interfaces.d.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "3246c7f2795bf432"
+    },
+    {
+      "event_id": "evt-0143",
+      "timestamp": "2026-01-26T02:05:57.126273+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/interfaces.d.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "09148695780242e9"
+      },
+      "hash": "f8c4d44d5911d839"
+    },
+    {
+      "event_id": "evt-0144",
+      "timestamp": "2026-01-26T02:05:57.126286+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/interfaces.d.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 5,
+        "time_ms": 0
+      },
+      "hash": "8610f2557bbf817a"
+    },
+    {
+      "event_id": "evt-0145",
+      "timestamp": "2026-01-26T02:05:57.126295+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/loader/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "6e9d28156ec405bd"
+    },
+    {
+      "event_id": "evt-0146",
+      "timestamp": "2026-01-26T02:05:57.126303+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/loader/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "27ff3e38ff0bb0b5"
+    },
+    {
+      "event_id": "evt-0147",
+      "timestamp": "2026-01-26T02:05:57.126414+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/loader/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 1986,
+        "hash": "98e88389dbd582c9"
+      },
+      "hash": "0d51422eaee83049"
+    },
+    {
+      "event_id": "evt-0148",
+      "timestamp": "2026-01-26T02:05:57.126423+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/loader/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "8e4cc13f91d680ee"
+    },
+    {
+      "event_id": "evt-0149",
+      "timestamp": "2026-01-26T02:05:57.126627+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/loader/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "1b5244ce2bd75ea4"
+    },
+    {
+      "event_id": "evt-0150",
+      "timestamp": "2026-01-26T02:05:57.126635+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/loader/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "b00b912254b691b5"
+    },
+    {
+      "event_id": "evt-0151",
+      "timestamp": "2026-01-26T02:05:57.126646+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/loader/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "98e88389dbd582c9"
+      },
+      "hash": "cdb403461ce2b7be"
+    },
+    {
+      "event_id": "evt-0152",
+      "timestamp": "2026-01-26T02:05:57.126658+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/loader/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 0
+      },
+      "hash": "07a9dee6bbb70270"
+    },
+    {
+      "event_id": "evt-0153",
+      "timestamp": "2026-01-26T02:05:57.126668+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/loader/fs_loader.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "2c03f91d8a21708e"
+    },
+    {
+      "event_id": "evt-0154",
+      "timestamp": "2026-01-26T02:05:57.126675+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/loader/fs_loader.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "29cd7d81891d2fb8"
+    },
+    {
+      "event_id": "evt-0155",
+      "timestamp": "2026-01-26T02:05:57.126803+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/loader/fs_loader.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 5001,
+        "hash": "38da3e313c81f8e1"
+      },
+      "hash": "86f6258926d8b433"
+    },
+    {
+      "event_id": "evt-0156",
+      "timestamp": "2026-01-26T02:05:57.126812+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/loader/fs_loader.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "45645bc615883c4c"
+    },
+    {
+      "event_id": "evt-0157",
+      "timestamp": "2026-01-26T02:05:57.127498+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/loader/fs_loader.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 3
+      },
+      "hash": "ffbe88f82010aba1"
+    },
+    {
+      "event_id": "evt-0158",
+      "timestamp": "2026-01-26T02:05:57.127508+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/loader/fs_loader.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "74a80d1992bc6644"
+    },
+    {
+      "event_id": "evt-0159",
+      "timestamp": "2026-01-26T02:05:57.127520+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/loader/fs_loader.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "38da3e313c81f8e1"
+      },
+      "hash": "3f097a45c6629de1"
+    },
+    {
+      "event_id": "evt-0160",
+      "timestamp": "2026-01-26T02:05:57.127529+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/loader/fs_loader.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 3,
+        "time_ms": 0
+      },
+      "hash": "2c2b97a54aa14fa3"
+    },
+    {
+      "event_id": "evt-0161",
+      "timestamp": "2026-01-26T02:05:57.127538+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/loader/git_loader.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "70f33c3ce6f9d869"
+    },
+    {
+      "event_id": "evt-0162",
+      "timestamp": "2026-01-26T02:05:57.127546+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/loader/git_loader.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "1dfe9b75dede8de6"
+    },
+    {
+      "event_id": "evt-0163",
+      "timestamp": "2026-01-26T02:05:57.127715+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/loader/git_loader.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 7769,
+        "hash": "070ef03d541d00a3"
+      },
+      "hash": "c4d8e2508bf2f59f"
+    },
+    {
+      "event_id": "evt-0164",
+      "timestamp": "2026-01-26T02:05:57.127727+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/loader/git_loader.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "d528b8998bbb7341"
+    },
+    {
+      "event_id": "evt-0165",
+      "timestamp": "2026-01-26T02:05:57.128722+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/loader/git_loader.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 3
+      },
+      "hash": "866fd7a167c995b4"
+    },
+    {
+      "event_id": "evt-0166",
+      "timestamp": "2026-01-26T02:05:57.128738+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/loader/git_loader.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "851d7a4aa39d1b77"
+    },
+    {
+      "event_id": "evt-0167",
+      "timestamp": "2026-01-26T02:05:57.128757+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/loader/git_loader.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "070ef03d541d00a3"
+      },
+      "hash": "76dff0e34a5b25ea"
+    },
+    {
+      "event_id": "evt-0168",
+      "timestamp": "2026-01-26T02:05:57.128772+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/loader/git_loader.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 3,
+        "time_ms": 1
+      },
+      "hash": "512ad9cd4e7a8ab0"
+    },
+    {
+      "event_id": "evt-0169",
+      "timestamp": "2026-01-26T02:05:57.128787+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/loader/merge_index.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "de5c2fa0141d932a"
+    },
+    {
+      "event_id": "evt-0170",
+      "timestamp": "2026-01-26T02:05:57.128801+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/loader/merge_index.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "5d7fc5d2f392e66c"
+    },
+    {
+      "event_id": "evt-0171",
+      "timestamp": "2026-01-26T02:05:57.129012+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/loader/merge_index.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 6427,
+        "hash": "4cf6e9f6597c5580"
+      },
+      "hash": "2e46a466e75b012b"
+    },
+    {
+      "event_id": "evt-0172",
+      "timestamp": "2026-01-26T02:05:57.129024+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/loader/merge_index.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "8b77403b11e91f13"
+    },
+    {
+      "event_id": "evt-0173",
+      "timestamp": "2026-01-26T02:05:57.129784+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/loader/merge_index.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 3
+      },
+      "hash": "6c1f33cb5e445e2e"
+    },
+    {
+      "event_id": "evt-0174",
+      "timestamp": "2026-01-26T02:05:57.129798+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/loader/merge_index.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "e18458ad5f957a35"
+    },
+    {
+      "event_id": "evt-0175",
+      "timestamp": "2026-01-26T02:05:57.129811+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/loader/merge_index.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "4cf6e9f6597c5580"
+      },
+      "hash": "7c6684e7f85282c3"
+    },
+    {
+      "event_id": "evt-0176",
+      "timestamp": "2026-01-26T02:05:57.129839+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/loader/merge_index.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 3,
+        "time_ms": 1
+      },
+      "hash": "04c879494f8fa9fd"
+    },
+    {
+      "event_id": "evt-0177",
+      "timestamp": "2026-01-26T02:05:57.129850+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/normalizer/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "daa09a5b78507fb9"
+    },
+    {
+      "event_id": "evt-0178",
+      "timestamp": "2026-01-26T02:05:57.129859+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/normalizer/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "fa16779591a649dd"
+    },
+    {
+      "event_id": "evt-0179",
+      "timestamp": "2026-01-26T02:05:57.129987+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/normalizer/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 1713,
+        "hash": "5e7050afe8397d50"
+      },
+      "hash": "65d20b23dc9f0a45"
+    },
+    {
+      "event_id": "evt-0180",
+      "timestamp": "2026-01-26T02:05:57.129997+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/normalizer/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "9806d49f923a4b84"
+    },
+    {
+      "event_id": "evt-0181",
+      "timestamp": "2026-01-26T02:05:57.130173+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/normalizer/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "e6bf8f1bbdae4e2e"
+    },
+    {
+      "event_id": "evt-0182",
+      "timestamp": "2026-01-26T02:05:57.130181+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/normalizer/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "6e6a8c53dff7d8a3"
+    },
+    {
+      "event_id": "evt-0183",
+      "timestamp": "2026-01-26T02:05:57.130192+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/normalizer/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "5e7050afe8397d50"
+      },
+      "hash": "72d217f025a4dae8"
+    },
+    {
+      "event_id": "evt-0184",
+      "timestamp": "2026-01-26T02:05:57.130201+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/normalizer/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 0
+      },
+      "hash": "78c5cb36ae088940"
+    },
+    {
+      "event_id": "evt-0185",
+      "timestamp": "2026-01-26T02:05:57.130210+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/normalizer/defaults_applier.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "0b7a5024c99a1160"
+    },
+    {
+      "event_id": "evt-0186",
+      "timestamp": "2026-01-26T02:05:57.130217+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/normalizer/defaults_applier.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "7c03e6a32be51d69"
+    },
+    {
+      "event_id": "evt-0187",
+      "timestamp": "2026-01-26T02:05:57.130345+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/normalizer/defaults_applier.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 5504,
+        "hash": "004745f2f946924a"
+      },
+      "hash": "3cf40bb8ee0de6ed"
+    },
+    {
+      "event_id": "evt-0188",
+      "timestamp": "2026-01-26T02:05:57.130354+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/normalizer/defaults_applier.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "0cf5592262c525e7"
+    },
+    {
+      "event_id": "evt-0189",
+      "timestamp": "2026-01-26T02:05:57.131118+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/normalizer/defaults_applier.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "e84f011be5212d8c"
+    },
+    {
+      "event_id": "evt-0190",
+      "timestamp": "2026-01-26T02:05:57.131128+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/normalizer/defaults_applier.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "67490eac2c2c4076"
+    },
+    {
+      "event_id": "evt-0191",
+      "timestamp": "2026-01-26T02:05:57.131144+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/normalizer/defaults_applier.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "004745f2f946924a"
+      },
+      "hash": "e98fa2e15ef8bab8"
+    },
+    {
+      "event_id": "evt-0192",
+      "timestamp": "2026-01-26T02:05:57.131153+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/normalizer/defaults_applier.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 0
+      },
+      "hash": "556446711ccfcf0f"
+    },
+    {
+      "event_id": "evt-0193",
+      "timestamp": "2026-01-26T02:05:57.131162+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/normalizer/env_merger.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "8b2f60d148de63b4"
+    },
+    {
+      "event_id": "evt-0194",
+      "timestamp": "2026-01-26T02:05:57.131169+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/normalizer/env_merger.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "d704ef4a2b9c279c"
+    },
+    {
+      "event_id": "evt-0195",
+      "timestamp": "2026-01-26T02:05:57.131303+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/normalizer/env_merger.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 4242,
+        "hash": "f475964575acbaeb"
+      },
+      "hash": "807a6b0105ac8cb7"
+    },
+    {
+      "event_id": "evt-0196",
+      "timestamp": "2026-01-26T02:05:57.131312+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/normalizer/env_merger.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "78b3602db0037189"
+    },
+    {
+      "event_id": "evt-0197",
+      "timestamp": "2026-01-26T02:05:57.131920+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/normalizer/env_merger.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "05ffd5cf955d9b61"
+    },
+    {
+      "event_id": "evt-0198",
+      "timestamp": "2026-01-26T02:05:57.131929+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/normalizer/env_merger.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "a2a374bfd1a45158"
+    },
+    {
+      "event_id": "evt-0199",
+      "timestamp": "2026-01-26T02:05:57.131946+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/normalizer/env_merger.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "f475964575acbaeb"
+      },
+      "hash": "68a33fac8797233f"
+    },
+    {
+      "event_id": "evt-0200",
+      "timestamp": "2026-01-26T02:05:57.131955+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/normalizer/env_merger.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 0
+      },
+      "hash": "645b7d67c678eb68"
+    },
+    {
+      "event_id": "evt-0201",
+      "timestamp": "2026-01-26T02:05:57.131964+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/normalizer/module_defaults.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "abb9aff674007c03"
+    },
+    {
+      "event_id": "evt-0202",
+      "timestamp": "2026-01-26T02:05:57.131972+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/normalizer/module_defaults.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "80a42b089b9d097b"
+    },
+    {
+      "event_id": "evt-0203",
+      "timestamp": "2026-01-26T02:05:57.132097+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/normalizer/module_defaults.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 5464,
+        "hash": "3fae0f0c60bfd9ff"
+      },
+      "hash": "2eb3d4f614798775"
+    },
+    {
+      "event_id": "evt-0204",
+      "timestamp": "2026-01-26T02:05:57.132106+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/normalizer/module_defaults.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "44b0358d910023f6"
+    },
+    {
+      "event_id": "evt-0205",
+      "timestamp": "2026-01-26T02:05:57.132872+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/normalizer/module_defaults.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "2635d2bed03ae214"
+    },
+    {
+      "event_id": "evt-0206",
+      "timestamp": "2026-01-26T02:05:57.132881+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/normalizer/module_defaults.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "43cc573b7e31ea0e"
+    },
+    {
+      "event_id": "evt-0207",
+      "timestamp": "2026-01-26T02:05:57.132894+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/normalizer/module_defaults.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "3fae0f0c60bfd9ff"
+      },
+      "hash": "42b2770f2a0d4f69"
+    },
+    {
+      "event_id": "evt-0208",
+      "timestamp": "2026-01-26T02:05:57.132903+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/normalizer/module_defaults.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 0
+      },
+      "hash": "ce5faa8a368770ea"
+    },
+    {
+      "event_id": "evt-0209",
+      "timestamp": "2026-01-26T02:05:57.132912+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/package-lock.json",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "f48a9248bd6a5ae1"
+    },
+    {
+      "event_id": "evt-0210",
+      "timestamp": "2026-01-26T02:05:57.132920+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/package-lock.json",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "a5d9bb3e3276e665"
+    },
+    {
+      "event_id": "evt-0211",
+      "timestamp": "2026-01-26T02:05:57.133988+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/package-lock.json",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 205382,
+        "hash": "b702f1759f5a20d7"
+      },
+      "hash": "ceb8e82072ca2193"
+    },
+    {
+      "event_id": "evt-0212",
+      "timestamp": "2026-01-26T02:05:57.134001+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/package-lock.json",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "3a73ea65d048c31a"
+    },
+    {
+      "event_id": "evt-0213",
+      "timestamp": "2026-01-26T02:05:57.150901+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/package-lock.json",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 1
+      },
+      "hash": "c40494448e347906"
+    },
+    {
+      "event_id": "evt-0214",
+      "timestamp": "2026-01-26T02:05:57.150918+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/package-lock.json",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "db6a514582d8eb42"
+    },
+    {
+      "event_id": "evt-0215",
+      "timestamp": "2026-01-26T02:05:57.150931+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/package-lock.json",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "b702f1759f5a20d7"
+      },
+      "hash": "3cfc4c00ac22135b"
+    },
+    {
+      "event_id": "evt-0216",
+      "timestamp": "2026-01-26T02:05:57.150944+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/package-lock.json",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 1,
+        "time_ms": 18
+      },
+      "hash": "5b61031d07af0986"
+    },
+    {
+      "event_id": "evt-0217",
+      "timestamp": "2026-01-26T02:05:57.150991+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/package.json",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "1eaa1ba5ac24c26a"
+    },
+    {
+      "event_id": "evt-0218",
+      "timestamp": "2026-01-26T02:05:57.151003+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/package.json",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "2ea0b487d794dcac"
+    },
+    {
+      "event_id": "evt-0219",
+      "timestamp": "2026-01-26T02:05:57.151135+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/package.json",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 1464,
+        "hash": "ad8760ea9f26a114"
+      },
+      "hash": "b3bd5e6230f70559"
+    },
+    {
+      "event_id": "evt-0220",
+      "timestamp": "2026-01-26T02:05:57.151145+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/package.json",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "6a1066b10a56a822"
+    },
+    {
+      "event_id": "evt-0221",
+      "timestamp": "2026-01-26T02:05:57.151290+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/package.json",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 1
+      },
+      "hash": "c7e2dce889bfe8dd"
+    },
+    {
+      "event_id": "evt-0222",
+      "timestamp": "2026-01-26T02:05:57.151299+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/package.json",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "c1aa5cb108edbbd4"
+    },
+    {
+      "event_id": "evt-0223",
+      "timestamp": "2026-01-26T02:05:57.151309+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/package.json",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "ad8760ea9f26a114"
+      },
+      "hash": "b4f6085f3ee0e924"
+    },
+    {
+      "event_id": "evt-0224",
+      "timestamp": "2026-01-26T02:05:57.151319+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/package.json",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 1,
+        "time_ms": 0
+      },
+      "hash": "37f96774575c0e3f"
+    },
+    {
+      "event_id": "evt-0225",
+      "timestamp": "2026-01-26T02:05:57.151328+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/parser/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "f1d309bcc5f3926b"
+    },
+    {
+      "event_id": "evt-0226",
+      "timestamp": "2026-01-26T02:05:57.151336+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/parser/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "149e74b35226b202"
+    },
+    {
+      "event_id": "evt-0227",
+      "timestamp": "2026-01-26T02:05:57.151449+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/parser/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 1627,
+        "hash": "81b70b696f14c975"
+      },
+      "hash": "9bfb36cef3a08b69"
+    },
+    {
+      "event_id": "evt-0228",
+      "timestamp": "2026-01-26T02:05:57.151458+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/parser/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "ef30209671dafbb8"
+    },
+    {
+      "event_id": "evt-0229",
+      "timestamp": "2026-01-26T02:05:57.151630+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/parser/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "abb211f868de235e"
+    },
+    {
+      "event_id": "evt-0230",
+      "timestamp": "2026-01-26T02:05:57.151637+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/parser/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "6ff97803b674e83d"
+    },
+    {
+      "event_id": "evt-0231",
+      "timestamp": "2026-01-26T02:05:57.151648+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/parser/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "81b70b696f14c975"
+      },
+      "hash": "d6858222b9a7bdd9"
+    },
+    {
+      "event_id": "evt-0232",
+      "timestamp": "2026-01-26T02:05:57.151657+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/parser/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 0
+      },
+      "hash": "c04110144021d474"
+    },
+    {
+      "event_id": "evt-0233",
+      "timestamp": "2026-01-26T02:05:57.151666+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/parser/anchor_resolver.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "bb0883cc47f5591d"
+    },
+    {
+      "event_id": "evt-0234",
+      "timestamp": "2026-01-26T02:05:57.151674+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/parser/anchor_resolver.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "f28e0ea2a8f04cbd"
+    },
+    {
+      "event_id": "evt-0235",
+      "timestamp": "2026-01-26T02:05:57.151800+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/parser/anchor_resolver.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 6693,
+        "hash": "1033447b4f64cd67"
+      },
+      "hash": "b48ff04b22553aa7"
+    },
+    {
+      "event_id": "evt-0236",
+      "timestamp": "2026-01-26T02:05:57.151809+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/parser/anchor_resolver.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "cf8c3b52b51a3a76"
+    },
+    {
+      "event_id": "evt-0237",
+      "timestamp": "2026-01-26T02:05:57.152745+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/parser/anchor_resolver.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "cc9d90727d0d6ff3"
+    },
+    {
+      "event_id": "evt-0238",
+      "timestamp": "2026-01-26T02:05:57.152757+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/parser/anchor_resolver.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "ed59e90b506765b7"
+    },
+    {
+      "event_id": "evt-0239",
+      "timestamp": "2026-01-26T02:05:57.152770+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/parser/anchor_resolver.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "1033447b4f64cd67"
+      },
+      "hash": "71e2744e6998e5bf"
+    },
+    {
+      "event_id": "evt-0240",
+      "timestamp": "2026-01-26T02:05:57.152780+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/parser/anchor_resolver.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 1
+      },
+      "hash": "d73fb6111a77e242"
+    },
+    {
+      "event_id": "evt-0241",
+      "timestamp": "2026-01-26T02:05:57.152789+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/parser/json_passthrough.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "a894b78c9f222594"
+    },
+    {
+      "event_id": "evt-0242",
+      "timestamp": "2026-01-26T02:05:57.152797+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/parser/json_passthrough.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "4811ac2910fa6428"
+    },
+    {
+      "event_id": "evt-0243",
+      "timestamp": "2026-01-26T02:05:57.152938+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/parser/json_passthrough.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 3893,
+        "hash": "ad5c6f8269d485cf"
+      },
+      "hash": "5c0e3bf40440db1d"
+    },
+    {
+      "event_id": "evt-0244",
+      "timestamp": "2026-01-26T02:05:57.152947+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/parser/json_passthrough.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "43e043a30da2e017"
+    },
+    {
+      "event_id": "evt-0245",
+      "timestamp": "2026-01-26T02:05:57.153502+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/parser/json_passthrough.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "cddfe10609460e99"
+    },
+    {
+      "event_id": "evt-0246",
+      "timestamp": "2026-01-26T02:05:57.153510+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/parser/json_passthrough.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "f22a32b89ada2c53"
+    },
+    {
+      "event_id": "evt-0247",
+      "timestamp": "2026-01-26T02:05:57.153523+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/parser/json_passthrough.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "ad5c6f8269d485cf"
+      },
+      "hash": "eaf34c10078731be"
+    },
+    {
+      "event_id": "evt-0248",
+      "timestamp": "2026-01-26T02:05:57.153532+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/parser/json_passthrough.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 0
+      },
+      "hash": "4b26b49769106e62"
+    },
+    {
+      "event_id": "evt-0249",
+      "timestamp": "2026-01-26T02:05:57.153542+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/parser/yaml_parser.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "e8d221cf568c688c"
+    },
+    {
+      "event_id": "evt-0250",
+      "timestamp": "2026-01-26T02:05:57.153550+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/parser/yaml_parser.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "ed632c04dc0ba4d8"
+    },
+    {
+      "event_id": "evt-0251",
+      "timestamp": "2026-01-26T02:05:57.153664+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/parser/yaml_parser.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 3422,
+        "hash": "ac6f570c843c0797"
+      },
+      "hash": "3704e3bf25482fa0"
+    },
+    {
+      "event_id": "evt-0252",
+      "timestamp": "2026-01-26T02:05:57.153673+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/parser/yaml_parser.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "1271eab02828fb05"
+    },
+    {
+      "event_id": "evt-0253",
+      "timestamp": "2026-01-26T02:05:57.154184+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/parser/yaml_parser.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 3
+      },
+      "hash": "db6e5392fadfae55"
+    },
+    {
+      "event_id": "evt-0254",
+      "timestamp": "2026-01-26T02:05:57.154194+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/parser/yaml_parser.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "ed60d6a27ad334ee"
+    },
+    {
+      "event_id": "evt-0255",
+      "timestamp": "2026-01-26T02:05:57.154211+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/parser/yaml_parser.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "ac6f570c843c0797"
+      },
+      "hash": "f11121a2ebb38f0c"
+    },
+    {
+      "event_id": "evt-0256",
+      "timestamp": "2026-01-26T02:05:57.154220+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/parser/yaml_parser.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 3,
+        "time_ms": 0
+      },
+      "hash": "c5b5e580f91559fc"
+    },
+    {
+      "event_id": "evt-0257",
+      "timestamp": "2026-01-26T02:05:57.154230+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/renderer/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "b7e50e097a9b6372"
+    },
+    {
+      "event_id": "evt-0258",
+      "timestamp": "2026-01-26T02:05:57.154238+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/renderer/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "9c3f0fa4c7b436a3"
+    },
+    {
+      "event_id": "evt-0259",
+      "timestamp": "2026-01-26T02:05:57.154397+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/renderer/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 1939,
+        "hash": "40b57df10b149554"
+      },
+      "hash": "b2beeaf5b5522903"
+    },
+    {
+      "event_id": "evt-0260",
+      "timestamp": "2026-01-26T02:05:57.154407+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/renderer/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "4af5fb064db303ec"
+    },
+    {
+      "event_id": "evt-0261",
+      "timestamp": "2026-01-26T02:05:57.154604+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/renderer/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "6e4d52b9c354fa0e"
+    },
+    {
+      "event_id": "evt-0262",
+      "timestamp": "2026-01-26T02:05:57.154611+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/renderer/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "44670f29b7710181"
+    },
+    {
+      "event_id": "evt-0263",
+      "timestamp": "2026-01-26T02:05:57.154622+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/renderer/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "40b57df10b149554"
+      },
+      "hash": "a0689971722121d8"
+    },
+    {
+      "event_id": "evt-0264",
+      "timestamp": "2026-01-26T02:05:57.154631+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/renderer/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 0
+      },
+      "hash": "847d357667b8ac88"
+    },
+    {
+      "event_id": "evt-0265",
+      "timestamp": "2026-01-26T02:05:57.154640+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/renderer/artifact_writer.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "e49817be03a2b6bc"
+    },
+    {
+      "event_id": "evt-0266",
+      "timestamp": "2026-01-26T02:05:57.154648+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/renderer/artifact_writer.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "dd9bdb3bb545a624"
+    },
+    {
+      "event_id": "evt-0267",
+      "timestamp": "2026-01-26T02:05:57.154769+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/renderer/artifact_writer.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 5757,
+        "hash": "526e80f6d0821306"
+      },
+      "hash": "1d594359af8081f3"
+    },
+    {
+      "event_id": "evt-0268",
+      "timestamp": "2026-01-26T02:05:57.154778+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/renderer/artifact_writer.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "5012821b8962921f"
+    },
+    {
+      "event_id": "evt-0269",
+      "timestamp": "2026-01-26T02:05:57.155587+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/renderer/artifact_writer.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "ad00ed8bd6f33c13"
+    },
+    {
+      "event_id": "evt-0270",
+      "timestamp": "2026-01-26T02:05:57.155597+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/renderer/artifact_writer.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "f6c1907f0fa1f284"
+    },
+    {
+      "event_id": "evt-0271",
+      "timestamp": "2026-01-26T02:05:57.155610+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/renderer/artifact_writer.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "526e80f6d0821306"
+      },
+      "hash": "34eafbed5f10b02d"
+    },
+    {
+      "event_id": "evt-0272",
+      "timestamp": "2026-01-26T02:05:57.155619+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/renderer/artifact_writer.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 0
+      },
+      "hash": "4a98c35aadc21915"
+    },
+    {
+      "event_id": "evt-0273",
+      "timestamp": "2026-01-26T02:05:57.155628+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/renderer/module_mapper.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "0423db1498efddc4"
+    },
+    {
+      "event_id": "evt-0274",
+      "timestamp": "2026-01-26T02:05:57.155636+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/renderer/module_mapper.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "7715d986bb765d66"
+    },
+    {
+      "event_id": "evt-0275",
+      "timestamp": "2026-01-26T02:05:57.155756+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/renderer/module_mapper.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 5535,
+        "hash": "e31079d17908bb9a"
+      },
+      "hash": "46f6175f602c80cc"
+    },
+    {
+      "event_id": "evt-0276",
+      "timestamp": "2026-01-26T02:05:57.155764+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/renderer/module_mapper.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "6ccee17468fad0e1"
+    },
+    {
+      "event_id": "evt-0277",
+      "timestamp": "2026-01-26T02:05:57.156557+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/renderer/module_mapper.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "8b88cb2b1a62f64d"
+    },
+    {
+      "event_id": "evt-0278",
+      "timestamp": "2026-01-26T02:05:57.156568+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/renderer/module_mapper.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "a47f72d272d64f90"
+    },
+    {
+      "event_id": "evt-0279",
+      "timestamp": "2026-01-26T02:05:57.156581+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/renderer/module_mapper.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "e31079d17908bb9a"
+      },
+      "hash": "ff9e0030ee707a8d"
+    },
+    {
+      "event_id": "evt-0280",
+      "timestamp": "2026-01-26T02:05:57.156591+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/renderer/module_mapper.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 0
+      },
+      "hash": "0a16d81e50b52505"
+    },
+    {
+      "event_id": "evt-0281",
+      "timestamp": "2026-01-26T02:05:57.156600+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/renderer/template_engine.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "6c448ddb07a0c74c"
+    },
+    {
+      "event_id": "evt-0282",
+      "timestamp": "2026-01-26T02:05:57.156608+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/renderer/template_engine.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "093ec4c1b187e2c4"
+    },
+    {
+      "event_id": "evt-0283",
+      "timestamp": "2026-01-26T02:05:57.156736+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/renderer/template_engine.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 6526,
+        "hash": "1301f4c20c569e5d"
+      },
+      "hash": "1b402606f4c3d709"
+    },
+    {
+      "event_id": "evt-0284",
+      "timestamp": "2026-01-26T02:05:57.156746+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/renderer/template_engine.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "69cd8647ca8f347e"
+    },
+    {
+      "event_id": "evt-0285",
+      "timestamp": "2026-01-26T02:05:57.157669+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/renderer/template_engine.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "d44ac1f1650eb3cf"
+    },
+    {
+      "event_id": "evt-0286",
+      "timestamp": "2026-01-26T02:05:57.157679+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/renderer/template_engine.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "0dbda89342adf4a7"
+    },
+    {
+      "event_id": "evt-0287",
+      "timestamp": "2026-01-26T02:05:57.157691+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/renderer/template_engine.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "1301f4c20c569e5d"
+      },
+      "hash": "e377a149f5a4ddad"
+    },
+    {
+      "event_id": "evt-0288",
+      "timestamp": "2026-01-26T02:05:57.157700+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/renderer/template_engine.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 1
+      },
+      "hash": "58f4fd78342a697d"
+    },
+    {
+      "event_id": "evt-0289",
+      "timestamp": "2026-01-26T02:05:57.157709+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/tests/artifacts/evidence_chain.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "1dffa3d1be841199"
+    },
+    {
+      "event_id": "evt-0290",
+      "timestamp": "2026-01-26T02:05:57.157717+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/tests/artifacts/evidence_chain.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "e4b47af985a8438b"
+    },
+    {
+      "event_id": "evt-0291",
+      "timestamp": "2026-01-26T02:05:57.157854+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/tests/artifacts/evidence_chain.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 2984,
+        "hash": "e21fd9b7d7fee4e9"
+      },
+      "hash": "e3ad1222fd798a8c"
+    },
+    {
+      "event_id": "evt-0292",
+      "timestamp": "2026-01-26T02:05:57.157865+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/tests/artifacts/evidence_chain.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "60d29629eb7ea96f"
+    },
+    {
+      "event_id": "evt-0293",
+      "timestamp": "2026-01-26T02:05:57.158377+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/tests/artifacts/evidence_chain.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "6f51fce3760e2f0c"
+    },
+    {
+      "event_id": "evt-0294",
+      "timestamp": "2026-01-26T02:05:57.158388+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/tests/artifacts/evidence_chain.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "3b86d59d9178896a"
+    },
+    {
+      "event_id": "evt-0295",
+      "timestamp": "2026-01-26T02:05:57.158400+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/tests/artifacts/evidence_chain.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "e21fd9b7d7fee4e9"
+      },
+      "hash": "f67ec996393be93f"
+    },
+    {
+      "event_id": "evt-0296",
+      "timestamp": "2026-01-26T02:05:57.158410+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/tests/artifacts/evidence_chain.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 0
+      },
+      "hash": "417e07cad7182f0a"
+    },
+    {
+      "event_id": "evt-0297",
+      "timestamp": "2026-01-26T02:05:57.158420+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/tests/governance/rule_evaluator.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "fe33ea864a0addfd"
+    },
+    {
+      "event_id": "evt-0298",
+      "timestamp": "2026-01-26T02:05:57.158428+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/tests/governance/rule_evaluator.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "5463daddf49c1b9f"
+    },
+    {
+      "event_id": "evt-0299",
+      "timestamp": "2026-01-26T02:05:57.158557+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/tests/governance/rule_evaluator.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 4072,
+        "hash": "af0ead09a63e1a08"
+      },
+      "hash": "276b7c0eb0df2936"
+    },
+    {
+      "event_id": "evt-0300",
+      "timestamp": "2026-01-26T02:05:57.158566+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/tests/governance/rule_evaluator.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "b70ebc7bcc97ff46"
+    },
+    {
+      "event_id": "evt-0301",
+      "timestamp": "2026-01-26T02:05:57.159100+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/tests/governance/rule_evaluator.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "75ef70ce0ecd3fc7"
+    },
+    {
+      "event_id": "evt-0302",
+      "timestamp": "2026-01-26T02:05:57.159111+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/tests/governance/rule_evaluator.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "7ad6d697a3675dd7"
+    },
+    {
+      "event_id": "evt-0303",
+      "timestamp": "2026-01-26T02:05:57.159122+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/tests/governance/rule_evaluator.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "af0ead09a63e1a08"
+      },
+      "hash": "b333852ad807f044"
+    },
+    {
+      "event_id": "evt-0304",
+      "timestamp": "2026-01-26T02:05:57.159131+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/tests/governance/rule_evaluator.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 0
+      },
+      "hash": "7c99cc7be5e5df0b"
+    },
+    {
+      "event_id": "evt-0305",
+      "timestamp": "2026-01-26T02:05:57.159141+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/tests/loader/fs_loader.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "8442044ed04cc4f2"
+    },
+    {
+      "event_id": "evt-0306",
+      "timestamp": "2026-01-26T02:05:57.159149+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/tests/loader/fs_loader.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "c97ef6c93cdcccf5"
+    },
+    {
+      "event_id": "evt-0307",
+      "timestamp": "2026-01-26T02:05:57.159265+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/tests/loader/fs_loader.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 1868,
+        "hash": "23b598f629092f0f"
+      },
+      "hash": "abd4aacba5c64b3d"
+    },
+    {
+      "event_id": "evt-0308",
+      "timestamp": "2026-01-26T02:05:57.159274+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/tests/loader/fs_loader.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "88358c5d8bdd9518"
+    },
+    {
+      "event_id": "evt-0309",
+      "timestamp": "2026-01-26T02:05:57.159535+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/tests/loader/fs_loader.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "496dd5623b378a63"
+    },
+    {
+      "event_id": "evt-0310",
+      "timestamp": "2026-01-26T02:05:57.159544+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/tests/loader/fs_loader.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "510cfc2712b3ae9b"
+    },
+    {
+      "event_id": "evt-0311",
+      "timestamp": "2026-01-26T02:05:57.159555+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/tests/loader/fs_loader.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "23b598f629092f0f"
+      },
+      "hash": "035545e9a8cb2bff"
+    },
+    {
+      "event_id": "evt-0312",
+      "timestamp": "2026-01-26T02:05:57.159564+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/tests/loader/fs_loader.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 0
+      },
+      "hash": "0443f154ea7386f6"
+    },
+    {
+      "event_id": "evt-0313",
+      "timestamp": "2026-01-26T02:05:57.159574+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/tests/loader/merge_index.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "d415ba5340406741"
+    },
+    {
+      "event_id": "evt-0314",
+      "timestamp": "2026-01-26T02:05:57.159581+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/tests/loader/merge_index.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "6429af6bc5cc0317"
+    },
+    {
+      "event_id": "evt-0315",
+      "timestamp": "2026-01-26T02:05:57.159700+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/tests/loader/merge_index.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 2790,
+        "hash": "a001e6e0d2872842"
+      },
+      "hash": "707cabd9b3e102cd"
+    },
+    {
+      "event_id": "evt-0316",
+      "timestamp": "2026-01-26T02:05:57.159708+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/tests/loader/merge_index.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "8962f4ef3af8b3d8"
+    },
+    {
+      "event_id": "evt-0317",
+      "timestamp": "2026-01-26T02:05:57.160112+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/tests/loader/merge_index.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "c5535c9ac6be4b97"
+    },
+    {
+      "event_id": "evt-0318",
+      "timestamp": "2026-01-26T02:05:57.160124+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/tests/loader/merge_index.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "b0be8604a77a4bc2"
+    },
+    {
+      "event_id": "evt-0319",
+      "timestamp": "2026-01-26T02:05:57.160136+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/tests/loader/merge_index.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "a001e6e0d2872842"
+      },
+      "hash": "d23e25506c4c713b"
+    },
+    {
+      "event_id": "evt-0320",
+      "timestamp": "2026-01-26T02:05:57.160146+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/tests/loader/merge_index.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 0
+      },
+      "hash": "4b3c88ec1738e458"
+    },
+    {
+      "event_id": "evt-0321",
+      "timestamp": "2026-01-26T02:05:57.160155+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/tests/normalizer/env_merger.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "a6dcf3100c74bf0a"
+    },
+    {
+      "event_id": "evt-0322",
+      "timestamp": "2026-01-26T02:05:57.160163+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/tests/normalizer/env_merger.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "21d1b5bd535143d1"
+    },
+    {
+      "event_id": "evt-0323",
+      "timestamp": "2026-01-26T02:05:57.160282+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/tests/normalizer/env_merger.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 1584,
+        "hash": "a2683bc146ba901f"
+      },
+      "hash": "40b5385ce3327f09"
+    },
+    {
+      "event_id": "evt-0324",
+      "timestamp": "2026-01-26T02:05:57.160292+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/tests/normalizer/env_merger.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "dc2588c24e3825c7"
+    },
+    {
+      "event_id": "evt-0325",
+      "timestamp": "2026-01-26T02:05:57.160521+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/tests/normalizer/env_merger.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "4ea3bf65cdd62c33"
+    },
+    {
+      "event_id": "evt-0326",
+      "timestamp": "2026-01-26T02:05:57.160529+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/tests/normalizer/env_merger.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "f56f4831a613f218"
+    },
+    {
+      "event_id": "evt-0327",
+      "timestamp": "2026-01-26T02:05:57.160540+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/tests/normalizer/env_merger.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "a2683bc146ba901f"
+      },
+      "hash": "7356e7e1ee0c3f2f"
+    },
+    {
+      "event_id": "evt-0328",
+      "timestamp": "2026-01-26T02:05:57.160549+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/tests/normalizer/env_merger.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 0
+      },
+      "hash": "22f617a6fcc86e0c"
+    },
+    {
+      "event_id": "evt-0329",
+      "timestamp": "2026-01-26T02:05:57.160558+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/tests/validator/schema_validator.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "a77d7f2d997486ec"
+    },
+    {
+      "event_id": "evt-0330",
+      "timestamp": "2026-01-26T02:05:57.160565+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/tests/validator/schema_validator.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "4fb179ec74c55547"
+    },
+    {
+      "event_id": "evt-0331",
+      "timestamp": "2026-01-26T02:05:57.160678+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/tests/validator/schema_validator.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 1802,
+        "hash": "08600725006092c2"
+      },
+      "hash": "ece436429ae2f645"
+    },
+    {
+      "event_id": "evt-0332",
+      "timestamp": "2026-01-26T02:05:57.160687+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/tests/validator/schema_validator.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "da03eb99c8da50d0"
+    },
+    {
+      "event_id": "evt-0333",
+      "timestamp": "2026-01-26T02:05:57.160961+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/tests/validator/schema_validator.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "9f43ee65c51b47ce"
+    },
+    {
+      "event_id": "evt-0334",
+      "timestamp": "2026-01-26T02:05:57.160970+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/tests/validator/schema_validator.test.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "92c3882d27811e9e"
+    },
+    {
+      "event_id": "evt-0335",
+      "timestamp": "2026-01-26T02:05:57.160981+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/tests/validator/schema_validator.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "08600725006092c2"
+      },
+      "hash": "ad58a79d3a05fb00"
+    },
+    {
+      "event_id": "evt-0336",
+      "timestamp": "2026-01-26T02:05:57.160990+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/tests/validator/schema_validator.test.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 0
+      },
+      "hash": "2b59a3a67921d1a8"
+    },
+    {
+      "event_id": "evt-0337",
+      "timestamp": "2026-01-26T02:05:57.160999+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/tsconfig.json",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "edf56b4be9d0e947"
+    },
+    {
+      "event_id": "evt-0338",
+      "timestamp": "2026-01-26T02:05:57.161006+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/tsconfig.json",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "283e98c18f01b122"
+    },
+    {
+      "event_id": "evt-0339",
+      "timestamp": "2026-01-26T02:05:57.161108+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/tsconfig.json",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 1037,
+        "hash": "564fe189952f1bc5"
+      },
+      "hash": "f624a0a6e81fa1ed"
+    },
+    {
+      "event_id": "evt-0340",
+      "timestamp": "2026-01-26T02:05:57.161116+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/tsconfig.json",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "0a8d3203d78cefc0"
+    },
+    {
+      "event_id": "evt-0341",
+      "timestamp": "2026-01-26T02:05:57.161239+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/tsconfig.json",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 1
+      },
+      "hash": "3fc017699dbe1af2"
+    },
+    {
+      "event_id": "evt-0342",
+      "timestamp": "2026-01-26T02:05:57.161246+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/tsconfig.json",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "c2b30f534950f749"
+    },
+    {
+      "event_id": "evt-0343",
+      "timestamp": "2026-01-26T02:05:57.161256+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/tsconfig.json",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "564fe189952f1bc5"
+      },
+      "hash": "44a7329994b2a03d"
+    },
+    {
+      "event_id": "evt-0344",
+      "timestamp": "2026-01-26T02:05:57.161265+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/tsconfig.json",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 1,
+        "time_ms": 0
+      },
+      "hash": "498bb7dcd41c12cb"
+    },
+    {
+      "event_id": "evt-0345",
+      "timestamp": "2026-01-26T02:05:57.161273+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/validator/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "b39da218f48d8b84"
+    },
+    {
+      "event_id": "evt-0346",
+      "timestamp": "2026-01-26T02:05:57.161281+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/validator/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "df8063e657056050"
+    },
+    {
+      "event_id": "evt-0347",
+      "timestamp": "2026-01-26T02:05:57.161386+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/validator/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 1752,
+        "hash": "9dbb9867df94db7c"
+      },
+      "hash": "834db9fcb0c0cd73"
+    },
+    {
+      "event_id": "evt-0348",
+      "timestamp": "2026-01-26T02:05:57.161395+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/validator/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "12f313bc6a097c04"
+    },
+    {
+      "event_id": "evt-0349",
+      "timestamp": "2026-01-26T02:05:57.161570+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/validator/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "ac0c0fc1030e1756"
+    },
+    {
+      "event_id": "evt-0350",
+      "timestamp": "2026-01-26T02:05:57.161577+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/validator/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "f493ecec9e44dc4f"
+    },
+    {
+      "event_id": "evt-0351",
+      "timestamp": "2026-01-26T02:05:57.161588+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/validator/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "9dbb9867df94db7c"
+      },
+      "hash": "da7e55bfad6bdd58"
+    },
+    {
+      "event_id": "evt-0352",
+      "timestamp": "2026-01-26T02:05:57.161596+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/validator/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 2,
+        "time_ms": 0
+      },
+      "hash": "4eaf54ddfd3c23ca"
+    },
+    {
+      "event_id": "evt-0353",
+      "timestamp": "2026-01-26T02:05:57.161604+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/validator/error_reporter.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "35cc026be8e0e89f"
+    },
+    {
+      "event_id": "evt-0354",
+      "timestamp": "2026-01-26T02:05:57.161612+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/validator/error_reporter.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "6b91d61a6f685442"
+    },
+    {
+      "event_id": "evt-0355",
+      "timestamp": "2026-01-26T02:05:57.161743+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/validator/error_reporter.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 5063,
+        "hash": "0af2c2d62f3c199f"
+      },
+      "hash": "e619650dd5851dd6"
+    },
+    {
+      "event_id": "evt-0356",
+      "timestamp": "2026-01-26T02:05:57.161752+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/validator/error_reporter.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "db5501460e292a45"
+    },
+    {
+      "event_id": "evt-0357",
+      "timestamp": "2026-01-26T02:05:57.162539+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/validator/error_reporter.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "16547f3bde7756fe"
+    },
+    {
+      "event_id": "evt-0358",
+      "timestamp": "2026-01-26T02:05:57.162549+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/validator/error_reporter.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "3d80212917a58dd5"
+    },
+    {
+      "event_id": "evt-0359",
+      "timestamp": "2026-01-26T02:05:57.162562+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/validator/error_reporter.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "0af2c2d62f3c199f"
+      },
+      "hash": "9b8a898899639db1"
+    },
+    {
+      "event_id": "evt-0360",
+      "timestamp": "2026-01-26T02:05:57.162570+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/validator/error_reporter.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 0
+      },
+      "hash": "7d7ff1fb5c788f83"
+    },
+    {
+      "event_id": "evt-0361",
+      "timestamp": "2026-01-26T02:05:57.162580+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/validator/module_validator.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "4338ea39cd91533d"
+    },
+    {
+      "event_id": "evt-0362",
+      "timestamp": "2026-01-26T02:05:57.162588+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/validator/module_validator.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "997ae94269a3923c"
+    },
+    {
+      "event_id": "evt-0363",
+      "timestamp": "2026-01-26T02:05:57.162714+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/validator/module_validator.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 7316,
+        "hash": "6ca5ed375d4d2689"
+      },
+      "hash": "1f7f9636b32b440a"
+    },
+    {
+      "event_id": "evt-0364",
+      "timestamp": "2026-01-26T02:05:57.162723+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/validator/module_validator.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "94262cfca086b650"
+    },
+    {
+      "event_id": "evt-0365",
+      "timestamp": "2026-01-26T02:05:57.163705+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/validator/module_validator.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "f3dcb5ed8769aec2"
+    },
+    {
+      "event_id": "evt-0366",
+      "timestamp": "2026-01-26T02:05:57.163715+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/validator/module_validator.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "123ee50884f36caa"
+    },
+    {
+      "event_id": "evt-0367",
+      "timestamp": "2026-01-26T02:05:57.163728+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/validator/module_validator.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "6ca5ed375d4d2689"
+      },
+      "hash": "e08b8adf5cf43897"
+    },
+    {
+      "event_id": "evt-0368",
+      "timestamp": "2026-01-26T02:05:57.163737+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/validator/module_validator.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 1
+      },
+      "hash": "b984c1ec2c79e963"
+    },
+    {
+      "event_id": "evt-0369",
+      "timestamp": "2026-01-26T02:05:57.163746+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/validator/schema_validator.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "0d22f435fafdf8e7"
+    },
+    {
+      "event_id": "evt-0370",
+      "timestamp": "2026-01-26T02:05:57.163754+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/validator/schema_validator.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "5c6d64ea6a3448cb"
+    },
+    {
+      "event_id": "evt-0371",
+      "timestamp": "2026-01-26T02:05:57.163888+00:00",
+      "event_type": "ETL",
+      "source": "extract",
+      "target": "engine/validator/schema_validator.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "size": 4764,
+        "hash": "8d35eab9d0cb9c2e"
+      },
+      "hash": "9e5fc77bd4f6a1ca"
+    },
+    {
+      "event_id": "evt-0372",
+      "timestamp": "2026-01-26T02:05:57.163898+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/validator/schema_validator.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "11191c66a4c7a187"
+    },
+    {
+      "event_id": "evt-0373",
+      "timestamp": "2026-01-26T02:05:57.164548+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/validator/schema_validator.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 4
+      },
+      "hash": "be9041eaa3b53d70"
+    },
+    {
+      "event_id": "evt-0374",
+      "timestamp": "2026-01-26T02:05:57.164556+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/validator/schema_validator.ts",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "31abb08c00325bd6"
+    },
+    {
+      "event_id": "evt-0375",
+      "timestamp": "2026-01-26T02:05:57.164569+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/validator/schema_validator.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "8d35eab9d0cb9c2e"
+      },
+      "hash": "380f5304d656bf32"
+    },
+    {
+      "event_id": "evt-0376",
+      "timestamp": "2026-01-26T02:05:57.164578+00:00",
+      "event_type": "AUDIT",
+      "source": "engine",
+      "target": "engine/validator/schema_validator.ts",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues": 4,
+        "time_ms": 0
+      },
+      "hash": "ac52c570e257acf6"
+    }
+  ],
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "governance-event-stream",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

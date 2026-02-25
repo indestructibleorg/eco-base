@@ -1,0 +1,4863 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "report_id": "db58e146876fb8dd",
+  "gl_charter_version": "ECO-UNIFIED-CHARTER-v1.0",
+  "execution_timestamp": "2026-01-24T11:18:49.127928",
+  "total_files": 48,
+  "files_processed": 48,
+  "files_passed": 48,
+  "files_failed": 0,
+  "issues_by_severity": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "MEDIUM": 70,
+    "LOW": 51,
+    "INFO": 0
+  },
+  "issues_by_type": {
+    "pipeline_execution_error": 0,
+    "schema_mismatch": 0,
+    "metadata_missing": 8,
+    "naming_inconsistent": 0,
+    "directory_structure_violation": 0,
+    "gl_marker_missing": 47,
+    "semantic_manifest_missing": 43,
+    "dag_governance_chain_break": 0,
+    "syntax_error": 0,
+    "type_error": 23
+  },
+  "file_results": [
+    {
+      "file_path": "engine/README.md",
+      "file_type": ".md",
+      "file_hash": "e0ad2f26809396a9efaf1fcd83a16b9cf6136c9d35b4c29540ceb961b70f1670",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-90-META-DOC",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/README.md",
+          "recommendation": "Add GL layer annotation comment at file header"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": true,
+        "has_license": true
+      },
+      "governance_events": [
+        {
+          "event_id": "3c7020eedaebf213",
+          "timestamp": "2026-01-24T11:18:49.127975",
+          "event_type": "ETL_START",
+          "source_file": "engine/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "98aa1c7d2cb3f131",
+          "timestamp": "2026-01-24T11:18:49.128091",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 4360,
+            "line_count": 162
+          },
+          "evidence_hash": "b98e4cac38a6cf6c5fff9e9e35d3ee72bbbb360014bdcfa1e4b0c6a4dd1cfeb9"
+        },
+        {
+          "event_id": "3e9ad225287b70aa",
+          "timestamp": "2026-01-24T11:18:49.128328",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 1,
+            "gl_compliant": true
+          },
+          "evidence_hash": "8a61cc1804475f1116325ae620157c1b9ca4150054a1f2510b90bef6910cf484"
+        },
+        {
+          "event_id": "4d7ec1bcfcf05555",
+          "timestamp": "2026-01-24T11:18:49.128351",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.128364",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/SPEC.md",
+      "file_type": ".md",
+      "file_hash": "a74e21942f5198591246c9c4042a1876e0a1811ed8ff8aaf74cc1bc5b1d63f21",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-90-META-DOC",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/SPEC.md",
+          "recommendation": "Add GL layer annotation comment at file header"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": false,
+        "has_interfaces": true,
+        "has_types": true,
+        "has_classes": false,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": true,
+        "has_license": true
+      },
+      "governance_events": [
+        {
+          "event_id": "58467fc73fb4e6e7",
+          "timestamp": "2026-01-24T11:18:49.128386",
+          "event_type": "ETL_START",
+          "source_file": "engine/SPEC.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "d745da16c7f09824",
+          "timestamp": "2026-01-24T11:18:49.128527",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/SPEC.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 12545,
+            "line_count": 453
+          },
+          "evidence_hash": "a4fd48b834c3239da7d93359298e9fafa25498e90ee5a5a8d314fb810434f9e0"
+        },
+        {
+          "event_id": "38973448aa35652f",
+          "timestamp": "2026-01-24T11:18:49.129410",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/SPEC.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 1,
+            "gl_compliant": true
+          },
+          "evidence_hash": "8a61cc1804475f1116325ae620157c1b9ca4150054a1f2510b90bef6910cf484"
+        },
+        {
+          "event_id": "6d7037d43ec1c60e",
+          "timestamp": "2026-01-24T11:18:49.129444",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/SPEC.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.129464",
+      "execution_time_ms": 1
+    },
+    {
+      "file_path": "engine/artifacts/README.md",
+      "file_type": ".md",
+      "file_hash": "d56d48288b0daf90d17cfec3610ce4a090d380371b44e32444c88fb2ea496625",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-90-META-DOC",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/artifacts/README.md",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/artifacts/README.md",
+          "recommendation": "Add semantic anchor annotation"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false
+      },
+      "governance_events": [
+        {
+          "event_id": "092398b7af5ce97c",
+          "timestamp": "2026-01-24T11:18:49.129477",
+          "event_type": "ETL_START",
+          "source_file": "engine/artifacts/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "155a5e9c3de81408",
+          "timestamp": "2026-01-24T11:18:49.129540",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/artifacts/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 1779,
+            "line_count": 72
+          },
+          "evidence_hash": "fd1ba316ba6e6fbeddc3a31e36bace6f5befda38dc5532ea1fc4f647f8597592"
+        },
+        {
+          "event_id": "f7c4853374453d87",
+          "timestamp": "2026-01-24T11:18:49.129656",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/artifacts/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "dcd3e9f341714301",
+          "timestamp": "2026-01-24T11:18:49.129673",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/artifacts/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.129684",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/artifacts/artifact_manager.ts",
+      "file_type": ".ts",
+      "file_hash": "3e855e1d6b5b7c3b8d165ed73fa393b8d179e67b4044fd19397833ddd669bb29",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/artifacts/artifact_manager.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/artifacts/artifact_manager.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 7 uses of 'any' type",
+          "file_path": "engine/artifacts/artifact_manager.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": true,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "b07fc142f18907e8",
+          "timestamp": "2026-01-24T11:18:49.129694",
+          "event_type": "ETL_START",
+          "source_file": "engine/artifacts/artifact_manager.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "d06f2d781d047cad",
+          "timestamp": "2026-01-24T11:18:49.129777",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/artifacts/artifact_manager.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 9411,
+            "line_count": 396
+          },
+          "evidence_hash": "efb30101cc93116bb422703a23f4b38a8aebb2a3126d9d2e50051d29ec26fc75"
+        },
+        {
+          "event_id": "b18c9a606efcbdea",
+          "timestamp": "2026-01-24T11:18:49.130200",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/artifacts/artifact_manager.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "0abc12f4e9c86717",
+          "timestamp": "2026-01-24T11:18:49.130217",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/artifacts/artifact_manager.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.130228",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/artifacts/evidence_chain.ts",
+      "file_type": ".ts",
+      "file_hash": "74d67c6493ac111b59b8c9e9ef00ef85fea66965cc1d59243e25d250d21806a2",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/artifacts/evidence_chain.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/artifacts/evidence_chain.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 1 uses of 'any' type",
+          "file_path": "engine/artifacts/evidence_chain.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "8ed52d411d52e3a0",
+          "timestamp": "2026-01-24T11:18:49.130238",
+          "event_type": "ETL_START",
+          "source_file": "engine/artifacts/evidence_chain.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "38aad8407ed093fc",
+          "timestamp": "2026-01-24T11:18:49.130321",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/artifacts/evidence_chain.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 6834,
+            "line_count": 280
+          },
+          "evidence_hash": "cb2debfc7078ff8260ab7acdbd01624fd8f00cb67839a389a4f66c695e6c7882"
+        },
+        {
+          "event_id": "daacdea9727af5d3",
+          "timestamp": "2026-01-24T11:18:49.130811",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/artifacts/evidence_chain.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "a7f936db203a49b2",
+          "timestamp": "2026-01-24T11:18:49.130832",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/artifacts/evidence_chain.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.130844",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/artifacts/manifest_generator.ts",
+      "file_type": ".ts",
+      "file_hash": "086c0e80af31a855efcf7ffe315012b8ddc189e9bf135ca93677a7e784850bb5",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/artifacts/manifest_generator.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/artifacts/manifest_generator.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 8 uses of 'any' type",
+          "file_path": "engine/artifacts/manifest_generator.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "ad15d709c1204a45",
+          "timestamp": "2026-01-24T11:18:49.130855",
+          "event_type": "ETL_START",
+          "source_file": "engine/artifacts/manifest_generator.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "09c3051f89ff5ea0",
+          "timestamp": "2026-01-24T11:18:49.130940",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/artifacts/manifest_generator.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 9109,
+            "line_count": 347
+          },
+          "evidence_hash": "5bcb70d74b9a95cf03ead0e692845b0d3d6273a3d6fd50538f02f3255722a3c1"
+        },
+        {
+          "event_id": "9fdbf225aebc53cf",
+          "timestamp": "2026-01-24T11:18:49.131354",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/artifacts/manifest_generator.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "4c07cecb3b6be1d6",
+          "timestamp": "2026-01-24T11:18:49.131372",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/artifacts/manifest_generator.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.131384",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/executor/README.md",
+      "file_type": ".md",
+      "file_hash": "f603599403e812b28358a88119016725f3c040380be4fa40bf94d8d75753ec59",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-90-META-DOC",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/executor/README.md",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/executor/README.md",
+          "recommendation": "Add semantic anchor annotation"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false
+      },
+      "governance_events": [
+        {
+          "event_id": "b706ced01fc95311",
+          "timestamp": "2026-01-24T11:18:49.131395",
+          "event_type": "ETL_START",
+          "source_file": "engine/executor/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "499b77495afe9bcc",
+          "timestamp": "2026-01-24T11:18:49.131458",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/executor/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 1947,
+            "line_count": 87
+          },
+          "evidence_hash": "028d6b62e86362261a70a452465737f5cbbfea06f660ecd139b1ea4ea4688fbd"
+        },
+        {
+          "event_id": "075ec5d55af7a556",
+          "timestamp": "2026-01-24T11:18:49.131578",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/executor/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "0362e878d7d6740e",
+          "timestamp": "2026-01-24T11:18:49.131594",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/executor/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.131605",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/executor/local_executor.ts",
+      "file_type": ".ts",
+      "file_hash": "7e69d945bebbfe50a84b2d63f10d5fc8a80286fa6f90a314e0ff7b8b5eddc0be",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/executor/local_executor.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/executor/local_executor.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 5 uses of 'any' type",
+          "file_path": "engine/executor/local_executor.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "5198371639e4ba60",
+          "timestamp": "2026-01-24T11:18:49.131624",
+          "event_type": "ETL_START",
+          "source_file": "engine/executor/local_executor.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "70384f2d7948c75d",
+          "timestamp": "2026-01-24T11:18:49.131711",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/executor/local_executor.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 9080,
+            "line_count": 365
+          },
+          "evidence_hash": "3f96f32e7240edcfd300b63ad47f682fdde169cfafca6cf93c61c3a8613d9f91"
+        },
+        {
+          "event_id": "4529e923840b05fc",
+          "timestamp": "2026-01-24T11:18:49.132134",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/executor/local_executor.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "5b3f62bb4841522f",
+          "timestamp": "2026-01-24T11:18:49.132153",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/executor/local_executor.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.132164",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/executor/remote_executor.ts",
+      "file_type": ".ts",
+      "file_hash": "4bdf0b5d3ca74c8979d317f580ab960c1a2b5ec5d514eca6f0d0a4b0b111db5f",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/executor/remote_executor.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/executor/remote_executor.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 12 uses of 'any' type",
+          "file_path": "engine/executor/remote_executor.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": true,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "b2e47fcf1313d005",
+          "timestamp": "2026-01-24T11:18:49.132176",
+          "event_type": "ETL_START",
+          "source_file": "engine/executor/remote_executor.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "2d95ad0156f40fc0",
+          "timestamp": "2026-01-24T11:18:49.132243",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/executor/remote_executor.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 6033,
+            "line_count": 258
+          },
+          "evidence_hash": "e3744668b2540a1db83ccc8b3e040d8d909183657921c806622170662a9136ed"
+        },
+        {
+          "event_id": "8b878c38bc8a6b2f",
+          "timestamp": "2026-01-24T11:18:49.132543",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/executor/remote_executor.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "2245f9e34e890613",
+          "timestamp": "2026-01-24T11:18:49.132560",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/executor/remote_executor.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.132571",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/executor/rollback.ts",
+      "file_type": ".ts",
+      "file_hash": "eb74475c23023e092a37d87d392988ddf07bebbc765ff1358b763a0c3228e2e4",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/executor/rollback.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/executor/rollback.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 2 uses of 'any' type",
+          "file_path": "engine/executor/rollback.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "991989926deee370",
+          "timestamp": "2026-01-24T11:18:49.132580",
+          "event_type": "ETL_START",
+          "source_file": "engine/executor/rollback.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "19e61c1dc0737329",
+          "timestamp": "2026-01-24T11:18:49.132652",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/executor/rollback.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 7738,
+            "line_count": 308
+          },
+          "evidence_hash": "4c9d0ffed0be2c8199543b7f63d167f89ef29a7f851469f031e5799d98f677d1"
+        },
+        {
+          "event_id": "cfb2e6b287a0da62",
+          "timestamp": "2026-01-24T11:18:49.133043",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/executor/rollback.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "0695558294448408",
+          "timestamp": "2026-01-24T11:18:49.133064",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/executor/rollback.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.133074",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/governance/README.md",
+      "file_type": ".md",
+      "file_hash": "05ce1af1174afcf1b076f308055e191ccab68e007a7b481042a07ad778664424",
+      "gl_layer": "ECO-10-OPERATIONAL",
+      "semantic_anchor": "ECO-90-META-DOC",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/governance/README.md",
+          "recommendation": "Add GL layer annotation comment at file header"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false
+      },
+      "governance_events": [
+        {
+          "event_id": "936f00c0b091f1da",
+          "timestamp": "2026-01-24T11:18:49.133083",
+          "event_type": "ETL_START",
+          "source_file": "engine/governance/README.md",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "ac5f6885b6af5250",
+          "timestamp": "2026-01-24T11:18:49.133140",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/governance/README.md",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 1801,
+            "line_count": 71
+          },
+          "evidence_hash": "3a0a2f9578b323bc7bc5287881714ccfdb9d237cec3533f5068538498d3d01e6"
+        },
+        {
+          "event_id": "f407b0be2ca9bbd1",
+          "timestamp": "2026-01-24T11:18:49.133254",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/governance/README.md",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 1,
+            "gl_compliant": true
+          },
+          "evidence_hash": "8a61cc1804475f1116325ae620157c1b9ca4150054a1f2510b90bef6910cf484"
+        },
+        {
+          "event_id": "3def39f9693a59cc",
+          "timestamp": "2026-01-24T11:18:49.133270",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/governance/README.md",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.133282",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/governance/anchor_resolver.ts",
+      "file_type": ".ts",
+      "file_hash": "da276bd3f182738a13e2a6791903d2ddac719e2ba376dba4da1f5b9b12c6ae6e",
+      "gl_layer": "ECO-10-OPERATIONAL",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/governance/anchor_resolver.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 12 uses of 'any' type",
+          "file_path": "engine/governance/anchor_resolver.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "7277cce0f679ba23",
+          "timestamp": "2026-01-24T11:18:49.133291",
+          "event_type": "ETL_START",
+          "source_file": "engine/governance/anchor_resolver.ts",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "5a87706d418655b7",
+          "timestamp": "2026-01-24T11:18:49.133363",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/governance/anchor_resolver.ts",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 6557,
+            "line_count": 273
+          },
+          "evidence_hash": "7758fe51093465a60e08563856d30a384f7d24843f9247a3b05bb7158170b7c9"
+        },
+        {
+          "event_id": "d64215f8c819ffe0",
+          "timestamp": "2026-01-24T11:18:49.133686",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/governance/anchor_resolver.ts",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "9a30a15f5b7e6262",
+          "timestamp": "2026-01-24T11:18:49.133703",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/governance/anchor_resolver.ts",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.133714",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/governance/events_writer.ts",
+      "file_type": ".ts",
+      "file_hash": "e960dae30caf0f3a6c5cb30d4f97d2247eb218c7184c5c4b29634d630903f81d",
+      "gl_layer": "ECO-10-OPERATIONAL",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/governance/events_writer.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/governance/events_writer.ts",
+          "recommendation": "Add semantic anchor annotation"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": true,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "d2359ac4b8b8fadd",
+          "timestamp": "2026-01-24T11:18:49.133723",
+          "event_type": "ETL_START",
+          "source_file": "engine/governance/events_writer.ts",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "2eb45421ddcb6ef6",
+          "timestamp": "2026-01-24T11:18:49.133785",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/governance/events_writer.ts",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 4556,
+            "line_count": 192
+          },
+          "evidence_hash": "9a6ad6d200c0ba113de3147c9e0ea0c04864f7603f9d5325b81b6fa03da9711d"
+        },
+        {
+          "event_id": "656fd63c202750fc",
+          "timestamp": "2026-01-24T11:18:49.134003",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/governance/events_writer.ts",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "aed320379b2b7459",
+          "timestamp": "2026-01-24T11:18:49.134017",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/governance/events_writer.ts",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.134027",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/governance/gl_engine.ts",
+      "file_type": ".ts",
+      "file_hash": "5603f3d1832fcbbdeb18184bcaa3b0495e5fb10e0e5ef730351cfd54eb743294",
+      "gl_layer": "ECO-10-OPERATIONAL",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 16 uses of 'any' type",
+          "file_path": "engine/governance/gl_engine.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "7abc8d30ee6e1278",
+          "timestamp": "2026-01-24T11:18:49.134036",
+          "event_type": "ETL_START",
+          "source_file": "engine/governance/gl_engine.ts",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "957ce6b55f47be65",
+          "timestamp": "2026-01-24T11:18:49.134105",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/governance/gl_engine.ts",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 7847,
+            "line_count": 290
+          },
+          "evidence_hash": "f8ee27aa0287b5de54b35ed6508f418bd1fa60cd741ca3a71835d6efd032c41b"
+        },
+        {
+          "event_id": "eac32025b1b88946",
+          "timestamp": "2026-01-24T11:18:49.134457",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/governance/gl_engine.ts",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 1,
+            "gl_compliant": true
+          },
+          "evidence_hash": "8a61cc1804475f1116325ae620157c1b9ca4150054a1f2510b90bef6910cf484"
+        },
+        {
+          "event_id": "3346ac9b25b332bd",
+          "timestamp": "2026-01-24T11:18:49.134473",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/governance/gl_engine.ts",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.134486",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/governance/rule_evaluator.ts",
+      "file_type": ".ts",
+      "file_hash": "e2dcbddd47310969715b441e110ef19699405968eb7b36ac7c6a51767bc0fc34",
+      "gl_layer": "ECO-10-OPERATIONAL",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/governance/rule_evaluator.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/governance/rule_evaluator.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 27 uses of 'any' type",
+          "file_path": "engine/governance/rule_evaluator.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": true,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "2aa92036b6082d08",
+          "timestamp": "2026-01-24T11:18:49.134496",
+          "event_type": "ETL_START",
+          "source_file": "engine/governance/rule_evaluator.ts",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "da19ce533ca49021",
+          "timestamp": "2026-01-24T11:18:49.134576",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/governance/rule_evaluator.ts",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 8163,
+            "line_count": 330
+          },
+          "evidence_hash": "b8457f55ab69a000de72ece9e69866063ff07235056e0ce416de06eb9bef7b04"
+        },
+        {
+          "event_id": "aa7f53d758639829",
+          "timestamp": "2026-01-24T11:18:49.134935",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/governance/rule_evaluator.ts",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "8de08d0c3755240e",
+          "timestamp": "2026-01-24T11:18:49.134950",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/governance/rule_evaluator.ts",
+          "gl_layer": "ECO-10-OPERATIONAL",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.134960",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/index.ts",
+      "file_type": ".ts",
+      "file_hash": "9b23992f9a2532066646b174877990c293f18ceddc29e2b53691d48a1e458df0",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/index.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/index.ts",
+          "recommendation": "Add semantic anchor annotation"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": false,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "f6219493850a6011",
+          "timestamp": "2026-01-24T11:18:49.134968",
+          "event_type": "ETL_START",
+          "source_file": "engine/index.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "942f9004f0ab5505",
+          "timestamp": "2026-01-24T11:18:49.135015",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/index.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 1848,
+            "line_count": 47
+          },
+          "evidence_hash": "dd5724c92dc65b90d4f11bfe8bb6a756d8a66dd9490871d4b6772d3c9f858668"
+        },
+        {
+          "event_id": "d19a7d5eb8ad6820",
+          "timestamp": "2026-01-24T11:18:49.135110",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/index.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "61feba38ebd2ac6d",
+          "timestamp": "2026-01-24T11:18:49.135123",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/index.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.135133",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/interfaces-fix.d.ts",
+      "file_type": ".ts",
+      "file_hash": "210942dbf37a4ff5e9726740e6086fd4bbe2b91b90d2acda86d293d5730633c0",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TYPEDEF",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/interfaces-fix.d.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/interfaces-fix.d.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 10 uses of 'any' type",
+          "file_path": "engine/interfaces-fix.d.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        },
+        {
+          "type": "metadata_missing",
+          "severity": "LOW",
+          "message": "No JSDoc documentation found",
+          "file_path": "engine/interfaces-fix.d.ts",
+          "recommendation": "Add JSDoc comments for public APIs"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": true,
+        "has_imports": false,
+        "has_interfaces": true,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "dc80d9a29b66e571",
+          "timestamp": "2026-01-24T11:18:49.135141",
+          "event_type": "ETL_START",
+          "source_file": "engine/interfaces-fix.d.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TYPEDEF",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "1bce94c51b8c6c23",
+          "timestamp": "2026-01-24T11:18:49.135194",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/interfaces-fix.d.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TYPEDEF",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 2451,
+            "line_count": 104
+          },
+          "evidence_hash": "ec4eca17ce21bfcaa0d2d8318ca14a1dc0b2bfe4cbc90a6fe99824fda57ebce4"
+        },
+        {
+          "event_id": "3043697538d59bc9",
+          "timestamp": "2026-01-24T11:18:49.135335",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/interfaces-fix.d.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TYPEDEF",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 4,
+            "gl_compliant": true
+          },
+          "evidence_hash": "ea23b1235e0e094f74b6463d7f68e330b5dc99342185ab5e17cfc1a30e56342c"
+        },
+        {
+          "event_id": "8ddd97bc62663c12",
+          "timestamp": "2026-01-24T11:18:49.135348",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/interfaces-fix.d.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TYPEDEF",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.135359",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/interfaces.d.ts",
+      "file_type": ".ts",
+      "file_hash": "09148695780242e973e86078c4acfbf0a7a66b8257ef7ef402baf767c7f18554",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TYPEDEF",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/interfaces.d.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/interfaces.d.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 10 uses of 'any' type",
+          "file_path": "engine/interfaces.d.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        },
+        {
+          "type": "metadata_missing",
+          "severity": "LOW",
+          "message": "No JSDoc documentation found",
+          "file_path": "engine/interfaces.d.ts",
+          "recommendation": "Add JSDoc comments for public APIs"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": true,
+        "has_imports": false,
+        "has_interfaces": true,
+        "has_types": true,
+        "has_classes": false,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "b8672ebd92abe499",
+          "timestamp": "2026-01-24T11:18:49.135367",
+          "event_type": "ETL_START",
+          "source_file": "engine/interfaces.d.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TYPEDEF",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "d6d24ef7bca91e69",
+          "timestamp": "2026-01-24T11:18:49.135414",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/interfaces.d.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TYPEDEF",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 2530,
+            "line_count": 106
+          },
+          "evidence_hash": "dc54979723ebec131e00b851c3c1e786064150b99cca905335ead66478286569"
+        },
+        {
+          "event_id": "180bb098712aa87e",
+          "timestamp": "2026-01-24T11:18:49.135551",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/interfaces.d.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TYPEDEF",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 4,
+            "gl_compliant": true
+          },
+          "evidence_hash": "ea23b1235e0e094f74b6463d7f68e330b5dc99342185ab5e17cfc1a30e56342c"
+        },
+        {
+          "event_id": "d1b2bb0c0a2e3dba",
+          "timestamp": "2026-01-24T11:18:49.135565",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/interfaces.d.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TYPEDEF",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.135573",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/jest.config.js",
+      "file_type": ".js",
+      "file_hash": "bd2d3d3e5c5adcde6d040c58b1170d48490b83d54e6a7e88aa96ab93a208b463",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-JS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/jest.config.js",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/jest.config.js",
+          "recommendation": "Add semantic anchor annotation"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": false,
+        "has_imports": false,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false
+      },
+      "governance_events": [
+        {
+          "event_id": "07108323f4a0691c",
+          "timestamp": "2026-01-24T11:18:49.135581",
+          "event_type": "ETL_START",
+          "source_file": "engine/jest.config.js",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-JS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "5c0e354f8aa74af5",
+          "timestamp": "2026-01-24T11:18:49.135622",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/jest.config.js",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-JS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 465,
+            "line_count": 23
+          },
+          "evidence_hash": "58c30e0b30207a8ea219a1c054a32fda5143d4f46391732c268794a565724699"
+        },
+        {
+          "event_id": "2cb3b9315b139922",
+          "timestamp": "2026-01-24T11:18:49.135673",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/jest.config.js",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-JS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "b67a160b9f07373a",
+          "timestamp": "2026-01-24T11:18:49.135687",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/jest.config.js",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-JS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.135697",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/loader/README.md",
+      "file_type": ".md",
+      "file_hash": "98e88389dbd582c9446ffeb835728a86ffc3b3a20a05659f02daf5ae479a707f",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-90-META-DOC",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/loader/README.md",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/loader/README.md",
+          "recommendation": "Add semantic anchor annotation"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false
+      },
+      "governance_events": [
+        {
+          "event_id": "a40d94cff32cd6f6",
+          "timestamp": "2026-01-24T11:18:49.135704",
+          "event_type": "ETL_START",
+          "source_file": "engine/loader/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "19ce2674fa33295d",
+          "timestamp": "2026-01-24T11:18:49.135751",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/loader/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 1986,
+            "line_count": 81
+          },
+          "evidence_hash": "5bf651e35ced5b5aea4d9f4f23813f33c64aa1f3f7ef264b498ef3d3e4bf01b5"
+        },
+        {
+          "event_id": "0f11e7bcb9852858",
+          "timestamp": "2026-01-24T11:18:49.135863",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/loader/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "bb0069fba657d1ea",
+          "timestamp": "2026-01-24T11:18:49.135876",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/loader/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.135886",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/loader/fs_loader.ts",
+      "file_type": ".ts",
+      "file_hash": "38da3e313c81f8e1cbab3d9cb2b6022053154d959963ede2c57f83a72e1bccd6",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/loader/fs_loader.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/loader/fs_loader.ts",
+          "recommendation": "Add semantic anchor annotation"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": true,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "b65e820a61f3f536",
+          "timestamp": "2026-01-24T11:18:49.135893",
+          "event_type": "ETL_START",
+          "source_file": "engine/loader/fs_loader.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "1fe18a9f8a90933f",
+          "timestamp": "2026-01-24T11:18:49.135951",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/loader/fs_loader.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 5001,
+            "line_count": 189
+          },
+          "evidence_hash": "b44a61c9936dfd51c29295d71b4ddd27e55d2b7f3f05992380b93d1e039b7eb7"
+        },
+        {
+          "event_id": "68caf8eec57d3c79",
+          "timestamp": "2026-01-24T11:18:49.136183",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/loader/fs_loader.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "f26ced156f319c4f",
+          "timestamp": "2026-01-24T11:18:49.136198",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/loader/fs_loader.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.136280",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/loader/git_loader.ts",
+      "file_type": ".ts",
+      "file_hash": "070ef03d541d00a368db4233703d56eaedd777b12d63d081e541ba6cbdcf776c",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/loader/git_loader.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/loader/git_loader.ts",
+          "recommendation": "Add semantic anchor annotation"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "061669cecffa8649",
+          "timestamp": "2026-01-24T11:18:49.136289",
+          "event_type": "ETL_START",
+          "source_file": "engine/loader/git_loader.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "96707af6d56c143f",
+          "timestamp": "2026-01-24T11:18:49.136366",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/loader/git_loader.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 7769,
+            "line_count": 288
+          },
+          "evidence_hash": "2271e5001f620956861f1fd79f90b45888231c4451fac7b249948e90a4383e01"
+        },
+        {
+          "event_id": "7e55b529178ee9e6",
+          "timestamp": "2026-01-24T11:18:49.136716",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/loader/git_loader.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "8d43f84212b69377",
+          "timestamp": "2026-01-24T11:18:49.136731",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/loader/git_loader.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.136740",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/loader/merge_index.ts",
+      "file_type": ".ts",
+      "file_hash": "4cf6e9f6597c55801ea2559b2e77987c18265456f793e5f9f304749bd6886f3c",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/loader/merge_index.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/loader/merge_index.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 8 uses of 'any' type",
+          "file_path": "engine/loader/merge_index.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": true,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "028188137993421d",
+          "timestamp": "2026-01-24T11:18:49.136749",
+          "event_type": "ETL_START",
+          "source_file": "engine/loader/merge_index.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "ac86605f4ea32fb8",
+          "timestamp": "2026-01-24T11:18:49.136814",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/loader/merge_index.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 6427,
+            "line_count": 234
+          },
+          "evidence_hash": "195ea3a686ae6ad5e4238960206cc935292b9b2085daaa3f484c8bccba2fba52"
+        },
+        {
+          "event_id": "e59c53ea2e40f9ba",
+          "timestamp": "2026-01-24T11:18:49.137123",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/loader/merge_index.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "bec6ae89c15444fb",
+          "timestamp": "2026-01-24T11:18:49.137141",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/loader/merge_index.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.137152",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/normalizer/README.md",
+      "file_type": ".md",
+      "file_hash": "5e7050afe8397d504f097d7e72dc5fe856492e28e7e74848d9cf9b6b73a13134",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-90-META-DOC",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/normalizer/README.md",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/normalizer/README.md",
+          "recommendation": "Add semantic anchor annotation"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false
+      },
+      "governance_events": [
+        {
+          "event_id": "d871924af1c81a5a",
+          "timestamp": "2026-01-24T11:18:49.137161",
+          "event_type": "ETL_START",
+          "source_file": "engine/normalizer/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "dfd52ac1396dcde1",
+          "timestamp": "2026-01-24T11:18:49.137215",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/normalizer/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 1713,
+            "line_count": 74
+          },
+          "evidence_hash": "1ee2b0520a92b2e34ad01be318baddd6e5274bbe6a76e7338e5defeb465d1d29"
+        },
+        {
+          "event_id": "4e32076ca51f0694",
+          "timestamp": "2026-01-24T11:18:49.137318",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/normalizer/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "9358c29413b99aac",
+          "timestamp": "2026-01-24T11:18:49.137333",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/normalizer/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.137342",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/normalizer/defaults_applier.ts",
+      "file_type": ".ts",
+      "file_hash": "004745f2f946924ac1ff3ff08b5474bb87fa2d86bc83e832e304148456ea01f4",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/normalizer/defaults_applier.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/normalizer/defaults_applier.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 13 uses of 'any' type",
+          "file_path": "engine/normalizer/defaults_applier.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": true,
+        "has_classes": true,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "8acb5edea9520534",
+          "timestamp": "2026-01-24T11:18:49.137351",
+          "event_type": "ETL_START",
+          "source_file": "engine/normalizer/defaults_applier.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "705cd59fa647bd2d",
+          "timestamp": "2026-01-24T11:18:49.137412",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/normalizer/defaults_applier.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 5504,
+            "line_count": 222
+          },
+          "evidence_hash": "ddd82f3df252bde773ad6c9e3aa915592df59ff99631348677f2aaf3bc60fc30"
+        },
+        {
+          "event_id": "01bcd732b512df20",
+          "timestamp": "2026-01-24T11:18:49.137671",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/normalizer/defaults_applier.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "1e2503dab1346402",
+          "timestamp": "2026-01-24T11:18:49.137684",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/normalizer/defaults_applier.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.137694",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/normalizer/env_merger.ts",
+      "file_type": ".ts",
+      "file_hash": "f475964575acbaebce939cd55a4ea9cbaca240c333b2bcd499666da1fc542e67",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/normalizer/env_merger.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/normalizer/env_merger.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 9 uses of 'any' type",
+          "file_path": "engine/normalizer/env_merger.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "e32e7f8d402b8e8d",
+          "timestamp": "2026-01-24T11:18:49.137702",
+          "event_type": "ETL_START",
+          "source_file": "engine/normalizer/env_merger.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "5b81bae6ee91b71a",
+          "timestamp": "2026-01-24T11:18:49.137756",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/normalizer/env_merger.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 4242,
+            "line_count": 172
+          },
+          "evidence_hash": "406001a083f8d75152b3a17eaf36ffbeb79b2aa181d4fc08ccd17e379d0ca1c1"
+        },
+        {
+          "event_id": "26a2fa0227754614",
+          "timestamp": "2026-01-24T11:18:49.137958",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/normalizer/env_merger.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "dc5e0cd776676954",
+          "timestamp": "2026-01-24T11:18:49.137973",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/normalizer/env_merger.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.137983",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/normalizer/module_defaults.ts",
+      "file_type": ".ts",
+      "file_hash": "3fae0f0c60bfd9ffd7382479d8a67fa77ca3467af474e16027945ccfb0f14252",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/normalizer/module_defaults.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/normalizer/module_defaults.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 10 uses of 'any' type",
+          "file_path": "engine/normalizer/module_defaults.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "b0d75f4a1972f3f7",
+          "timestamp": "2026-01-24T11:18:49.137991",
+          "event_type": "ETL_START",
+          "source_file": "engine/normalizer/module_defaults.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "a0f6831aeea268bb",
+          "timestamp": "2026-01-24T11:18:49.138052",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/normalizer/module_defaults.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 5464,
+            "line_count": 214
+          },
+          "evidence_hash": "bfb85351433e2809f3ff9c02be75b92649cdc4967d926b418d072a8501c6e36b"
+        },
+        {
+          "event_id": "cdb215c997c60812",
+          "timestamp": "2026-01-24T11:18:49.138303",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/normalizer/module_defaults.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "cf8a0baa58074c97",
+          "timestamp": "2026-01-24T11:18:49.138316",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/normalizer/module_defaults.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.138326",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/package-lock.json",
+      "file_type": ".json",
+      "file_hash": "b702f1759f5a20d758bb257e51852465a68138f306c49979b0460463f2e08f76",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-10-CONFIG-JSON",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/package-lock.json",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/package-lock.json",
+          "recommendation": "Add semantic anchor annotation"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": false,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": true,
+        "valid_json": true
+      },
+      "governance_events": [
+        {
+          "event_id": "0b1b7230d68ee06d",
+          "timestamp": "2026-01-24T11:18:49.138334",
+          "event_type": "ETL_START",
+          "source_file": "engine/package-lock.json",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-10-CONFIG-JSON",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "0690b92ddac6f38f",
+          "timestamp": "2026-01-24T11:18:49.139140",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/package-lock.json",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-10-CONFIG-JSON",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 205382,
+            "line_count": 5709
+          },
+          "evidence_hash": "d5ba591a9e464360988cc990923bf713c6dda022518487a960e7d199fcf51079"
+        },
+        {
+          "event_id": "f4e294e8c4f05c8b",
+          "timestamp": "2026-01-24T11:18:49.146712",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/package-lock.json",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-10-CONFIG-JSON",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "c4e277ec3c825f76",
+          "timestamp": "2026-01-24T11:18:49.146739",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/package-lock.json",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-10-CONFIG-JSON",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.146751",
+      "execution_time_ms": 8
+    },
+    {
+      "file_path": "engine/package.json",
+      "file_type": ".json",
+      "file_hash": "ad8760ea9f26a1144e842f5bace1df8447657acec829994888e1a53079d89d45",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-10-CONFIG-JSON",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/package.json",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/package.json",
+          "recommendation": "Add semantic anchor annotation"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": false,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": true,
+        "valid_json": true
+      },
+      "governance_events": [
+        {
+          "event_id": "c912df246b98a476",
+          "timestamp": "2026-01-24T11:18:49.146789",
+          "event_type": "ETL_START",
+          "source_file": "engine/package.json",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-10-CONFIG-JSON",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "36b739422d5cfb24",
+          "timestamp": "2026-01-24T11:18:49.146878",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/package.json",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-10-CONFIG-JSON",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 1464,
+            "line_count": 59
+          },
+          "evidence_hash": "5a406a8e5e765dde23832b7ce855041bdd56f801daf4f3b859d579173bc44a1a"
+        },
+        {
+          "event_id": "91833de163621315",
+          "timestamp": "2026-01-24T11:18:49.147008",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/package.json",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-10-CONFIG-JSON",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "55deba4fbf935f40",
+          "timestamp": "2026-01-24T11:18:49.147024",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/package.json",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-10-CONFIG-JSON",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.147034",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/parser/README.md",
+      "file_type": ".md",
+      "file_hash": "81b70b696f14c9754cfb9e751db572f433647f45a983e6e157a1f4bd0a941e30",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-90-META-DOC",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/parser/README.md",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/parser/README.md",
+          "recommendation": "Add semantic anchor annotation"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false
+      },
+      "governance_events": [
+        {
+          "event_id": "4181e4e54bfb8b17",
+          "timestamp": "2026-01-24T11:18:49.147043",
+          "event_type": "ETL_START",
+          "source_file": "engine/parser/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "373fe6b56338fabe",
+          "timestamp": "2026-01-24T11:18:49.147096",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/parser/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 1627,
+            "line_count": 73
+          },
+          "evidence_hash": "27cd4b25ced9322a4010d36267429172e063a58b7872702e276dc9b3749a7881"
+        },
+        {
+          "event_id": "1b2f60ac6ed5fa33",
+          "timestamp": "2026-01-24T11:18:49.147200",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/parser/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "05273963c423409f",
+          "timestamp": "2026-01-24T11:18:49.147215",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/parser/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.147224",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/parser/anchor_resolver.ts",
+      "file_type": ".ts",
+      "file_hash": "1033447b4f64cd6745fd90cd737611a9914cd7c654220b19a50ded0693019719",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/parser/anchor_resolver.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/parser/anchor_resolver.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 4 uses of 'any' type",
+          "file_path": "engine/parser/anchor_resolver.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": true,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "b1f50fdf019ec223",
+          "timestamp": "2026-01-24T11:18:49.147233",
+          "event_type": "ETL_START",
+          "source_file": "engine/parser/anchor_resolver.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "bb246d39ff21ef2d",
+          "timestamp": "2026-01-24T11:18:49.147295",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/parser/anchor_resolver.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 6693,
+            "line_count": 246
+          },
+          "evidence_hash": "c727b0399b9485925ad9ce85dc114309d5d5040907f5e66216edf7fd5e10bdec"
+        },
+        {
+          "event_id": "0190e663911d93bf",
+          "timestamp": "2026-01-24T11:18:49.147612",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/parser/anchor_resolver.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "eabab73975432a62",
+          "timestamp": "2026-01-24T11:18:49.147629",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/parser/anchor_resolver.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.147640",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/parser/json_passthrough.ts",
+      "file_type": ".ts",
+      "file_hash": "ad5c6f8269d485cf7048eb384e6fe72ad904ee558b85c880e2bf7be486344985",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/parser/json_passthrough.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/parser/json_passthrough.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 1 uses of 'any' type",
+          "file_path": "engine/parser/json_passthrough.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "ae5174e0cc75ab78",
+          "timestamp": "2026-01-24T11:18:49.147649",
+          "event_type": "ETL_START",
+          "source_file": "engine/parser/json_passthrough.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "066ffd21e1271242",
+          "timestamp": "2026-01-24T11:18:49.147709",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/parser/json_passthrough.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 3893,
+            "line_count": 150
+          },
+          "evidence_hash": "09352e9d3e2b8defdbdb37b6b3f6f31e3194fd0fd825e2b65b39e95255f9cdf8"
+        },
+        {
+          "event_id": "b14eabb465f02df2",
+          "timestamp": "2026-01-24T11:18:49.147895",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/parser/json_passthrough.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "bb4cb5e82d6ab087",
+          "timestamp": "2026-01-24T11:18:49.147910",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/parser/json_passthrough.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.147921",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/parser/yaml_parser.ts",
+      "file_type": ".ts",
+      "file_hash": "ac6f570c843c0797227020e2e420eda7fd8d0180da14e5659b077e94d97ccc87",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/parser/yaml_parser.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/parser/yaml_parser.ts",
+          "recommendation": "Add semantic anchor annotation"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "638e3b3834fe1386",
+          "timestamp": "2026-01-24T11:18:49.147930",
+          "event_type": "ETL_START",
+          "source_file": "engine/parser/yaml_parser.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "10d5a0587e500b81",
+          "timestamp": "2026-01-24T11:18:49.147983",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/parser/yaml_parser.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 3422,
+            "line_count": 128
+          },
+          "evidence_hash": "666fc1dcd32733e260e2c73c4747f93d779d41c7c78c51009f498210d902a049"
+        },
+        {
+          "event_id": "ce1170c34b06cfa3",
+          "timestamp": "2026-01-24T11:18:49.148138",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/parser/yaml_parser.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "d27e6b847e53ee47",
+          "timestamp": "2026-01-24T11:18:49.148151",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/parser/yaml_parser.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.148161",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/renderer/README.md",
+      "file_type": ".md",
+      "file_hash": "40b57df10b1495540b4c743dad83ea973f1f5670434cae09186c1989a99eadaa",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-90-META-DOC",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/renderer/README.md",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/renderer/README.md",
+          "recommendation": "Add semantic anchor annotation"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": true,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false
+      },
+      "governance_events": [
+        {
+          "event_id": "3634b75c367842d2",
+          "timestamp": "2026-01-24T11:18:49.148169",
+          "event_type": "ETL_START",
+          "source_file": "engine/renderer/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "1d228774ae1253c2",
+          "timestamp": "2026-01-24T11:18:49.148219",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/renderer/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 1939,
+            "line_count": 78
+          },
+          "evidence_hash": "5e359e79eb6c56874d9039b1d29110d8cd8528368faf878402983aea2a2b28b0"
+        },
+        {
+          "event_id": "3594d9a91c55a622",
+          "timestamp": "2026-01-24T11:18:49.148331",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/renderer/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "77e8f40f25034f4a",
+          "timestamp": "2026-01-24T11:18:49.148345",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/renderer/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.148354",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/renderer/artifact_writer.ts",
+      "file_type": ".ts",
+      "file_hash": "526e80f6d0821306d6d4eda91050eca6ae983115b3ffc4e2586b1694f0b38923",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/renderer/artifact_writer.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/renderer/artifact_writer.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 4 uses of 'any' type",
+          "file_path": "engine/renderer/artifact_writer.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "975dbc64f519472a",
+          "timestamp": "2026-01-24T11:18:49.148362",
+          "event_type": "ETL_START",
+          "source_file": "engine/renderer/artifact_writer.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "18fb759d3e76d9e9",
+          "timestamp": "2026-01-24T11:18:49.148430",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/renderer/artifact_writer.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 5757,
+            "line_count": 256
+          },
+          "evidence_hash": "3e8e50bb4387f7e693561ffb7d494f0c4b190e97f34fced9ed291d2de8612a6b"
+        },
+        {
+          "event_id": "15246845a71b7a7e",
+          "timestamp": "2026-01-24T11:18:49.148730",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/renderer/artifact_writer.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "fef412b642b46902",
+          "timestamp": "2026-01-24T11:18:49.148749",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/renderer/artifact_writer.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.148760",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/renderer/module_mapper.ts",
+      "file_type": ".ts",
+      "file_hash": "e31079d17908bb9ad1fc53fc363d06dc0fdd7ad7228013c076ee034a73a9801e",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/renderer/module_mapper.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/renderer/module_mapper.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 11 uses of 'any' type",
+          "file_path": "engine/renderer/module_mapper.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": true,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "5887ab663a27f749",
+          "timestamp": "2026-01-24T11:18:49.148769",
+          "event_type": "ETL_START",
+          "source_file": "engine/renderer/module_mapper.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "9d291d0170a1592b",
+          "timestamp": "2026-01-24T11:18:49.148831",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/renderer/module_mapper.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 5535,
+            "line_count": 211
+          },
+          "evidence_hash": "fd4524b0f9b0aa84ca55ad39b0bad314504a99c58f9e32be8f6c7cf0cc723a7a"
+        },
+        {
+          "event_id": "d1d172db8725f8c2",
+          "timestamp": "2026-01-24T11:18:49.149100",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/renderer/module_mapper.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "1aee5d4c2bb89650",
+          "timestamp": "2026-01-24T11:18:49.149116",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/renderer/module_mapper.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.149126",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/renderer/template_engine.ts",
+      "file_type": ".ts",
+      "file_hash": "1301f4c20c569e5d05fe56bdf3f3983c888651196980943ff4a0a8043a1e0ce1",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/renderer/template_engine.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/renderer/template_engine.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 10 uses of 'any' type",
+          "file_path": "engine/renderer/template_engine.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": true,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "828e5063cb39e33a",
+          "timestamp": "2026-01-24T11:18:49.149135",
+          "event_type": "ETL_START",
+          "source_file": "engine/renderer/template_engine.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "a503e09aa453dfa9",
+          "timestamp": "2026-01-24T11:18:49.149201",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/renderer/template_engine.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 6526,
+            "line_count": 255
+          },
+          "evidence_hash": "4c8b6be87ae458e543a81dee726043d1351f2f535403ea548149fb487266e42e"
+        },
+        {
+          "event_id": "52511522b32a357f",
+          "timestamp": "2026-01-24T11:18:49.149509",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/renderer/template_engine.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "16e361c6b7419cef",
+          "timestamp": "2026-01-24T11:18:49.149526",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/renderer/template_engine.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.149537",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/tests/artifacts/evidence_chain.test.ts",
+      "file_type": ".ts",
+      "file_hash": "e21fd9b7d7fee4e9c790cb7799e29bafde76805695a917f26b53e655479aa1ec",
+      "gl_layer": "ECO-50-OBSERVABILITY",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/tests/artifacts/evidence_chain.test.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/tests/artifacts/evidence_chain.test.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "metadata_missing",
+          "severity": "LOW",
+          "message": "No JSDoc documentation found",
+          "file_path": "engine/tests/artifacts/evidence_chain.test.ts",
+          "recommendation": "Add JSDoc comments for public APIs"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": true,
+        "has_tests": true,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "502b0a1639c6dd11",
+          "timestamp": "2026-01-24T11:18:49.149545",
+          "event_type": "ETL_START",
+          "source_file": "engine/tests/artifacts/evidence_chain.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "daa017bd77c625c1",
+          "timestamp": "2026-01-24T11:18:49.149605",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/tests/artifacts/evidence_chain.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 2984,
+            "line_count": 124
+          },
+          "evidence_hash": "0d10443c382605230650fd17a6cb02221f5eafae13616ed26bc97e57f6f2a377"
+        },
+        {
+          "event_id": "117b8a34b8c4507d",
+          "timestamp": "2026-01-24T11:18:49.149756",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/tests/artifacts/evidence_chain.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "dc05fed52158b66d",
+          "timestamp": "2026-01-24T11:18:49.149770",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/tests/artifacts/evidence_chain.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.149780",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/tests/governance/rule_evaluator.test.ts",
+      "file_type": ".ts",
+      "file_hash": "af0ead09a63e1a089466ab5c96dd146a35c2a61f8ab870c1ffdfe6593484b487",
+      "gl_layer": "ECO-50-OBSERVABILITY",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/tests/governance/rule_evaluator.test.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/tests/governance/rule_evaluator.test.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "metadata_missing",
+          "severity": "LOW",
+          "message": "No JSDoc documentation found",
+          "file_path": "engine/tests/governance/rule_evaluator.test.ts",
+          "recommendation": "Add JSDoc comments for public APIs"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": true,
+        "has_tests": true,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "ff914a9c1689287a",
+          "timestamp": "2026-01-24T11:18:49.149788",
+          "event_type": "ETL_START",
+          "source_file": "engine/tests/governance/rule_evaluator.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "9d5ad4d3e65bd3d5",
+          "timestamp": "2026-01-24T11:18:49.149842",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/tests/governance/rule_evaluator.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 4072,
+            "line_count": 142
+          },
+          "evidence_hash": "ed0f9c8216e37844e6c3ffc68fcd3c5eee4b696ced7e7b061337a30838d8f187"
+        },
+        {
+          "event_id": "fc02114edb449610",
+          "timestamp": "2026-01-24T11:18:49.150018",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/tests/governance/rule_evaluator.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "b74d75b478baed91",
+          "timestamp": "2026-01-24T11:18:49.150032",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/tests/governance/rule_evaluator.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.150043",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/tests/loader/fs_loader.test.ts",
+      "file_type": ".ts",
+      "file_hash": "23b598f629092f0f76728061921fb5706b0ad5a8b9bde6b17cabb1f1d381886c",
+      "gl_layer": "ECO-50-OBSERVABILITY",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/tests/loader/fs_loader.test.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/tests/loader/fs_loader.test.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "metadata_missing",
+          "severity": "LOW",
+          "message": "No JSDoc documentation found",
+          "file_path": "engine/tests/loader/fs_loader.test.ts",
+          "recommendation": "Add JSDoc comments for public APIs"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": true,
+        "has_tests": true,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "325a9a5643952b1d",
+          "timestamp": "2026-01-24T11:18:49.150051",
+          "event_type": "ETL_START",
+          "source_file": "engine/tests/loader/fs_loader.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "d3ef9145cab3bfd5",
+          "timestamp": "2026-01-24T11:18:49.150098",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/tests/loader/fs_loader.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 1868,
+            "line_count": 58
+          },
+          "evidence_hash": "93a1951bf31ad169ec1e66b328950da6e86ebf3a3daf31ed2661b6138c47852d"
+        },
+        {
+          "event_id": "c81d2e124deeb176",
+          "timestamp": "2026-01-24T11:18:49.150198",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/tests/loader/fs_loader.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "6008470dfaa6fabc",
+          "timestamp": "2026-01-24T11:18:49.150213",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/tests/loader/fs_loader.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.150223",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/tests/loader/merge_index.test.ts",
+      "file_type": ".ts",
+      "file_hash": "a001e6e0d2872842717356b11b9a0596389493b95a2f4d6e1b96c7a5f30c291c",
+      "gl_layer": "ECO-50-OBSERVABILITY",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/tests/loader/merge_index.test.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/tests/loader/merge_index.test.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "metadata_missing",
+          "severity": "LOW",
+          "message": "No JSDoc documentation found",
+          "file_path": "engine/tests/loader/merge_index.test.ts",
+          "recommendation": "Add JSDoc comments for public APIs"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": true,
+        "has_tests": true,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "4f73d596852ff103",
+          "timestamp": "2026-01-24T11:18:49.150231",
+          "event_type": "ETL_START",
+          "source_file": "engine/tests/loader/merge_index.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "1f335c31db349630",
+          "timestamp": "2026-01-24T11:18:49.150281",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/tests/loader/merge_index.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 2790,
+            "line_count": 111
+          },
+          "evidence_hash": "f885fd41ffccf5a0067ed25fa059b836148bdf21a47f407db1eac927ee8effc9"
+        },
+        {
+          "event_id": "b5dab7eb5835652f",
+          "timestamp": "2026-01-24T11:18:49.150409",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/tests/loader/merge_index.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "f68b0c71b91b4d11",
+          "timestamp": "2026-01-24T11:18:49.150430",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/tests/loader/merge_index.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.150442",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/tests/normalizer/env_merger.test.ts",
+      "file_type": ".ts",
+      "file_hash": "a2683bc146ba901f7277183ce963ca7f530732f5c2098564d95e5a0d6a37342b",
+      "gl_layer": "ECO-50-OBSERVABILITY",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/tests/normalizer/env_merger.test.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/tests/normalizer/env_merger.test.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "metadata_missing",
+          "severity": "LOW",
+          "message": "No JSDoc documentation found",
+          "file_path": "engine/tests/normalizer/env_merger.test.ts",
+          "recommendation": "Add JSDoc comments for public APIs"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": true,
+        "has_tests": true,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "cd4d6b5e4f1a90be",
+          "timestamp": "2026-01-24T11:18:49.150450",
+          "event_type": "ETL_START",
+          "source_file": "engine/tests/normalizer/env_merger.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "0fbc35438919fc85",
+          "timestamp": "2026-01-24T11:18:49.150496",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/tests/normalizer/env_merger.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 1584,
+            "line_count": 49
+          },
+          "evidence_hash": "db3a8ba69c34d351471008a07633c9ffd42e91df89878d68d788914329f5bf6b"
+        },
+        {
+          "event_id": "7d806c0e860b975e",
+          "timestamp": "2026-01-24T11:18:49.150583",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/tests/normalizer/env_merger.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "896a340959bc64dd",
+          "timestamp": "2026-01-24T11:18:49.150596",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/tests/normalizer/env_merger.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.150606",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/tests/validator/schema_validator.test.ts",
+      "file_type": ".ts",
+      "file_hash": "08600725006092c2958a0ad8d6c88f346f23a45c3eb888d2db2fa9345af2bc37",
+      "gl_layer": "ECO-50-OBSERVABILITY",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/tests/validator/schema_validator.test.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/tests/validator/schema_validator.test.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "metadata_missing",
+          "severity": "LOW",
+          "message": "No JSDoc documentation found",
+          "file_path": "engine/tests/validator/schema_validator.test.ts",
+          "recommendation": "Add JSDoc comments for public APIs"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": true,
+        "has_tests": true,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "762d3bbf18039a7e",
+          "timestamp": "2026-01-24T11:18:49.150614",
+          "event_type": "ETL_START",
+          "source_file": "engine/tests/validator/schema_validator.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "aab148e3105eb730",
+          "timestamp": "2026-01-24T11:18:49.150660",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/tests/validator/schema_validator.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 1802,
+            "line_count": 61
+          },
+          "evidence_hash": "b5272edb825bd39fc394684677427c04b7fbd90ac1c63a69ea45b9cdcfc99c60"
+        },
+        {
+          "event_id": "5e491c34ed7c65b9",
+          "timestamp": "2026-01-24T11:18:49.150758",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/tests/validator/schema_validator.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "78d326d65f7b5b21",
+          "timestamp": "2026-01-24T11:18:49.150770",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/tests/validator/schema_validator.test.ts",
+          "gl_layer": "ECO-50-OBSERVABILITY",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.150779",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/tsconfig.json",
+      "file_type": ".json",
+      "file_hash": "564fe189952f1bc592e1247eecdb159a26e71fb3159a8b048bff1d5ae28a6502",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-10-CONFIG-JSON",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/tsconfig.json",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/tsconfig.json",
+          "recommendation": "Add semantic anchor annotation"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": false,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "valid_json": true
+      },
+      "governance_events": [
+        {
+          "event_id": "4945dce55f6cb655",
+          "timestamp": "2026-01-24T11:18:49.150787",
+          "event_type": "ETL_START",
+          "source_file": "engine/tsconfig.json",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-10-CONFIG-JSON",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "50d855e80fa642d5",
+          "timestamp": "2026-01-24T11:18:49.150828",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/tsconfig.json",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-10-CONFIG-JSON",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 1037,
+            "line_count": 42
+          },
+          "evidence_hash": "7150e93ea8eaa9e3e73d9dd590ecea29da3a3daecdc5771b226ab5c49d5fce5d"
+        },
+        {
+          "event_id": "e09365c28ca49490",
+          "timestamp": "2026-01-24T11:18:49.150925",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/tsconfig.json",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-10-CONFIG-JSON",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "92ebf5357828dbe4",
+          "timestamp": "2026-01-24T11:18:49.150939",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/tsconfig.json",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-10-CONFIG-JSON",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.150948",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/validator/README.md",
+      "file_type": ".md",
+      "file_hash": "9dbb9867df94db7c143daa6626b7b877690d25d32526bcb0352d8db543ecc86d",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-90-META-DOC",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/validator/README.md",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/validator/README.md",
+          "recommendation": "Add semantic anchor annotation"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": false,
+        "has_exports": false,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": false,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false
+      },
+      "governance_events": [
+        {
+          "event_id": "0fe87c2cd2f42147",
+          "timestamp": "2026-01-24T11:18:49.150955",
+          "event_type": "ETL_START",
+          "source_file": "engine/validator/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "9c4bd876d079db1a",
+          "timestamp": "2026-01-24T11:18:49.151000",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/validator/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 1752,
+            "line_count": 75
+          },
+          "evidence_hash": "c3cf86173f3a28c32192dc3e0b27fdf974ba8e2b88685d0e3dd90060a4456b71"
+        },
+        {
+          "event_id": "a30b3cc55759e589",
+          "timestamp": "2026-01-24T11:18:49.151102",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/validator/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 2,
+            "gl_compliant": true
+          },
+          "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+        },
+        {
+          "event_id": "0f266f06ba1ff0a6",
+          "timestamp": "2026-01-24T11:18:49.151115",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/validator/README.md",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-90-META-DOC",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.151125",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/validator/error_reporter.ts",
+      "file_type": ".ts",
+      "file_hash": "0af2c2d62f3c199f6aba3848d66501bb6e8b0ee0e0540b99d85ab22f70e626f2",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/validator/error_reporter.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/validator/error_reporter.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 8 uses of 'any' type",
+          "file_path": "engine/validator/error_reporter.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "e25996caace1bc71",
+          "timestamp": "2026-01-24T11:18:49.151132",
+          "event_type": "ETL_START",
+          "source_file": "engine/validator/error_reporter.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "5557ba1e6cd8f01f",
+          "timestamp": "2026-01-24T11:18:49.151200",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/validator/error_reporter.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 5063,
+            "line_count": 233
+          },
+          "evidence_hash": "e04ebd6c83f83118d57401fdbf23be5092657b5839ec128aff6b89fb3868ef39"
+        },
+        {
+          "event_id": "29ece744a3c8d7fb",
+          "timestamp": "2026-01-24T11:18:49.151584",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/validator/error_reporter.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "099c9252aee84412",
+          "timestamp": "2026-01-24T11:18:49.151602",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/validator/error_reporter.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.151615",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/validator/module_validator.ts",
+      "file_type": ".ts",
+      "file_hash": "6ca5ed375d4d2689bb121f340c25a5ce1772c41a8878aeb9af21586b2d2e2d84",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/validator/module_validator.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/validator/module_validator.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 9 uses of 'any' type",
+          "file_path": "engine/validator/module_validator.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": false,
+        "has_tests": true,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "8491f93e3a13ab87",
+          "timestamp": "2026-01-24T11:18:49.151624",
+          "event_type": "ETL_START",
+          "source_file": "engine/validator/module_validator.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "39656d4fa6d03bec",
+          "timestamp": "2026-01-24T11:18:49.151695",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/validator/module_validator.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 7316,
+            "line_count": 257
+          },
+          "evidence_hash": "de72bf6799c3c3011ba0b0f0e0d156e4e7041a6943766a98eedcd011e8ec8869"
+        },
+        {
+          "event_id": "23bddb189d891ab5",
+          "timestamp": "2026-01-24T11:18:49.152005",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/validator/module_validator.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "6f5234ec49554371",
+          "timestamp": "2026-01-24T11:18:49.152019",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/validator/module_validator.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.152029",
+      "execution_time_ms": 0
+    },
+    {
+      "file_path": "engine/validator/schema_validator.ts",
+      "file_type": ".ts",
+      "file_hash": "8d35eab9d0cb9c2ed3174c62725bc894ba9e38a3269b2280ed97099d4ef27c50",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "etl_status": "SUCCESS",
+      "es_index_status": "READY",
+      "issues": [
+        {
+          "type": "gl_marker_missing",
+          "severity": "MEDIUM",
+          "message": "No GL governance markers found in file",
+          "file_path": "engine/validator/schema_validator.ts",
+          "recommendation": "Add GL layer annotation comment at file header"
+        },
+        {
+          "type": "semantic_manifest_missing",
+          "severity": "LOW",
+          "message": "No semantic manifest reference found",
+          "file_path": "engine/validator/schema_validator.ts",
+          "recommendation": "Add semantic anchor annotation"
+        },
+        {
+          "type": "type_error",
+          "severity": "MEDIUM",
+          "message": "Found 7 uses of 'any' type",
+          "file_path": "engine/validator/schema_validator.ts",
+          "recommendation": "Replace 'any' with specific types for better type safety"
+        }
+      ],
+      "metadata": {
+        "has_jsdoc": true,
+        "has_exports": true,
+        "has_imports": true,
+        "has_interfaces": false,
+        "has_types": false,
+        "has_classes": true,
+        "has_functions": false,
+        "has_tests": false,
+        "has_readme_reference": false,
+        "has_license": false,
+        "typescript_strict": false
+      },
+      "governance_events": [
+        {
+          "event_id": "565fc586695feb91",
+          "timestamp": "2026-01-24T11:18:49.152039",
+          "event_type": "ETL_START",
+          "source_file": "engine/validator/schema_validator.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "STARTED",
+          "details": {
+            "phase": "extract"
+          },
+          "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+        },
+        {
+          "event_id": "bb4f74b6ecdec365",
+          "timestamp": "2026-01-24T11:18:49.152095",
+          "event_type": "ETL_EXTRACT",
+          "source_file": "engine/validator/schema_validator.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "size_bytes": 4764,
+            "line_count": 168
+          },
+          "evidence_hash": "fd5dcf2697188e13e2e89e7dc06afe38d0e80dc40101ea1e6cc8ab7be81bd145"
+        },
+        {
+          "event_id": "2be2b70fddab9b44",
+          "timestamp": "2026-01-24T11:18:49.152317",
+          "event_type": "ETL_TRANSFORM",
+          "source_file": "engine/validator/schema_validator.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "issues_count": 3,
+            "gl_compliant": true
+          },
+          "evidence_hash": "de00096b76e507f8d787536284926751c132a8e2b1a39bb074978f8f16323f18"
+        },
+        {
+          "event_id": "40fbda59d2f60924",
+          "timestamp": "2026-01-24T11:18:49.152333",
+          "event_type": "ETL_LOAD",
+          "source_file": "engine/validator/schema_validator.ts",
+          "gl_layer": "ECO-30-EXECUTION",
+          "semantic_anchor": "ECO-30-EXEC-TS",
+          "status": "SUCCESS",
+          "details": {
+            "index": "gl-aep-engine-audit"
+          },
+          "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+        }
+      ],
+      "timestamp": "2026-01-24T11:18:49.152344",
+      "execution_time_ms": 0
+    }
+  ],
+  "governance_event_summary": {
+    "total_events": 192,
+    "events_by_type": {
+      "ETL_START": 48,
+      "ETL_EXTRACT": 48,
+      "ETL_TRANSFORM": 48,
+      "ETL_LOAD": 48
+    },
+    "events_by_status": {
+      "STARTED": 48,
+      "SUCCESS": 144
+    }
+  },
+  "best_practice_recommendations": [
+    {
+      "id": "REC-001",
+      "priority": "HIGH",
+      "category": "governance",
+      "title": "Add GL Governance Markers",
+      "description": "46 files are missing GL governance markers",
+      "action": "Add GL layer annotation comments to file headers",
+      "template": "// @gl-layer: ECO-30-EXECUTION\n// @semantic-anchor: ECO-30-EXEC-TS"
+    },
+    {
+      "id": "REC-002",
+      "priority": "MEDIUM",
+      "category": "documentation",
+      "title": "Improve Documentation Coverage",
+      "description": "8 files need better documentation",
+      "action": "Add JSDoc comments for all public APIs and exports"
+    }
+  ],
+  "migration_suggestions": [
+    {
+      "id": "MIG-001",
+      "priority": "LOW",
+      "category": "structure",
+      "title": "Consolidate Test Structure",
+      "current_path": "engine/tests/*/",
+      "suggested_path": "engine/__tests__/",
+      "rationale": "Follow Jest conventions for test file organization"
+    }
+  ],
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "GLOBAL_GOVERNANCE_AUDIT_REPORT",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

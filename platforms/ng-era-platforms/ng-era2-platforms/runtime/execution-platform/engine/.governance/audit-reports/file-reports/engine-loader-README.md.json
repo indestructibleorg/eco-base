@@ -1,0 +1,100 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "file_path": "engine/loader/README.md",
+  "file_hash": "98e88389dbd582c9446ffeb835728a86ffc3b3a20a05659f02daf5ae479a707f",
+  "audit_timestamp": "2026-01-26T02:05:57.126653+00:00",
+  "etl_status": "success",
+  "es_index_status": "indexed",
+  "metadata": {},
+  "execution_time_ms": 0,
+  "issues": [
+    {
+      "issue_id": "ISS-0001",
+      "type": "gl_marker_missing",
+      "severity": "P1",
+      "title": "GL 治理標記缺失",
+      "description": "檔案 engine/loader/README.md 缺少 GL Unified Architecture Governance Framework 標記",
+      "line_number": null,
+      "suggestion": "在檔案開頭添加 '// GL Unified Architecture Governance Framework Activated' 或 '@gl-governed' 標記",
+      "auto_fixable": true
+    },
+    {
+      "issue_id": "ISS-0002",
+      "type": "metadata_missing",
+      "severity": "P2",
+      "title": "Metadata 缺失",
+      "description": "缺少以下 metadata: version, status, author, last_updated",
+      "line_number": null,
+      "suggestion": "添加缺失的 metadata 欄位: version, status, author, last_updated",
+      "auto_fixable": false
+    }
+  ],
+  "governance_events": [
+    {
+      "event_id": "evt-0148",
+      "timestamp": "2026-01-26T02:05:57.126423+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/loader/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "8e4cc13f91d680ee"
+    },
+    {
+      "event_id": "evt-0149",
+      "timestamp": "2026-01-26T02:05:57.126627+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/loader/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 2
+      },
+      "hash": "1b5244ce2bd75ea4"
+    },
+    {
+      "event_id": "evt-0150",
+      "timestamp": "2026-01-26T02:05:57.126635+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/loader/README.md",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "b00b912254b691b5"
+    },
+    {
+      "event_id": "evt-0151",
+      "timestamp": "2026-01-26T02:05:57.126646+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/loader/README.md",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "98e88389dbd582c9"
+      },
+      "hash": "cdb403461ce2b7be"
+    }
+  ],
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "engine_loader_README.md",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

@@ -1,0 +1,48 @@
+# @ECO-governed
+# @ECO-layer: GL30-49
+# @ECO-semantic: test
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL30_49-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+[
+  {
+    "id": "artifact-001",
+    "type": "service",
+    "version": "1.0.0",
+    "name": "auth-service",
+    "namespace": "authentication",
+    "metadata": {
+      "created_at": "2025-01-16T00:00:00Z",
+      "author": "test-user",
+      "description": "Authentication service"
+    }
+  },
+  {
+    "id": "artifact-002",
+    "type": "component",
+    "version": "2.1.0",
+    "name": "user-component",
+    "namespace": "user-management",
+    "metadata": {
+      "created_at": "2025-01-16T00:00:00Z",
+      "author": "test-user",
+      "description": "User management component"
+    }
+  },
+  {
+    "id": "artifact-003",
+    "type": "library",
+    "version": "1.5.2",
+    "name": "utils-lib",
+    "namespace": "common",
+    "metadata": {
+      "created_at": "2025-01-16T00:00:00Z",
+      "author": "test-user",
+      "description": "Utility library"
+    }
+  }
+]

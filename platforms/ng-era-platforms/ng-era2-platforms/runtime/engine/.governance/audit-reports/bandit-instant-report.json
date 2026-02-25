@@ -1,0 +1,1431 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "errors": [],
+  "generated_at": "2026-01-28T10:14:11Z",
+  "metrics": {
+    "_totals": {
+      "CONFIDENCE.HIGH": 58,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 1,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 58,
+      "SEVERITY.MEDIUM": 1,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 3255,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "instant/scripts/INSTANT-DEPLOY.py": {
+      "CONFIDENCE.HIGH": 9,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 1,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 9,
+      "SEVERITY.MEDIUM": 1,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 66,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "instant/scripts/demo_instant_generation.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 201,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "instant/scripts/generate-instant-dag.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 188,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "instant/scripts/instant_archiver_v1.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 243,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "instant/scripts/instant_execution_engine_v2.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 582,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "instant/scripts/instant_execution_pipeline.py": {
+      "CONFIDENCE.HIGH": 3,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 3,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 561,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "instant/scripts/registry_instant.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 296,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "instant/scripts/test_registry_instant.py": {
+      "CONFIDENCE.HIGH": 46,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 46,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 288,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "instant/scripts/validate-instant-execution.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 385,
+      "nosec": 0,
+      "skipped_tests": 0
+    },
+    "instant/scripts/validate-instant-manifest.py": {
+      "CONFIDENCE.HIGH": 0,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
+      "CONFIDENCE.UNDEFINED": 0,
+      "SEVERITY.HIGH": 0,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 0,
+      "SEVERITY.UNDEFINED": 0,
+      "loc": 445,
+      "nosec": 0,
+      "skipped_tests": 0
+    }
+  },
+  "results": [
+    {
+      "code": "13 import os\n14 import subprocess\n15 import time\n",
+      "col_offset": 0,
+      "end_col_offset": 17,
+      "filename": "instant/scripts/INSTANT-DEPLOY.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Consider possible security implications associated with the subprocess module.",
+      "line_number": 14,
+      "line_range": [
+        14
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_imports.html#b404-import-subprocess",
+      "test_id": "B404",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "20     # 2. \u5b89\u88dd\u4f9d\u8cf4\n21     subprocess.run([\"pip\", \"install\", \"-r\", \"requirements.txt\"], capture_output=True)\n22     # 3. \u555f\u52d5\u5373\u6642\u670d\u52d9\uff08\u5f8c\u53f0\uff09\n",
+      "col_offset": 4,
+      "end_col_offset": 85,
+      "filename": "instant/scripts/INSTANT-DEPLOY.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 21,
+      "line_range": [
+        21
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "20     # 2. \u5b89\u88dd\u4f9d\u8cf4\n21     subprocess.run([\"pip\", \"install\", \"-r\", \"requirements.txt\"], capture_output=True)\n22     # 3. \u555f\u52d5\u5373\u6642\u670d\u52d9\uff08\u5f8c\u53f0\uff09\n",
+      "col_offset": 4,
+      "end_col_offset": 85,
+      "filename": "instant/scripts/INSTANT-DEPLOY.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 21,
+      "line_range": [
+        21
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "22     # 3. \u555f\u52d5\u5373\u6642\u670d\u52d9\uff08\u5f8c\u53f0\uff09\n23     subprocess.Popen(\n24         [\n25             \"python\",\n26             \"-m\",\n27             \"uvicorn\",\n28             \"api:app\",\n29             \"--host\",\n30             \"0.0.0.0\",\n31             \"--port\",\n32             \"8000\",\n33             \"--workers\",\n34             \"4\",\n35         ],\n36         stdout=subprocess.DEVNULL,\n37         stderr=subprocess.DEVNULL,\n38     )\n39     # 4. \u7b49\u5f85\u670d\u52d9\u555f\u52d5\n",
+      "col_offset": 4,
+      "end_col_offset": 5,
+      "filename": "instant/scripts/INSTANT-DEPLOY.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 23,
+      "line_range": [
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "22     # 3. \u555f\u52d5\u5373\u6642\u670d\u52d9\uff08\u5f8c\u53f0\uff09\n23     subprocess.Popen(\n24         [\n25             \"python\",\n26             \"-m\",\n27             \"uvicorn\",\n28             \"api:app\",\n29             \"--host\",\n30             \"0.0.0.0\",\n31             \"--port\",\n32             \"8000\",\n33             \"--workers\",\n34             \"4\",\n35         ],\n36         stdout=subprocess.DEVNULL,\n37         stderr=subprocess.DEVNULL,\n38     )\n39     # 4. \u7b49\u5f85\u670d\u52d9\u555f\u52d5\n",
+      "col_offset": 4,
+      "end_col_offset": 5,
+      "filename": "instant/scripts/INSTANT-DEPLOY.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 23,
+      "line_range": [
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "29             \"--host\",\n30             \"0.0.0.0\",\n31             \"--port\",\n32             \"8000\",\n33             \"--workers\",\n34             \"4\",\n35         ],\n36         stdout=subprocess.DEVNULL,\n37         stderr=subprocess.DEVNULL,\n38     )\n39     # 4. \u7b49\u5f85\u670d\u52d9\u555f\u52d5\n40     time.sleep(2)\n41     # 5. \u9a57\u8b49\u670d\u52d9\u904b\u884c\n42     health_check = subprocess.run(\n",
+      "col_offset": 12,
+      "end_col_offset": 21,
+      "filename": "instant/scripts/INSTANT-DEPLOY.py",
+      "issue_confidence": "MEDIUM",
+      "issue_cwe": {
+        "id": 605,
+        "link": "https://cwe.mitre.org/data/definitions/605.html"
+      },
+      "issue_severity": "MEDIUM",
+      "issue_text": "Possible binding to all interfaces.",
+      "line_number": 30,
+      "line_range": [
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b104_hardcoded_bind_all_interfaces.html",
+      "test_id": "B104",
+      "test_name": "hardcoded_bind_all_interfaces"
+    },
+    {
+      "code": "41     # 5. \u9a57\u8b49\u670d\u52d9\u904b\u884c\n42     health_check = subprocess.run(\n43         [\"curl\", \"-s\", \"http://localhost:8000/instant/health\"],\n44         capture_output=True,\n45         text=True,\n46     )\n47     if \"instant\" in health_check.stdout:\n",
+      "col_offset": 19,
+      "end_col_offset": 5,
+      "filename": "instant/scripts/INSTANT-DEPLOY.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 42,
+      "line_range": [
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "41     # 5. \u9a57\u8b49\u670d\u52d9\u904b\u884c\n42     health_check = subprocess.run(\n43         [\"curl\", \"-s\", \"http://localhost:8000/instant/health\"],\n44         capture_output=True,\n45         text=True,\n46     )\n47     if \"instant\" in health_check.stdout:\n",
+      "col_offset": 19,
+      "end_col_offset": 5,
+      "filename": "instant/scripts/INSTANT-DEPLOY.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 42,
+      "line_range": [
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "58         # 7. \u57f7\u884c\u5373\u6642\u67b6\u69cb\n59         deploy_result = subprocess.run(\n60             [\n61                 \"curl\",\n62                 \"-X\",\n63                 \"POST\",\n64                 \"http://localhost:8000/instant/architect\",\n65                 \"-H\",\n66                 \"Content-Type: application/json\",\n67                 \"-d\",\n68                 str(config).replace(\"'\", '\"'),\n69             ],\n70             capture_output=True,\n71             text=True,\n72         )\n73         if '\"success\": true' in deploy_result.stdout:\n",
+      "col_offset": 24,
+      "end_col_offset": 9,
+      "filename": "instant/scripts/INSTANT-DEPLOY.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 59,
+      "line_range": [
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "58         # 7. \u57f7\u884c\u5373\u6642\u67b6\u69cb\n59         deploy_result = subprocess.run(\n60             [\n61                 \"curl\",\n62                 \"-X\",\n63                 \"POST\",\n64                 \"http://localhost:8000/instant/architect\",\n65                 \"-H\",\n66                 \"Content-Type: application/json\",\n67                 \"-d\",\n68                 str(config).replace(\"'\", '\"'),\n69             ],\n70             capture_output=True,\n71             text=True,\n72         )\n73         if '\"success\": true' in deploy_result.stdout:\n",
+      "col_offset": 24,
+      "end_col_offset": 9,
+      "filename": "instant/scripts/INSTANT-DEPLOY.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 59,
+      "line_range": [
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "33 import json\n34 import subprocess\n35 import sys\n",
+      "col_offset": 0,
+      "end_col_offset": 17,
+      "filename": "instant/scripts/instant_execution_pipeline.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Consider possible security implications associated with the subprocess module.",
+      "line_number": 34,
+      "line_range": [
+        34
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_imports.html#b404-import-subprocess",
+      "test_id": "B404",
+      "test_name": "blacklist"
+    },
+    {
+      "code": "344             if deploy_script.exists():\n345                 result = subprocess.run(\n346                     [\"bash\", str(deploy_script), \"--namespace\", self.context.namespace],\n347                     capture_output=True,\n348                     text=True,\n349                     timeout=self.context.max_stage_duration[stage],\n350                 )\n351                 deploy_success = result.returncode == 0\n",
+      "col_offset": 25,
+      "end_col_offset": 17,
+      "filename": "instant/scripts/instant_execution_pipeline.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Starting a process with a partial executable path",
+      "line_number": 345,
+      "line_range": [
+        345,
+        346,
+        347,
+        348,
+        349,
+        350
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b607_start_process_with_partial_path.html",
+      "test_id": "B607",
+      "test_name": "start_process_with_partial_path"
+    },
+    {
+      "code": "344             if deploy_script.exists():\n345                 result = subprocess.run(\n346                     [\"bash\", str(deploy_script), \"--namespace\", self.context.namespace],\n347                     capture_output=True,\n348                     text=True,\n349                     timeout=self.context.max_stage_duration[stage],\n350                 )\n351                 deploy_success = result.returncode == 0\n",
+      "col_offset": 25,
+      "end_col_offset": 17,
+      "filename": "instant/scripts/instant_execution_pipeline.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 78,
+        "link": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "subprocess call - check for execution of untrusted input.",
+      "line_number": 345,
+      "line_range": [
+        345,
+        346,
+        347,
+        348,
+        349,
+        350
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b603_subprocess_without_shell_equals_true.html",
+      "test_id": "B603",
+      "test_name": "subprocess_without_shell_equals_true"
+    },
+    {
+      "code": "50         )\n51         assert result.status == ValidationStatus.PASSED\n52         assert len(result.errors) == 0\n",
+      "col_offset": 8,
+      "end_col_offset": 55,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 51,
+      "line_range": [
+        51
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "51         assert result.status == ValidationStatus.PASSED\n52         assert len(result.errors) == 0\n53         assert result.latency_ms < 100  # <100ms\n",
+      "col_offset": 8,
+      "end_col_offset": 38,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 52,
+      "line_range": [
+        52
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "52         assert len(result.errors) == 0\n53         assert result.latency_ms < 100  # <100ms\n54     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 38,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 53,
+      "line_range": [
+        53
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "58         result = await validator.validate_namespace(\"invalid-namespace\", invalid_data)\n59         assert result.status == ValidationStatus.FAILED_INVALID\n60         assert len(result.errors) > 0\n",
+      "col_offset": 8,
+      "end_col_offset": 63,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 59,
+      "line_range": [
+        59
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "59         assert result.status == ValidationStatus.FAILED_INVALID\n60         assert len(result.errors) > 0\n61     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 37,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 60,
+      "line_range": [
+        60
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "69         results = await validator.validate_all(registry)\n70         assert len(results) == 3\n71         assert all(r.status == ValidationStatus.PASSED for r in results.values())\n",
+      "col_offset": 8,
+      "end_col_offset": 32,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 70,
+      "line_range": [
+        70
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "70         assert len(results) == 3\n71         assert all(r.status == ValidationStatus.PASSED for r in results.values())\n72         assert (\n",
+      "col_offset": 8,
+      "end_col_offset": 81,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 71,
+      "line_range": [
+        71
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "71         assert all(r.status == ValidationStatus.PASSED for r in results.values())\n72         assert (\n73             sum(r.latency_ms for r in results.values()) / len(results) < 500\n74         )  # <500ms\n75 class TestMultiLayerCache:\n",
+      "col_offset": 8,
+      "end_col_offset": 9,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 72,
+      "line_range": [
+        72,
+        73,
+        74
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "84         result = await cache.get(\"test-key\")\n85         assert result is not None\n86         assert result[\"data\"] == \"value\"\n",
+      "col_offset": 8,
+      "end_col_offset": 33,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 85,
+      "line_range": [
+        85
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "85         assert result is not None\n86         assert result[\"data\"] == \"value\"\n87     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 40,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 86,
+      "line_range": [
+        86
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "92         result1 = await cache.get(\"test-key\")\n93         assert result1 is not None\n94         # \u7b2c\u4e8c\u6b21\u7372\u53d6\uff0c\u61c9\u8a72\u547d\u4e2d Local\n",
+      "col_offset": 8,
+      "end_col_offset": 34,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 93,
+      "line_range": [
+        93
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "95         result2 = await cache.get(\"test-key\")\n96         assert result2 is not None\n97         stats = cache.get_stats()\n",
+      "col_offset": 8,
+      "end_col_offset": 34,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 96,
+      "line_range": [
+        96
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "97         stats = cache.get_stats()\n98         assert stats[\"local_hits\"] >= 1\n99     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 39,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 98,
+      "line_range": [
+        98
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "102         result = await cache.get(\"nonexistent-key\")\n103         assert result is None\n104         stats = cache.get_stats()\n",
+      "col_offset": 8,
+      "end_col_offset": 29,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 103,
+      "line_range": [
+        103
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "104         stats = cache.get_stats()\n105         assert stats[\"misses\"] == 1\n106     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 35,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 105,
+      "line_range": [
+        105
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "111         result = await cache.get(\"test-key\")\n112         assert result is not None\n113         # \u522a\u9664\n",
+      "col_offset": 8,
+      "end_col_offset": 33,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 112,
+      "line_range": [
+        112
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "116         result = await cache.get(\"test-key\")\n117         assert result is None\n118     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 29,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 117,
+      "line_range": [
+        117
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "125         count = await cache.invalidate(\"key\")\n126         assert count >= 2\n127     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 25,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 126,
+      "line_range": [
+        126
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "133         latency = (time.time() - start) * 1000\n134         assert result is not None\n135         assert latency < 50  # <50ms (p99)\n",
+      "col_offset": 8,
+      "end_col_offset": 33,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 134,
+      "line_range": [
+        134
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "134         assert result is not None\n135         assert latency < 50  # <50ms (p99)\n136 class TestSchemaValidator:\n",
+      "col_offset": 8,
+      "end_col_offset": 27,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 135,
+      "line_range": [
+        135
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "152         result = await validator.validate_schema(\"test-schema\", valid_schema)\n153         assert result.status == SchemaValidationStatus.PASSED\n154         assert len(result.errors) == 0\n",
+      "col_offset": 8,
+      "end_col_offset": 61,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 153,
+      "line_range": [
+        153
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "153         assert result.status == SchemaValidationStatus.PASSED\n154         assert len(result.errors) == 0\n155         assert result.latency_ms < 100  # <100ms\n",
+      "col_offset": 8,
+      "end_col_offset": 38,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 154,
+      "line_range": [
+        154
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "154         assert len(result.errors) == 0\n155         assert result.latency_ms < 100  # <100ms\n156     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 38,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 155,
+      "line_range": [
+        155
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "160         result = await validator.validate_schema(\"test-schema\", invalid_schema)\n161         assert result.status in [\n162             SchemaValidationStatus.FAILED_INVALID,\n163             SchemaValidationStatus.FAILED_UNREALIZABLE,\n164         ]\n165         assert len(result.errors) > 0\n",
+      "col_offset": 8,
+      "end_col_offset": 9,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 161,
+      "line_range": [
+        161,
+        162,
+        163,
+        164
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "164         ]\n165         assert len(result.errors) > 0\n166     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 37,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 165,
+      "line_range": [
+        165
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "174         results = await validator.validate_all(schemas)\n175         assert len(results) == 3\n176         assert all(r.status == SchemaValidationStatus.PASSED for r in results.values())\n",
+      "col_offset": 8,
+      "end_col_offset": 32,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 175,
+      "line_range": [
+        175
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "175         assert len(results) == 3\n176         assert all(r.status == SchemaValidationStatus.PASSED for r in results.values())\n177 class TestRegistryManagerInstant:\n",
+      "col_offset": 8,
+      "end_col_offset": 87,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 176,
+      "line_range": [
+        176
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "212         )\n213         assert result is True\n214         assert \"platform-registry-service-v1\" in registry.namespaces\n",
+      "col_offset": 8,
+      "end_col_offset": 29,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 213,
+      "line_range": [
+        213
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "213         assert result is True\n214         assert \"platform-registry-service-v1\" in registry.namespaces\n215     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 68,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 214,
+      "line_range": [
+        214
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "218         result = await registry.create_namespace(\"invalid-namespace\", {})\n219         assert result is False\n220     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 30,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 219,
+      "line_range": [
+        219
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "228         result1 = await registry.get_namespace(\"platform-registry-service-v1\")\n229         assert result1 is not None\n230         # \u7b2c\u4e8c\u6b21\u7372\u53d6\uff0c\u61c9\u8a72\u547d\u4e2d\u7de9\u5b58\n",
+      "col_offset": 8,
+      "end_col_offset": 34,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 229,
+      "line_range": [
+        229
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "231         result2 = await registry.get_namespace(\"platform-registry-service-v1\")\n232         assert result2 is not None\n233         # \u9a57\u8b49\u7de9\u5b58\u547d\u4e2d\n",
+      "col_offset": 8,
+      "end_col_offset": 34,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 232,
+      "line_range": [
+        232
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "234         stats = await registry.get_stats()\n235         assert stats[\"cache\"][\"local_hits\"] >= 1\n236     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 48,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 235,
+      "line_range": [
+        235
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "248         )\n249         assert result is True\n250     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 29,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 249,
+      "line_range": [
+        249
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "258         result = await registry.delete_namespace(\"platform-registry-service-v1\")\n259         assert result is True\n260         assert \"platform-registry-service-v1\" not in registry.namespaces\n",
+      "col_offset": 8,
+      "end_col_offset": 29,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 259,
+      "line_range": [
+        259
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "259         assert result is True\n260         assert \"platform-registry-service-v1\" not in registry.namespaces\n261     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 72,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 260,
+      "line_range": [
+        260
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "269         namespaces = await registry.list_namespaces()\n270         assert len(namespaces) == 3\n271     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 35,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 270,
+      "line_range": [
+        270
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "281         results = await registry.search_namespaces(\"platform\")\n282         assert len(results) == 2\n283     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 32,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 282,
+      "line_range": [
+        282
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "291         result = await registry.validate_all()\n292         assert result[\"total\"] == 3\n293         assert result[\"passed\"] == 3\n",
+      "col_offset": 8,
+      "end_col_offset": 35,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 292,
+      "line_range": [
+        292
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "292         assert result[\"total\"] == 3\n293         assert result[\"passed\"] == 3\n294         assert result[\"failed\"] == 0\n",
+      "col_offset": 8,
+      "end_col_offset": 36,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 293,
+      "line_range": [
+        293
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "293         assert result[\"passed\"] == 3\n294         assert result[\"failed\"] == 0\n295         assert result[\"latency_ms\"] < 500  # <500ms\n",
+      "col_offset": 8,
+      "end_col_offset": 36,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 294,
+      "line_range": [
+        294
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "294         assert result[\"failed\"] == 0\n295         assert result[\"latency_ms\"] < 500  # <500ms\n296     @pytest.mark.asyncio\n",
+      "col_offset": 8,
+      "end_col_offset": 41,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 295,
+      "line_range": [
+        295
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "302         create_latency = (time.time() - start) * 1000\n303         assert create_latency < 500  # <500ms\n304         # \u7372\u53d6\n",
+      "col_offset": 8,
+      "end_col_offset": 35,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 303,
+      "line_range": [
+        303
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "307         get_latency = (time.time() - start) * 1000\n308         assert get_latency < 50  # <50ms (\u7de9\u5b58)\n309         # \u66f4\u65b0\n",
+      "col_offset": 8,
+      "end_col_offset": 31,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 308,
+      "line_range": [
+        308
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "312         update_latency = (time.time() - start) * 1000\n313         assert update_latency < 500  # <500ms\n314         # \u522a\u9664\n",
+      "col_offset": 8,
+      "end_col_offset": 35,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 313,
+      "line_range": [
+        313
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    },
+    {
+      "code": "317         delete_latency = (time.time() - start) * 1000\n318         assert delete_latency < 100  # <100ms\n319 # \u904b\u884c\u6e2c\u8a66\n",
+      "col_offset": 8,
+      "end_col_offset": 35,
+      "filename": "instant/scripts/test_registry_instant.py",
+      "issue_confidence": "HIGH",
+      "issue_cwe": {
+        "id": 703,
+        "link": "https://cwe.mitre.org/data/definitions/703.html"
+      },
+      "issue_severity": "LOW",
+      "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+      "line_number": 318,
+      "line_range": [
+        318
+      ],
+      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b101_assert_used.html",
+      "test_id": "B101",
+      "test_name": "assert_used"
+    }
+  ]
+}

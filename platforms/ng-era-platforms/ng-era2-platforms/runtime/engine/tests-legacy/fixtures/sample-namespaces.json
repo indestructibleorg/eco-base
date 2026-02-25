@@ -1,0 +1,44 @@
+# @ECO-governed
+# @ECO-layer: GL30-49
+# @ECO-semantic: test
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL30_49-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+[
+  {
+    "id": "namespace-001",
+    "name": "authentication",
+    "owner": "auth-team",
+    "status": "active",
+    "created_at": "2025-01-16T00:00:00Z",
+    "description": "Authentication and authorization namespace"
+  },
+  {
+    "id": "namespace-002",
+    "name": "user-management",
+    "owner": "platform-team",
+    "status": "active",
+    "created_at": "2025-01-16T00:00:00Z",
+    "description": "User management namespace"
+  },
+  {
+    "id": "namespace-003",
+    "name": "common",
+    "owner": "shared-services",
+    "status": "active",
+    "created_at": "2025-01-16T00:00:00Z",
+    "description": "Common shared utilities namespace"
+  },
+  {
+    "id": "namespace-004",
+    "name": "deprecated",
+    "owner": "archive-team",
+    "status": "inactive",
+    "created_at": "2025-01-15T00:00:00Z",
+    "description": "Deprecated namespace"
+  }
+]

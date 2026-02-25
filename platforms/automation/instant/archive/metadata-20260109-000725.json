@@ -1,0 +1,122 @@
+# @ECO-governed
+# @ECO-layer: GL20-29
+# @ECO-semantic: general-component
+# @ECO-audit-trail: gov-enterprise-architecture/governance/audit-trails/GL20_29-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gov-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gov-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "archive_name": "refactor_playbooks_20260109_000725.tar.gz",
+  "source_directory": "machine-native-ops/workspace/docs/refactor_playbooks",
+  "timestamp": "20260109_000725",
+  "analysis": {
+    "file_count": 108,
+    "total_size": 1593806,
+    "file_types": {
+      ".md": 71,
+      ".yaml": 22,
+      ".txt": 5,
+      ".docx": 4,
+      ".py": 4
+    },
+    "directory_structure": [
+      ".",
+      "01_deconstruction",
+      "01_deconstruction/automation",
+      "01_deconstruction/core",
+      "01_deconstruction/services",
+      "02_integration",
+      "02_integration/automation",
+      "02_integration/core",
+      "02_integration/services",
+      "02_integration/infrastructure",
+      "02_integration/k8s",
+      "03_refactor",
+      "03_refactor/quantum",
+      "03_refactor/axiom",
+      "03_refactor/automation",
+      "03_refactor/core",
+      "03_refactor/autonomous",
+      "03_refactor/services",
+      "03_refactor/templates",
+      "03_refactor/infrastructure",
+      "03_refactor/apps",
+      "03_refactor/meta",
+      "03_refactor/kg-builder",
+      "03_refactor/misc",
+      "03_refactor/tools",
+      "templates",
+      "_legacy_scratch",
+      "config",
+      "config/governance"
+    ],
+    "largest_files": [
+      {
+        "path": "03_refactor/misc/2-namespace.md",
+        "size": 86483,
+        "ext": ".md"
+      },
+      {
+        "path": "03_refactor/misc/namespace-design.md",
+        "size": 65821,
+        "ext": ".md"
+      },
+      {
+        "path": "03_refactor/misc/3-kubernetes-namespace.md",
+        "size": 46726,
+        "ext": ".md"
+      },
+      {
+        "path": "03_refactor/axiom/axiom_complete_architecture.txt",
+        "size": 45302,
+        "ext": ".txt"
+      },
+      {
+        "path": "02_integration/core/core__architecture_integration.md",
+        "size": 36156,
+        "ext": ".md"
+      },
+      {
+        "path": "03_refactor/misc/2.md",
+        "size": 36112,
+        "ext": ".md"
+      },
+      {
+        "path": "03_refactor/kg-builder_refactor.md",
+        "size": 34873,
+        "ext": ".md"
+      },
+      {
+        "path": "templates/IMPROVED_ARCHITECTURE.md",
+        "size": 34144,
+        "ext": ".md"
+      },
+      {
+        "path": "03_refactor/core/core__architecture_refactor.md",
+        "size": 33778,
+        "ext": ".md"
+      },
+      {
+        "path": "02_integration/BASELINE_YAML_INTEGRATION_PLAN.md",
+        "size": 31443,
+        "ext": ".md"
+      }
+    ],
+    "estimated_compression_ratio": 0.33
+  },
+  "compression": "gzip",
+  "format": "tar.gz",
+  "actual_compression_ratio": 0.321,
+  "archive_size": 511773,
+  "_GL": {
+    "governed": true,
+    "layer": "data",
+    "semantic": "metadata_20260109_000725",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

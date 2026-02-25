@@ -1,0 +1,114 @@
+# @ECO-governed
+# @ECO-layer: GL30-49
+# @ECO-semantic: general-component
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL30_49-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "validation_results": {
+    "timestamp": "2026-01-23T01:25:33Z",
+    "root_path": "etl-pipeline",
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "valid_files": [
+      "etl-pipeline/controlplane",
+      "etl-pipeline/controlplane/governance",
+      "etl-pipeline/controlplane/baseline",
+      "etl-pipeline/workspace",
+      "etl-pipeline/workspace/projects",
+      "etl-pipeline/var/evidence",
+      "etl-pipeline/root-policy",
+      "etl-pipeline/root-policy/naming-convention",
+      "etl-pipeline/root-contracts",
+      "etl-pipeline/root-evidence",
+      "etl-pipeline/tools"
+    ],
+    "invalid_files": [],
+    "evidence_chain_length": 6
+  },
+  "evidence_chain": [
+    {
+      "timestamp": "2026-01-23T01:25:33Z",
+      "validator": "pipeline-structure-validator",
+      "operation": "validation_start",
+      "details": {
+        "root_path": "etl-pipeline"
+      },
+      "hash": "372ed10a7445d191a8f218fefd188c405479a4c566169e2ab194069c40a3a31e"
+    },
+    {
+      "timestamp": "2026-01-23T01:25:33Z",
+      "validator": "pipeline-structure-validator",
+      "operation": "directory_structure_validated",
+      "details": {
+        "required_dirs": [
+          "controlplane",
+          "controlplane/governance",
+          "controlplane/baseline",
+          "workspace",
+          "workspace/projects",
+          "var/evidence",
+          "root-policy",
+          "root-policy/naming-convention",
+          "root-contracts",
+          "root-evidence",
+          "tools"
+        ],
+        "errors": 0
+      },
+      "hash": "695d836e2e6adac892dad00aa937e5f4ab445fe22d611eebcde8afe245bf044e"
+    },
+    {
+      "timestamp": "2026-01-23T01:25:33Z",
+      "validator": "pipeline-structure-validator",
+      "operation": "naming_conventions_validated",
+      "details": {
+        "errors": 0,
+        "warnings": 0
+      },
+      "hash": "c825329ef51e00957fafd9a4baaa62f9797528c64e5b3d8cb8459156a71d4a64"
+    },
+    {
+      "timestamp": "2026-01-23T01:25:33Z",
+      "validator": "pipeline-structure-validator",
+      "operation": "closure_signals_validated",
+      "details": {
+        "warnings": 0
+      },
+      "hash": "b9785c19dd3d8f512fe3811358452243bf58d12136bef1e21f07141908fd5483"
+    },
+    {
+      "timestamp": "2026-01-23T01:25:33Z",
+      "validator": "pipeline-structure-validator",
+      "operation": "forbidden_files_validated",
+      "details": {
+        "errors": 0
+      },
+      "hash": "35f98f18b37c6d0057be5e70bead86d25a1f34569131faf317675a32b73ef7ed"
+    },
+    {
+      "timestamp": "2026-01-23T01:25:33Z",
+      "validator": "pipeline-structure-validator",
+      "operation": "validation_complete",
+      "details": {
+        "passed": true,
+        "errors": 0,
+        "warnings": 0
+      },
+      "hash": "1ebd209ebc5dd3c39ff0a3f84805b9924e25d5b354330476b061bedf59071548"
+    }
+  ],
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "validation-report",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

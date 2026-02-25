@@ -1,0 +1,13 @@
+{
+  "digestManifest": {
+    "traceId": "2025-12-22-2C8",
+    "timestamp": "2025-12-22T17:49:42.966096+00:00",
+    "version": "v1.0",
+    "algorithms": {
+      "content": "sha256",
+      "semantic": "sha3-512"
+    }
+  },
+  "artifacts": [],
+  "bundleHash": "sha3-512:1d59d4edce83204e060a903cac26677212a6a02ad8f0410d07cb5a41c801e7b72c16df4a1f423e119690bccdb59f534e77976a0eabb52f374177a2b75a6b6a24"
+}

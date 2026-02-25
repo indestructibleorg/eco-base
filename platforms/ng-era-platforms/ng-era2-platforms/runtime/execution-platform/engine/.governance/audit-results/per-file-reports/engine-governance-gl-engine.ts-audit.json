@@ -1,0 +1,107 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "file_path": "engine/governance/gl_engine.ts",
+  "file_type": ".ts",
+  "file_hash": "5603f3d1832fcbbdeb18184bcaa3b0495e5fb10e0e5ef730351cfd54eb743294",
+  "gl_layer": "ECO-10-OPERATIONAL",
+  "semantic_anchor": "ECO-30-EXEC-TS",
+  "etl_status": "SUCCESS",
+  "es_index_status": "READY",
+  "issues": [
+    {
+      "type": "type_error",
+      "severity": "MEDIUM",
+      "message": "Found 16 uses of 'any' type",
+      "file_path": "engine/governance/gl_engine.ts",
+      "recommendation": "Replace 'any' with specific types for better type safety"
+    }
+  ],
+  "metadata": {
+    "has_jsdoc": true,
+    "has_exports": true,
+    "has_imports": true,
+    "has_interfaces": false,
+    "has_types": false,
+    "has_classes": true,
+    "has_functions": true,
+    "has_tests": false,
+    "has_readme_reference": false,
+    "has_license": false,
+    "typescript_strict": false
+  },
+  "governance_events": [
+    {
+      "event_id": "7abc8d30ee6e1278",
+      "timestamp": "2026-01-24T11:18:49.134036",
+      "event_type": "ETL_START",
+      "source_file": "engine/governance/gl_engine.ts",
+      "gl_layer": "ECO-10-OPERATIONAL",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "status": "STARTED",
+      "details": {
+        "phase": "extract"
+      },
+      "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+    },
+    {
+      "event_id": "957ce6b55f47be65",
+      "timestamp": "2026-01-24T11:18:49.134105",
+      "event_type": "ETL_EXTRACT",
+      "source_file": "engine/governance/gl_engine.ts",
+      "gl_layer": "ECO-10-OPERATIONAL",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "status": "SUCCESS",
+      "details": {
+        "size_bytes": 7847,
+        "line_count": 290
+      },
+      "evidence_hash": "f8ee27aa0287b5de54b35ed6508f418bd1fa60cd741ca3a71835d6efd032c41b"
+    },
+    {
+      "event_id": "eac32025b1b88946",
+      "timestamp": "2026-01-24T11:18:49.134457",
+      "event_type": "ETL_TRANSFORM",
+      "source_file": "engine/governance/gl_engine.ts",
+      "gl_layer": "ECO-10-OPERATIONAL",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "status": "SUCCESS",
+      "details": {
+        "issues_count": 1,
+        "gl_compliant": true
+      },
+      "evidence_hash": "8a61cc1804475f1116325ae620157c1b9ca4150054a1f2510b90bef6910cf484"
+    },
+    {
+      "event_id": "3346ac9b25b332bd",
+      "timestamp": "2026-01-24T11:18:49.134473",
+      "event_type": "ETL_LOAD",
+      "source_file": "engine/governance/gl_engine.ts",
+      "gl_layer": "ECO-10-OPERATIONAL",
+      "semantic_anchor": "ECO-30-EXEC-TS",
+      "status": "SUCCESS",
+      "details": {
+        "index": "gl-aep-engine-audit"
+      },
+      "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+    }
+  ],
+  "timestamp": "2026-01-24T11:18:49.134486",
+  "execution_time_ms": 0,
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "engine_governance_gl_engine.ts_audit",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

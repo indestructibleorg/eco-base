@@ -1,0 +1,33 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "id": "GL12-risk-control-report",
+  "gllevel": "GL12",
+  "name": "GL12-risk-control-report",
+  "createdat": "$TIMESTAMP",
+  "immutable": true,
+  "language": "zh-TW",
+  "semanticterms": [
+    "Risk Control"
+  ],
+  "functionaldimensions": [
+    "Risk Control"
+  ],
+  "path": "risk-control/GL12-risk-control-report.json",
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "GL12-risk-control-report",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

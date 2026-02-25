@@ -1,0 +1,135 @@
+# @ECO-governed
+# @ECO-layer: GL00-09
+# @ECO-semantic: naming-governance
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL00_09-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "dashboard": {
+    "title": "ESync Naming Compliance Dashboard",
+    "uid": "esync-naming-compliance",
+    "tags": ["esync", "governance", "naming"],
+    "timezone": "browser",
+    "refresh": "30s",
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "panels": [
+      {
+        "id": 1,
+        "title": "Overall Naming Compliance Rate",
+        "type": "stat",
+        "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
+        "targets": [
+          {
+            "expr": "sum(naming_checks_success_total) / sum(naming_checks_total) * 100",
+            "legendFormat": "Compliance %"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                { "color": "red", "value": 0 },
+                { "color": "yellow", "value": 80 },
+                { "color": "green", "value": 95 }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "Total Naming Violations (Last 24h)",
+        "type": "stat",
+        "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
+        "targets": [
+          {
+            "expr": "sum(increase(naming_violations_total[24h]))",
+            "legendFormat": "Violations"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Auto-Fix Success Rate",
+        "type": "stat",
+        "gridPos": { "h": 4, "w": 6, "x": 12, "y": 0 },
+        "targets": [
+          {
+            "expr": "sum(auto_fix_successes_total) / sum(auto_fix_attempts_total) * 100",
+            "legendFormat": "Success %"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "thresholds": {
+              "steps": [
+                { "color": "red", "value": 0 },
+                { "color": "yellow", "value": 70 },
+                { "color": "green", "value": 90 }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 4,
+        "title": "Pending Migrations",
+        "type": "stat",
+        "gridPos": { "h": 4, "w": 6, "x": 18, "y": 0 },
+        "targets": [
+          {
+            "expr": "naming_pending_migrations",
+            "legendFormat": "Pending"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Naming Violations Over Time",
+        "type": "graph",
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 4 },
+        "targets": [
+          {
+            "expr": "sum(rate(naming_violations_total[5m]))",
+            "legendFormat": "Violation Rate"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Violations by Severity",
+        "type": "piechart",
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 4 },
+        "targets": [
+          {
+            "expr": "sum by (severity) (increase(naming_violations_total[24h]))",
+            "legendFormat": "{{severity}}"
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Compliance Trend (7 Days)",
+        "type": "graph",
+        "gridPos": { "h": 8, "w": 24, "x": 0, "y": 12 },
+        "targets": [
+          {
+            "expr": "sum(naming_checks_success_total) / sum(naming_checks_total) * 100",
+            "legendFormat": "Compliance Rate"
+          }
+        ]
+      }
+    ]
+  }
+}

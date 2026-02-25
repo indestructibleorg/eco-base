@@ -1,0 +1,292 @@
+# @ECO-governed
+# @ECO-layer: governance
+# @ECO-semantic: maturity-criteria
+# @ECO-audit-trail: ../../engine/governance/GL_SEMANTIC_ANCHOR.json
+# 
+# GL Unified Architecture Governance Framework Activated
+
+# FHS Integration Maturity Criteria
+# 定義組件何時可以從 workspace/ 遷移到 FHS 目錄的標準
+
+apiVersion: fhs.integration/v1
+kind: MaturityCriteria
+
+metadata:
+  annotations:
+    eco-base/urn: "urn:eco-base:platform:resource:ng-era-platforms:ng-era2-platforms:runtime:execution-platform:engine:tools-legacy:fhs-integration:maturity-criteria.yaml"
+    eco-base/uri: "eco-base://platform/resource/ng-era-platforms/ng-era2-platforms/runtime/execution-platform/engine/tools-legacy/fhs-integration/maturity-criteria.yaml"
+  name: fhs-integration-maturity-criteria
+  version: v1.0.0
+  description: Criteria for determining when workspace components are ready for FHS integration
+
+# 成熟度評估標準
+maturityLevels:
+  # Level 1: 實驗階段 - 留在 workspace/
+  experimental:
+    score: 0-40
+    location: workspace/tools/
+    description: Active development, frequent changes, experimental features
+    
+  # Level 2: 開發階段 - 留在 workspace/
+  development:
+    score: 41-60
+    location: workspace/tools/
+    description: Stable API, some production usage, ongoing improvements
+    
+  # Level 3: 穩定階段 - 可選擇性整合
+  stable:
+    score: 61-80
+    location: workspace/tools/ or FHS
+    description: Stable, production-ready, minimal breaking changes
+    action: optional_fhs_integration
+    
+  # Level 4: 生產就緒 - 應該整合到 FHS
+  production:
+    score: 81-100
+    location: FHS directories
+    description: Production-grade, stable API, comprehensive documentation
+    action: required_fhs_integration
+
+# 評估指標（每項 0-10 分）
+assessmentCriteria:
+  
+  # 1. 代碼品質 (0-30 分)
+  codeQuality:
+    weight: 30
+    metrics:
+      - name: test_coverage
+        description: 測試覆蓋率
+        weight: 10
+        thresholds:
+          excellent: ">= 80%"
+          good: ">= 60%"
+          fair: ">= 40%"
+          poor: "< 40%"
+      
+      - name: documentation
+        description: 文檔完整性
+        weight: 10
+        thresholds:
+          excellent: "完整的 README, API 文檔, 使用範例"
+          good: "README 和基本使用說明"
+          fair: "僅有 README"
+          poor: "無文檔或文檔過時"
+      
+      - name: code_style
+        description: 代碼風格一致性
+        weight: 10
+        thresholds:
+          excellent: "使用 linter, 自動格式化, 100% 合規"
+          good: "使用 linter, > 90% 合規"
+          fair: "部分使用 linter"
+          poor: "無代碼風格檢查"
+  
+  # 2. 穩定性 (0-25 分)
+  stability:
+    weight: 25
+    metrics:
+      - name: api_stability
+        description: API 穩定性
+        weight: 10
+        thresholds:
+          excellent: "無破壞性變更 > 6 個月"
+          good: "無破壞性變更 > 3 個月"
+          fair: "少量破壞性變更"
+          poor: "頻繁破壞性變更"
+      
+      - name: bug_rate
+        description: Bug 率
+        weight: 8
+        thresholds:
+          excellent: "< 0.1 bugs/month"
+          good: "< 0.5 bugs/month"
+          fair: "< 2 bugs/month"
+          poor: ">= 2 bugs/month"
+      
+      - name: release_frequency
+        description: 發布頻率
+        weight: 7
+        thresholds:
+          excellent: "定期發布（每月或每季）"
+          good: "不定期但有版本管理"
+          fair: "偶爾發布"
+          poor: "無版本管理"
+  
+  # 3. 使用情況 (0-20 分)
+  usage:
+    weight: 20
+    metrics:
+      - name: production_usage
+        description: 生產環境使用
+        weight: 10
+        thresholds:
+          excellent: "在多個生產系統中使用"
+          good: "在生產環境中使用"
+          fair: "僅測試環境使用"
+          poor: "無生產使用"
+      
+      - name: user_adoption
+        description: 用戶採用率
+        weight: 10
+        thresholds:
+          excellent: "> 10 活躍用戶或系統"
+          good: "5-10 活躍用戶"
+          fair: "1-5 活躍用戶"
+          poor: "無活躍用戶"
+  
+  # 4. 依賴管理 (0-15 分)
+  dependencies:
+    weight: 15
+    metrics:
+      - name: dependency_stability
+        description: 依賴穩定性
+        weight: 8
+        thresholds:
+          excellent: "所有依賴為穩定版本，定期更新"
+          good: "主要依賴穩定，少量 beta"
+          fair: "部分不穩定依賴"
+          poor: "大量不穩定或過時依賴"
+      
+      - name: dependency_count
+        description: 依賴數量
+        weight: 7
+        thresholds:
+          excellent: "< 5 個外部依賴"
+          good: "5-10 個外部依賴"
+          fair: "10-20 個外部依賴"
+          poor: "> 20 個外部依賴"
+  
+  # 5. 維護狀態 (0-10 分)
+  maintenance:
+    weight: 10
+    metrics:
+      - name: active_maintenance
+        description: 積極維護
+        weight: 10
+        thresholds:
+          excellent: "每週有提交，及時回應問題"
+          good: "每月有提交"
+          fair: "每季度有提交"
+          poor: "長期無更新"
+
+# FHS 目錄映射規則
+fhsMapping:
+  # 用戶命令
+  userCommands:
+    source: workspace/tools/*/
+    destination: bin/
+    pattern: "主要用戶界面命令"
+    examples:
+      - "mno-repo-scan"
+      - "mno-validator"
+      - "mno-analyzer"
+    wrapper_template: |
+      #!/bin/bash
+      # Auto-generated FHS wrapper for {tool_name}
+      SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+      LIB_DIR="$SCRIPT_DIR/../lib/{tool_name}"
+      exec python3 "$LIB_DIR/{main_script}" "$@"
+  
+  # 系統管理命令
+  systemCommands:
+    source: workspace/tools/*/
+    destination: sbin/
+    pattern: "系統管理、維護命令"
+    examples:
+      - "mno-repo-maintain"
+      - "mno-system-check"
+    wrapper_template: |
+      #!/bin/bash
+      # Auto-generated FHS wrapper for {tool_name}
+      # Requires elevated privileges
+      SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+      LIB_DIR="$SCRIPT_DIR/../lib/{tool_name}"
+      exec python3 "$LIB_DIR/{main_script}" "$@"
+  
+  # 庫文件
+  libraries:
+    source: workspace/tools/*/
+    destination: lib/
+    pattern: "Python 模組、共享庫"
+    structure: |
+      lib/{tool_name}/
+      ├── __init__.py
+      ├── {main_script}.py
+      ├── {module1}.py
+      └── requirements.txt
+  
+  # 配置文件
+  configuration:
+    source: workspace/tools/*/config/
+    destination: etc/
+    pattern: "配置文件、策略文件"
+    structure: |
+      etc/{tool_name}/
+      ├── {tool_name}.conf
+      └── {tool_name}.yaml
+  
+  # 服務文件
+  services:
+    source: workspace/tools/*/*.service
+    destination: etc/systemd/
+    pattern: "Systemd 服務定義"
+
+# 自動整合流程
+integrationWorkflow:
+  steps:
+    - name: assess_maturity
+      description: 評估組件成熟度
+      automated: true
+      
+    - name: check_criteria
+      description: 檢查是否達到整合標準
+      automated: true
+      threshold: 80  # 需要 80+ 分才自動整合
+      
+    - name: create_fhs_structure
+      description: 創建 FHS 目錄結構
+      automated: true
+      
+    - name: generate_wrappers
+      description: 生成命令包裝器
+      automated: true
+      
+    - name: update_documentation
+      description: 更新文檔
+      automated: false  # 需要人工審查
+      
+    - name: create_migration_pr
+      description: 創建遷移 PR
+      automated: true
+      
+    - name: validation
+      description: 驗證整合
+      automated: true
+      tests:
+        - command_execution
+        - import_paths
+        - service_startup
+
+# 排除列表
+exclusions:
+  # 這些工具永久留在 workspace
+  permanentWorkspace:
+    - name: experimental-*
+      reason: 實驗性質，不適合 FHS
+    - name: "*-prototype"
+      reason: 原型開發
+    - name: "test-*"
+      reason: 測試工具
+
+# 通知設定
+notifications:
+  maturityReached:
+    enabled: true
+    threshold: 80
+    message: "組件 {component_name} 已達到 FHS 整合標準（分數: {score}）"
+    action: create_issue
+    
+  integrationComplete:
+    enabled: true
+    message: "組件 {component_name} 已成功整合到 FHS 目錄"
+    action: update_documentation

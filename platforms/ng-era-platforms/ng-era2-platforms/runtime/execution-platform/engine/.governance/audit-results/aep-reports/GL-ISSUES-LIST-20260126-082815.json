@@ -1,0 +1,5144 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+[
+  {
+    "issue_id": "ISS-20260126_082815-000000",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000001",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/RESTRUCTURE-SUMMARY.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000002",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/ACTION_PLAN_PRIORITY_MATRIX.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000003",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/ADDITIONAL-SYSTEMS-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000004",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/ANALYSIS_EXECUTION_SUMMARY.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000005",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/BEST_PRACTICES_IMPLEMENTATION_PLAN.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000006",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/COMPREHENSIVE-DELIVERY-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000007",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/COMPREHENSIVE-INTEGRATION-STRATEGY.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000008",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/COMPREHENSIVE_ANALYSIS_REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000009",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/DEPLOYMENT-GUIDE.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000010",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/DEVELOPER-GUIDE.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000011",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/DISASTER-RECOVERY-PLAN.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000012",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/GOVERNANCE-LAYER-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000013",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/IMPLEMENTATION_STATUS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000014",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/INTEGRATION_GUIDE.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000015",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/NAMESPACES ANALYSIS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000016",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/docs/NAMESPACES ANALYSIS.md",
+    "line_number": null,
+    "description": "Filename 'NAMESPACES ANALYSIS.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "NAMESPACES ANALYSIS.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000016",
+    "category": "naming_inconsistent",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/NAMESPACES ANALYSIS.md",
+    "line_number": null,
+    "description": "Filename contains spaces: 'NAMESPACES ANALYSIS.md'",
+    "suggestion": "Replace spaces with hyphens or underscores",
+    "evidence": {
+      "current_name": "NAMESPACES ANALYSIS.md"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000018",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/OPERATIONS-MANUAL.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000019",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/REGISTRY-COMPLETION-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000020",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/ROOT_IMPLEMENTATION_PLAN.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000021",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/SCHEMA-SYSTEM-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000022",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/SECURITY-AUDIT-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000023",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/SECURITY-LAYER-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000024",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/TAXONOMY_COMPLETION_REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000025",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/TAXONOMY_COMPLIANCE.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000026",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/TAXONOMY_MANIFESTO.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000027",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/TECHNICAL_IMPROVEMENT_SPECIFICATIONS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000028",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/VERIFICATION_REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000029",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/todo-phase3-final.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000030",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/docs/todo-phase3-final.md",
+    "line_number": null,
+    "description": "Filename 'todo-phase3-final.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "todo-phase3-final.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000031",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/todo-phase6-7.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000032",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/docs/todo-phase6-7.md",
+    "line_number": null,
+    "description": "Filename 'todo-phase6-7.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "todo-phase6-7.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000033",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/docs/todo.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000034",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/docs/todo.md",
+    "line_number": null,
+    "description": "Filename 'todo.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "todo.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000035",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/DEPLOYMENT_GUIDE.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000036",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/IMPLEMENTATION_SUMMARY.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000037",
+    "category": "gl_marker_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/LICENSE",
+    "line_number": null,
+    "description": "No GL governance markers found",
+    "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+    "evidence": {
+      "searched_patterns": [
+        "@gl-layer\\s+(\\S+)",
+        "@gl-module\\s+(\\S+)",
+        "@gl-semantic-anchor\\s+(\\S+)"
+      ]
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000038",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/LICENSE",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000039",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/PROJECT_SUMMARY.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000040",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000041",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/adk-architecture-blueprint.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000042",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-adk/adk-architecture-blueprint.md",
+    "line_number": null,
+    "description": "Filename 'adk-architecture-blueprint.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "adk-architecture-blueprint.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000043",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/adk-package-config.yaml",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [
+        "version",
+        "name",
+        "description"
+      ],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000044",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/config/logging.yaml",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [
+        "version",
+        "name"
+      ],
+      "missing_fields": [
+        "description"
+      ],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000045",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/config/policies.yaml",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [
+        "name",
+        "description"
+      ],
+      "missing_fields": [
+        "version"
+      ],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000046",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/config/settings.yaml",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [
+        "version",
+        "name"
+      ],
+      "missing_fields": [
+        "description"
+      ],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000047",
+    "category": "gl_marker_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/namespaces-adk.txt",
+    "line_number": null,
+    "description": "No GL governance markers found",
+    "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+    "evidence": {
+      "searched_patterns": [
+        "@gl-layer\\s+(\\S+)",
+        "@gl-module\\s+(\\S+)",
+        "@gl-semantic-anchor\\s+(\\S+)"
+      ]
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000048",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/namespaces-adk.txt",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000049",
+    "category": "gl_marker_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/requirements.txt",
+    "line_number": null,
+    "description": "No GL governance markers found",
+    "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+    "evidence": {
+      "searched_patterns": [
+        "@gl-layer\\s+(\\S+)",
+        "@gl-module\\s+(\\S+)",
+        "@gl-semantic-anchor\\s+(\\S+)"
+      ]
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000050",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/requirements.txt",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000051",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/scripts/restart_agents.sh",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000052",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/scripts/start_agents.sh",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000053",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/scripts/status_agents.sh",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000054",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/scripts/stop_agents.sh",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000055",
+    "category": "gl_marker_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/tests/pytest.ini",
+    "line_number": null,
+    "description": "No GL governance markers found",
+    "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+    "evidence": {
+      "searched_patterns": [
+        "@gl-layer\\s+(\\S+)",
+        "@gl-module\\s+(\\S+)",
+        "@gl-semantic-anchor\\s+(\\S+)"
+      ]
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000056",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/tests/pytest.ini",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000057",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-adk/todo.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000058",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-adk/todo.md",
+    "line_number": null,
+    "description": "Filename 'todo.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "todo.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000059",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/CHANGELOG.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000060",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/CONTRIBUTING.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000061",
+    "category": "gl_marker_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/LICENSE",
+    "line_number": null,
+    "description": "No GL governance markers found",
+    "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+    "evidence": {
+      "searched_patterns": [
+        "@gl-layer\\s+(\\S+)",
+        "@gl-module\\s+(\\S+)",
+        "@gl-semantic-anchor\\s+(\\S+)"
+      ]
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000062",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/LICENSE",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000063",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000064",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/ROOT-CLEANUP-COMPLETION.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000065",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/API_REFERENCE.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000066",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/ARCHITECTURE.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000067",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/docs/KNOWLEDGE_INDEX.yaml",
+    "line_number": null,
+    "description": "Filename 'KNOWLEDGE_INDEX.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "KNOWLEDGE_INDEX.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000068",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/PERFORMANCE_TUNING.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000069",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/PROJECT-SUMMARY.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000070",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000071",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/STRUCTURE-ANALYSIS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000072",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/architecture.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000073",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/docs/architecture.md",
+    "line_number": null,
+    "description": "Filename 'architecture.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "architecture.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000074",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/MCP-CURRENT-STATUS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000075",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/MCP-FINAL-STATUS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000076",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/MCP-LEVEL1-IMPLEMENTATION-PLAN.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000077",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/MCP-MODULARIZATION-PLAN.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000078",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/MCP-MODULARIZATION-PROGRESS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000079",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/MCP-OVERALL-PROGRESS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000080",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/NAMESPACES-MCP-DEEP-ANALYSIS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000081",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/NAMESPACES-MCP-INTEGRATION-ANALYSIS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000082",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/NAMESPACES-MCP-INTEGRATION-COMPLETION-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000083",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/NAMESPACES-MCP-MCP-INTEGRATION-ANALYSIS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000084",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/implementation/COMMUNICATION-LAYER-COMPLETION.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000085",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/implementation/MCP-L1-L2-IMPLEMENTATION-ANALYSIS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000086",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/implementation/VERIFICATION-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000087",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/level2/MCP-LEVEL2-ARTIFACTS-PROGRESS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000088",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/level2/MCP-LEVEL2-COMPLETION-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000089",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/level2/MCP-LEVEL2-DIRECTORY-MAP-RESEARCH-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000090",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/level2/MCP-LEVEL2-FILES-INVENTORY.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000091",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/level2/MCP-LEVEL2-FINAL-COMPLETION-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000092",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/level2/MCP-LEVEL2-FINAL-COMPLETION.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000093",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/level2/MCP-LEVEL2-STATUS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000094",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/modules/MODULE-5E-COMPLETION-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000095",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/modules/MODULE-5E-TESTING-COMPLETE.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000096",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/modules/PHASE-5-COMPLETE-SUMMARY.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000097",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/reports/modules/PHASE-5-VISUAL-SUMMARY.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000098",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/scalability/USAGE_GUIDE.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000099",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/docs/usage.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000100",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/docs/usage.md",
+    "line_number": null,
+    "description": "Filename 'usage.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "usage.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000101",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/examples/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000102",
+    "category": "gl_marker_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/examples/example-project/requirements.txt",
+    "line_number": null,
+    "description": "No GL governance markers found",
+    "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+    "evidence": {
+      "searched_patterns": [
+        "@gl-layer\\s+(\\S+)",
+        "@gl-module\\s+(\\S+)",
+        "@gl-semantic-anchor\\s+(\\S+)"
+      ]
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000103",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/examples/example-project/requirements.txt",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000104",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/IMPLEMENTATION-SUMMARY.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000105",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/LEVEL1-COMPLIANCE-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000106",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000107",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/core/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000108",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/examples/basic-artifact/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000109",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/examples/full-application/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000110",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/governance/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000111",
+    "category": "gl_marker_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/instant-system/Dockerfile",
+    "line_number": null,
+    "description": "No GL governance markers found",
+    "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+    "evidence": {
+      "searched_patterns": [
+        "@gl-layer\\s+(\\S+)",
+        "@gl-module\\s+(\\S+)",
+        "@gl-semantic-anchor\\s+(\\S+)"
+      ]
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000112",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/instant-system/Dockerfile",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000113",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/instant-system/docker-compose.yml",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [
+        "version",
+        "name"
+      ],
+      "missing_fields": [
+        "description"
+      ],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000114",
+    "category": "gl_marker_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/instant-system/requirements.txt",
+    "line_number": null,
+    "description": "No GL governance markers found",
+    "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+    "evidence": {
+      "searched_patterns": [
+        "@gl-layer\\s+(\\S+)",
+        "@gl-module\\s+(\\S+)",
+        "@gl-semantic-anchor\\s+(\\S+)"
+      ]
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000115",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/instant-system/requirements.txt",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000116",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level1/registries/0-naming-rules-registry.yaml",
+    "line_number": null,
+    "description": "Filename '0-naming-rules-registry.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "0-naming-rules-registry.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000117",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level1/registries/1-team-identity-registry.yaml",
+    "line_number": null,
+    "description": "Filename '1-team-identity-registry.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "1-team-identity-registry.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000118",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level1/registries/2-directory-taxonomy-registry.yaml",
+    "line_number": null,
+    "description": "Filename '2-directory-taxonomy-registry.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "2-directory-taxonomy-registry.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000119",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level1/registries/3-artifact-entry-registry.yaml",
+    "line_number": null,
+    "description": "Filename '3-artifact-entry-registry.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "3-artifact-entry-registry.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000120",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level1/registries/4-mapping-key-registry.yaml",
+    "line_number": null,
+    "description": "Filename '4-mapping-key-registry.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "4-mapping-key-registry.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000121",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level1/registries/5-dependency-identifier-registry.yaml",
+    "line_number": null,
+    "description": "Filename '5-dependency-identifier-registry.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "5-dependency-identifier-registry.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000122",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level1/registries/6-reference-tag-registry.yaml",
+    "line_number": null,
+    "description": "Filename '6-reference-tag-registry.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "6-reference-tag-registry.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000123",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level1/registries/7-toolchain-identifier-registry.yaml",
+    "line_number": null,
+    "description": "Filename '7-toolchain-identifier-registry.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "7-toolchain-identifier-registry.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000124",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/registries/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000125",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/tools/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000126",
+    "category": "gl_marker_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/tools/requirements.txt",
+    "line_number": null,
+    "description": "No GL governance markers found",
+    "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+    "evidence": {
+      "searched_patterns": [
+        "@gl-layer\\s+(\\S+)",
+        "@gl-module\\s+(\\S+)",
+        "@gl-semantic-anchor\\s+(\\S+)"
+      ]
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000127",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/tools/requirements.txt",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000128",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/tutorials/01-getting-started.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000129",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level1/tutorials/01-getting-started.md",
+    "line_number": null,
+    "description": "Filename '01-getting-started.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "01-getting-started.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000130",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/tutorials/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000131",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/validation/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000132",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level1/validation/extended-validator.py",
+    "line_number": null,
+    "description": "Filename 'extended-validator.py' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z_][a-z0-9_]*\\.py$",
+    "evidence": {
+      "current_name": "extended-validator.py",
+      "expected_pattern": "^[a-z_][a-z0-9_]*\\.py$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000133",
+    "category": "gl_marker_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/validation/requirements.txt",
+    "line_number": null,
+    "description": "No GL governance markers found",
+    "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+    "evidence": {
+      "searched_patterns": [
+        "@gl-layer\\s+(\\S+)",
+        "@gl-module\\s+(\\S+)",
+        "@gl-semantic-anchor\\s+(\\S+)"
+      ]
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000134",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/validation/requirements.txt",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000135",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/verification/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000136",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level1/verification/dns-txt-verifier.py",
+    "line_number": null,
+    "description": "Filename 'dns-txt-verifier.py' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z_][a-z0-9_]*\\.py$",
+    "evidence": {
+      "current_name": "dns-txt-verifier.py",
+      "expected_pattern": "^[a-z_][a-z0-9_]*\\.py$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000137",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level1/verification/github-oauth-verifier.py",
+    "line_number": null,
+    "description": "Filename 'github-oauth-verifier.py' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z_][a-z0-9_]*\\.py$",
+    "evidence": {
+      "current_name": "github-oauth-verifier.py",
+      "expected_pattern": "^[a-z_][a-z0-9_]*\\.py$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000138",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level1/verification/http-well-known-verifier.py",
+    "line_number": null,
+    "description": "Filename 'http-well-known-verifier.py' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z_][a-z0-9_]*\\.py$",
+    "evidence": {
+      "current_name": "http-well-known-verifier.py",
+      "expected_pattern": "^[a-z_][a-z0-9_]*\\.py$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000139",
+    "category": "gl_marker_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/verification/requirements.txt",
+    "line_number": null,
+    "description": "No GL governance markers found",
+    "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+    "evidence": {
+      "searched_patterns": [
+        "@gl-layer\\s+(\\S+)",
+        "@gl-module\\s+(\\S+)",
+        "@gl-semantic-anchor\\s+(\\S+)"
+      ]
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000140",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level1/verification/requirements.txt",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000141",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level1/verification/verification-system.py",
+    "line_number": null,
+    "description": "Filename 'verification-system.py' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z_][a-z0-9_]*\\.py$",
+    "evidence": {
+      "current_name": "verification-system.py",
+      "expected_pattern": "^[a-z_][a-z0-9_]*\\.py$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000142",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level2/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000143",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/bundles/communication.bundle.yaml",
+    "line_number": null,
+    "description": "Filename 'communication.bundle.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "communication.bundle.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000144",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/bundles/configuration-governance.bundle.yaml",
+    "line_number": null,
+    "description": "Filename 'configuration-governance.bundle.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "configuration-governance.bundle.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000145",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/bundles/data-management.bundle.yaml",
+    "line_number": null,
+    "description": "Filename 'data-management.bundle.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "data-management.bundle.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000146",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/bundles/integration-extension.bundle.yaml",
+    "line_number": null,
+    "description": "Filename 'integration-extension.bundle.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "integration-extension.bundle.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000147",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/bundles/monitoring-observability.bundle.yaml",
+    "line_number": null,
+    "description": "Filename 'monitoring-observability.bundle.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "monitoring-observability.bundle.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000148",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/bundles/protocol.bundle.yaml",
+    "line_number": null,
+    "description": "Filename 'protocol.bundle.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "protocol.bundle.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000149",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/flows/data-pipeline.flow.yaml",
+    "line_number": null,
+    "description": "Filename 'data-pipeline.flow.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "data-pipeline.flow.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000150",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/flows/governance-workflow.flow.yaml",
+    "line_number": null,
+    "description": "Filename 'governance-workflow.flow.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "governance-workflow.flow.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000151",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/flows/integration-workflow.flow.yaml",
+    "line_number": null,
+    "description": "Filename 'integration-workflow.flow.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "integration-workflow.flow.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000152",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/flows/monitoring-pipeline.flow.yaml",
+    "line_number": null,
+    "description": "Filename 'monitoring-pipeline.flow.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "monitoring-pipeline.flow.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000153",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/flows/rag-pipeline.flow.yaml",
+    "line_number": null,
+    "description": "Filename 'rag-pipeline.flow.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "rag-pipeline.flow.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000154",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/graphs/communication.graph.yaml",
+    "line_number": null,
+    "description": "Filename 'communication.graph.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "communication.graph.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000155",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/graphs/configuration-governance.graph.yaml",
+    "line_number": null,
+    "description": "Filename 'configuration-governance.graph.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "configuration-governance.graph.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000156",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/graphs/data-management.graph.yaml",
+    "line_number": null,
+    "description": "Filename 'data-management.graph.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "data-management.graph.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000157",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/graphs/integration-extension.graph.yaml",
+    "line_number": null,
+    "description": "Filename 'integration-extension.graph.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "integration-extension.graph.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000158",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/graphs/monitoring-observability.graph.yaml",
+    "line_number": null,
+    "description": "Filename 'monitoring-observability.graph.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "monitoring-observability.graph.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000159",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/graphs/protocol.graph.yaml",
+    "line_number": null,
+    "description": "Filename 'protocol.graph.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "protocol.graph.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000160",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/manifests/communication.manifest.yaml",
+    "line_number": null,
+    "description": "Filename 'communication.manifest.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "communication.manifest.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000161",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/manifests/configuration-governance.manifest.yaml",
+    "line_number": null,
+    "description": "Filename 'configuration-governance.manifest.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "configuration-governance.manifest.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000162",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/manifests/data-management.manifest.yaml",
+    "line_number": null,
+    "description": "Filename 'data-management.manifest.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "data-management.manifest.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000163",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/manifests/integration-extension.manifest.yaml",
+    "line_number": null,
+    "description": "Filename 'integration-extension.manifest.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "integration-extension.manifest.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000164",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/manifests/monitoring-observability.manifest.yaml",
+    "line_number": null,
+    "description": "Filename 'monitoring-observability.manifest.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "monitoring-observability.manifest.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000165",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/manifests/protocol.manifest.yaml",
+    "line_number": null,
+    "description": "Filename 'protocol.manifest.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "protocol.manifest.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000166",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/policies/communication.policy.yaml",
+    "line_number": null,
+    "description": "Filename 'communication.policy.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "communication.policy.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000167",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/policies/configuration-governance.policy.yaml",
+    "line_number": null,
+    "description": "Filename 'configuration-governance.policy.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "configuration-governance.policy.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000168",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/policies/data-management.policy.yaml",
+    "line_number": null,
+    "description": "Filename 'data-management.policy.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "data-management.policy.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000169",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/policies/integration-extension.policy.yaml",
+    "line_number": null,
+    "description": "Filename 'integration-extension.policy.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "integration-extension.policy.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000170",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/policies/monitoring-observability.policy.yaml",
+    "line_number": null,
+    "description": "Filename 'monitoring-observability.policy.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "monitoring-observability.policy.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000171",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/policies/protocol.policy.yaml",
+    "line_number": null,
+    "description": "Filename 'protocol.policy.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "protocol.policy.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000172",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/schemas/communication.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'communication.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "communication.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000173",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/schemas/configuration-governance.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'configuration-governance.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "configuration-governance.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000174",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/schemas/data-management.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'data-management.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "data-management.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000175",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/schemas/integration-extension.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'integration-extension.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "integration-extension.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000176",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/schemas/monitoring-observability.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'monitoring-observability.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "monitoring-observability.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000177",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/schemas/protocol.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'protocol.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "protocol.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000178",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/specs/communication.spec.yaml",
+    "line_number": null,
+    "description": "Filename 'communication.spec.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "communication.spec.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000179",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/specs/configuration-governance.spec.yaml",
+    "line_number": null,
+    "description": "Filename 'configuration-governance.spec.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "configuration-governance.spec.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000180",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/specs/data-management.spec.yaml",
+    "line_number": null,
+    "description": "Filename 'data-management.spec.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "data-management.spec.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000181",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/specs/integration-extension.spec.yaml",
+    "line_number": null,
+    "description": "Filename 'integration-extension.spec.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "integration-extension.spec.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000182",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/specs/monitoring-observability.spec.yaml",
+    "line_number": null,
+    "description": "Filename 'monitoring-observability.spec.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "monitoring-observability.spec.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000183",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/specs/protocol.spec.yaml",
+    "line_number": null,
+    "description": "Filename 'protocol.spec.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "protocol.spec.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000184",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/src/modules/module-5e-universal-integration/__tests__/protocol-translator.test.ts",
+    "line_number": null,
+    "description": "Filename 'protocol-translator.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "protocol-translator.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000185",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/src/modules/module-5e-universal-integration/__tests__/universal-adapter.test.ts",
+    "line_number": null,
+    "description": "Filename 'universal-adapter.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "universal-adapter.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000186",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/src/modules/module-5e-universal-integration/__tests__/universal-integration-system.test.ts",
+    "line_number": null,
+    "description": "Filename 'universal-integration-system.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "universal-integration-system.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000187",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/src/scalability/__tests__/elastic-resource-manager.test.ts",
+    "line_number": null,
+    "description": "Filename 'elastic-resource-manager.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "elastic-resource-manager.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000188",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/src/scalability/__tests__/global-load-balancer.test.ts",
+    "line_number": null,
+    "description": "Filename 'global-load-balancer.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "global-load-balancer.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000189",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/src/semantic/__tests__/artifact-registry.test.ts",
+    "line_number": null,
+    "description": "Filename 'artifact-registry.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "artifact-registry.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000190",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/src/semantic/__tests__/performance.test.ts",
+    "line_number": null,
+    "description": "Filename 'performance.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "performance.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000191",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/src/semantic/__tests__/promotion-engine.test.ts",
+    "line_number": null,
+    "description": "Filename 'promotion-engine.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "promotion-engine.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000192",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level2/src/semantic/__tests__/validation-engine.test.ts",
+    "line_number": null,
+    "description": "Filename 'validation-engine.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "validation-engine.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000193",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000194",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/config/engine_map.yaml",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [
+        "version"
+      ],
+      "missing_fields": [
+        "name",
+        "description"
+      ],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000195",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/config/engine_map.yaml",
+    "line_number": null,
+    "description": "Filename 'engine_map.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "engine_map.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000196",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/DEPLOYMENT-GUIDE.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000197",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/MCP-LEVEL3-COMPLETE-SPECIFICATION.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000198",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/MCP-LEVEL3-COMPLETION-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000199",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/PERFORMANCE-OPTIMIZATION-GUIDE.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000200",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/PHASE2-COMPLETION-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000201",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/PHASE3-FINAL-COMPLETION-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000202",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/api-reference.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000203",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/api-reference.md",
+    "line_number": null,
+    "description": "Filename 'api-reference.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "api-reference.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000204",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/deployment-guide.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000205",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/deployment-guide.md",
+    "line_number": null,
+    "description": "Filename 'deployment-guide.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "deployment-guide.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000206",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/DELIVERY-SUMMARY-PHASE6.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000207",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/EXECUTION-ENGINE-COMPLETION.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000208",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/MODULE-COMPLETION-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000209",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/PHASE3-PROGRESS-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000210",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/PHASE4-ACCEPTANCE-CRITERIA.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000211",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/PHASE4-MODULE-ENHANCEMENT-PLAN.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000212",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/PHASE5-CRITICAL-FIX-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000213",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/PHASE5-EXECUTION-TODO.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000214",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/PHASE5-EXTREME-ANALYSIS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000215",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/PHASE5-IMPLEMENTATION-ROADMAP.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000216",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/PHASE5-MODULE-5A-SUCCESS-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000217",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/PHASE5-REMAINING-TODO.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000218",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/PHASE5-TECHNICAL-SPECIFICATIONS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000219",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/PHASE7-DEEP-ANALYSIS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000220",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/PHASE7-IMPLEMENTATION-PLAN.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000221",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/PROJECT_FINAL_SUMMARY.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000222",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/reports/VISUAL-COMPLETION-SUMMARY.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000223",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/user-guide.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000224",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/docs/user-guide.md",
+    "line_number": null,
+    "description": "Filename 'user-guide.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "user-guide.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000225",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/dag/artifacts/dag-definition.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'dag-definition.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "dag-definition.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000226",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/dag/artifacts/dependency-matrix.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'dependency-matrix.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "dependency-matrix.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000227",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/dag/artifacts/lineage-graph.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'lineage-graph.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "lineage-graph.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000228",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/dag/dag-engine.bundle.yaml",
+    "line_number": null,
+    "description": "Filename 'dag-engine.bundle.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "dag-engine.bundle.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000229",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/dag/dag-engine.flow.yaml",
+    "line_number": null,
+    "description": "Filename 'dag-engine.flow.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "dag-engine.flow.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000230",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/dag/dag-engine.graph.yaml",
+    "line_number": null,
+    "description": "Filename 'dag-engine.graph.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "dag-engine.graph.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000231",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/dag/dag-engine.manifest.yaml",
+    "line_number": null,
+    "description": "Filename 'dag-engine.manifest.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "dag-engine.manifest.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000232",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/dag/dag-engine.policy.yaml",
+    "line_number": null,
+    "description": "Filename 'dag-engine.policy.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "dag-engine.policy.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000233",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/dag/dag-engine.spec.yaml",
+    "line_number": null,
+    "description": "Filename 'dag-engine.spec.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "dag-engine.spec.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000234",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/execution/artifacts/execution-log.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'execution-log.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "execution-log.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000235",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/execution/artifacts/execution-plan.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'execution-plan.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "execution-plan.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000236",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/execution/artifacts/rollback-manifest.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'rollback-manifest.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "rollback-manifest.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000237",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/execution/artifacts/transaction-record.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'transaction-record.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "transaction-record.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000238",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/execution/execution-engine.bundle.yaml",
+    "line_number": null,
+    "description": "Filename 'execution-engine.bundle.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "execution-engine.bundle.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000239",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/execution/execution-engine.flow.yaml",
+    "line_number": null,
+    "description": "Filename 'execution-engine.flow.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "execution-engine.flow.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000240",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/execution/execution-engine.graph.yaml",
+    "line_number": null,
+    "description": "Filename 'execution-engine.graph.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "execution-engine.graph.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000241",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/execution/execution-engine.manifest.yaml",
+    "line_number": null,
+    "description": "Filename 'execution-engine.manifest.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "execution-engine.manifest.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000242",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/execution/execution-engine.policy.yaml",
+    "line_number": null,
+    "description": "Filename 'execution-engine.policy.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "execution-engine.policy.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000243",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/execution/execution-engine.spec.yaml",
+    "line_number": null,
+    "description": "Filename 'execution-engine.spec.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "execution-engine.spec.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000244",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/governance/artifacts/access-token.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'access-token.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "access-token.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000245",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/governance/artifacts/audit-log.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'audit-log.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "audit-log.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000246",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/governance/artifacts/compliance-report.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'compliance-report.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "compliance-report.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000247",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/governance/artifacts/policy-definition.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'policy-definition.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "policy-definition.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000248",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/governance/governance-engine.bundle.yaml",
+    "line_number": null,
+    "description": "Filename 'governance-engine.bundle.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "governance-engine.bundle.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000249",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/governance/governance-engine.flow.yaml",
+    "line_number": null,
+    "description": "Filename 'governance-engine.flow.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "governance-engine.flow.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000250",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/governance/governance-engine.graph.yaml",
+    "line_number": null,
+    "description": "Filename 'governance-engine.graph.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "governance-engine.graph.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000251",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/governance/governance-engine.manifest.yaml",
+    "line_number": null,
+    "description": "Filename 'governance-engine.manifest.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "governance-engine.manifest.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000252",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/governance/governance-engine.policy.yaml",
+    "line_number": null,
+    "description": "Filename 'governance-engine.policy.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "governance-engine.policy.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000253",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/governance/governance-engine.spec.yaml",
+    "line_number": null,
+    "description": "Filename 'governance-engine.spec.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "governance-engine.spec.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000254",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/promotion/artifacts/approval-record.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'approval-record.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "approval-record.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000255",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/promotion/artifacts/deployment-manifest.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'deployment-manifest.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "deployment-manifest.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000256",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/promotion/artifacts/promoted-artifact.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'promoted-artifact.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "promoted-artifact.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000257",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/promotion/artifacts/promotion-plan.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'promotion-plan.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "promotion-plan.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000258",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/promotion/promotion-engine.bundle.yaml",
+    "line_number": null,
+    "description": "Filename 'promotion-engine.bundle.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "promotion-engine.bundle.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000259",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/promotion/promotion-engine.flow.yaml",
+    "line_number": null,
+    "description": "Filename 'promotion-engine.flow.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "promotion-engine.flow.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000260",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/promotion/promotion-engine.graph.yaml",
+    "line_number": null,
+    "description": "Filename 'promotion-engine.graph.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "promotion-engine.graph.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000261",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/promotion/promotion-engine.manifest.yaml",
+    "line_number": null,
+    "description": "Filename 'promotion-engine.manifest.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "promotion-engine.manifest.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000262",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/promotion/promotion-engine.policy.yaml",
+    "line_number": null,
+    "description": "Filename 'promotion-engine.policy.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "promotion-engine.policy.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000263",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/promotion/promotion-engine.spec.yaml",
+    "line_number": null,
+    "description": "Filename 'promotion-engine.spec.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "promotion-engine.spec.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000264",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/rag/artifacts/generated-answer.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'generated-answer.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "generated-answer.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000265",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/rag/artifacts/hybrid-context.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'hybrid-context.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "hybrid-context.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000266",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/rag/artifacts/knowledge-triplet.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'knowledge-triplet.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "knowledge-triplet.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000267",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/rag/artifacts/vector-chunk.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'vector-chunk.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "vector-chunk.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000268",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/rag/rag-engine.bundle.yaml",
+    "line_number": null,
+    "description": "Filename 'rag-engine.bundle.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "rag-engine.bundle.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000269",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/rag/rag-engine.flow.yaml",
+    "line_number": null,
+    "description": "Filename 'rag-engine.flow.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "rag-engine.flow.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000270",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/rag/rag-engine.graph.yaml",
+    "line_number": null,
+    "description": "Filename 'rag-engine.graph.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "rag-engine.graph.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000271",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/rag/rag-engine.manifest.yaml",
+    "line_number": null,
+    "description": "Filename 'rag-engine.manifest.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "rag-engine.manifest.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000272",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/rag/rag-engine.policy.yaml",
+    "line_number": null,
+    "description": "Filename 'rag-engine.policy.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "rag-engine.policy.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000273",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/rag/rag-engine.spec.yaml",
+    "line_number": null,
+    "description": "Filename 'rag-engine.spec.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "rag-engine.spec.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000274",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/registry/artifact-registry.bundle.yaml",
+    "line_number": null,
+    "description": "Filename 'artifact-registry.bundle.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "artifact-registry.bundle.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000275",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/registry/artifact-registry.flow.yaml",
+    "line_number": null,
+    "description": "Filename 'artifact-registry.flow.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "artifact-registry.flow.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000276",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/registry/artifact-registry.graph.yaml",
+    "line_number": null,
+    "description": "Filename 'artifact-registry.graph.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "artifact-registry.graph.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000277",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/registry/artifact-registry.policy.yaml",
+    "line_number": null,
+    "description": "Filename 'artifact-registry.policy.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "artifact-registry.policy.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000278",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/registry/artifact-registry.spec.yaml",
+    "line_number": null,
+    "description": "Filename 'artifact-registry.spec.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "artifact-registry.spec.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000279",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/registry/artifacts/artifact-instance.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'artifact-instance.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "artifact-instance.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000280",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/registry/artifacts/metadata.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'metadata.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "metadata.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000281",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/registry/registry-engine.manifest.yaml",
+    "line_number": null,
+    "description": "Filename 'registry-engine.manifest.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "registry-engine.manifest.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000282",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/taxonomy/artifacts/entity.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'entity.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "entity.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000283",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/taxonomy/artifacts/ontology-graph.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'ontology-graph.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "ontology-graph.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000284",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/taxonomy/artifacts/relationship.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'relationship.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "relationship.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000285",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/taxonomy/artifacts/taxonomy-definition.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'taxonomy-definition.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "taxonomy-definition.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000286",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/taxonomy/artifacts/triplet.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'triplet.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "triplet.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000287",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/taxonomy/taxonomy-engine.bundle.yaml",
+    "line_number": null,
+    "description": "Filename 'taxonomy-engine.bundle.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "taxonomy-engine.bundle.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000288",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/taxonomy/taxonomy-engine.flow.yaml",
+    "line_number": null,
+    "description": "Filename 'taxonomy-engine.flow.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "taxonomy-engine.flow.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000289",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/taxonomy/taxonomy-engine.graph.yaml",
+    "line_number": null,
+    "description": "Filename 'taxonomy-engine.graph.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "taxonomy-engine.graph.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000290",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/taxonomy/taxonomy-engine.manifest.yaml",
+    "line_number": null,
+    "description": "Filename 'taxonomy-engine.manifest.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "taxonomy-engine.manifest.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000291",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/taxonomy/taxonomy-engine.policy.yaml",
+    "line_number": null,
+    "description": "Filename 'taxonomy-engine.policy.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "taxonomy-engine.policy.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000292",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/taxonomy/taxonomy-engine.spec.yaml",
+    "line_number": null,
+    "description": "Filename 'taxonomy-engine.spec.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "taxonomy-engine.spec.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000293",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/validation/artifacts/evaluation-report.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'evaluation-report.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "evaluation-report.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000294",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/validation/artifacts/metric-score.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'metric-score.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "metric-score.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000295",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/validation/artifacts/schema-definition.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'schema-definition.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "schema-definition.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000296",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/validation/artifacts/test-case.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'test-case.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "test-case.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000297",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/validation/artifacts/validation-report.schema.yaml",
+    "line_number": null,
+    "description": "Filename 'validation-report.schema.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "validation-report.schema.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000298",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/validation/validation-engine.bundle.yaml",
+    "line_number": null,
+    "description": "Filename 'validation-engine.bundle.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "validation-engine.bundle.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000299",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/validation/validation-engine.flow.yaml",
+    "line_number": null,
+    "description": "Filename 'validation-engine.flow.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "validation-engine.flow.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000300",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/validation/validation-engine.graph.yaml",
+    "line_number": null,
+    "description": "Filename 'validation-engine.graph.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "validation-engine.graph.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000301",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/validation/validation-engine.manifest.yaml",
+    "line_number": null,
+    "description": "Filename 'validation-engine.manifest.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "validation-engine.manifest.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000302",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/validation/validation-engine.policy.yaml",
+    "line_number": null,
+    "description": "Filename 'validation-engine.policy.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "validation-engine.policy.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000303",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/engines/validation/validation-engine.spec.yaml",
+    "line_number": null,
+    "description": "Filename 'validation-engine.spec.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "validation-engine.spec.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000304",
+    "category": "gl_marker_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/structure.txt",
+    "line_number": null,
+    "description": "No GL governance markers found",
+    "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+    "evidence": {
+      "searched_patterns": [
+        "@gl-layer\\s+(\\S+)",
+        "@gl-module\\s+(\\S+)",
+        "@gl-semantic-anchor\\s+(\\S+)"
+      ]
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000305",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/structure.txt",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000306",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/tests/integration/rag-dag-integration.test.ts",
+    "line_number": null,
+    "description": "Filename 'rag-dag-integration.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "rag-dag-integration.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000307",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/tests/performance/benchmark.test.ts",
+    "line_number": null,
+    "description": "Filename 'benchmark.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "benchmark.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000308",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/tests/unit/governance/policy-evaluator.test.ts",
+    "line_number": null,
+    "description": "Filename 'policy-evaluator.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "policy-evaluator.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000309",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/tests/unit/governance/rbac-manager.test.ts",
+    "line_number": null,
+    "description": "Filename 'rbac-manager.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "rbac-manager.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000310",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/tests/unit/rag/vector-rag.test.ts",
+    "line_number": null,
+    "description": "Filename 'vector-rag.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "vector-rag.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000311",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/visualizations/architecture-diagrams.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000312",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/visualizations/architecture-diagrams.md",
+    "line_number": null,
+    "description": "Filename 'architecture-diagrams.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "architecture-diagrams.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000313",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/visualizations/data-flow-diagrams.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000314",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/visualizations/data-flow-diagrams.md",
+    "line_number": null,
+    "description": "Filename 'data-flow-diagrams.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "data-flow-diagrams.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000315",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/visualizations/dependency-graphs.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000316",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level3/visualizations/dependency-graphs.md",
+    "line_number": null,
+    "description": "Filename 'dependency-graphs.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "dependency-graphs.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000317",
+    "category": "gl_marker_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/visualizations/interactive-dashboard.html",
+    "line_number": null,
+    "description": "No GL governance markers found",
+    "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+    "evidence": {
+      "searched_patterns": [
+        "@gl-layer\\s+(\\S+)",
+        "@gl-module\\s+(\\S+)",
+        "@gl-semantic-anchor\\s+(\\S+)"
+      ]
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000318",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level3/visualizations/interactive-dashboard.html",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000319",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level4/FINAL-SUMMARY.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000320",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level4/MCP-LEVEL4-FINAL-STATUS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000321",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level4/PHASE1-COMPLETION-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000322",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level4/PHASE1-FINAL-COMPLETION.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000323",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level4/PHASE1-PROGRESS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000324",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level4/PHASE2-COMPLETION-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000325",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level4/PHASE2-PROGRESS.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000326",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level4/PHASE3-COMPLETION-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000327",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level4/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000328",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level4/SESSION-3-FINAL-REPORT.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000329",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level4/TODO-PHASE1-2.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000330",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level4/docs/IMPLEMENTATION-PLAN.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000331",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level4/docs/LEVEL4-ARCHITECTURE-OVERVIEW.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000332",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/level4/openapi.yaml",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [
+        "version",
+        "name",
+        "description"
+      ],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000333",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level4/tests/engines/audit-engine.test.ts",
+    "line_number": null,
+    "description": "Filename 'audit-engine.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "audit-engine.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000334",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level4/tests/engines/evolution-engine.test.ts",
+    "line_number": null,
+    "description": "Filename 'evolution-engine.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "evolution-engine.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000335",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level4/tests/engines/observation-engine.test.ts",
+    "line_number": null,
+    "description": "Filename 'observation-engine.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "observation-engine.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000336",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level4/tests/engines/reflex-engine.test.ts",
+    "line_number": null,
+    "description": "Filename 'reflex-engine.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "reflex-engine.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000337",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-mcp/level4/tests/phase3-engines.test.ts",
+    "line_number": null,
+    "description": "Filename 'phase3-engines.test.ts' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.ts$",
+    "evidence": {
+      "current_name": "phase3-engines.test.ts",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.ts$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000338",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/scripts/advanced-convert.sh",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000339",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/scripts/convert.sh",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000340",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/scripts/generate-missing-artifacts.sh",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000341",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/scripts/generate-module-artifacts.sh",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000342",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-mcp/scripts/test.sh",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000343",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-sdk/CHANGELOG.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000344",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-sdk/GOVERNANCE_COMPLIANCE.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000345",
+    "category": "gl_marker_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-sdk/LICENSE",
+    "line_number": null,
+    "description": "No GL governance markers found",
+    "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+    "evidence": {
+      "searched_patterns": [
+        "@gl-layer\\s+(\\S+)",
+        "@gl-module\\s+(\\S+)",
+        "@gl-semantic-anchor\\s+(\\S+)"
+      ]
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000346",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-sdk/LICENSE",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000347",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-sdk/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000348",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-sdk/README_FIX.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000349",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-sdk/RFC_TEMPLATE.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000350",
+    "category": "gl_marker_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-sdk/bin/namespaces-sdk",
+    "line_number": null,
+    "description": "No GL governance markers found",
+    "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+    "evidence": {
+      "searched_patterns": [
+        "@gl-layer\\s+(\\S+)",
+        "@gl-module\\s+(\\S+)",
+        "@gl-semantic-anchor\\s+(\\S+)"
+      ]
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000351",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-sdk/bin/namespaces-sdk",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000352",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-sdk/fix-typescript-errors.sh",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000353",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-sdk/fix_tools.sh",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000354",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-sdk/helm/namespace-sdk/Chart.yaml",
+    "line_number": null,
+    "description": "Filename 'Chart.yaml' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[a-z][a-z0-9-]*\\.yaml$",
+    "evidence": {
+      "current_name": "Chart.yaml",
+      "expected_pattern": "^[a-z][a-z0-9-]*\\.yaml$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000355",
+    "category": "gl_marker_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-sdk/namespaces-sdk.txt",
+    "line_number": null,
+    "description": "No GL governance markers found",
+    "suggestion": "Add @gl-layer, @gl-module, or @gl-semantic-anchor markers",
+    "evidence": {
+      "searched_patterns": [
+        "@gl-layer\\s+(\\S+)",
+        "@gl-module\\s+(\\S+)",
+        "@gl-semantic-anchor\\s+(\\S+)"
+      ]
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000356",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-sdk/namespaces-sdk.txt",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000357",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-sdk/security/compliance-checklist.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000358",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-sdk/security/compliance-checklist.md",
+    "line_number": null,
+    "description": "Filename 'compliance-checklist.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "compliance-checklist.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000359",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/namespaces-sdk/todo.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000360",
+    "category": "naming_inconsistent",
+    "severity": "LOW",
+    "file_path": "ns-root/namespaces-sdk/todo.md",
+    "line_number": null,
+    "description": "Filename 'todo.md' does not match naming convention",
+    "suggestion": "Rename to match pattern: ^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$",
+    "evidence": {
+      "current_name": "todo.md",
+      "expected_pattern": "^[A-Z][A-Z0-9_-]*\\.md$|^README\\.md$|^CHANGELOG\\.md$"
+    }
+  },
+  {
+    "issue_id": "ISS-20260126_082815-000361",
+    "category": "metadata_missing",
+    "severity": "MEDIUM",
+    "file_path": "ns-root/taxonomy-core/README.md",
+    "line_number": null,
+    "description": "No metadata found in file",
+    "suggestion": "Add metadata header with version, name, description",
+    "evidence": {
+      "has_metadata": false,
+      "metadata_fields": [],
+      "missing_fields": [],
+      "issues": []
+    }
+  }
+]

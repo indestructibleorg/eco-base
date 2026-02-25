@@ -1,0 +1,45 @@
+# @ECO-governed
+# @ECO-layer: GL00-09
+# @ECO-semantic: general-component
+# @ECO-audit-trail: gov-enterprise-architecture/governance/audit-trails/GL00_09-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gov-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gov-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "document": {
+    "name": "INSTANT_TRIGGERS_IMPLEMENTATION_REPORT.md",
+    "path": "/home/runner/work/machine-native-ops/machine-native-ops/workspace/docs/INSTANT_TRIGGERS_IMPLEMENTATION_REPORT.md",
+    "size": "7.6KB",
+    "last_modified": "2026-01-06T00:32:45.439846Z"
+  },
+  "quantum_features": {
+    "coherence": 0.7936103658248522,
+    "entanglement": 0.9733919228478818,
+    "fidelity": 0.9805851159065571,
+    "noise_level": 0.05511574384809312,
+    "coherence_time": 0.8020840441340066
+  },
+  "extraction_info": {
+    "backend": "ibm_kyiv",
+    "circuit_depth": 8,
+    "shots": 1024,
+    "error_mitigated": true,
+    "timestamp": "2026-01-06T00:34:51.074959Z"
+  },
+  "cryptographic_evidence": {
+    "sha256": "d53ab003840044b47359996ca35631e5bfca46f09686d989dd61450ee4ebe532",
+    "sha512": "b7031af216496d52a232bd36be1d60daef0e66e36b2bd1a9b64d48cf5526ae2a00083d59dbb62e5a401cce3a39c000b92ab988d479bd444d70b5ec716a522643",
+    "quantum_signature": "qsig:2:ibm_kyiv:0x8b8b4dd5c92b43ca"
+  },
+  "_GL": {
+    "governed": true,
+    "layer": "data",
+    "semantic": "pr-validation-INSTANT_TRIGGERS_IMPLEMENTATION_REPORT",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

@@ -1,0 +1,114 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "file_path": "engine/tsconfig.json",
+  "file_type": ".json",
+  "file_hash": "564fe189952f1bc592e1247eecdb159a26e71fb3159a8b048bff1d5ae28a6502",
+  "gl_layer": "ECO-30-EXECUTION",
+  "semantic_anchor": "ECO-10-CONFIG-JSON",
+  "etl_status": "SUCCESS",
+  "es_index_status": "READY",
+  "issues": [
+    {
+      "type": "gl_marker_missing",
+      "severity": "MEDIUM",
+      "message": "No GL governance markers found in file",
+      "file_path": "engine/tsconfig.json",
+      "recommendation": "Add GL layer annotation comment at file header"
+    },
+    {
+      "type": "semantic_manifest_missing",
+      "severity": "LOW",
+      "message": "No semantic manifest reference found",
+      "file_path": "engine/tsconfig.json",
+      "recommendation": "Add semantic anchor annotation"
+    }
+  ],
+  "metadata": {
+    "has_jsdoc": false,
+    "has_exports": false,
+    "has_imports": false,
+    "has_interfaces": false,
+    "has_types": false,
+    "has_classes": false,
+    "has_functions": false,
+    "has_tests": false,
+    "has_readme_reference": false,
+    "has_license": false,
+    "valid_json": true
+  },
+  "governance_events": [
+    {
+      "event_id": "4945dce55f6cb655",
+      "timestamp": "2026-01-24T11:18:49.150787",
+      "event_type": "ETL_START",
+      "source_file": "engine/tsconfig.json",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-10-CONFIG-JSON",
+      "status": "STARTED",
+      "details": {
+        "phase": "extract"
+      },
+      "evidence_hash": "2720eb02a0fdab2f3bf2a2a74daf65ac1664e29931d03547981a4fe760ca14c4"
+    },
+    {
+      "event_id": "50d855e80fa642d5",
+      "timestamp": "2026-01-24T11:18:49.150828",
+      "event_type": "ETL_EXTRACT",
+      "source_file": "engine/tsconfig.json",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-10-CONFIG-JSON",
+      "status": "SUCCESS",
+      "details": {
+        "size_bytes": 1037,
+        "line_count": 42
+      },
+      "evidence_hash": "7150e93ea8eaa9e3e73d9dd590ecea29da3a3daecdc5771b226ab5c49d5fce5d"
+    },
+    {
+      "event_id": "e09365c28ca49490",
+      "timestamp": "2026-01-24T11:18:49.150925",
+      "event_type": "ETL_TRANSFORM",
+      "source_file": "engine/tsconfig.json",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-10-CONFIG-JSON",
+      "status": "SUCCESS",
+      "details": {
+        "issues_count": 2,
+        "gl_compliant": true
+      },
+      "evidence_hash": "970ec5ef7bd00e2c246e0333f1bc52678a05bc555254dfa21ad182f086fadeda"
+    },
+    {
+      "event_id": "92ebf5357828dbe4",
+      "timestamp": "2026-01-24T11:18:49.150939",
+      "event_type": "ETL_LOAD",
+      "source_file": "engine/tsconfig.json",
+      "gl_layer": "ECO-30-EXECUTION",
+      "semantic_anchor": "ECO-10-CONFIG-JSON",
+      "status": "SUCCESS",
+      "details": {
+        "index": "gl-aep-engine-audit"
+      },
+      "evidence_hash": "20c33237bb13d8a1c00997683e13a1bb277dc5e08a160f3d17d79a4bfb48308c"
+    }
+  ],
+  "timestamp": "2026-01-24T11:18:49.150948",
+  "execution_time_ms": 0,
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "engine_tsconfig.json_audit",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

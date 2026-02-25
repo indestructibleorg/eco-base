@@ -1,0 +1,37 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "id": "GL11-incident-response-sop",
+  "gllevel": "GL11",
+  "name": "GL11-incident-response-sop",
+  "createdat": "2026-01-21T19:14:06.679783Z",
+  "immutable": true,
+  "language": "zh-TW",
+  "semanticterms": [
+    "Process",
+    "Standard",
+    "Incident Response",
+    "Monitoring"
+  ],
+  "functionaldimensions": [
+    "Operational Supervision",
+    "Risk Control"
+  ],
+  "path": "sop/GL11-incident-response-sop.json",
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "GL11-incident-response-sop",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

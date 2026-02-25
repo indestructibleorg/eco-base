@@ -1,0 +1,86 @@
+# @ECO-layer: GQS-L0
+# @ECO-governed
+# @ECO-layer: GL00-09
+# @ECO-semantic: naming-governance
+# @ECO-audit-trail: gov-enterprise-architecture/governance/audit-trails/GL00_09-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gov-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gov-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "dashboard": {
+    "title": "GL Quantum Naming Governance Compliance",
+    "uid": "gov-quantum-naming-compliance",
+    "tags": ["gl", "quantum", "naming", "governance"],
+    "timezone": "browser",
+    "refresh": "30s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Overall Compliance Rate",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "sum(kube_pod_info) / (sum(kube_pod_info) + sum(increase(glnamingconvention_violations_total[24h])))"
+          }
+        ],
+        "options": {
+          "colorMode": "value",
+          "graphMode": "area"
+        }
+      },
+      {
+        "id": 2,
+        "title": "Naming Violations by Namespace",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(increase(glnamingconvention_violations_total[5m])) by (namespace)"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Violations by Resource Kind",
+        "type": "piechart",
+        "targets": [
+          {
+            "expr": "sum(increase(glnamingconvention_violations_total[1h])) by (kind)"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Auto-Remediation Success Rate",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "sum(naming_remediation_successes_total) / (sum(naming_remediation_successes_total) + sum(naming_remediation_failures_total))"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Migration Status",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "naming_migration_status{status=&quot;completed&quot;}"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Compliance Trend (24h)",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(increase(glnamingconvention_violations_total[24h]))"
+          }
+        ]
+      }
+    ]
+  }
+}

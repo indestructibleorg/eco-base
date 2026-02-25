@@ -1,0 +1,52 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "audit_id": "gl-root-audit-2026-01-28",
+  "timestamp": "2026-01-28T08:00:00Z",
+  "audit_mode": "multi-agent-parallel-orchestration",
+  "governance_charter_version": "2.0.0",
+  "execution_chain": [
+    "multi-agent-parallel-orchestration",
+    "Prompt Input",
+    ".governance",
+    "Charter / Strategy Baseline",
+    ".agent_hooks",
+    "engine",
+    "esync-platform",
+    "subsystems",
+    "summarized_conversations"
+  ],
+  "audit_scope": {
+    "repository": "machine-native-ops",
+    "systems": [
+      "engine",
+      "file-organizer-system",
+      "instant",
+      "elasticsearch-search-system",
+      "infrastructure",
+      "esync-platform",
+      "gl-gate",
+      ".github"
+    ],
+    "total_files": 905,
+    "code_files": 1360
+  },
+  "audit_config": {
+    "strict_mode": true,
+    "continue_on_error": false,
+    "enforce_semantic_anchors": true,
+    "require_traceability": true,
+    "require_provability": true
+  },
+  "governance_events_stream": "engine/.governance/governance-event-stream.jsonl",
+  "per_file_audit_reports": "engine/.governance/per-file-audits/",
+  "global_audit_report": "engine/.governance/audit-reports/global-governance-audit-report.json"
+}

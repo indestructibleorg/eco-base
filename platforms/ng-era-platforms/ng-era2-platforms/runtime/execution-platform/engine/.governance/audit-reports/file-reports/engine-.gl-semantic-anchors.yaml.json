@@ -1,0 +1,90 @@
+# @ECO-governed
+# @ECO-layer: GL90-99
+# @ECO-semantic: governance-core
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL90_99-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "file_path": "engine/.gl/semantic-anchors.yaml",
+  "file_hash": "7fa2ab6d9319a65bfe6d5a72d5e57ec11c151d5778da3ac86425ec6493101259",
+  "audit_timestamp": "2026-01-24T13:10:44.866227+00:00",
+  "etl_status": "success",
+  "es_index_status": "indexed",
+  "metadata": {},
+  "execution_time_ms": 0,
+  "issues": [
+    {
+      "issue_id": "ISS-0001",
+      "type": "gl_marker_missing",
+      "severity": "P1",
+      "title": "GL 治理標記缺失",
+      "description": "檔案 engine/.gl/semantic-anchors.yaml 缺少 GL Unified Architecture Governance Framework 標記",
+      "line_number": null,
+      "suggestion": "在檔案開頭添加 '// GL Unified Architecture Governance Framework Activated' 或 '@gl-governed' 標記",
+      "auto_fixable": true
+    }
+  ],
+  "governance_events": [
+    {
+      "event_id": "evt-0020",
+      "timestamp": "2026-01-24T13:10:44.865885+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/.gl/semantic-anchors.yaml",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "dca7605cf8232b5d"
+    },
+    {
+      "event_id": "evt-0021",
+      "timestamp": "2026-01-24T13:10:44.866208+00:00",
+      "event_type": "ETL",
+      "source": "transform",
+      "target": "engine/.gl/semantic-anchors.yaml",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "issues_found": 1
+      },
+      "hash": "7c3ac0f91a6bd62e"
+    },
+    {
+      "event_id": "evt-0022",
+      "timestamp": "2026-01-24T13:10:44.866213+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/.gl/semantic-anchors.yaml",
+      "action": "start",
+      "status": "running",
+      "details": {},
+      "hash": "3311830a50545df8"
+    },
+    {
+      "event_id": "evt-0023",
+      "timestamp": "2026-01-24T13:10:44.866224+00:00",
+      "event_type": "ETL",
+      "source": "load",
+      "target": "engine/.gl/semantic-anchors.yaml",
+      "action": "complete",
+      "status": "success",
+      "details": {
+        "es_index": "gl-governance-audit",
+        "doc_id": "7fa2ab6d9319a65b"
+      },
+      "hash": "32e401594ae1919e"
+    }
+  ],
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "engine_.gl_semantic-anchors.yaml",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

@@ -1,0 +1,101 @@
+# @ECO-governed
+# @ECO-layer: governance
+# @ECO-semantic: hybrid-weights-config
+# @ECO-audit-trail: ../../engine/governance/GL_SEMANTIC_ANCHOR.json
+# 
+# GL Unified Architecture Governance Framework Activated
+
+apiVersion: validation.machinenativeops/v1
+kind: HybridWeightsConfig
+metadata:
+  annotations:
+    eco-base/urn: "urn:eco-base:platform:resource:ng-era-platforms:ng-era2-platforms:runtime:execution-platform:engine:tools-legacy:validation:hybrid-weights-config.yaml"
+    eco-base/uri: "eco-base://platform/resource/ng-era-platforms/ng-era2-platforms/runtime/execution-platform/engine/tools-legacy/validation/hybrid-weights-config.yaml"
+  name: hybrid-weights-config
+  namespace: gl-runtime-verification
+  version: v1.0.0
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+    app.kubernetes.io/name: validation-system
+    app.kubernetes.io/component: hybrid-decider
+spec:
+  # 預設權重配置
+  default_weights:
+    classic: 0.43
+    quantum: 0.57
+
+  # 權重調整範圍
+  weight_bounds:
+    classic:
+      min: 0.20
+      max: 0.80
+    quantum:
+      min: 0.20
+      max: 0.80
+
+  # 融合算法配置
+  fusion_algorithms:
+    - name: weighted_average
+      description: "加權平均融合"
+      default: true
+      parameters:
+        normalize: true
+    - name: bayesian_fusion
+      description: "貝葉斯融合"
+      parameters:
+        prior_weight: 0.3
+    - name: ensemble_voting
+      description: "集成投票"
+      parameters:
+        voting_method: soft
+        threshold: 0.6
+
+  # 場景預設配置
+  presets:
+    standard_v3:
+      description: "標準驗證模式"
+      classic_weight: 0.43
+      quantum_weight: 0.57
+      circuit_depth: 12
+      fusion_algorithm: weighted_average
+    lightweight_v2:
+      description: "輕量級模式（低量子資源消耗）"
+      classic_weight: 0.70
+      quantum_weight: 0.30
+      circuit_depth: 6
+      fusion_algorithm: weighted_average
+    high_precision:
+      description: "高精度模式"
+      classic_weight: 0.35
+      quantum_weight: 0.65
+      circuit_depth: 16
+      fusion_algorithm: bayesian_fusion
+    emergency_fallback:
+      description: "緊急降級模式"
+      classic_weight: 0.90
+      quantum_weight: 0.10
+      circuit_depth: 4
+      fusion_algorithm: weighted_average
+
+  # 自適應權重調整
+  adaptive_adjustment:
+    enabled: true
+    learning_rate: 0.01
+    momentum: 0.9
+    update_interval: "1m"
+    history_window: 100
+
+  # 決策引擎配置
+  decision_engine:
+    confidence_threshold: 0.85
+    uncertainty_handling: monte_carlo
+    monte_carlo_samples: 1000
+    timeout: "10s"
+
+  # 品質保證配置
+  quality_assurance:
+    min_quantum_fidelity: 0.95
+    max_classical_error_rate: 0.02
+    validation_rounds: 3
+    consensus_threshold: 0.67

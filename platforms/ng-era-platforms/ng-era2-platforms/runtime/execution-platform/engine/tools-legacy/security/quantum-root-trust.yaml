@@ -1,0 +1,92 @@
+# @ECO-layer: GQS-L0
+# @ECO-governed
+# @ECO-layer: governance
+# @ECO-semantic: quantum-root-trust
+# @ECO-audit-trail: ../../engine/governance/GL_SEMANTIC_ANCHOR.json
+# 
+# GL Unified Architecture Governance Framework Activated
+
+# MachineNativeOps Quantum Root of Trust Configuration
+# Security Level: SLSA L4 | NIST Level 5+ | FIPS 140-3 Level 4
+
+apiVersion: security.machinenativeops/v1
+kind: QuantumRootOfTrust
+metadata:
+  annotations:
+    eco-base/urn: "urn:eco-base:platform:resource:ng-era-platforms:ng-era2-platforms:runtime:execution-platform:engine:tools-legacy:security:quantum-root-trust.yaml"
+    eco-base/uri: "eco-base://platform/resource/ng-era-platforms/ng-era2-platforms/runtime/execution-platform/engine/tools-legacy/security/quantum-root-trust.yaml"
+  name: quantum-root-trust
+  namespace: security
+  labels:
+    eco-base/part-of: eco-base
+    eco-base/governance: aligned
+    security.level: slsa-l4
+    quantum.resistance: nist-level-5-plus
+    compliance: fips-140-3-level-4
+
+spec:
+  quantumRandomness:
+    sources:
+      - name: ibm_kyiv_qrng
+        provider: IBM Quantum
+        backend: ibm_kyiv
+        type: hardware_quantum
+        priority: 1
+      - name: google_sycamore_qrng
+        provider: Google Quantum AI
+        backend: google_sycamore
+        type: hardware_quantum
+        priority: 2
+      - name: ionq_harmony_qrng
+        provider: IonQ
+        backend: ionq_harmony
+        type: trapped_ion_quantum
+        priority: 3
+    
+    minEntropyBits: 4096
+    realtimeValidation: true
+    backupSources: 3
+    refreshInterval: 1h
+    
+  quantumKeyDistribution:
+    protocol: BB84_enhanced
+    keyRate: 100Mbps
+    distance: 250km
+    networkTopology: mesh_redundant
+    errorCorrectionThreshold: 0.11
+    securityParameter: 128
+    
+  hardwareSecurityModules:
+    - name: aws-cloudhsm-primary
+      type: aws_cloudhsm
+      certification: fips_140_3_level_4
+      quantumResistance: true
+      keyStorage: quantum_safe
+      location: us-east-1
+      
+    - name: azure-dedicated-hsm-backup
+      type: azure_dedicated_hsm
+      certification: common_criteria_eal4_plus
+      quantumResistance: true
+      keyStorage: quantum_safe
+      location: westeurope
+  
+  rootCertificationAuthority:
+    algorithm: Falcon-1024
+    keyLifetime: 90d
+    revocation: quantum_crl
+    crossSigning:
+      - global_sign
+      - digicert
+      - letsencrypt
+    
+    certificatePolicy:
+      maxPathLength: 3
+      keyUsage:
+        - digitalSignature
+        - keyCertSign
+        - cRLSign
+      extendedKeyUsage:
+        - serverAuth
+        - clientAuth
+        - codeSigning

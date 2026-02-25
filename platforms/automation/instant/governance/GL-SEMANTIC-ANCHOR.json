@@ -1,0 +1,45 @@
+{
+  "governance": {
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0",
+    "activation": "active",
+    "system": "instant",
+    "system_role": "data_synchronization",
+    "integration_date": "2026-01-28"
+  },
+  "semantic": {
+    "anchor": {
+      "id": "ECO-INSTANT-SEMANTIC-ANCHOR",
+      "namespace": "governance.layers.instant",
+      "description": "Semantic anchor for Instant Data Synchronization System"
+    },
+    "hierarchy": {
+      "levels": [
+        "root",
+        "layer",
+        "module",
+        "component",
+        "artifact"
+      ]
+    },
+    "metadata": {
+      "required": [
+        "@ECO-governed",
+        "@ECO-layer",
+        "@ECO-semantic",
+        "@ECO-audit-trail"
+      ]
+    }
+  },
+  "enforcement": {
+    "strict": true,
+    "continue_on_error": false,
+    "validation_required": true,
+    "audit_trail_required": true
+  },
+  "paths": {
+    "gl_artifacts": "../engine/governance/gov-artifacts/",
+    "gl_architecture": "../.github/governance/architecture/",
+    "gl_sealed": "../.github/governance/sealed/"
+  }
+}

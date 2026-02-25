@@ -1,0 +1,185 @@
+# @ECO-governed
+# @ECO-layer: GL30-49
+# @ECO-semantic: general-component
+# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL30_49-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Module Manifest Schema",
+  "description": "Schema for module manifest files in MachineNativeOps",
+  "type": "object",
+  "required": [
+    "module_id",
+    "module_name",
+    "module_description",
+    "autonomy_level",
+    "namespace",
+    "dependencies",
+    "interfaces",
+    "status",
+    "version"
+  ],
+  "properties": {
+    "module_id": {
+      "type": "string",
+      "pattern": "^\\d{2}-[a-z-]+$",
+      "description": "Module identifier (e.g., 01-core, 02-intelligence)"
+    },
+    "module_name": {
+      "type": "string",
+      "description": "Human-readable module name"
+    },
+    "module_description": {
+      "type": "string",
+      "description": "Detailed description of module purpose and scope"
+    },
+    "autonomy_level": {
+      "type": "string",
+      "pattern": "^(L[1-5](-L[1-5])?|Global Layer)$",
+      "description": "Autonomy level (L1=Basic, L5=Fully Autonomous, or ranges like L1-L2, or 'Global Layer')"
+    },
+    "namespace": {
+      "type": "string",
+      "pattern": "^mno-[a-z-]+$",
+      "description": "Semantic namespace for the module"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^\\d{2}-[a-z-]+$"
+      },
+      "description": "List of module dependencies"
+    },
+    "interfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "api",
+              "event",
+              "data",
+              "service",
+              "workflow"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "endpoints": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "description": "Public interfaces provided by this module"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planned",
+        "in-development",
+        "active",
+        "deprecated"
+      ],
+      "description": "Current status of the module"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Module version (semantic versioning)"
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "service",
+              "library",
+              "tool",
+              "workflow",
+              "framework"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Components within this module"
+    },
+    "semantic_mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "concept": {
+            "type": "string"
+          },
+          "mapping": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Semantic concept mappings for the module"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "created_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "last_modified": {
+          "type": "string",
+          "format": "date"
+        },
+        "maintainers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "_GL": {
+    "governed": true,
+    "layer": "governance",
+    "semantic": "module-manifest.schema",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}

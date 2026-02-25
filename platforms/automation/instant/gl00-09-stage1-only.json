@@ -1,0 +1,38 @@
+# @ECO-governed
+# @ECO-layer: GL00-09
+# @ECO-semantic: general-component
+# @ECO-audit-trail: gov-enterprise-architecture/governance/audit-trails/GL00_09-audit.json
+#
+# GL Unified Architecture Governance Framework Activated
+# GL Root Semantic Anchor: gov-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
+# GL Unified Naming Charter: gov-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
+
+
+{
+  "stage": "AI_ANALYSIS",
+  "status": "failed",
+  "duration": 0.6930701732635498,
+  "details": {
+    "metrics": {
+      "total_files": 7428,
+      "total_lines": 2880201
+    },
+    "decision": "needs_review",
+    "confidence": 0.6402818555490312,
+    "risk_score": 70.0,
+    "conflicts": 750,
+    "recommendations": [
+      "Pattern confidence below threshold",
+      "Additional validation recommended",
+      "Review naming conventions"
+    ]
+  },
+  "_GL": {
+    "governed": true,
+    "layer": "data",
+    "semantic": "gl00-09-stage1-only",
+    "audit_trail": "../../engine/governance/GL_SEMANTIC_ANCHOR.json",
+    "charter": "GL Unified Architecture Governance Framework",
+    "version": "2.0.0"
+  }
+}
