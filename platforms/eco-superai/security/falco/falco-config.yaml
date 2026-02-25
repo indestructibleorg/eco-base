@@ -1,76 +1,34 @@
-# ============================================================================
-# Falco Runtime Security — Configuration
-# ============================================================================
-# Deployed as DaemonSet in the cluster for real-time threat detection
-# ============================================================================
-
+---
 apiVersion: v1
+data:
+  falco.yaml: "rules_file:\n  - /etc/falco/falco_rules.yaml\n  - /etc/falco/falco_rules.local.yaml\n\
+    \  - /etc/falco/superai_rules.yaml\n\njson_output: true\njson_include_output_property:\
+    \ true\njson_include_tags_property: true\n\nlog_stderr: true\nlog_syslog: false\n\
+    log_level: info\n\npriority: warning\n\nbuffered_outputs: false\nsyscall_event_drops:\n\
+    \  threshold: 0.1\n  actions:\n    - log\n    - alert\n  rate: 0.03333\n  max_burst:\
+    \ 1\n\noutputs:\n  rate: 1\n  max_burst: 1000\n\nstdout_output:\n  enabled: true\n\
+    \nsyslog_output:\n  enabled: false\n\nfile_output:\n  enabled: true\n  keep_alive:\
+    \ false\n  filename: /var/log/falco/events.log\n\nhttp_output:\n  enabled: true\n\
+    \  url: \"http://alertmanager.observability:9093/api/v1/alerts\"\n\ngrpc:\n  enabled:\
+    \ true\n  bind_address: \"unix:///var/run/falco/falco.sock\"\n  threadiness: 8\n\
+    \ngrpc_output:\n  enabled: true\n\nwebserver:\n  enabled: true\n  listen_port:\
+    \ 8765\n  k8s_healthz_endpoint: /healthz\n\nmetadata_download:\n  max_mb: 100\n\
+    \  chunk_wait_us: 1000\n  watch_freq_sec: 1"
 kind: ConfigMap
 metadata:
-  name: falco-config
-  namespace: eco-superai
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/configmap/falco-config
+    eco-base/urn: urn:eco-base:k8s:core:configmap:falco-config:sha256-b4fc94b222e3e6e210f392c85ff16051d9d2f984223f7cc8d940bf6f0661b1c6
   labels:
+    app.kubernetes.io/component: eco-component
+    app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: falco
     app.kubernetes.io/part-of: superai
-data:
-  falco.yaml: |
-    rules_file:
-      - /etc/falco/falco_rules.yaml
-      - /etc/falco/falco_rules.local.yaml
-      - /etc/falco/superai_rules.yaml
-
-    json_output: true
-    json_include_output_property: true
-    json_include_tags_property: true
-
-    log_stderr: true
-    log_syslog: false
-    log_level: info
-
-    priority: warning
-
-    buffered_outputs: false
-    syscall_event_drops:
-      threshold: 0.1
-      actions:
-        - log
-        - alert
-      rate: 0.03333
-      max_burst: 1
-
-    outputs:
-      rate: 1
-      max_burst: 1000
-
-    stdout_output:
-      enabled: true
-
-    syslog_output:
-      enabled: false
-
-    file_output:
-      enabled: true
-      keep_alive: false
-      filename: /var/log/falco/events.log
-
-    http_output:
-      enabled: true
-      url: "http://alertmanager.observability:9093/api/v1/alerts"
-
-    grpc:
-      enabled: true
-      bind_address: "unix:///var/run/falco/falco.sock"
-      threadiness: 8
-
-    grpc_output:
-      enabled: true
-
-    webserver:
-      enabled: true
-      listen_port: 8765
-      k8s_healthz_endpoint: /healthz
-
-    metadata_download:
-      max_mb: 100
-      chunk_wait_us: 1000
-      watch_freq_sec: 1
+    app.kubernetes.io/version: 1.0.0
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
+  name: falco-config
+  namespace: eco-superai

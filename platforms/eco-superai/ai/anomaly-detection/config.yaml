@@ -1,220 +1,164 @@
-# AI Anomaly Detection Configuration
-# P0 Critical: Machine learning-based anomaly detection for metrics, logs, and network traffic
-
 ---
 apiVersion: v1
+data:
+  config.yaml: "# Anomaly Detection Configuration\n\nmodels:\n  # Metrics Anomaly\
+    \ Detection\n  metrics:\n    enabled: true\n    algorithm: isolation_forest\n\
+    \    threshold: 0.95\n    sliding_window: 3600  # 1 hour\n    features:\n    \
+    \  - cpu_usage\n      - memory_usage\n      - request_rate\n      - error_rate\n\
+    \      - latency_p95\n      - latency_p99\n    ensemble:\n      enabled: true\n\
+    \      models:\n        - isolation_forest\n        - one_class_svm\n        -\
+    \ local_outlier_factor\n      voting: hard\n  \n  # Log Anomaly Detection\n  logs:\n\
+    \    enabled: true\n    algorithm: autoencoder\n    threshold: 0.92\n    features:\n\
+    \      - log_frequency\n      - error_patterns\n      - timestamp_anomalies\n\
+    \      - user_agent_anomalies\n      - path_anomalies\n    preprocessing:\n  \
+    \    - tokenization\n      - embedding\n      - normalization\n    model:\n  \
+    \    type: lstm_autoencoder\n      hidden_layers: [128, 64, 128]\n      dropout:\
+    \ 0.2\n  \n  # Network Traffic Anomaly Detection\n  network:\n    enabled: true\n\
+    \    algorithm: spectral_anomaly\n    threshold: 0.90\n    features:\n      -\
+    \ packet_rate\n      - byte_rate\n      - connection_count\n      - port_distribution\n\
+    \      - protocol_distribution\n      - geo_location_anomalies\n    sliding_window:\
+    \ 300  # 5 minutes\n  \n  # User Behavior Analytics\n  user_behavior:\n    enabled:\
+    \ true\n    algorithm: markov_chain\n    threshold: 0.88\n    features:\n    \
+    \  - login_patterns\n      - access_patterns\n      - time_patterns\n      - location_patterns\n\
+    \      - resource_access\n    behavioral_profiles:\n      enabled: true\n    \
+    \  update_interval: 86400  # 24 hours\n\nalerting:\n  enabled: true\n  severity_levels:\n\
+    \    critical:\n      threshold: 0.98\n      min_duration: 60  # seconds\n   \
+    \   channels: [pagerduty, slack, email]\n    warning:\n      threshold: 0.95\n\
+    \      min_duration: 300  # seconds\n      channels: [slack, email]\n    info:\n\
+    \      threshold: 0.90\n      min_duration: 600  # seconds\n      channels: [email]\n\
+    \  correlation:\n    enabled: true\n    time_window: 900  # 15 minutes\n    min_anomalies:\
+    \ 3\n  suppression:\n    enabled: true\n    suppression_period: 1800  # 30 minutes\n\
+    \ntraining:\n  enabled: true\n  schedule: \"0 2 * * *\"  # Daily at 2 AM\n  training_data_retention:\
+    \ 90  # days\n  model_retention: 30  # days\n  retrain_threshold: 0.85  # Retrain\
+    \ if accuracy drops below this\n  validation:\n    enabled: true\n    split_ratio:\
+    \ 0.2  # 20% for validation\n    cross_validation_folds: 5\n\nstorage:\n  features_backend:\
+    \ \"redis\"\n  models_backend: \"s3://superai-ml-models\"\n  metrics_backend:\
+    \ \"prometheus\"\n  logs_backend: \"loki\"\n  \nperformance:\n  batch_size: 1000\n\
+    \  max_concurrent_predictions: 10\n  prediction_timeout: 5  # seconds\n  model_loading_timeout:\
+    \ 30  # seconds\n\nsecurity:\n  encryption:\n    enabled: true\n    algorithm:\
+    \ AES-256-GCM\n    key_rotation: 2592000  # 30 days\n  access_control:\n    enabled:\
+    \ true\n    role_based: true\n    audit_logging: true\n"
 kind: ConfigMap
 metadata:
-  name: anomaly-detection-config
-  namespace: default
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/configmap/anomaly-detection-config
+    eco-base/urn: urn:eco-base:k8s:core:configmap:anomaly-detection-config:sha256-b15f50d85e837be29b097308652fc5dc17898b5dad51e1d696c7bf6b62baab45
   labels:
     app: superai-platform
+    app.kubernetes.io/component: eco-component
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: anomaly-detection-config
+    app.kubernetes.io/part-of: eco-base
+    app.kubernetes.io/version: 1.0.0
     component: ai-anomaly-detection
-data:
-  config.yaml: |
-    # Anomaly Detection Configuration
-    
-    models:
-      # Metrics Anomaly Detection
-      metrics:
-        enabled: true
-        algorithm: isolation_forest
-        threshold: 0.95
-        sliding_window: 3600  # 1 hour
-        features:
-          - cpu_usage
-          - memory_usage
-          - request_rate
-          - error_rate
-          - latency_p95
-          - latency_p99
-        ensemble:
-          enabled: true
-          models:
-            - isolation_forest
-            - one_class_svm
-            - local_outlier_factor
-          voting: hard
-      
-      # Log Anomaly Detection
-      logs:
-        enabled: true
-        algorithm: autoencoder
-        threshold: 0.92
-        features:
-          - log_frequency
-          - error_patterns
-          - timestamp_anomalies
-          - user_agent_anomalies
-          - path_anomalies
-        preprocessing:
-          - tokenization
-          - embedding
-          - normalization
-        model:
-          type: lstm_autoencoder
-          hidden_layers: [128, 64, 128]
-          dropout: 0.2
-      
-      # Network Traffic Anomaly Detection
-      network:
-        enabled: true
-        algorithm: spectral_anomaly
-        threshold: 0.90
-        features:
-          - packet_rate
-          - byte_rate
-          - connection_count
-          - port_distribution
-          - protocol_distribution
-          - geo_location_anomalies
-        sliding_window: 300  # 5 minutes
-      
-      # User Behavior Analytics
-      user_behavior:
-        enabled: true
-        algorithm: markov_chain
-        threshold: 0.88
-        features:
-          - login_patterns
-          - access_patterns
-          - time_patterns
-          - location_patterns
-          - resource_access
-        behavioral_profiles:
-          enabled: true
-          update_interval: 86400  # 24 hours
-    
-    alerting:
-      enabled: true
-      severity_levels:
-        critical:
-          threshold: 0.98
-          min_duration: 60  # seconds
-          channels: [pagerduty, slack, email]
-        warning:
-          threshold: 0.95
-          min_duration: 300  # seconds
-          channels: [slack, email]
-        info:
-          threshold: 0.90
-          min_duration: 600  # seconds
-          channels: [email]
-      correlation:
-        enabled: true
-        time_window: 900  # 15 minutes
-        min_anomalies: 3
-      suppression:
-        enabled: true
-        suppression_period: 1800  # 30 minutes
-    
-    training:
-      enabled: true
-      schedule: "0 2 * * *"  # Daily at 2 AM
-      training_data_retention: 90  # days
-      model_retention: 30  # days
-      retrain_threshold: 0.85  # Retrain if accuracy drops below this
-      validation:
-        enabled: true
-        split_ratio: 0.2  # 20% for validation
-        cross_validation_folds: 5
-    
-    storage:
-      features_backend: "redis"
-      models_backend: "s3://superai-ml-models"
-      metrics_backend: "prometheus"
-      logs_backend: "loki"
-      
-    performance:
-      batch_size: 1000
-      max_concurrent_predictions: 10
-      prediction_timeout: 5  # seconds
-      model_loading_timeout: 30  # seconds
-    
-    security:
-      encryption:
-        enabled: true
-        algorithm: AES-256-GCM
-        key_rotation: 2592000  # 30 days
-      access_control:
-        enabled: true
-        role_based: true
-        audit_logging: true
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
+  name: anomaly-detection-config
+  namespace: default
 ---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: anomaly-model-training
-  namespace: default
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/cronjob/anomaly-model-training
+    eco-base/urn: urn:eco-base:k8s:core:cronjob:anomaly-model-training:sha256-af238090c0eedcb4101b39359a10f6d25609fd95b0ff0e5314e6ebd3eb97dec6
   labels:
     app: superai-platform
+    app.kubernetes.io/component: eco-component
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: anomaly-model-training
+    app.kubernetes.io/part-of: eco-base
+    app.kubernetes.io/version: 1.0.0
     component: ai-anomaly-detection
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
+  name: anomaly-model-training
+  namespace: default
 spec:
-  schedule: "0 2 * * *"  # Daily at 2 AM
   concurrencyPolicy: Forbid
-  successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
   jobTemplate:
     spec:
-      backoffLimit: 3
       activeDeadlineSeconds: 3600
+      backoffLimit: 3
       template:
         spec:
-          serviceAccountName: superai-monitoring
-          restartPolicy: OnFailure
           containers:
-          - name: trainer
-            image: ghcr.io/superai-platform/anomaly-detection-trainer:latest
-            command: ["/bin/sh", "-c"]
-            args:
-              - |
-                python train_models.py \
-                  --config /etc/config/config.yaml \
-                  --metrics-backend http://prometheus.monitoring.svc.cluster.local:9090 \
-                  --logs-backend http://loki.monitoring.svc.cluster.local:3100 \
-                  --output s3://superai-ml-models/anomaly-detection
-            volumeMounts:
-            - name: config
-              mountPath: /etc/config
-              readOnly: true
-            - name: models
-              mountPath: /models
+          - args:
+            - "python train_models.py \\\n  --config /etc/config/config.yaml \\\n\
+              \  --metrics-backend http://prometheus.monitoring.svc.cluster.local:9090\
+              \ \\\n  --logs-backend http://loki.monitoring.svc.cluster.local:3100\
+              \ \\\n  --output s3://superai-ml-models/anomaly-detection\n"
+            command:
+            - /bin/sh
+            - -c
             env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: anomaly-detection-secrets
                   key: aws_access_key_id
+                  name: anomaly-detection-secrets
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: anomaly-detection-secrets
                   key: aws_secret_access_key
-            resources:
-              requests:
-                cpu: 2000m
-                memory: 8Gi
-              limits:
-                cpu: 8000m
-                memory: 32Gi
+                  name: anomaly-detection-secrets
             envFrom:
             - secretRef:
                 name: anomaly-detection-secrets
+            image: ghcr.io/superai-platform/anomaly-detection-trainer:latest
+            name: trainer
+            resources:
+              limits:
+                cpu: 8000m
+                memory: 32Gi
+              requests:
+                cpu: 2000m
+                memory: 8Gi
+            volumeMounts:
+            - mountPath: /etc/config
+              name: config
+              readOnly: true
+            - mountPath: /models
+              name: models
+          restartPolicy: OnFailure
+          serviceAccountName: superai-monitoring
           volumes:
-          - name: config
-            configMap:
+          - configMap:
               name: anomaly-detection-config
-          - name: models
-            emptyDir: {}
+            name: config
+          - emptyDir: {}
+            name: models
+  schedule: 0 2 * * *
+  successfulJobsHistoryLimit: 3
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: anomaly-detection-service
-  namespace: default
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/deployment/anomaly-detection-service
+    eco-base/urn: urn:eco-base:k8s:core:deployment:anomaly-detection-service:sha256-068f2a0ccb03d6df119504c42c2c27813622b432f502bfb57a7820dbe7cb343c
   labels:
     app: superai-platform
+    app.kubernetes.io/component: eco-component
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: anomaly-detection-service
+    app.kubernetes.io/part-of: eco-base
+    app.kubernetes.io/version: 1.0.0
     component: ai-anomaly-detection
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
+  name: anomaly-detection-service
+  namespace: default
 spec:
   replicas: 3
   selector:
@@ -223,27 +167,14 @@ spec:
   template:
     metadata:
       labels:
-        app: anomaly-detection-service
         app: superai-platform
         component: ai-anomaly-detection
     spec:
-      serviceAccountName: superai-monitoring
       containers:
-      - name: detector
-        image: ghcr.io/superai-platform/anomaly-detection-service:latest
-        args:
-          - --config=/etc/config/config.yaml
-          - --metrics-address=:8080
-          - --api-address=:8443
-        ports:
-        - name: metrics
-          containerPort: 8080
-        - name: api
-          containerPort: 8443
-        volumeMounts:
-        - name: config
-          mountPath: /etc/config
-          readOnly: true
+      - args:
+        - --config=/etc/config/config.yaml
+        - --metrics-address=:8080
+        - --api-address=:8443
         env:
         - name: NAMESPACE
           valueFrom:
@@ -253,40 +184,64 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-        resources:
-          requests:
-            cpu: 500m
-            memory: 2Gi
-          limits:
-            cpu: 2000m
-            memory: 8Gi
+        image: ghcr.io/superai-platform/anomaly-detection-service:latest
         livenessProbe:
           httpGet:
             path: /healthz
             port: metrics
           initialDelaySeconds: 30
           periodSeconds: 10
+        name: detector
+        ports:
+        - containerPort: 8080
+          name: metrics
+        - containerPort: 8443
+          name: api
         readinessProbe:
           httpGet:
             path: /readyz
             port: metrics
           initialDelaySeconds: 30
           periodSeconds: 10
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 8Gi
+          requests:
+            cpu: 500m
+            memory: 2Gi
+        volumeMounts:
+        - mountPath: /etc/config
+          name: config
+          readOnly: true
+      serviceAccountName: superai-monitoring
       volumes:
-      - name: config
-        configMap:
+      - configMap:
           name: anomaly-detection-config
+        name: config
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: anomaly-detection-service
-  namespace: default
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/service/anomaly-detection-service
+    eco-base/urn: urn:eco-base:k8s:core:service:anomaly-detection-service:sha256-1add5408b350091fdc46997600d5fd6934d33dcd62f7176efe709fa5dac80e03
   labels:
     app: superai-platform
+    app.kubernetes.io/component: eco-component
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: anomaly-detection-service
+    app.kubernetes.io/part-of: eco-base
+    app.kubernetes.io/version: 1.0.0
     component: ai-anomaly-detection
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
+  name: anomaly-detection-service
+  namespace: default
 spec:
-  type: ClusterIP
   ports:
   - name: metrics
     port: 8080
@@ -296,17 +251,31 @@ spec:
     targetPort: api
   selector:
     app: anomaly-detection-service
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: anomaly-detection-secrets
-  namespace: default
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/secret/anomaly-detection-secrets
+    eco-base/urn: urn:eco-base:k8s:core:secret:anomaly-detection-secrets:sha256-5690ed0e228feb3c37a88a16e853d6abaee2dedd31b125951bc715e9339a942a
   labels:
     app: superai-platform
+    app.kubernetes.io/component: eco-component
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: anomaly-detection-secrets
+    app.kubernetes.io/part-of: eco-base
+    app.kubernetes.io/version: 1.0.0
     component: ai-anomaly-detection
-type: Opaque
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
+  name: anomaly-detection-secrets
+  namespace: default
 stringData:
-  aws_access_key_id: "YOUR_AWS_ACCESS_KEY_ID"
-  aws_secret_access_key: "YOUR_AWS_SECRET_ACCESS_KEY"
-  encryption_key: "YOUR_AES_256_GCM_KEY"
+  aws_access_key_id: YOUR_AWS_ACCESS_KEY_ID
+  aws_secret_access_key: YOUR_AWS_SECRET_ACCESS_KEY
+  encryption_key: YOUR_AES_256_GCM_KEY
+type: Opaque

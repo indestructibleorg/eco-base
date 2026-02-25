@@ -1,93 +1,114 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/deployment/seccompops-engine
+    eco-base/urn: urn:eco-base:k8s:core:deployment:seccompops-engine:sha256-fb7352a0e15d29c171d73e893ed5dd5a81fbe7ffd800f8cbd9a8e82d4324df07
+  labels:
+    app.kubernetes.io/component: api
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: seccompops-engine
+    app.kubernetes.io/part-of: seccompops-platform
+    app.kubernetes.io/version: 1.0.0
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
   name: seccompops-engine
   namespace: eco-seccompops
-  labels:
-    app.kubernetes.io/name: seccompops-engine
-    app.kubernetes.io/component: api
-    app.kubernetes.io/part-of: seccompops-platform
 spec:
   replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/name: seccompops-engine
   strategy:
-    type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: seccompops-engine
         app.kubernetes.io/component: api
+        app.kubernetes.io/name: seccompops-engine
     spec:
-      serviceAccountName: seccompops
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: seccompops-config
+        - secretRef:
+            name: seccompops-secrets
+        image: seccompops-platform:latest
+        livenessProbe:
+          httpGet:
+            path: /livez
+            port: http
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          timeoutSeconds: 5
+        name: seccompops-engine
+        ports:
+        - containerPort: 8095
+          name: http
+          protocol: TCP
+        - containerPort: 9095
+          name: metrics
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: '1'
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 256Mi
+        volumeMounts:
+        - mountPath: /app/evidence
+          name: evidence-store
+        - mountPath: /app/.config
+          name: config
+          readOnly: true
       securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-      containers:
-        - name: seccompops-engine
-          image: seccompops-platform:latest
-          ports:
-            - name: http
-              containerPort: 8095
-              protocol: TCP
-            - name: metrics
-              containerPort: 9095
-              protocol: TCP
-          envFrom:
-            - configMapRef:
-                name: seccompops-config
-            - secretRef:
-                name: seccompops-secrets
-          resources:
-            requests:
-              cpu: 250m
-              memory: 256Mi
-            limits:
-              cpu: "1"
-              memory: 512Mi
-          livenessProbe:
-            httpGet:
-              path: /livez
-              port: http
-            initialDelaySeconds: 15
-            periodSeconds: 20
-            timeoutSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /healthz
-              port: http
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 5
-          volumeMounts:
-            - name: evidence-store
-              mountPath: /app/evidence
-            - name: config
-              mountPath: /app/.config
-              readOnly: true
+      serviceAccountName: seccompops
       volumes:
-        - name: evidence-store
-          persistentVolumeClaim:
-            claimName: seccompops-evidence
-        - name: config
-          configMap:
-            name: seccompops-config
+      - name: evidence-store
+        persistentVolumeClaim:
+          claimName: seccompops-evidence
+      - configMap:
+          name: seccompops-config
+        name: config
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/deployment/seccompops-enforcer
+    eco-base/urn: urn:eco-base:k8s:core:deployment:seccompops-enforcer:sha256-cc0b66c0d02f58129c15e10655b64d44c3a0fe513aefa5ed4920818e924e68b1
+  labels:
+    app.kubernetes.io/component: worker
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: seccompops-enforcer
+    app.kubernetes.io/part-of: seccompops-platform
+    app.kubernetes.io/version: 1.0.0
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
   name: seccompops-enforcer
   namespace: eco-seccompops
-  labels:
-    app.kubernetes.io/name: seccompops-enforcer
-    app.kubernetes.io/component: worker
-    app.kubernetes.io/part-of: seccompops-platform
 spec:
   replicas: 1
   selector:
@@ -96,39 +117,52 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: seccompops-enforcer
         app.kubernetes.io/component: worker
+        app.kubernetes.io/name: seccompops-enforcer
     spec:
-      serviceAccountName: seccompops
+      containers:
+      - command:
+        - python
+        - -m
+        - engines.zero_tolerance.engine
+        envFrom:
+        - configMapRef:
+            name: seccompops-config
+        - secretRef:
+            name: seccompops-secrets
+        image: seccompops-platform:latest
+        name: seccompops-enforcer
+        resources:
+          limits:
+            cpu: 500m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
-      containers:
-        - name: seccompops-enforcer
-          image: seccompops-platform:latest
-          command: ["python", "-m", "engines.zero_tolerance.engine"]
-          envFrom:
-            - configMapRef:
-                name: seccompops-config
-            - secretRef:
-                name: seccompops-secrets
-          resources:
-            requests:
-              cpu: 100m
-              memory: 128Mi
-            limits:
-              cpu: 500m
-              memory: 256Mi
+      serviceAccountName: seccompops
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/deployment/seccompops-auditor
+    eco-base/urn: urn:eco-base:k8s:core:deployment:seccompops-auditor:sha256-db94412589d94c0c0a98e36b333d96e9c289ac80d2a40bd2954612bcbbe53ba1
+  labels:
+    app.kubernetes.io/component: worker
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: seccompops-auditor
+    app.kubernetes.io/part-of: seccompops-platform
+    app.kubernetes.io/version: 1.0.0
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
   name: seccompops-auditor
   namespace: eco-seccompops
-  labels:
-    app.kubernetes.io/name: seccompops-auditor
-    app.kubernetes.io/component: worker
-    app.kubernetes.io/part-of: seccompops-platform
 spec:
   replicas: 1
   selector:
@@ -137,26 +171,29 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: seccompops-auditor
         app.kubernetes.io/component: worker
+        app.kubernetes.io/name: seccompops-auditor
     spec:
-      serviceAccountName: seccompops
+      containers:
+      - command:
+        - python
+        - -m
+        - engines.browser_enforcement.engine
+        envFrom:
+        - configMapRef:
+            name: seccompops-config
+        - secretRef:
+            name: seccompops-secrets
+        image: seccompops-platform:latest
+        name: seccompops-auditor
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
-      containers:
-        - name: seccompops-auditor
-          image: seccompops-platform:latest
-          command: ["python", "-m", "engines.browser_enforcement.engine"]
-          envFrom:
-            - configMapRef:
-                name: seccompops-config
-            - secretRef:
-                name: seccompops-secrets
-          resources:
-            requests:
-              cpu: 100m
-              memory: 256Mi
-            limits:
-              cpu: 500m
-              memory: 512Mi
+      serviceAccountName: seccompops

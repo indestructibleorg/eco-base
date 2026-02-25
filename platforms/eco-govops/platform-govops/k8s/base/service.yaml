@@ -1,20 +1,31 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: govops-engine
-  namespace: eco-govops
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/service/govops-engine
+    eco-base/urn: urn:eco-base:k8s:core:service:govops-engine:sha256-36837ef7ffc9eab1fadc8216c6f1e90dabd2f574db109d003c4014eeadf8f68c
   labels:
+    app.kubernetes.io/component: engine
+    app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: govops-engine
     app.kubernetes.io/part-of: govops-platform
-    app.kubernetes.io/component: engine
-    governance.io/managed: "true"
+    app.kubernetes.io/version: 1.0.0
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
+    governance.io/managed: 'true'
+  name: govops-engine
+  namespace: eco-govops
 spec:
-  type: ClusterIP
-  selector:
-    app.kubernetes.io/name: govops-engine
-    app.kubernetes.io/component: engine
   ports:
-    - name: http
-      port: 8090
-      targetPort: http
-      protocol: TCP
+  - name: http
+    port: 8090
+    protocol: TCP
+    targetPort: http
+  selector:
+    app.kubernetes.io/component: engine
+    app.kubernetes.io/name: govops-engine
+  type: ClusterIP

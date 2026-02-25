@@ -1,123 +1,125 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: observops-engine
-  namespace: eco-observops
+  annotations:
+    eco-base/audit-log-level: full
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/platform-observops/deployment/observops-engine
+    eco-base/urn: urn:eco-base:k8s:platform-observops:deployment:observops-engine:sha256-422cd19cce178d1c3bc9b4bec6ff6ceccd91ac61ced01f078976c516cae72244
   labels:
-    app.kubernetes.io/name: observops-engine
-    app.kubernetes.io/instance: observops-engine-prod
-    app.kubernetes.io/part-of: eco-base
     app.kubernetes.io/component: engine
-    app.kubernetes.io/version: "1.0.0"
-    eco-base/platform: platform-observops
+    app.kubernetes.io/instance: observops-engine-prod
+    app.kubernetes.io/name: observops-engine
+    app.kubernetes.io/part-of: eco-base
+    app.kubernetes.io/version: 1.0.0
     eco-base/environment: production
     eco-base/owner: observability-operations-team
-    governance.io/managed: "true"
-  annotations:
-    eco-base/uri: "eco-base://k8s/platform-observops/deployment/observops-engine"
-    eco-base/urn: "urn:eco-base:k8s:platform-observops:deployment:observops-engine:gl.observ-ops.platform"
-    eco-base/audit-log-level: "full"
+    eco-base/platform: platform-observops
+    governance.io/managed: 'true'
+  name: observops-engine
+  namespace: eco-observops
 spec:
   replicas: 2
   revisionHistoryLimit: 5
   selector:
     matchLabels:
-      app.kubernetes.io/name: observops-engine
       app.kubernetes.io/component: engine
+      app.kubernetes.io/name: observops-engine
   strategy:
-    type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
-      labels:
-        app.kubernetes.io/name: observops-engine
-        app.kubernetes.io/instance: observops-engine-prod
-        app.kubernetes.io/part-of: eco-base
-        app.kubernetes.io/component: engine
-        app.kubernetes.io/version: "1.0.0"
-        eco-base/platform: platform-observops
-        eco-base/environment: production
-        governance.io/managed: "true"
       annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "9094"
-        prometheus.io/path: "/metrics"
+        prometheus.io/path: /metrics
+        prometheus.io/port: '9094'
+        prometheus.io/scrape: 'true'
+      labels:
+        app.kubernetes.io/component: engine
+        app.kubernetes.io/instance: observops-engine-prod
+        app.kubernetes.io/name: observops-engine
+        app.kubernetes.io/part-of: eco-base
+        app.kubernetes.io/version: 1.0.0
+        eco-base/environment: production
+        eco-base/platform: platform-observops
+        governance.io/managed: 'true'
     spec:
-      serviceAccountName: observops-engine
-      automountServiceAccountToken: false
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        seccompProfile:
-          type: RuntimeDefault
-      containers:
-        - name: observops-engine
-          image: asia-east1-docker.pkg.dev/eco-base/eco-registry/observops-platform:1.0.0
-          imagePullPolicy: IfNotPresent
-          ports:
-            - name: http
-              containerPort: 8094
-              protocol: TCP
-            - name: metrics
-              containerPort: 9094
-              protocol: TCP
-          envFrom:
-            - configMapRef:
-                name: observops-engine-config
-            - secretRef:
-                name: observops-engine-secrets
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: http
-            initialDelaySeconds: 15
-            periodSeconds: 20
-            timeoutSeconds: 5
-            failureThreshold: 3
-            successThreshold: 1
-          readinessProbe:
-            httpGet:
-              path: /readyz
-              port: http
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            timeoutSeconds: 3
-            failureThreshold: 3
-            successThreshold: 1
-          resources:
-            limits:
-              memory: 512Mi
-              cpu: 500m
-            requests:
-              memory: 256Mi
-              cpu: 250m
-          securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            capabilities:
-              drop:
-                - ALL
-          volumeMounts:
-            - name: tmp
-              mountPath: /tmp
-      volumes:
-        - name: tmp
-          emptyDir:
-            sizeLimit: 64Mi
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: app.kubernetes.io/name
-                      operator: In
-                      values:
-                        - observops-engine
-                topologyKey: kubernetes.io/hostname
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - observops-engine
+              topologyKey: kubernetes.io/hostname
+            weight: 100
+      automountServiceAccountToken: false
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: observops-engine-config
+        - secretRef:
+            name: observops-engine-secrets
+        image: asia-east1-docker.pkg.dev/eco-base/eco-registry/observops-platform:1.0.0
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: http
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: observops-engine
+        ports:
+        - containerPort: 8094
+          name: http
+          protocol: TCP
+        - containerPort: 9094
+          name: metrics
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /readyz
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 3
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 256Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: observops-engine
       terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir:
+          sizeLimit: 64Mi
+        name: tmp
