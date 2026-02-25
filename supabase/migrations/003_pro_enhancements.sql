@@ -31,10 +31,22 @@ on conflict (id) do nothing;
 
 -- ─── Storage RLS Policies ───────────────────────────────────────────────
 -- Audit attachments: only service_role and admins
-create policy "Service role can manage audit attachments"
+create policy "Service role and admins can manage audit attachments"
   on storage.objects for all
-  using (bucket_id = 'audit-attachments' and auth.role() = 'service_role')
-  with check (bucket_id = 'audit-attachments' and auth.role() = 'service_role');
+  using (
+    bucket_id = 'audit-attachments' and
+    (
+      auth.role() = 'service_role' or
+      exists (select 1 from public.users where id = auth.uid() and role = 'admin')
+    )
+  )
+  with check (
+    bucket_id = 'audit-attachments' and
+    (
+      auth.role() = 'service_role' or
+      exists (select 1 from public.users where id = auth.uid() and role = 'admin')
+    )
+  );
 
 -- Platform assets: public read, admin write
 create policy "Anyone can read platform assets"
@@ -46,6 +58,22 @@ create policy "Admins can manage platform assets"
   using (bucket_id = 'platform-assets')
   with check (
     bucket_id = 'platform-assets' and
+    exists (select 1 from public.users where id = auth.uid() and role = 'admin')
+  );
+
+create policy "Admins can update platform assets"
+  on storage.objects for update
+  using (bucket_id = 'platform-assets' and
+    exists (select 1 from public.users where id = auth.uid() and role = 'admin')
+  )
+  with check (
+    bucket_id = 'platform-assets' and
+    exists (select 1 from public.users where id = auth.uid() and role = 'admin')
+  );
+
+create policy "Admins can delete platform assets"
+  on storage.objects for delete
+  using (bucket_id = 'platform-assets' and
     exists (select 1 from public.users where id = auth.uid() and role = 'admin')
   );
 
@@ -144,6 +172,17 @@ alter publication supabase_realtime add table public.service_registry;
 alter publication supabase_realtime add table public.deployment_history;
 alter publication supabase_realtime add table public.slo_metrics;
 
+-- ─── Webhook Delivery Error Logging ────────────────────────────────────
+-- Logs failures from notify_webhook_handler's calls to the Edge Function
+create table if not exists public.webhook_delivery_errors (
+  id bigserial primary key,
+  created_at timestamptz not null default now(),
+  webhook_url text not null,
+  http_status int,
+  error text,
+  response jsonb
+);
+
 -- ─── Database Webhook Trigger Functions ─────────────────────────────────
 -- These functions call the webhook-handler Edge Function on data changes
 
@@ -152,9 +191,29 @@ returns trigger as $$
 declare
   payload jsonb;
   edge_function_url text;
+  base_url text;
+  service_role_key text;
+  http_result jsonb;
+  http_status int;
 begin
-  edge_function_url := current_setting('app.settings.supabase_url', true)
-    || '/functions/v1/webhook-handler';
+  -- Read base Supabase URL from settings and validate it before use
+  base_url := current_setting('app.settings.supabase_url', true);
+
+  if base_url is null then
+    raise exception 'Configuration app.settings.supabase_url is not set';
+  end if;
+
+  -- Basic format validation: require an HTTPS URL
+  if base_url !~ '^https://.+' then
+    raise exception 'Invalid app.settings.supabase_url value: must start with https://';
+  end if;
+
+  edge_function_url := base_url || '/functions/v1/webhook-handler';
+
+  service_role_key := current_setting('app.settings.service_role_key', true);
+  if service_role_key is null or length(service_role_key) = 0 then
+    raise exception 'Missing configuration: app.settings.service_role_key is not set or is empty';
+  end if;
 
   payload := jsonb_build_object(
     'type', TG_OP,
@@ -164,15 +223,27 @@ begin
     'old_record', case when TG_OP = 'INSERT' then null else row_to_json(OLD) end
   );
 
-  -- Use pg_net for async HTTP call (non-blocking)
-  perform net.http_post(
+  -- Use pg_net for async HTTP call (non-blocking), but capture the result
+  http_result := net.http_post(
     url := edge_function_url,
     headers := jsonb_build_object(
       'Content-Type', 'application/json',
-      'Authorization', 'Bearer ' || current_setting('app.settings.service_role_key', true)
+      'Authorization', 'Bearer ' || service_role_key
     ),
     body := payload
   );
+
+  -- Log failures to a dedicated error table for observability
+  http_status := coalesce((http_result->>'status')::int, 0);
+  if http_status < 200 or http_status >= 300 or http_result ? 'error' then
+    insert into public.webhook_delivery_errors (webhook_url, http_status, error, response)
+    values (
+      edge_function_url,
+      nullif(http_status, 0),
+      http_result->>'error',
+      http_result
+    );
+  end if;
 
   return coalesce(NEW, OLD);
 end;

@@ -20,7 +20,7 @@ def main():
             if v.get("fix_versions")
         ]
         print(len(vulns))
-    except Exception:
+    except (OSError, json.JSONDecodeError):
         print(0)
 
 

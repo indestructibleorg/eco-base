@@ -1,4 +1,9 @@
-# eco-base - Complete Token Manifest
+# eco-base - Complete Token Manifest (TEMPLATE ONLY)
+
+> This file is a **template**. Do not put real secrets here.
+> Copy this file to a local, untracked file (for example, `TOKENS_MANIFEST.local.md`)
+> and store any real credentials only in that copied file, which must be added to
+> `.gitignore` or your VCS ignore configuration.
 
 **Date**: February 21, 2026
 **Project**: eco-base
@@ -264,6 +269,12 @@ export GRAFANA_ADMIN_PASSWORD="YOUR_SECURE_PASSWORD"
 
 ---
 
-**End of Token Manifest**
+**End of Token Manifest Template**
 
-⚠️ **WARNING**: This document contains sensitive credentials. Store securely and never commit to version control.
+⚠️ **WARNING**: This is a **template file that is tracked in version control** and
+⚠️ **MUST NEVER** contain real credentials, secrets, or private keys.
+
+For real credentials:
+- Copy this file to a new name, such as `TOKENS_MANIFEST.local.md`.
+- Ensure that new file is ignored by version control (for example, via `.gitignore`).
+- Store real secrets **only** in that ignored file and in secure secret managers.

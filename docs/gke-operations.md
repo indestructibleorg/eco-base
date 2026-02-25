@@ -74,6 +74,8 @@ gcloud container clusters create-auto eco-production \
 gcloud container clusters get-credentials eco-production --region asia-east1
 
 # Apply manifests (strip governance blocks first)
+# First sed: from the last '---' separator onward, drop the '---' line itself
+# and any non-lowercase-starting lines, leaving only the deployable manifest content.
 for f in k8s/production/*.qyaml; do
   sed '/^---$/,/^[a-z]/{ /^---$/d; /^[a-z]/!d }' "$f" | \
   sed '/^document_metadata:/,/^[a-z]/d; /^governance_info:/,/^[a-z]/d; /^registry_binding:/,/^[a-z]/d; /^vector_alignment_map:/,/^[a-z]/d' | \

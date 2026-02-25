@@ -39,7 +39,8 @@ def main():
             data = json.load(f)
         result = get_nested(data, field_path, default)
         print(result)
-    except Exception:
+    except Exception as e:
+        print(f"Error processing '{filepath}' for field '{field_path}': {e.__class__.__name__}: {e}", file=sys.stderr)
         print(default)
 
 
