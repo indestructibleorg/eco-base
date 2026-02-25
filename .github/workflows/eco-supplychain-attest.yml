@@ -17,6 +17,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3.6.0
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -34,6 +37,20 @@ jobs:
             --paths platforms k8s manifests \
             --hashlock supplychain/hashlock.json
 
+      - name: Keyless sign hashlock.json (cosign sign-blob) -> hashlock.sig + hashlock.pem
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+        run: |
+          set -euo pipefail
+          cosign version
+          mkdir -p supplychain
+          # Keyless signing via GitHub OIDC (no private key in repo)
+          cosign sign-blob \
+            --yes \
+            --output-signature supplychain/hashlock.sig \
+            --output-certificate supplychain/hashlock.pem \
+            supplychain/hashlock.json
+
       - name: Generate in-toto attestation for hashlock.json
         env:
           GITHUB_RUN_ID: ${{ github.run_id }}
@@ -43,7 +60,24 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_WORKFLOW: ${{ github.workflow }}
         run: |
-          python tools/eco-supplychain/attest.py
+          python tools/eco-supplychain/attest.py \
+            --hashlock supplychain/hashlock.json \
+            --out supplychain/hashlock.attestation.intoto.json
+
+      - name: Verify cosign signature (verify-blob gate)
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          # Expected identity binds signature to THIS workflow on main branch
+          IDENTITY="https://github.com/${GITHUB_REPOSITORY}/.github/workflows/eco-supplychain-attest.yml@refs/heads/main"
+          cosign verify-blob \
+            --certificate supplychain/hashlock.pem \
+            --signature supplychain/hashlock.sig \
+            --certificate-identity "${IDENTITY}" \
+            --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+            supplychain/hashlock.json
 
       - name: Verify attestation binds to hashlock
         run: |
@@ -60,7 +94,7 @@ jobs:
           git config user.name  "eco-supplychain-bot"
           git config user.email "eco-supplychain-bot@users.noreply.github.com"
           git add -A
-          git commit -m "chore(eco): update hashlock + attestation [ci]"
+          git commit -m "chore(eco): update hashlock + attestation + signature [ci]"
           git push
 
       - name: Upload supplychain evidence
@@ -70,3 +104,5 @@ jobs:
           path: |
             supplychain/hashlock.json
             supplychain/hashlock.attestation.intoto.json
+            supplychain/hashlock.sig
+            supplychain/hashlock.pem

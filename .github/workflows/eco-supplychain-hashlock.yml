@@ -102,6 +102,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3.6.0
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -111,6 +114,22 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pyyaml
+
+      - name: Verify cosign signature for hashlock.json (verify-blob gate)
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          test -f supplychain/hashlock.sig
+          test -f supplychain/hashlock.pem
+          IDENTITY="https://github.com/${GITHUB_REPOSITORY}/.github/workflows/eco-supplychain-attest.yml@refs/heads/main"
+          cosign verify-blob \
+            --certificate supplychain/hashlock.pem \
+            --signature supplychain/hashlock.sig \
+            --certificate-identity "${IDENTITY}" \
+            --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+            supplychain/hashlock.json
 
       - name: Verify attestation binds to hashlock
         run: |
