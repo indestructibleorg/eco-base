@@ -28,7 +28,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/configmap/istio-custom-metrics
-    eco-base/urn: urn:eco-base:k8s:core:configmap:istio-custom-metrics:sha256-bfc9dc2a044fa8925ed3d9b24d91336fdc5cf1b56144115f0ce2e7abc2a92bd8
+    eco-base/urn: urn:eco-base:k8s:core:configmap:istio-custom-metrics:sha256-7ae642eeda0150a3d7a2582a720e549bfe0a6fc36e9dc066165ffd97bf212741
   labels:
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
@@ -95,7 +95,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/configmap/service-mesh-dashboard
-    eco-base/urn: urn:eco-base:k8s:core:configmap:service-mesh-dashboard:sha256-b501875b8c79398de9e07725c38e2809acc70135772b3753fecbe5089cd6fee5
+    eco-base/urn: urn:eco-base:k8s:core:configmap:service-mesh-dashboard:sha256-31fb65a278e7895fcf9863253e3b335ab7bf5abf2505c27fa0e7770f2173e142
   labels:
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance

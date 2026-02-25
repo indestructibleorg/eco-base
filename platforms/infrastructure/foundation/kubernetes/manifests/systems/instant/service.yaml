@@ -6,7 +6,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/service/instant-service
-    eco-base/urn: urn:eco-base:k8s:core:service:instant-service:sha256-ca145484f769928c8735c875ae1358f382f24afa8366b5d04e7ff5c2dd6c8d09
+    eco-base/urn: urn:eco-base:k8s:core:service:instant-service:sha256-30a39ba6ef49e02f2ebf07b9b4315c91232ff187a496b4b2744b718345b3f33b
   labels:
     app.kubernetes.io/app.kubernetes.io/component: data
     app.kubernetes.io/component: eco-component

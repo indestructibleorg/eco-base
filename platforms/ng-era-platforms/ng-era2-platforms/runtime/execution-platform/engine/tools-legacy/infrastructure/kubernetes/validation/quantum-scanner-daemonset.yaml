@@ -6,7 +6,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/daemonset/quantum-scanner
-    eco-base/urn: urn:eco-base:k8s:core:daemonset:quantum-scanner:sha256-462fc2565261b524b2e529ab84c06efa2e2146a12936fb7f0dcde771f6307ccc
+    eco-base/urn: urn:eco-base:k8s:core:daemonset:quantum-scanner:sha256-dbf19b8d7e8090f17dc96310b1bacc59776ba3322f8b06a9d909aa1f90b6b24e
   labels:
     app.kubernetes.io/component: quantum-scanner
     app.kubernetes.io/instance: eco-instance
@@ -134,7 +134,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/configmap/quantum-scanner-config
-    eco-base/urn: urn:eco-base:k8s:core:configmap:quantum-scanner-config:sha256-67e0c95e4ae6cdae0fac069911c778b74ff2b0ab4487565540fa3fbbec1c4d1b
+    eco-base/urn: urn:eco-base:k8s:core:configmap:quantum-scanner-config:sha256-e0f7e5290af98a2a14b219d551ea3480569308159661546d82ca346330b1afc0
   labels:
     app.kubernetes.io/component: quantum-scanner
     app.kubernetes.io/instance: eco-instance

@@ -27,7 +27,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/configmap/backup-encryption-config
-    eco-base/urn: urn:eco-base:k8s:core:configmap:backup-encryption-config:sha256-112d4324c7a26d34218bf0725d374055c50b68153b016746bc2b85d0cfb4a74d
+    eco-base/urn: urn:eco-base:k8s:core:configmap:backup-encryption-config:sha256-0841ca6645e7ea404a120fc2e24cf68c553718abb1781754ddf581c55a43c6a4
   labels:
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
@@ -47,7 +47,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/secret/velero-encryption-keys
-    eco-base/urn: urn:eco-base:k8s:core:secret:velero-encryption-keys:sha256-e67b1757d12a4ea09d41abddaab078cde8f2445fc2ee0cf565cec9f932fb6301
+    eco-base/urn: urn:eco-base:k8s:core:secret:velero-encryption-keys:sha256-a80c345d10c844009f7477d9dd943bc9e257e442a055cf5d759e41cfff22b17a
   labels:
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance

@@ -26,49 +26,49 @@ spec:
             prune: "false"
   template:
     metadata:
-  name: "eco-{{env}}"
-  namespace: argocd
-  labels:
-    app.kubernetes.io/name: eco-base
-    app.kubernetes.io/instance: "eco-{{env}}"
-    environment: "{{env}}"
-  annotations:
-    notifications.argoproj.io/subscribe.on-sync-succeeded.slack: eco-deployments
-    notifications.argoproj.io/subscribe.on-sync-failed.slack: eco-alerts
+      name: "eco-{{env}}"
+      namespace: argocd
+      labels:
+      app.kubernetes.io/name: eco-base
+      app.kubernetes.io/instance: "eco-{{env}}"
+      environment: "{{env}}"
+      annotations:
+      notifications.argoproj.io/subscribe.on-sync-succeeded.slack: eco-deployments
+      notifications.argoproj.io/subscribe.on-sync-failed.slack: eco-alerts
     spec:
       project: default
       source:
-        repoURL: https://github.com/indestructibleorg/eco-base.git
-        targetRevision: "{{revision}}"
-        path: helm
-        helm:
-          releaseName: "eco-{{env}}"
-          valueFiles:
-      - "{{values_file}}"
-          parameters:
-      - name: global.namespace
-              value: "{{namespace}}"
-      - name: global.environment
-              value: "{{env}}"
+          repoURL: https://github.com/indestructibleorg/eco-base.git
+          targetRevision: "{{revision}}"
+          path: helm
+          helm:
+            releaseName: "eco-{{env}}"
+            valueFiles:
+        - "{{values_file}}"
+            parameters:
+        - name: global.namespace
+                value: "{{namespace}}"
+        - name: global.environment
+                value: "{{env}}"
       destination:
-        server: "{{cluster}}"
-        namespace: "{{namespace}}"
+          server: "{{cluster}}"
+          namespace: "{{namespace}}"
       syncPolicy:
-        automated:
-          selfHeal: true
-          prune: true
-        syncOptions:
-      - CreateNamespace=true
-      - PrunePropagationPolicy=foreground
-      - PruneLast=true
-        retry:
-          limit: 3
-          backoff:
-            duration: 5s
-            factor: 2
-            maxDuration: 3m
+          automated:
+            selfHeal: true
+            prune: true
+          syncOptions:
+        - CreateNamespace=true
+        - PrunePropagationPolicy=foreground
+        - PruneLast=true
+          retry:
+            limit: 3
+            backoff:
+              duration: 5s
+              factor: 2
+              maxDuration: 3m
       ignoreDifferences:
-      - group: apps
-          kind: Deployment
-          jsonPointers:
-      - /spec/replicas
+        - group: apps
+            kind: Deployment
+            jsonPointers:
+        - /spec/replicas
