@@ -189,7 +189,7 @@ def validate_governance_blocks(repo: Path) -> list[dict]:
             ))
 
         # Schema version must be v1 or v8
-        if re.search(r"schema_version:\s*v[2-7]\b|schema_version:\s*v9\b", content):
+        if re.search(r"schema_version:\s*v(?![18]\b)\d+\b", content):
             findings.append(finding(
                 Category.GOVERNANCE_MISSING, Severity.ERROR, rel,
                 "Schema version must be v1 or v8",
