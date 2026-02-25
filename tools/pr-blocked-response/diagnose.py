@@ -901,6 +901,9 @@ def process_pr(pr_num, pr_title, pr_branch, head_sha, merge_status, labels, is_d
         if failing:
             print(f"  [DRAFT] Required checks failed: {failing}. Re-triggering...")
             retrigger_ci(pr_num, head_sha, set(failing))
+        if merge_status in ("BEHIND", "UNKNOWN"):
+            print(f"  [DRAFT] Branch is {merge_status}. Triggering update-branch maintenance.")
+            update_branch(pr_num)
         print("  [DRAFT] Continuous maintenance enabled; merge actions skipped.")
         return
 

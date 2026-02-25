@@ -27,6 +27,7 @@ jobs:
       - name: Re-dispatch PR Blocked Response
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7.0.1
         with:
+          github-token: ${{ secrets.AUTO_FIX_TOKEN || github.token }}
           script: |
             const fs = require('fs');
             const path = require('path');
@@ -70,6 +71,7 @@ jobs:
             let lastSuccessfulRecoveryAt = lastSuccessMatch ? lastSuccessMatch[1] : 'N/A';
             const duplicateHeadSha = !!(existing && existing.body.includes(headShaLine));
             let approveResult = "not-needed";
+            let approveError = "";
             if (shouldApprove && !duplicateHeadSha) {
               try {
                 await github.request('POST /repos/{owner}/{repo}/actions/runs/{run_id}/approve', {
@@ -81,10 +83,12 @@ jobs:
                 core.info(`Approved workflow run ${run.id}`);
               } catch (e) {
                 approveResult = "approve-failed";
+                approveError = e.message || String(e);
                 core.info(`Approve run skipped/failed for ${run.id}: ${e.message}`);
               }
             }
             let dispatchResult = "not-required";
+            let dispatchError = "";
             if (duplicateHeadSha) {
               dispatchResult = "skipped-duplicate-head-sha";
               core.info(`Recovery already attempted for head SHA ${run.head_sha}; skip redispatch.`);
@@ -104,6 +108,7 @@ jobs:
                 lastSuccessfulRecoveryAt = new Date().toISOString();
               } catch (e) {
                 dispatchResult = "dispatch-failed";
+                dispatchError = e.message || String(e);
                 core.info(`Dispatch failed for run ${run.id}: ${e.message}`);
               }
             }
@@ -128,6 +133,8 @@ jobs:
               `- Last successful recovery time (最後一次恢復成功修復時間): \`${lastSuccessfulRecoveryAt}\``,
               `- Warning summary: \`${warningSummary.length ? warningSummary.join(',') : 'none'}\``,
               `- Error summary: \`${errorSummary.length ? errorSummary.join(',') : 'none'}\``,
+              `- Approve error detail: \`${approveError || 'none'}\``,
+              `- Dispatch error detail: \`${dispatchError || 'none'}\``,
               '',
               marker,
             ].join('\n');
@@ -160,6 +167,8 @@ jobs:
               last_successful_recovery_time: lastSuccessfulRecoveryAt,
               warning_summary: warningSummary.length ? warningSummary.join(',') : 'none',
               error_summary: errorSummary.length ? errorSummary.join(',') : 'none',
+              approve_error_detail: approveError || 'none',
+              dispatch_error_detail: dispatchError || 'none',
               generated_at: new Date().toISOString(),
             };
             try {

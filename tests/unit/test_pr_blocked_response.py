@@ -231,6 +231,31 @@ def test_process_pr_draft_retriggers_failures_without_merge(monkeypatch):
     assert not auto_merged
 
 
+def test_process_pr_draft_updates_behind_branch(monkeypatch):
+    monkeypatch.setattr(diagnose, "get_check_runs", lambda _: [])
+    monkeypatch.setattr(diagnose, "ensure_conventional_pr_title", lambda _n, title: title)
+    monkeypatch.setattr(diagnose, "apply_mechanical_codacy_fixes", lambda *_: False)
+    monkeypatch.setattr(diagnose, "collect_non_required_gate_anomalies", lambda _: [])
+    monkeypatch.setattr(diagnose, "close_auto_anomaly_issue_if_clean", lambda *_: None)
+
+    updates = []
+    monkeypatch.setattr(diagnose, "update_branch", lambda pr: updates.append(pr))
+    monkeypatch.setattr(diagnose, "direct_merge", lambda *_args, **_kwargs: (_ for _ in ()).throw(AssertionError("should not merge draft")))
+    monkeypatch.setattr(diagnose, "enable_auto_merge", lambda *_args, **_kwargs: (_ for _ in ()).throw(AssertionError("should not auto-merge draft")))
+
+    diagnose.process_pr(
+        pr_num=280,
+        pr_title="t",
+        pr_branch="b",
+        head_sha="abc",
+        merge_status="BEHIND",
+        labels=[],
+        is_draft=True,
+    )
+
+    assert updates == [280]
+
+
 def test_ensure_conventional_pr_title_updates_when_invalid(monkeypatch):
     calls = []
     monkeypatch.setattr(diagnose, "gh_api", lambda path, method="GET", data=None: calls.append((path, method, data)) or {})
