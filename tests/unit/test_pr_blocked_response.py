@@ -252,6 +252,56 @@ def test_ensure_conventional_pr_title_keeps_valid(monkeypatch):
     assert not calls
 
 
+def test_apply_mechanical_codacy_fixes_signed_commit_with_optional_details(monkeypatch):
+    monkeypatch.setattr(
+        diagnose,
+        "get_pr_review_comments",
+        lambda _pr: [{
+            "user": {"login": "codacy-production[bot]"},
+            "body": "Codacy found an issue: I001",
+            "path": "tools/pr-blocked-response/diagnose.py",
+        }],
+    )
+    monkeypatch.setattr(diagnose, "AUTOFIX_SIGNOFF", True)
+    monkeypatch.setattr(diagnose, "AUTOFIX_DETAILS", "Apply safe mechanical formatting fixes")
+
+    commit_cmds = []
+    comments = []
+
+    class Result:
+        def __init__(self, returncode=0, stdout="", stderr=""):
+            self.returncode = returncode
+            self.stdout = stdout
+            self.stderr = stderr
+
+    def fake_run(cmd, capture_output=True, text=True):
+        if cmd[:2] == [diagnose.sys.executable, "-m"]:
+            return Result(returncode=0)
+        if cmd[:3] == ["git", "status", "--porcelain"]:
+            return Result(stdout=" M tools/pr-blocked-response/diagnose.py\n")
+        if cmd[:2] == ["git", "commit"]:
+            commit_cmds.append(cmd)
+            return Result(returncode=0)
+        if cmd[:3] == ["git", "rev-parse", "--short"]:
+            return Result(stdout="abc123\n")
+        if cmd[:2] == ["git", "push"]:
+            return Result(returncode=0)
+        return Result(returncode=0)
+
+    monkeypatch.setattr(diagnose.subprocess, "run", fake_run)
+    monkeypatch.setattr(
+        diagnose,
+        "gh_api",
+        lambda path, method="GET", data=None: comments.append((path, method, data)) or {},
+    )
+
+    ok = diagnose.apply_mechanical_codacy_fixes(280, "copilot/fix-automation-workflow-errors")
+
+    assert ok is True
+    assert commit_cmds and "-s" in commit_cmds[0]
+    assert any("Apply safe mechanical formatting fixes" in (entry[2] or {}).get("body", "") for entry in comments)
+
+
 class _DummyAuditTrail:
     def __init__(self, *_args, **_kwargs):
         self.final_action = None

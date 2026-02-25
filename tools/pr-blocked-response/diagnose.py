@@ -39,6 +39,8 @@ SPECIFIC_PR    = os.environ.get("SPECIFIC_PR", "").strip()
 GH_TOKEN       = os.environ.get("GH_TOKEN", "")
 TRIGGER_EVENT  = os.environ.get("TRIGGER_EVENT", "").strip()
 SOURCE_WORKFLOW = os.environ.get("SOURCE_WORKFLOW", "").strip()
+AUTOFIX_DETAILS = os.environ.get("AUTOFIX_DETAILS", "").strip()
+AUTOFIX_SIGNOFF = os.environ.get("AUTOFIX_SIGNOFF", "true").strip().lower() not in {"0", "false", "no"}
 
 # Internal required checks — ONLY these matter for merge decisions
 REQUIRED_CHECKS = {"validate", "lint", "test", "build", "opa-policy", "supply-chain"}
@@ -246,14 +248,38 @@ def apply_mechanical_codacy_fixes(pr_num, pr_branch):
     changed = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
     if not changed.stdout.strip():
         return False
+
+    subject = f"chore(ci): auto-fix codacy mechanical issues for PR #{pr_num}"
+    body = "Automated safe fixes applied for: " + ", ".join(sorted(files))
+    if AUTOFIX_DETAILS:
+        body += f"\n\nDetails: {AUTOFIX_DETAILS}"
+
     subprocess.run(["git", "add", *sorted(files)], capture_output=True, text=True)
-    subprocess.run(
-        ["git", "commit", "-m", f"chore(ci): auto-fix codacy mechanical issues for PR #{pr_num}"],
-        capture_output=True,
-        text=True,
-    )
+    commit_cmd = ["git", "commit", "-m", subject, "-m", body]
+    if AUTOFIX_SIGNOFF:
+        commit_cmd.append("-s")
+    commit = subprocess.run(commit_cmd, capture_output=True, text=True)
+    if commit.returncode != 0:
+        print(f"  [AUTOFIX] Commit failed: {commit.stderr[:120]}")
+        return False
     push = subprocess.run(["git", "push", "origin", f"HEAD:{pr_branch}"], capture_output=True, text=True)
     if push.returncode == 0:
+        sha = subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True)
+        commit_sha = (sha.stdout or "").strip()
+        detail = f"\n\n- Details: {AUTOFIX_DETAILS}" if AUTOFIX_DETAILS else ""
+        gh_api(
+            f"/repos/{REPO}/issues/{pr_num}/comments",
+            method="POST",
+            data={
+                "body": (
+                    "## Auto-fix applied\n\n"
+                    f"- Commit: `{commit_sha}`\n"
+                    f"- Signed-off: `{AUTOFIX_SIGNOFF}`\n"
+                    f"- Files: {', '.join(sorted(files))}{detail}\n\n"
+                    "> AutoEcoOps PR Governance Engine"
+                )
+            },
+        )
         print(f"  [AUTOFIX] Pushed mechanical Codacy fixes for PR #{pr_num}")
         return True
     print(f"  [AUTOFIX] Push failed: {push.stderr[:120]}")
