@@ -27,7 +27,7 @@ jobs:
           TRIGGER_WORKFLOW: ${{ github.event.workflow_run.name || 'Manual' }}
         run: |
           if [ "$RUN_ID" == "manual" ]; then
-            # 如果是手動觸發，獲取最近一個失敗的 CI Run (優先檢查 YAML Lint)
+            # 如果是手動觸發，獲取最近一個失敗的 CI Run
             RUN_ID=$(gh run list --repo $REPO --status failure --limit 1 --json databaseId --jq '.[0].databaseId')
             if [ -z "$RUN_ID" ]; then
               echo "No failed CI runs found. Exiting."
@@ -72,6 +72,5 @@ jobs:
             gh issue create --repo $REPO \
               --title "$REPORT_TITLE" \
               --body "$FINAL_BODY" \
-              --label "ci-health-report,bug,needs-attention" \
-              --assignee "AutoEcoOps-Bot"
+              --label "ci-health-report,bug,needs-attention"
           fi
