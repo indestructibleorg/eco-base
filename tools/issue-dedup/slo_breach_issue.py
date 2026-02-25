@@ -20,7 +20,7 @@ LABELS = "slo-breach,dora,incident"
 COOLDOWN_HOURS = 48
 PER_PAGE = 50
 
-headers = {"Authorization": f"token {token}", "Accept": "application/vnd.github.v3+json"}
+headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github.v3+json"}
 
 
 def gh_get(path: str):
