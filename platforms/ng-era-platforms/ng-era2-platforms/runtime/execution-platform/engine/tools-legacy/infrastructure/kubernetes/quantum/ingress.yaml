@@ -5,7 +5,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     eco-base/uri: eco-base://k8s/core/ingress/quantumflow-ingress
-    eco-base/urn: urn:eco-base:k8s:core:ingress:quantumflow-ingress:sha256-3efd668ae89a5c281deccd4f33586bae51aff0b5f23cfb80c85dd8ba6ba760b4
+    eco-base/urn: urn:eco-base:k8s:core:ingress:quantumflow-ingress:sha256-12a63eb22b5dec3fa5ecc213f5ece9a746f57f61e750133188a1fba80427fb27
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/force-ssl-redirect: 'true'
     nginx.ingress.kubernetes.io/rate-limit: '100'

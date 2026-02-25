@@ -4,7 +4,7 @@ kind: Service
 metadata:
   annotations:
     eco-base/uri: eco-base://k8s/core/service/file-organizer-service
-    eco-base/urn: urn:eco-base:k8s:core:service:file-organizer-service:sha256-352ffefe03203d859b763d48c3ab6826dd5144785efed8fa3e3c18193a0f8370
+    eco-base/urn: urn:eco-base:k8s:core:service:file-organizer-service:sha256-e86993f23fb412bedeef261309954dcc0f71363667133aae1dd060070e1b4066
   labels:
     app.kubernetes.io/app.kubernetes.io/component: application
     app.kubernetes.io/name: file-organizer-system

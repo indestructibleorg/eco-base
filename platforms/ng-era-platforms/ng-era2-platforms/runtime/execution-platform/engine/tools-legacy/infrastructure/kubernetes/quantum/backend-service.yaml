@@ -4,7 +4,7 @@ kind: Service
 metadata:
   annotations:
     eco-base/uri: eco-base://k8s/core/service/quantumflow-backend
-    eco-base/urn: urn:eco-base:k8s:core:service:quantumflow-backend:sha256-085cf44dd9146d46f5493c3bd03f5d423da59a1db09aef5af16680feb84d5f7d
+    eco-base/urn: urn:eco-base:k8s:core:service:quantumflow-backend:sha256-1ec06885a9d360b9fc1221e62ee06001e479c4c9ae79830a3c2832f8c2807a94
   labels:
     app.kubernetes.io/component: backend
     app.kubernetes.io/name: quantumflow

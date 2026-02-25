@@ -4,7 +4,7 @@ kind: Service
 metadata:
   annotations:
     eco-base/uri: eco-base://k8s/core/service/instant-service
-    eco-base/urn: urn:eco-base:k8s:core:service:instant-service:sha256-624434f7c4ddbcfcc7d761c410521f15f6ef5d58e19e90cbaf916773916cbefc
+    eco-base/urn: urn:eco-base:k8s:core:service:instant-service:sha256-c6e016a80e52187e9a25e601073bd4b2a73bc9648a85ec63aff4d7d0d98b3ba9
   labels:
     app.kubernetes.io/app.kubernetes.io/component: data
     app.kubernetes.io/name: instant-system

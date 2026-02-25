@@ -120,7 +120,7 @@ kind: ConfigMap
 metadata:
   annotations:
     eco-base/uri: eco-base://k8s/core/configmap/platform-agnostic-config
-    eco-base/urn: urn:eco-base:k8s:core:configmap:platform-agnostic-config:sha256-979c13947736300745c9c23cd85d3f3e963399d63b7218bf2dd7f9e5fea7ca42
+    eco-base/urn: urn:eco-base:k8s:core:configmap:platform-agnostic-config:sha256-d441164bcdaf40f6a0fad09e35e7fee6c5b3e1f9b112721c4e602d63cd437d0e
   labels: {}
   name: platform-agnostic-config
   namespace: production

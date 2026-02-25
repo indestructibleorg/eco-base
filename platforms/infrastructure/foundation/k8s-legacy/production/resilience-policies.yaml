@@ -98,7 +98,7 @@ kind: ConfigMap
 metadata:
   annotations:
     eco-base/uri: eco-base://k8s/core/configmap/resilience-policies
-    eco-base/urn: urn:eco-base:k8s:core:configmap:resilience-policies:sha256-b4ef61d2a0c11f2d8ff6f9f1025c8438d5100b9854a1a4bb4ae066e2ad1c4a73
+    eco-base/urn: urn:eco-base:k8s:core:configmap:resilience-policies:sha256-400494eb248f702de0a3b96f124e4d397a9cfaa850936626a96fa7cdd405111d
   labels:
     app.kubernetes.io/name: resilience
     eco-base/governance: aligned

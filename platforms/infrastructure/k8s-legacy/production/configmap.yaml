@@ -52,7 +52,7 @@ kind: ConfigMap
 metadata:
   annotations:
     eco-base/uri: eco-base://k8s/core/configmap/machine-native-ops-config
-    eco-base/urn: urn:eco-base:k8s:core:configmap:machine-native-ops-config:sha256-2759904e3fea5e5c2c89a80fef06d5bcb19d3594c71a285a534cd16ddd57ebc6
+    eco-base/urn: urn:eco-base:k8s:core:configmap:machine-native-ops-config:sha256-f86242835835b5ec115a683efc5874d636ef3a08ef5b0ab647992d7fba2f3db7
   labels:
     app.kubernetes.io/name: machine-native-ops
     eco-base/governance: aligned

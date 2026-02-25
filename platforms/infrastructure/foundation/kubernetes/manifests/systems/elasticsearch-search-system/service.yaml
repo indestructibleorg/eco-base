@@ -4,7 +4,7 @@ kind: Service
 metadata:
   annotations:
     eco-base/uri: eco-base://k8s/core/service/elasticsearch-search-service
-    eco-base/urn: urn:eco-base:k8s:core:service:elasticsearch-search-service:sha256-43628e63671190c2aeecc019620c39507aeb9882ce239ef4cab8d7d73f444e6c
+    eco-base/urn: urn:eco-base:k8s:core:service:elasticsearch-search-service:sha256-7597d3bfdba120eac719bd17af78c25f12c345b6eef1d5bfed318257c1bb2c23
   labels:
     app.kubernetes.io/app.kubernetes.io/component: search
     app.kubernetes.io/name: elasticsearch-search-system

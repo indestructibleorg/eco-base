@@ -416,7 +416,7 @@ kind: ConfigMap
 metadata:
   annotations:
     eco-base/uri: eco-base://k8s/core/configmap/trust-schema
-    eco-base/urn: urn:eco-base:k8s:core:configmap:trust-schema:sha256-0627edc8145c86b2ce8e415ec7f48a5fe2bb4f3e74bf5ee13521b9d3371cceb8
+    eco-base/urn: urn:eco-base:k8s:core:configmap:trust-schema:sha256-584beaad0f42956133871e9481ec07f2d8a920a3c285dd1b6fcae078aa7ec3eb
   labels: {}
   name: trust-schema
   namespace: machinenativenops-trust
