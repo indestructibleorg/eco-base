@@ -1,66 +1,61 @@
-# @ECO-governed
-# @ECO-layer: GL00-09
-# @ECO-semantic: general-component
-# @ECO-audit-trail: gl-enterprise-architecture/governance/audit-trails/GL00_09-audit.json
-#
-# GL Unified Architecture Governance Framework Activated
-# GL Root Semantic Anchor: gl-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
-# GL Unified Naming Charter: gl-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
-
-
+---
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    eco-base/uri: eco-base://k8s/unknown/service/gl-semantic-core-service
+    eco-base/urn: urn:eco-base:k8s:unknown:service:gl-semantic-core-service:sha256-9b8aa2386d6a738ba188714b2627a2eaae21ef5166be5e08d3fa98d0a6472e32
+    prometheus.io/port: '9091'
+    prometheus.io/scrape: 'true'
+  labels:
+    app.kubernetes.io/name: semantic-core
+    eco-base/governance: aligned
+    eco-base/part-of: eco-base
+    gl.service/semantic.core: 'true'
+    platform: gl-platform-services
   name: gl-semantic-core-service
   namespace: gl-platform-semantic-core
-  labels:
-    eco-base/part-of: eco-base
-    eco-base/governance: aligned
-    app.kubernetes.io/name: semantic-core
-    platform: gl-platform-services
-    gl.service/semantic.core: "true"
-  annotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "9091"
 spec:
-  selector:
-    app.kubernetes.io/name: semantic-core
-    version: v1.0.0
   ports:
   - name: http
     port: 80
-    targetPort: 8080
     protocol: TCP
+    targetPort: 8080
   - name: grpc
     port: 9090
-    targetPort: 9090
     protocol: TCP
+    targetPort: 9090
   - name: metrics
     port: 9091
-    targetPort: 9091
     protocol: TCP
+    targetPort: 9091
+  selector:
+    app.kubernetes.io/name: semantic-core
+    version: v1.0.0
   type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    eco-base/uri: eco-base://k8s/unknown/service/gl-semantic-core-external
+    eco-base/urn: urn:eco-base:k8s:unknown:service:gl-semantic-core-external:sha256-674e8112dd8aa97bfb2600f0878e6713c4fa88327d1af4cbc4635ca830d360d0
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+    service.beta.kubernetes.io/aws-load-balancer-type: alb
+  labels:
+    app.kubernetes.io/name: semantic-core-external
+    eco-base/governance: aligned
+    eco-base/part-of: eco-base
+    platform: gl-platform-services
   name: gl-semantic-core-external
   namespace: gl-platform-semantic-core
-  labels:
-    eco-base/part-of: eco-base
-    eco-base/governance: aligned
-    app.kubernetes.io/name: semantic-core-external
-    platform: gl-platform-services
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: "alb"
-    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
 spec:
-  selector:
-    app.kubernetes.io/name: semantic-core
-    version: v1.0.0
   ports:
   - name: https
     port: 443
-    targetPort: 8080
     protocol: TCP
+    targetPort: 8080
+  selector:
+    app.kubernetes.io/name: semantic-core
+    version: v1.0.0
   type: LoadBalancer

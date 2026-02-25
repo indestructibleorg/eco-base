@@ -1,24 +1,21 @@
+---
 apiVersion: v1
+data:
+  CIRCLECI_RUNNER_MODE: single-task
+  CIRCLECI_RUNNER_NAME: eco-base-gke-runner
+  CIRCLECI_RUNNER_RESOURCE_CLASS: eco/base
+  CLEANUP_WORKSPACE: 'true'
+  LOG_FORMAT: json
+  LOG_LEVEL: info
+  POD_CHECK_INTERVAL: 30s
+  POD_TIMEOUT: 10m
+  WORKING_DIRECTORY: /tmp/circleci-workspace
 kind: ConfigMap
 metadata:
-  name: circleci-agent-config
-  namespace: circleci-runner
+  annotations:
+    eco-base/uri: eco-base://k8s/unknown/configmap/circleci-agent-config
+    eco-base/urn: urn:eco-base:k8s:unknown:configmap:circleci-agent-config:sha256-a00de141333a07e41b3784dc30882fb8ad139e392d3114d695fdb9da15d2ac15
   labels:
     app: circleci-runner
-data:
-  # CircleCI configuration
-  CIRCLECI_RUNNER_RESOURCE_CLASS: "eco/base"
-  CIRCLECI_RUNNER_NAME: "eco-base-gke-runner"
-  CIRCLECI_RUNNER_MODE: "single-task"
-  
-  # Logging configuration
-  LOG_LEVEL: "info"
-  LOG_FORMAT: "json"
-  
-  # Task configuration
-  WORKING_DIRECTORY: "/tmp/circleci-workspace"
-  CLEANUP_WORKSPACE: "true"
-  
-  # Kubernetes configuration
-  POD_TIMEOUT: "10m"
-  POD_CHECK_INTERVAL: "30s"
+  name: circleci-agent-config
+  namespace: circleci-runner

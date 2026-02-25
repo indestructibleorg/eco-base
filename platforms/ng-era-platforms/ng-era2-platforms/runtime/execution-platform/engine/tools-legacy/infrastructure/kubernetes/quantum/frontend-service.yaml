@@ -1,32 +1,24 @@
-# @ECO-layer: GQS-L0
-# @ECO-governed
-# @ECO-layer: governance
-# @ECO-semantic: frontend-service
-# @ECO-audit-trail: ../../engine/governance/GL_SEMANTIC_ANCHOR.json
-# 
-# GL Unified Architecture Governance Framework Activated
-
+---
 apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    eco-base/urn: "urn:eco-base:platform:resource:ng-era-platforms:ng-era2-platforms:runtime:execution-platform:engine:tools-legacy:infrastructure:kubernetes:quantum:frontend-service.yaml"
-    eco-base/uri: "eco-base://platform/resource/ng-era-platforms/ng-era2-platforms/runtime/execution-platform/engine/tools-legacy/infrastructure/kubernetes/quantum/frontend-service.yaml"
+    eco-base/uri: eco-base://k8s/unknown/service/quantumflow-frontend
+    eco-base/urn: urn:eco-base:k8s:unknown:service:quantumflow-frontend:sha256-76c55d7c262c492fe5881aba74e8cd1221326aa45f8344cdc99943e85656e9f3
+  labels:
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/name: quantumflow
+    eco-base/governance: aligned
+    eco-base/part-of: eco-base
   name: quantumflow-frontend
   namespace: quantumflow
-  labels:
-    eco-base/part-of: eco-base
-    eco-base/governance: aligned
-    app.kubernetes.io/name: quantumflow
-    app.kubernetes.io/component: frontend
 spec:
-  type: ClusterIP
   ports:
-  - port: 80
-    targetPort: 80
+  - name: http
+    port: 80
     protocol: TCP
-    name: http
+    targetPort: 80
   selector:
-    app.kubernetes.io/name: quantumflow
     app.kubernetes.io/component: frontend
-
+    app.kubernetes.io/name: quantumflow
+  type: ClusterIP
