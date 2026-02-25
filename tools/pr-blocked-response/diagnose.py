@@ -123,6 +123,11 @@ AUTO_FIX_PATTERNS = [
     r"typo",
 ]
 
+CONVENTIONAL_TITLE_RE = re.compile(
+    r"^(feat|fix|chore|docs|style|refactor|perf|test|build|ci|revert)(\([^)]+\))?: .{10,}$",
+    re.IGNORECASE,
+)
+
 
 # ── GitHub API helpers ────────────────────────────────────────────────────────
 
@@ -187,6 +192,72 @@ def get_pr_reviews(pr_num):
     """Get formal PR reviews (APPROVED/CHANGES_REQUESTED/COMMENTED)."""
     data = gh_api(f"/repos/{REPO}/pulls/{pr_num}/reviews?per_page=100")
     return data if isinstance(data, list) else []
+
+def get_pr_files(pr_num):
+    data = gh_api(f"/repos/{REPO}/pulls/{pr_num}/files?per_page=100")
+    return data if isinstance(data, list) else []
+
+
+def normalize_pr_title(title):
+    clean = re.sub(r"^\s*\[(wip|draft)\]\s*", "", title or "", flags=re.IGNORECASE).strip()
+    if not clean:
+        clean = "automated governance maintenance update"
+    return f"chore(pr): {clean}"
+
+
+def ensure_conventional_pr_title(pr_num, pr_title):
+    if CONVENTIONAL_TITLE_RE.match(pr_title or ""):
+        return pr_title
+    new_title = normalize_pr_title(pr_title)
+    if len(new_title) < 10:
+        new_title = "chore(pr): governance update"
+    gh_api(f"/repos/{REPO}/pulls/{pr_num}", method="PATCH", data={"title": new_title})
+    print(f"  [TITLE-AUTOFIX] Updated PR title to Conventional Commits format")
+    return new_title
+
+
+def apply_mechanical_codacy_fixes(pr_num, pr_branch):
+    files = set()
+    for c in get_pr_review_comments(pr_num):
+        actor = c.get("user", {}).get("login", "")
+        body = c.get("body", "")
+        path = c.get("path", "")
+        if actor not in {"codacy-production", "codacy-production[bot]"}:
+            continue
+        if not path or not path.endswith(".py"):
+            continue
+        if "I001" in body or "F541" in body:
+            files.add(path)
+    if not files:
+        return False
+
+    subprocess.run(["git", "fetch", "origin", pr_branch], capture_output=True, text=True)
+    subprocess.run(["git", "checkout", "-B", pr_branch, f"origin/{pr_branch}"], capture_output=True, text=True)
+
+    result = subprocess.run(
+        [sys.executable, "-m", "ruff", "check", "--select", "I,F541", "--fix", *sorted(files)],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode not in (0, 1):
+        print(f"  [AUTOFIX] Ruff execution failed: {result.stderr[:120]}")
+        return False
+
+    changed = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
+    if not changed.stdout.strip():
+        return False
+    subprocess.run(["git", "add", *sorted(files)], capture_output=True, text=True)
+    subprocess.run(
+        ["git", "commit", "-m", f"chore(ci): auto-fix codacy mechanical issues for PR #{pr_num}"],
+        capture_output=True,
+        text=True,
+    )
+    push = subprocess.run(["git", "push", "origin", f"HEAD:{pr_branch}"], capture_output=True, text=True)
+    if push.returncode == 0:
+        print(f"  [AUTOFIX] Pushed mechanical Codacy fixes for PR #{pr_num}")
+        return True
+    print(f"  [AUTOFIX] Push failed: {push.stderr[:120]}")
+    return False
 
 
 # ── AI/Bot governance ─────────────────────────────────────────────────────────
@@ -739,6 +810,8 @@ def close_all_stale_auto_issues():
 # ── Main PR processor ─────────────────────────────────────────────────────────
 
 def process_pr(pr_num, pr_title, pr_branch, head_sha, merge_status, labels, is_draft=False):
+    pr_title = ensure_conventional_pr_title(pr_num, pr_title)
+    apply_mechanical_codacy_fixes(pr_num, pr_branch)
     label_names = {l["name"] for l in labels} if labels else set()
 
     # ── Human-review-required: evaluate AI/bot comments ──────────────────────

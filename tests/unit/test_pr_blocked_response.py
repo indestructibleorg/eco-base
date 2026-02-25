@@ -204,6 +204,8 @@ def test_process_pr_draft_retriggers_failures_without_merge(monkeypatch):
         "get_check_runs",
         lambda _: [{"name": "lint", "status": "completed", "conclusion": "failure"}],
     )
+    monkeypatch.setattr(diagnose, "ensure_conventional_pr_title", lambda _n, title: title)
+    monkeypatch.setattr(diagnose, "apply_mechanical_codacy_fixes", lambda *_: False)
     monkeypatch.setattr(diagnose, "collect_non_required_gate_anomalies", lambda _: [])
     monkeypatch.setattr(diagnose, "close_auto_anomaly_issue_if_clean", lambda *_: None)
 
@@ -227,6 +229,27 @@ def test_process_pr_draft_retriggers_failures_without_merge(monkeypatch):
     assert retriggered
     assert not merged
     assert not auto_merged
+
+
+def test_ensure_conventional_pr_title_updates_when_invalid(monkeypatch):
+    calls = []
+    monkeypatch.setattr(diagnose, "gh_api", lambda path, method="GET", data=None: calls.append((path, method, data)) or {})
+
+    new_title = diagnose.ensure_conventional_pr_title(280, "[WIP] Fix errors")
+
+    assert new_title.startswith("chore(pr): ")
+    assert calls and calls[0][1] == "PATCH"
+
+
+def test_ensure_conventional_pr_title_keeps_valid(monkeypatch):
+    calls = []
+    monkeypatch.setattr(diagnose, "gh_api", lambda path, method="GET", data=None: calls.append((path, method, data)) or {})
+
+    title = "fix(ci): resolve startup failure for security gates"
+    out = diagnose.ensure_conventional_pr_title(280, title)
+
+    assert out == title
+    assert not calls
 
 
 class _DummyAuditTrail:
