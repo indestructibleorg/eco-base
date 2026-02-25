@@ -1,0 +1,58 @@
+name: PR Blocked Response Recovery
+
+on:
+  workflow_run:
+    workflows:
+      - "PR Blocked Response"
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: write
+  pull-requests: write
+
+jobs:
+  redispatch:
+    name: Re-dispatch blocked response on action_required
+    runs-on: ubuntu-latest
+    if: |
+      github.event.workflow_run.event != 'workflow_dispatch' &&
+      github.event.workflow_run.run_attempt == 1
+    steps:
+      - name: Re-dispatch PR Blocked Response
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7.0.1
+        with:
+          script: |
+            const run = context.payload.workflow_run;
+            const conclusion = (run.conclusion || '').toLowerCase();
+            const jobs = await github.rest.actions.listJobsForWorkflowRun({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: run.id,
+            });
+            const shouldRedispatch = conclusion === 'action_required' || jobs.data.total_count === 0;
+            if (!shouldRedispatch) {
+              core.info(`Skip redispatch for conclusion=${conclusion}, jobs=${jobs.data.total_count}`);
+              return;
+            }
+            const prNumber = run.pull_requests?.[0]?.number;
+            if (!prNumber) {
+              core.info('No PR number associated with workflow run; skip redispatch.');
+              return;
+            }
+            const headBranch = run.head_branch;
+            if (!headBranch) {
+              core.info('No head branch associated with workflow run; skip redispatch.');
+              return;
+            }
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'pr-blocked-response.yaml',
+              ref: headBranch,
+              inputs: {
+                pr_number: String(prNumber),
+                autofix_details: `Recovery dispatch from action_required run ${run.id}`,
+              },
+            });
+            core.info(`Dispatched pr-blocked-response.yaml for PR #${prNumber} on ${headBranch}`);
