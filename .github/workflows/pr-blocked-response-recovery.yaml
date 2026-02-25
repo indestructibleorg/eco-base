@@ -57,12 +57,14 @@ jobs:
               per_page: 100,
             });
             const existing = comments.data.find(c => c.body && c.body.includes(marker));
-            if (existing && existing.body.includes(headShaLine)) {
-              core.info(`Recovery already attempted for head SHA ${run.head_sha}; skip redispatch.`);
-              return;
-            }
+            const existingBody = existing?.body || '';
+            const countMatch = existingBody.match(/- Cumulative recovery count: `(\d+)`/);
+            const lastSuccessMatch = existingBody.match(/- Last successful recovery at: `([^`]+)`/);
+            const cumulativeCount = (countMatch ? Number(countMatch[1]) : 0) + 1;
+            let lastSuccessfulRecoveryAt = lastSuccessMatch ? lastSuccessMatch[1] : 'N/A';
+            const duplicateHeadSha = !!(existing && existing.body.includes(headShaLine));
             let approveResult = "not-needed";
-            if (shouldApprove) {
+            if (shouldApprove && !duplicateHeadSha) {
               try {
                 await github.request('POST /repos/{owner}/{repo}/actions/runs/{run_id}/approve', {
                   owner: context.repo.owner,
@@ -76,22 +78,35 @@ jobs:
                 core.info(`Approve run skipped/failed for ${run.id}: ${e.message}`);
               }
             }
-            let dispatchResult = "dispatched";
-            try {
-              await github.rest.actions.createWorkflowDispatch({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                workflow_id: 'pr-blocked-response.yaml',
-                ref: headBranch,
-                inputs: {
-                  pr_number: String(prNumber),
-                  autofix_details: `Recovery dispatch from run ${run.id} (status=${status}, conclusion=${conclusion}, jobs=${jobs.data.total_count}, approve=${approveResult})`,
-                },
-              });
-            } catch (e) {
-              dispatchResult = "dispatch-failed";
-              core.info(`Dispatch failed for run ${run.id}: ${e.message}`);
+            let dispatchResult = "not-required";
+            if (duplicateHeadSha) {
+              dispatchResult = "skipped-duplicate-head-sha";
+              core.info(`Recovery already attempted for head SHA ${run.head_sha}; skip redispatch.`);
+            } else if (shouldRedispatch) {
+              dispatchResult = "dispatched";
+              try {
+                await github.rest.actions.createWorkflowDispatch({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  workflow_id: 'pr-blocked-response.yaml',
+                  ref: headBranch,
+                  inputs: {
+                    pr_number: String(prNumber),
+                    autofix_details: `Recovery dispatch from run ${run.id} (status=${status}, conclusion=${conclusion}, jobs=${jobs.data.total_count}, approve=${approveResult})`,
+                  },
+                });
+                lastSuccessfulRecoveryAt = new Date().toISOString();
+              } catch (e) {
+                dispatchResult = "dispatch-failed";
+                core.info(`Dispatch failed for run ${run.id}: ${e.message}`);
+              }
             }
+            const warningSummary = [];
+            const errorSummary = [];
+            if (approveResult === 'approve-failed') warningSummary.push('approve-failed');
+            if (dispatchResult === 'dispatch-failed') errorSummary.push('dispatch-failed');
+            if (dispatchResult === 'not-required') warningSummary.push('redispatch-not-required');
+            if (dispatchResult === 'skipped-duplicate-head-sha') warningSummary.push('duplicate-head-sha');
             const body = [
               '## Auto Recovery Triggered',
               '',
@@ -102,6 +117,10 @@ jobs:
               `- Jobs detected: \`${jobs.data.total_count}\``,
               `- Approve workflows to run: \`${approveResult}\``,
               `- Redispatch: \`${dispatchResult}\` on \`${headBranch}\``,
+              `- Cumulative recovery count: \`${cumulativeCount}\``,
+              `- Last successful recovery at: \`${lastSuccessfulRecoveryAt}\``,
+              `- Warning summary: \`${warningSummary.length ? warningSummary.join(',') : 'none'}\``,
+              `- Error summary: \`${errorSummary.length ? errorSummary.join(',') : 'none'}\``,
               '',
               marker,
             ].join('\n');
