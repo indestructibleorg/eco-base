@@ -48,7 +48,8 @@ jobs:
         if [ -f "package.json" ]; then
           pnpm install --frozen-lockfile 2>/dev/null || pnpm install 2>/dev/null || true
           pnpm audit --audit-level=high 2>&1 | tee /tmp/node-audit.txt || true
-          HIGH_VULNS=$(grep -c "high\|critical" /tmp/node-audit.txt 2>/dev/null || echo "0")
+          HIGH_VULNS=$(grep -c "high\|critical" /tmp/node-audit.txt 2>/dev/null || true)
+          HIGH_VULNS=${HIGH_VULNS:-0}
           echo "high_vulns=$HIGH_VULNS" >> "$GITHUB_OUTPUT"
           echo "Node.js high/critical vulnerabilities: $HIGH_VULNS"
         else

@@ -88,7 +88,8 @@ jobs:
           CHANGED=$(find . -name "*.rego" -o -name "*.qyaml" | grep -v node_modules | grep -v .git | head -100)
         fi
 
-        COUNT=$(echo "$CHANGED" | grep -c . || echo "0")
+        COUNT=$(echo "$CHANGED" | grep -c . || true)
+        COUNT=${COUNT:-0}
 
         if [ -z "$CHANGED" ] || [ "$COUNT" = "0" ]; then
           echo "has_changes=false" >> "$GITHUB_OUTPUT"
