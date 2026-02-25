@@ -24,6 +24,8 @@ jobs:
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7.0.1
         with:
           script: |
+            const fs = require('fs');
+            const path = require('path');
             const run = context.payload.workflow_run;
             const status = (run.status || '').toLowerCase();
             const conclusion = (run.conclusion || '').toLowerCase();
@@ -60,7 +62,7 @@ jobs:
             const existingBody = existing?.body || '';
             const countMatch = existingBody.match(/- Cumulative recovery count: `(\d+)`/);
             const lastSuccessMatch = existingBody.match(/- Last successful recovery at: `([^`]+)`/);
-            const cumulativeCount = (countMatch ? Number(countMatch[1]) : 0) + 1;
+            const previousCount = countMatch ? Number(countMatch[1]) : 0;
             let lastSuccessfulRecoveryAt = lastSuccessMatch ? lastSuccessMatch[1] : 'N/A';
             const duplicateHeadSha = !!(existing && existing.body.includes(headShaLine));
             let approveResult = "not-needed";
@@ -107,6 +109,7 @@ jobs:
             if (dispatchResult === 'dispatch-failed') errorSummary.push('dispatch-failed');
             if (dispatchResult === 'not-required') warningSummary.push('redispatch-not-required');
             if (dispatchResult === 'skipped-duplicate-head-sha') warningSummary.push('duplicate-head-sha');
+            const cumulativeCount = previousCount + (duplicateHeadSha ? 0 : 1);
             const body = [
               '## Auto Recovery Triggered',
               '',
@@ -117,8 +120,8 @@ jobs:
               `- Jobs detected: \`${jobs.data.total_count}\``,
               `- Approve workflows to run: \`${approveResult}\``,
               `- Redispatch: \`${dispatchResult}\` on \`${headBranch}\``,
-              `- Cumulative recovery count: \`${cumulativeCount}\``,
-              `- Last successful recovery at: \`${lastSuccessfulRecoveryAt}\``,
+              `- Cumulative recovery count (累積恢復次數): \`${cumulativeCount}\``,
+              `- Last successful recovery time (最後一次恢復成功修復時間): \`${lastSuccessfulRecoveryAt}\``,
               `- Warning summary: \`${warningSummary.length ? warningSummary.join(',') : 'none'}\``,
               `- Error summary: \`${errorSummary.length ? errorSummary.join(',') : 'none'}\``,
               '',
@@ -139,4 +142,38 @@ jobs:
                 body,
               });
             }
+            const metrics = {
+              run_id: run.id,
+              pr_number: prNumber,
+              head_branch: headBranch,
+              head_sha: run.head_sha || 'unknown',
+              status: status || 'unknown',
+              conclusion: conclusion || 'none',
+              jobs_detected: Number(jobs?.data?.total_count ?? 0),
+              approve_result: approveResult,
+              redispatch_result: dispatchResult,
+              cumulative_recovery_count: cumulativeCount,
+              last_successful_recovery_time: lastSuccessfulRecoveryAt,
+              warning_summary: warningSummary.length ? warningSummary.join(',') : 'none',
+              error_summary: errorSummary.length ? errorSummary.join(',') : 'none',
+              generated_at: new Date().toISOString(),
+            };
+            try {
+              const workspace = process.env.GITHUB_WORKSPACE || process.cwd();
+              const artifactDir = path.join(workspace, 'artifacts', 'recovery');
+              fs.mkdirSync(artifactDir, { recursive: true });
+              const artifactPath = path.join(artifactDir, `pr-${prNumber}-run-${run.id}.json`);
+              fs.writeFileSync(artifactPath, JSON.stringify(metrics, null, 2));
+              core.info(`Wrote recovery metrics artifact: ${artifactPath}`);
+            } catch (e) {
+              core.info(`Failed to write recovery metrics artifact: ${e.message}`);
+            }
             core.info(`Recovery flow completed for PR #${prNumber} on ${headBranch} with ${dispatchResult}`);
+
+      - name: Upload recovery metrics artifact
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
+        with:
+          name: recovery-metrics-${{ github.run_id }}
+          path: artifacts/recovery/*.json
+          if-no-files-found: warn
