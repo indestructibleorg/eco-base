@@ -127,11 +127,92 @@ jobs:
         env:
           COSIGN_EXPERIMENTAL: 1
 
+  # Immutable Rules Proxy — calls immutable-rules-gate.yml checks inline
+  # GitHub Actions does not support cross-workflow needs, so we replicate
+  # the critical gate checks here as a blocking pre-deployment job.
+  immutable-rules-proxy:
+    name: "Immutable Rules Gate (pre-deploy)"
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rule-01 — EventBus zone resilience not downgraded
+        run: |
+          DIFF=$(git diff HEAD~1..HEAD -- 'gitops/**' 'platforms/**' 'k8s/**' 2>/dev/null || true)
+          VIOLATIONS=()
+          if echo "$DIFF" | grep -q '^-.*topologyKey.*topology\.kubernetes\.io/zone'; then
+            VIOLATIONS+=("RULE-01: topologySpreadConstraints zone key removed")
+          fi
+          if echo "$DIFF" | grep -q '^-.*whenUnsatisfiable.*DoNotSchedule' && \
+             echo "$DIFF" | grep -q '^+.*whenUnsatisfiable.*ScheduleAnyway'; then
+            VIOLATIONS+=("RULE-01: whenUnsatisfiable weakened to ScheduleAnyway")
+          fi
+          if [ ${#VIOLATIONS[@]} -gt 0 ]; then
+            printf '%s\n' "${VIOLATIONS[@]}"
+            exit 1
+          fi
+          echo "Rule-01: PASS"
+
+      - name: Rule-02 — PVC zone binding explicit
+        run: |
+          DIFF=$(git diff HEAD~1..HEAD 2>/dev/null || true)
+          PVC_DELETES=$(echo "$DIFF" | grep '^-' | grep -c 'kind: PersistentVolumeClaim' || true)
+          PV_AFFINITY=$(echo "$DIFF" | grep '^+' | grep -cE 'topology\.gke\.io/zone|topology\.kubernetes\.io/zone' || true)
+          if [ "$PVC_DELETES" -gt 0 ] && [ "$PV_AFFINITY" -eq 0 ]; then
+            echo "RULE-02: PVC deletion without explicit PV nodeAffinity"
+            exit 1
+          fi
+          echo "Rule-02: PASS"
+
+      - name: Rule-03 — PolicyException expiry valid
+        run: |
+          TODAY=$(date +%Y-%m-%d)
+          FAIL=0
+          for f in $(find gitops/policies/ -name "*.yaml" 2>/dev/null | xargs grep -l "kind: PolicyException" 2>/dev/null); do
+            if ! grep -q 'eco.policy/expires' "$f"; then echo "RULE-03: $f missing eco.policy/expires"; FAIL=1; fi
+            if ! grep -q 'eco.policy/owner' "$f"; then echo "RULE-03: $f missing eco.policy/owner"; FAIL=1; fi
+            EXPIRES=$(grep 'eco.policy/expires' "$f" | grep -oP '\d{4}-\d{2}-\d{2}' | head -1)
+            if [ -n "$EXPIRES" ] && [ "$EXPIRES" \< "$TODAY" ]; then
+              echo "RULE-03: $f expired on $EXPIRES"; FAIL=1
+            fi
+          done
+          [ $FAIL -eq 0 ] && echo "Rule-03: PASS" || exit 1
+
+      - name: Rule-04 — Flagger SLI thresholds not relaxed
+        run: |
+          DIFF=$(git diff HEAD~1..HEAD -- 'gitops/**' 'platforms/**' 'k8s/**' 2>/dev/null || true)
+          # Detect failureThreshold increase above 3
+          OLD_FT=$(echo "$DIFF" | grep '^-.*failureThreshold' | grep -oP '\d+' | head -1)
+          NEW_FT=$(echo "$DIFF" | grep '^\+.*failureThreshold' | grep -oP '\d+' | head -1)
+          if [ -n "$OLD_FT" ] && [ -n "$NEW_FT" ] && [ "$NEW_FT" -gt 3 ] && [ "$NEW_FT" -gt "$OLD_FT" ]; then
+            echo "RULE-04: failureThreshold increased to $NEW_FT (max: 3)"
+            exit 1
+          fi
+          echo "Rule-04: PASS"
+
+      - name: Rule-05 — Chaos drill cron not disabled
+        run: |
+          if [ ! -f ".github/workflows/weekly-chaos-drill.yml" ]; then
+            echo "RULE-05: weekly-chaos-drill.yml missing"
+            exit 1
+          fi
+          if ! grep -q 'cron:' ".github/workflows/weekly-chaos-drill.yml"; then
+            echo "RULE-05: cron schedule missing from weekly-chaos-drill.yml"
+            exit 1
+          fi
+          echo "Rule-05: PASS"
+
+      - name: All immutable rules passed
+        run: echo "All 5 immutable rules PASS — deployment unblocked."
+
   # Stage 3: Deploy to Staging
   deploy-staging:
     name: Deploy to Staging
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, immutable-rules-proxy]
     if: github.ref == 'refs/heads/develop'
     
     permissions:
@@ -170,7 +251,7 @@ jobs:
   deploy-production:
     name: Deploy to Production
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, immutable-rules-proxy]
     if: github.ref == 'refs/heads/main'
     
     permissions:
@@ -257,7 +338,7 @@ jobs:
   notify:
     name: Send Notifications
     runs-on: ubuntu-latest
-    needs: [code-quality, build, deploy-production, integration-tests]
+    needs: [code-quality, build, immutable-rules-proxy, deploy-production, integration-tests]
     if: always()
     
     steps:

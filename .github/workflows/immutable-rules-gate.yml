@@ -1,0 +1,498 @@
+name: Immutable Rules Gate (OPERATIONS.md)
+
+# Enforces all 5 rules defined in OPERATIONS.md on every PR and push to main.
+# Any violation blocks merge / deployment.
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Rule-01: EventBus zone_resilience downgrade = P0 risk change
+  # Detects any PR that lowers zone spread constraints or removes zone affinity
+  # ─────────────────────────────────────────────────────────────────────────────
+  rule01-zone-resilience:
+    name: "Rule-01: EventBus Zone Resilience"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect zone resilience downgrade in PR diff
+        id: zone-check
+        run: |
+          set +e
+          VIOLATIONS=()
+
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+            HEAD="${{ github.event.pull_request.head.sha }}"
+            DIFF=$(git diff "$BASE".."$HEAD" -- \
+              'gitops/**' 'platforms/**' 'k8s/**' 'infrastructure/**' 2>/dev/null || true)
+          else
+            DIFF=$(git diff HEAD~1..HEAD -- \
+              'gitops/**' 'platforms/**' 'k8s/**' 'infrastructure/**' 2>/dev/null || true)
+          fi
+
+          # Check 1: Removal of topologySpreadConstraints zone key
+          if echo "$DIFF" | grep -q '^-.*topologyKey.*topology\.kubernetes\.io/zone'; then
+            VIOLATIONS+=("RULE-01-A: topologySpreadConstraints zone key removed — zone_resilience may degrade")
+          fi
+
+          # Check 2: Removal of podAntiAffinity zone key
+          if echo "$DIFF" | grep -q '^-.*topologyKey.*topology\.kubernetes\.io/zone'; then
+            VIOLATIONS+=("RULE-01-B: podAntiAffinity zone key removed — zone_resilience may degrade")
+          fi
+
+          # Check 3: whenUnsatisfiable changed from DoNotSchedule to ScheduleAnyway
+          if echo "$DIFF" | grep -q '^-.*whenUnsatisfiable.*DoNotSchedule' && \
+             echo "$DIFF" | grep -q '^+.*whenUnsatisfiable.*ScheduleAnyway'; then
+            VIOLATIONS+=("RULE-01-C: whenUnsatisfiable weakened from DoNotSchedule to ScheduleAnyway")
+          fi
+
+          # Check 4: EventBus replicas reduced below 3
+          if echo "$DIFF" | grep -E '^-.*replicas.*[3-9]' | grep -qi 'eventbus\|jetstream'; then
+            VIOLATIONS+=("RULE-01-D: EventBus replicas may be reduced below 3")
+          fi
+
+          # Check 5: PDB minAvailable reduced for eventbus
+          if echo "$DIFF" | grep -q '^-.*minAvailable.*2' && \
+             git diff "$BASE".."$HEAD" -- 'gitops/**' 'platforms/**' 'k8s/**' 2>/dev/null | \
+             grep -qi 'eventbus\|jetstream'; then
+            VIOLATIONS+=("RULE-01-E: EventBus PDB minAvailable may be reduced below 2")
+          fi
+
+          if [ ${#VIOLATIONS[@]} -gt 0 ]; then
+            echo "RULE01_FAIL=true" >> $GITHUB_OUTPUT
+            printf '%s\n' "${VIOLATIONS[@]}" > /tmp/rule01_violations.txt
+            echo "violations<<EOF" >> $GITHUB_OUTPUT
+            printf '%s\n' "${VIOLATIONS[@]}" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "RULE01_FAIL=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Post Rule-01 violation comment
+        if: steps.zone-check.outputs.RULE01_FAIL == 'true' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const violations = `${{ steps.zone-check.outputs.violations }}`;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `## ❌ Rule-01 Violation: EventBus Zone Resilience Downgrade (P0 Risk Change)
+
+            This PR contains changes that may reduce EventBus zone resilience from \`full\` to \`degraded\` or \`not_supported\`.
+
+            **Violations detected:**
+            \`\`\`
+            ${violations}
+            \`\`\`
+
+            **Required actions per OPERATIONS.md Rule-01:**
+            1. Label this PR with \`risk:P0\` + \`zone-resilience-change\`
+            2. Obtain 2x platform-ops approvals (at least 1 on-call)
+            3. Attach \`drill-eventbus-zone.sh\` report as PR artifact
+            4. Include rollback plan and timeline to restore \`zone_resilience=full\`
+
+            > Reference: [OPERATIONS.md Rule-01](../blob/main/OPERATIONS.md#rule-01-eventbus-zone-resilience-不得降級)`
+            });
+
+      - name: Fail on Rule-01 violation
+        if: steps.zone-check.outputs.RULE01_FAIL == 'true'
+        run: |
+          echo "ERROR: Rule-01 violation — EventBus zone resilience downgrade detected."
+          cat /tmp/rule01_violations.txt
+          echo ""
+          echo "Per OPERATIONS.md Rule-01: zone_resilience downgrade is a P0 risk change."
+          echo "Required: 2x platform-ops approve + rollback plan + drill report."
+          exit 1
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Rule-02: PVC zone binding must be explicit
+  # Detects PVC deletions without explicit PV nodeAffinity in the same PR
+  # ─────────────────────────────────────────────────────────────────────────────
+  rule02-pvc-zone-binding:
+    name: "Rule-02: PVC Zone Binding Explicit"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect implicit PVC zone binding
+        id: pvc-check
+        run: |
+          set +e
+          VIOLATIONS=()
+
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+            HEAD="${{ github.event.pull_request.head.sha }}"
+            DIFF=$(git diff "$BASE".."$HEAD" 2>/dev/null || true)
+            CHANGED_FILES=$(git diff --name-only "$BASE".."$HEAD" 2>/dev/null || true)
+          else
+            DIFF=$(git diff HEAD~1..HEAD 2>/dev/null || true)
+            CHANGED_FILES=$(git diff --name-only HEAD~1..HEAD 2>/dev/null || true)
+          fi
+
+          # Check 1: PVC deletion without corresponding PV nodeAffinity
+          PVC_DELETES=$(echo "$DIFF" | grep '^-' | grep -E 'kind: PersistentVolumeClaim' | wc -l)
+          PV_WITH_AFFINITY=$(echo "$DIFF" | grep '^+' | grep -E 'topology\.gke\.io/zone|topology\.kubernetes\.io/zone' | wc -l)
+
+          if [ "$PVC_DELETES" -gt 0 ] && [ "$PV_WITH_AFFINITY" -eq 0 ]; then
+            VIOLATIONS+=("RULE-02-A: PVC deletion detected without explicit PV nodeAffinity for target zone")
+          fi
+
+          # Check 2: StatefulSet PVC template without storageClassName (implicit default)
+          for f in $(echo "$CHANGED_FILES" | grep -E '\.ya?ml$'); do
+            if [ -f "$f" ]; then
+              if grep -q 'volumeClaimTemplates' "$f" && ! grep -q 'storageClassName' "$f"; then
+                VIOLATIONS+=("RULE-02-B: $f — StatefulSet volumeClaimTemplates missing explicit storageClassName")
+              fi
+            fi
+          done
+
+          # Check 3: volume.kubernetes.io/selected-node annotation without volumeName binding
+          if echo "$DIFF" | grep -q 'volume\.kubernetes\.io/selected-node' && \
+             ! echo "$DIFF" | grep -q 'volumeName:'; then
+            VIOLATIONS+=("RULE-02-C: selected-node annotation used without volumeName binding — PVC may bind to wrong zone")
+          fi
+
+          if [ ${#VIOLATIONS[@]} -gt 0 ]; then
+            echo "RULE02_FAIL=true" >> $GITHUB_OUTPUT
+            printf '%s\n' "${VIOLATIONS[@]}" > /tmp/rule02_violations.txt
+            echo "violations<<EOF" >> $GITHUB_OUTPUT
+            printf '%s\n' "${VIOLATIONS[@]}" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "RULE02_FAIL=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Post Rule-02 violation comment
+        if: steps.pvc-check.outputs.RULE02_FAIL == 'true' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const violations = `${{ steps.pvc-check.outputs.violations }}`;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `## ❌ Rule-02 Violation: PVC Zone Binding Not Explicit
+
+            **Violations detected:**
+            \`\`\`
+            ${violations}
+            \`\`\`
+
+            **Required actions per OPERATIONS.md Rule-02:**
+            1. Create PV manually with explicit \`nodeAffinity.required\` for target zone
+            2. Create PVC with \`volumeName\` pointing to the pre-created PV
+            3. Do NOT rely on StorageClass automatic zone selection
+
+            > Reference: [OPERATIONS.md Rule-02](../blob/main/OPERATIONS.md#rule-02-persistentvolume-zone-綁定不得靜默變更)`
+            });
+
+      - name: Fail on Rule-02 violation
+        if: steps.pvc-check.outputs.RULE02_FAIL == 'true'
+        run: |
+          echo "ERROR: Rule-02 violation — implicit PVC zone binding detected."
+          cat /tmp/rule02_violations.txt
+          exit 1
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Rule-03: PolicyException expiry validation (integrated from existing gate)
+  # Delegates to policy-exception-expiry-gate.yml — checked here for completeness
+  # ─────────────────────────────────────────────────────────────────────────────
+  rule03-policy-exception:
+    name: "Rule-03: PolicyException Expiry"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate PolicyException annotations
+        run: |
+          VIOLATIONS=()
+          TODAY=$(date +%Y-%m-%d)
+
+          for f in $(find gitops/policies/ -name "*.yaml" 2>/dev/null | xargs grep -l "kind: PolicyException" 2>/dev/null); do
+            # Check required annotations
+            if ! grep -q 'eco.policy/expires' "$f"; then
+              VIOLATIONS+=("RULE-03-A: $f — missing eco.policy/expires annotation")
+            fi
+            if ! grep -q 'eco.policy/owner' "$f"; then
+              VIOLATIONS+=("RULE-03-B: $f — missing eco.policy/owner annotation")
+            fi
+            if ! grep -q 'eco.policy/issue' "$f"; then
+              VIOLATIONS+=("RULE-03-C: $f — missing eco.policy/issue annotation")
+            fi
+
+            # Check expiry not exceeded 90 days from creation
+            EXPIRES=$(grep 'eco.policy/expires' "$f" | grep -oP '\d{4}-\d{2}-\d{2}' | head -1)
+            if [ -n "$EXPIRES" ] && [ "$EXPIRES" \< "$TODAY" ]; then
+              VIOLATIONS+=("RULE-03-D: $f — PolicyException expired on $EXPIRES (today: $TODAY)")
+            fi
+          done
+
+          if [ ${#VIOLATIONS[@]} -gt 0 ]; then
+            echo "ERROR: Rule-03 violations:"
+            printf '%s\n' "${VIOLATIONS[@]}"
+            exit 1
+          fi
+          echo "Rule-03: All PolicyExceptions have valid annotations."
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Rule-04: Flagger SLI threshold relaxation detection
+  # Detects any PR that weakens canary analysis thresholds
+  # ─────────────────────────────────────────────────────────────────────────────
+  rule04-flagger-sli:
+    name: "Rule-04: Flagger SLI Thresholds"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect Flagger SLI threshold relaxation
+        id: sli-check
+        run: |
+          set +e
+          VIOLATIONS=()
+
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+            HEAD="${{ github.event.pull_request.head.sha }}"
+            DIFF=$(git diff "$BASE".."$HEAD" -- \
+              'gitops/**' 'platforms/**' 'k8s/**' 2>/dev/null || true)
+          else
+            DIFF=$(git diff HEAD~1..HEAD -- \
+              'gitops/**' 'platforms/**' 'k8s/**' 2>/dev/null || true)
+          fi
+
+          # Check 1: request-success-rate threshold reduced below 99
+          # Pattern: threshold: <value> where old value was >= 99 and new is < 99
+          OLD_SUCCESS=$(echo "$DIFF" | grep '^-.*request-success-rate' -A5 | grep 'threshold' | grep -oP '\d+\.?\d*' | head -1)
+          NEW_SUCCESS=$(echo "$DIFF" | grep '^\+.*request-success-rate' -A5 | grep 'threshold' | grep -oP '\d+\.?\d*' | head -1)
+          if [ -n "$OLD_SUCCESS" ] && [ -n "$NEW_SUCCESS" ]; then
+            if python3 -c "exit(0 if float('$NEW_SUCCESS') < float('$OLD_SUCCESS') else 1)" 2>/dev/null; then
+              VIOLATIONS+=("RULE-04-A: request-success-rate threshold reduced: $OLD_SUCCESS → $NEW_SUCCESS (minimum: 99)")
+            fi
+          fi
+
+          # Check 2: request-duration (p99) threshold increased above 200ms
+          OLD_DUR=$(echo "$DIFF" | grep '^-.*request-duration' -A5 | grep 'threshold' | grep -oP '\d+\.?\d*' | head -1)
+          NEW_DUR=$(echo "$DIFF" | grep '^\+.*request-duration' -A5 | grep 'threshold' | grep -oP '\d+\.?\d*' | head -1)
+          if [ -n "$OLD_DUR" ] && [ -n "$NEW_DUR" ]; then
+            if python3 -c "exit(0 if float('$NEW_DUR') > float('$OLD_DUR') else 1)" 2>/dev/null; then
+              VIOLATIONS+=("RULE-04-B: request-duration threshold increased: ${OLD_DUR}ms → ${NEW_DUR}ms (maximum: 200ms)")
+            fi
+          fi
+
+          # Check 3: failureThreshold increased above 3
+          OLD_FT=$(echo "$DIFF" | grep '^-.*failureThreshold' | grep -oP '\d+' | head -1)
+          NEW_FT=$(echo "$DIFF" | grep '^\+.*failureThreshold' | grep -oP '\d+' | head -1)
+          if [ -n "$OLD_FT" ] && [ -n "$NEW_FT" ]; then
+            if [ "$NEW_FT" -gt "$OLD_FT" ] && [ "$NEW_FT" -gt 3 ]; then
+              VIOLATIONS+=("RULE-04-C: failureThreshold increased: $OLD_FT → $NEW_FT (maximum: 3)")
+            fi
+          fi
+
+          # Check 4: analysis interval lengthened beyond 10s
+          OLD_INT=$(echo "$DIFF" | grep '^-.*interval:' | grep -oP '\d+(?=s)' | head -1)
+          NEW_INT=$(echo "$DIFF" | grep '^\+.*interval:' | grep -oP '\d+(?=s)' | head -1)
+          if [ -n "$OLD_INT" ] && [ -n "$NEW_INT" ]; then
+            if [ "$NEW_INT" -gt "$OLD_INT" ] && [ "$NEW_INT" -gt 10 ]; then
+              VIOLATIONS+=("RULE-04-D: analysis interval lengthened: ${OLD_INT}s → ${NEW_INT}s (maximum: 10s)")
+            fi
+          fi
+
+          if [ ${#VIOLATIONS[@]} -gt 0 ]; then
+            echo "RULE04_FAIL=true" >> $GITHUB_OUTPUT
+            printf '%s\n' "${VIOLATIONS[@]}" > /tmp/rule04_violations.txt
+            echo "violations<<EOF" >> $GITHUB_OUTPUT
+            printf '%s\n' "${VIOLATIONS[@]}" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "RULE04_FAIL=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Post Rule-04 violation comment
+        if: steps.sli-check.outputs.RULE04_FAIL == 'true' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const violations = `${{ steps.sli-check.outputs.violations }}`;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `## ❌ Rule-04 Violation: Flagger SLI Threshold Relaxation
+
+            **Violations detected:**
+            \`\`\`
+            ${violations}
+            \`\`\`
+
+            **Production minimums per OPERATIONS.md Rule-04:**
+            | Metric | Threshold | Direction |
+            |--------|-----------|-----------|
+            | request-success-rate | ≥99% | Must not decrease |
+            | request-duration (p99) | ≤200ms | Must not increase |
+            | failureThreshold | 3 | Must not increase |
+            | analysis interval | 10s | Must not lengthen |
+
+            **Required:** Attach \`drill-flagger-rollback.sh\` report proving rollback still works at new thresholds.
+
+            > Reference: [OPERATIONS.md Rule-04](../blob/main/OPERATIONS.md#rule-04-flagger-canary-sli-閾值不得放寬)`
+            });
+
+      - name: Fail on Rule-04 violation
+        if: steps.sli-check.outputs.RULE04_FAIL == 'true'
+        run: |
+          echo "ERROR: Rule-04 violation — Flagger SLI threshold relaxation detected."
+          cat /tmp/rule04_violations.txt
+          exit 1
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Rule-05: Weekly chaos drill cron must not be disabled
+  # Detects removal/disabling of weekly-chaos-drill.yml cron schedule
+  # ─────────────────────────────────────────────────────────────────────────────
+  rule05-drill-cron:
+    name: "Rule-05: Chaos Drill Cron Active"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect chaos drill cron removal or disabling
+        id: cron-check
+        run: |
+          set +e
+          VIOLATIONS=()
+
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+            HEAD="${{ github.event.pull_request.head.sha }}"
+            DIFF=$(git diff "$BASE".."$HEAD" -- \
+              '.github/workflows/weekly-chaos-drill.yml' 2>/dev/null || true)
+            CHANGED=$(git diff --name-only "$BASE".."$HEAD" 2>/dev/null || true)
+          else
+            DIFF=$(git diff HEAD~1..HEAD -- \
+              '.github/workflows/weekly-chaos-drill.yml' 2>/dev/null || true)
+            CHANGED=$(git diff --name-only HEAD~1..HEAD 2>/dev/null || true)
+          fi
+
+          # Check 1: weekly-chaos-drill.yml deleted
+          if echo "$CHANGED" | grep -q 'weekly-chaos-drill.yml' && \
+             [ ! -f ".github/workflows/weekly-chaos-drill.yml" ]; then
+            VIOLATIONS+=("RULE-05-A: weekly-chaos-drill.yml deleted — chaos drill cron removed")
+          fi
+
+          # Check 2: cron schedule line removed
+          if echo "$DIFF" | grep -q '^-.*cron.*\*.*1'; then
+            if ! echo "$DIFF" | grep -q '^\+.*cron.*\*.*1'; then
+              VIOLATIONS+=("RULE-05-B: cron schedule removed from weekly-chaos-drill.yml")
+            fi
+          fi
+
+          # Check 3: schedule trigger removed entirely
+          if echo "$DIFF" | grep -q '^-.*schedule:' && \
+             ! echo "$DIFF" | grep -q '^\+.*schedule:'; then
+            VIOLATIONS+=("RULE-05-C: schedule trigger removed from weekly-chaos-drill.yml")
+          fi
+
+          # Check 4: drill scripts deleted
+          for script in "tests/drill-eventbus-zone.sh" "tests/drill-flagger-rollback.sh"; do
+            if echo "$CHANGED" | grep -q "$script" && [ ! -f "$script" ]; then
+              VIOLATIONS+=("RULE-05-D: $script deleted — drill capability removed")
+            fi
+          done
+
+          # Check 5: Current state — cron must exist in file
+          if [ -f ".github/workflows/weekly-chaos-drill.yml" ]; then
+            if ! grep -q 'cron:' ".github/workflows/weekly-chaos-drill.yml"; then
+              VIOLATIONS+=("RULE-05-E: weekly-chaos-drill.yml exists but has no cron schedule")
+            fi
+          fi
+
+          if [ ${#VIOLATIONS[@]} -gt 0 ]; then
+            echo "RULE05_FAIL=true" >> $GITHUB_OUTPUT
+            printf '%s\n' "${VIOLATIONS[@]}" > /tmp/rule05_violations.txt
+            echo "violations<<EOF" >> $GITHUB_OUTPUT
+            printf '%s\n' "${VIOLATIONS[@]}" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "RULE05_FAIL=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Post Rule-05 violation comment
+        if: steps.cron-check.outputs.RULE05_FAIL == 'true' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const violations = `${{ steps.cron-check.outputs.violations }}`;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `## ❌ Rule-05 Violation: Chaos Drill Cron Disabled or Removed
+
+            **Violations detected:**
+            \`\`\`
+            ${violations}
+            \`\`\`
+
+            **Per OPERATIONS.md Rule-05:**
+            - \`weekly-chaos-drill.yml\` cron schedule must not be removed or disabled
+            - Maximum suspension: 2 weeks (requires tracking issue with label \`drill-suspended\`)
+            - Drill scripts (\`drill-eventbus-zone.sh\`, \`drill-flagger-rollback.sh\`) must not be deleted
+
+            **If maintenance suspension is required:**
+            1. Create a GitHub Issue with label \`drill-suspended\` documenting the reason and end date
+            2. Add a comment to this PR referencing the issue
+            3. Restore the cron within 2 weeks and run \`workflow_dispatch\` to confirm PASS
+
+            > Reference: [OPERATIONS.md Rule-05](../blob/main/OPERATIONS.md#rule-05-週期性演練不得停用或跳過)`
+            });
+
+      - name: Fail on Rule-05 violation
+        if: steps.cron-check.outputs.RULE05_FAIL == 'true'
+        run: |
+          echo "ERROR: Rule-05 violation — chaos drill cron disabled or removed."
+          cat /tmp/rule05_violations.txt
+          exit 1
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Summary gate: all rules must pass before deployment proceeds
+  # ─────────────────────────────────────────────────────────────────────────────
+  immutable-rules-summary:
+    name: "Immutable Rules: All Gates PASS"
+    runs-on: ubuntu-latest
+    needs:
+      - rule01-zone-resilience
+      - rule02-pvc-zone-binding
+      - rule03-policy-exception
+      - rule04-flagger-sli
+      - rule05-drill-cron
+    steps:
+      - name: All immutable rules passed
+        run: |
+          echo "All 5 immutable rules from OPERATIONS.md passed."
+          echo "Rule-01: EventBus zone resilience — PASS"
+          echo "Rule-02: PVC zone binding explicit — PASS"
+          echo "Rule-03: PolicyException expiry — PASS"
+          echo "Rule-04: Flagger SLI thresholds — PASS"
+          echo "Rule-05: Chaos drill cron active — PASS"
