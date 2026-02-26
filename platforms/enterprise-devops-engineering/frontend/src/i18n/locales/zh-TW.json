@@ -1,0 +1,327 @@
+{
+  "common": {
+    "loading": "載入中...",
+    "save": "儲存",
+    "cancel": "取消",
+    "delete": "刪除",
+    "edit": "編輯",
+    "create": "創建",
+    "search": "搜尋",
+    "settings": "設定",
+    "logout": "登出",
+    "login": "登入",
+    "signup": "註冊",
+    "free": "免費",
+    "upgrade": "升級",
+    "learnMore": "了解更多",
+    "getStarted": "開始使用",
+    "tryFree": "免費試用",
+    "contactSales": "聯繫銷售",
+    "lightMode": "淺色模式",
+    "darkMode": "深色模式"
+  },
+  "nav": {
+    "home": "首頁",
+    "aiWorkstation": "AI 工作台",
+    "aiHub": "AI Hub",
+    "learningCenter": "學習中心",
+    "aiChat": "AI Chat",
+    "ide": "IDE",
+    "supabase": "Supabase",
+    "browserOperator": "Browser Operator",
+    "virtualBrowser": "Virtual Browser",
+    "desktop": "Desktop",
+    "agents": "Agents",
+    "integrations": "Integrations",
+    "team": "Team",
+    "deploy": "Deploy"
+  },
+  "landing": {
+    "hero": {
+      "badge": "AI 驅動的開發平台",
+      "title1": "讓編程更",
+      "titleHighlight1": "簡單",
+      "title2": "讓開發更",
+      "titleHighlight2": "高效",
+      "description": "集成 AI 代碼生成、雲端 IDE、智能部署於一體的新一代開發平台。無需複雜配置，打開瀏覽器即可開始編程。",
+      "startFree": "免費開始",
+      "watchDemo": "觀看演示",
+      "noCreditCard": "無需信用卡",
+      "freeTrial": "免費試用 14 天",
+      "cancelAnytime": "隨時取消",
+      "optimizedVersion": "AI 生成的優化版本",
+      "codeQuality": "代碼質量",
+      "grade": "等級",
+      "products": "產品",
+      "features": "功能",
+      "pricing": "定價",
+      "docs": "文檔"
+    },
+    "stats": {
+      "developers": "開發者",
+      "enterpriseClients": "企業客戶",
+      "uptime": "可用性",
+      "support": "技術支持"
+    },
+    "features": {
+      "title": "強大的功能，助力高效開發",
+      "subtitle": "集成 AI 代碼生成、雲端 IDE、智能部署等核心功能，讓開發流程更加順暢",
+      "aiCodeGen": {
+        "title": "智能代碼生成",
+        "description": "AI 驅動的代碼生成，支持 Python、JavaScript、TypeScript 等多種語言"
+      },
+      "cloudIDE": {
+        "title": "雲端 IDE",
+        "description": "無需配置，打開瀏覽器即可開始編程，支持實時協作"
+      },
+      "aiAgents": {
+        "title": "AI 代理",
+        "description": "多智能體協作，自動化處理複雜開發任務"
+      },
+      "oneClickDeploy": {
+        "title": "一键部署",
+        "description": "支持 Vercel、Netlify、AWS 等多平台一键部署"
+      },
+      "codeSecurity": {
+        "title": "代碼安全",
+        "description": "自動檢測安全漏洞，保障代碼質量和安全性"
+      },
+      "databaseMgmt": {
+        "title": "數據庫管理",
+        "description": "可視化數據庫管理，支持 PostgreSQL、MySQL、MongoDB"
+      }
+    },
+    "pricing": {
+      "title": "簡單透明的定價",
+      "subtitle": "選擇適合您的方案，隨時升級或降級",
+      "free": {
+        "name": "免費版",
+        "description": "適合個人學習和小型專案",
+        "cta": "免費開始",
+        "feature1": "每月 100 次 AI 代碼生成",
+        "feature2": "基礎 IDE 功能",
+        "feature3": "社區支持",
+        "feature4": "1GB 存儲空間"
+      },
+      "pro": {
+        "name": "專業版",
+        "description": "適合專業開發者和團隊",
+        "cta": "開始試用",
+        "popular": "最受歡迎",
+        "feature1": "無限 AI 代碼生成",
+        "feature2": "高級 IDE 功能",
+        "feature3": "優先技術支持",
+        "feature4": "100GB 存儲空間"
+      },
+      "enterprise": {
+        "name": "企業版",
+        "description": "適合大型企業和組織",
+        "cta": "聯繫銷售",
+        "custom": "定制",
+        "feature1": "所有專業版功能",
+        "feature2": "私有化部署",
+        "feature3": "專屬客戶經理",
+        "feature4": "無限存儲空間"
+      }
+    },
+    "cta": {
+      "title": "準備好開始了嗎？",
+      "subtitle": "加入 100,000+ 開發者，體驗 AI 驅動的開發效率",
+      "startFree": "免費開始",
+      "contactSales": "聯繫銷售"
+    },
+    "footer": {
+      "tagline": "AI 驅動的開發平台，讓編程更簡單，讓開發更高效。",
+      "products": "產品",
+      "company": "公司",
+      "support": "支持",
+      "privacy": "隱私政策",
+      "terms": "服務條款",
+      "cookies": "Cookie 設置",
+      "codeGen": "代碼生成",
+      "cloudIDE": "雲端 IDE",
+      "smartDeploy": "智能部署",
+      "docs": "文檔",
+      "about": "關於我們",
+      "blog": "博客",
+      "careers": "招聘",
+      "contact": "聯繫我們",
+      "helpCenter": "幫助中心",
+      "documentation": "文檔",
+      "community": "社區",
+      "status": "狀態"
+    }
+  },
+  "aiWorkstation": {
+    "title": "AI 工作台",
+    "subtitle": "多模型 AI 平台，功能全面",
+    "models": {
+      "title": "AI 模型",
+      "gpt4o": "GPT-4o",
+      "claude37": "Claude 3.7",
+      "gemini15": "Gemini 1.5",
+      "gpt4oMini": "GPT-4o Mini",
+      "claude3Haiku": "Claude 3 Haiku"
+    },
+    "tabs": {
+      "chat": "對話",
+      "tools": "AI 工具箱",
+      "agents": "智能體",
+      "history": "歷史記錄"
+    },
+    "tools": {
+      "title": "AI 工具",
+      "categories": {
+        "all": "全部",
+        "document": "文檔工具",
+        "image": "圖片工具",
+        "audio": "音頻工具",
+        "video": "視頻工具",
+        "productivity": "效率工具"
+      }
+    },
+    "inputPlaceholder": "輸入消息... 支持 @ 提及文件"
+  },
+  "learningCenter": {
+    "title": "學習中心",
+    "subtitle": "從入門到精通，掌握編程技能",
+    "progress": {
+      "streak": "連續天數",
+      "xp": "XP",
+      "completed": "已完成",
+      "level": "等級"
+    },
+    "dailyGoal": {
+      "title": "今日目標",
+      "completeLesson": "完成 1 節課",
+      "earnXP": "獲得 50 XP",
+      "streak": "保持連續"
+    },
+    "tabs": {
+      "courses": "課程",
+      "practice": "練習",
+      "achievements": "成就",
+      "leaderboard": "排行榜"
+    },
+    "course": {
+      "beginner": "入門",
+      "intermediate": "進階",
+      "advanced": "高級",
+      "lessons": "節課程",
+      "progress": "進度",
+      "startLearning": "開始學習",
+      "continue": "繼續"
+    },
+    "lesson": {
+      "hint": "提示",
+      "nextHint": "下一個提示",
+      "run": "運行",
+      "skip": "跳過",
+      "reset": "重置",
+      "complete": "完成",
+      "output": "輸出"
+    },
+    "achievements": {
+      "beginner": "初學者",
+      "beginnerDesc": "完成第一節課",
+      "streak": "連續學習",
+      "streakDesc": "連續學習 3 天",
+      "codeMaster": "代碼大師",
+      "codeMasterDesc": "完成 10 個代碼練習",
+      "perfect": "完美通關",
+      "perfectDesc": "不借助提示完成課程",
+      "knowledgeable": "知識淵博",
+      "knowledgeableDesc": "完成 5 門課程"
+    }
+  },
+  "ide": {
+    "title": "Cursor IDE",
+    "subtitle": "AI 驅動的代碼編輯器",
+    "actions": {
+      "explain": "解釋",
+      "fix": "修復",
+      "refactor": "重構",
+      "generate": "生成",
+      "addDocs": "添加文檔",
+      "generateTest": "生成測試"
+    },
+    "chat": {
+      "title": "Cursor AI",
+      "placeholder": "輸入任何問題... (Cmd+K 內聯編輯)",
+      "context": "上下文"
+    },
+    "inlineEdit": {
+      "title": "AI 編輯",
+      "placeholder": "描述您想要的更改...",
+      "apply": "應用",
+      "cancel": "取消"
+    },
+    "terminal": {
+      "title": "終端",
+      "aiAssist": "AI 輔助"
+    }
+  },
+  "supabase": {
+    "title": "Supabase",
+    "subtitle": "開源的 Firebase 替代方案",
+    "tabs": {
+      "overview": "概覽",
+      "database": "數據庫",
+      "auth": "認證",
+      "storage": "存儲",
+      "api": "API",
+      "realtime": "實時"
+    },
+    "database": {
+      "tables": "表",
+      "columns": "列",
+      "indexes": "索引",
+      "policies": "策略"
+    },
+    "credentials": {
+      "title": "API 憑證",
+      "projectUrl": "專案 URL",
+      "anonKey": "匿名密鑰"
+    }
+  },
+  "browserOperator": {
+    "title": "Browser Operator",
+    "subtitle": "自動化瀏覽器操作",
+    "templates": {
+      "githubLogin": "GitHub 登入",
+      "vercelDeploy": "Vercel 部署",
+      "webResearch": "網頁研究"
+    },
+    "credentials": {
+      "title": "憑證",
+      "username": "用戶名",
+      "password": "密碼",
+      "domain": "域名"
+    },
+    "actions": {
+      "start": "開始",
+      "pause": "暫停",
+      "resume": "繼續",
+      "stop": "停止"
+    }
+  },
+  "team": {
+    "title": "團隊",
+    "subtitle": "與您的團隊協作",
+    "members": "成員",
+    "invite": "邀請成員",
+    "roles": {
+      "owner": "擁有者",
+      "admin": "管理員",
+      "member": "成員",
+      "viewer": "檢視者"
+    }
+  },
+  "settings": {
+    "title": "設定",
+    "language": "語言",
+    "theme": "主題",
+    "notifications": "通知",
+    "apiKeys": "API 密鑰"
+  }
+}

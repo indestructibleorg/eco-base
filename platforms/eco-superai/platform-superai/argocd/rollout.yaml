@@ -1,252 +1,223 @@
-# ============================================================================
-# Argo Rollouts — Canary Deployment Strategy
-# ============================================================================
-# Replaces standard Deployment for production with progressive delivery
-# ============================================================================
-
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/version: 1.0.0
   name: superai-app
   namespace: eco-superai
-  labels:
-    app.kubernetes.io/name: superai-platform
-    app.kubernetes.io/component: app
-    app.kubernetes.io/version: "1.0.0"
 spec:
   replicas: 3
   revisionHistoryLimit: 5
   selector:
     matchLabels:
-      app.kubernetes.io/name: superai-platform
       app.kubernetes.io/component: app
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/name: superai-platform
-        app.kubernetes.io/component: app
-        app.kubernetes.io/version: "1.0.0"
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "8000"
-        prometheus.io/path: "/metrics"
-    spec:
-      serviceAccountName: superai-app
-      terminationGracePeriodSeconds: 60
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-      containers:
-        - name: app
-          image: ghcr.io/indestructibleautoops/superai-platform:latest
-          imagePullPolicy: IfNotPresent
-          ports:
-            - name: http
-              containerPort: 8000
-              protocol: TCP
-          envFrom:
-            - configMapRef:
-                name: superai-config
-            - secretRef:
-                name: superai-secrets
-          env:
-            - name: APP_ENV
-              value: "production"
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
-          resources:
-            requests:
-              cpu: 500m
-              memory: 1Gi
-            limits:
-              cpu: "2"
-              memory: 2Gi
-          livenessProbe:
-            httpGet:
-              path: /api/v1/health
-              port: http
-            initialDelaySeconds: 30
-            periodSeconds: 15
-            timeoutSeconds: 5
-            failureThreshold: 3
-          readinessProbe:
-            httpGet:
-              path: /api/v1/health
-              port: http
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 3
-            failureThreshold: 3
-          startupProbe:
-            httpGet:
-              path: /api/v1/health
-              port: http
-            initialDelaySeconds: 5
-            periodSeconds: 5
-            failureThreshold: 12
-          volumeMounts:
-            - name: app-logs
-              mountPath: /app/logs
-            - name: tmp
-              mountPath: /app/tmp
-          securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            capabilities:
-              drop: ["ALL"]
-      volumes:
-        - name: app-logs
-          emptyDir:
-            sizeLimit: 500Mi
-        - name: tmp
-          emptyDir:
-            sizeLimit: 100Mi
-
+      app.kubernetes.io/name: superai-platform
   strategy:
     canary:
-      # --- Traffic Management ---
-      canaryService: superai-app-canary
-      stableService: superai-app
-      trafficRouting:
-        nginx:
-          stableIngress: superai-ingress
-          annotationPrefix: nginx.ingress.kubernetes.io
-
-      # --- Canary Steps ---
-      steps:
-        # Step 1: 5% traffic, pause for analysis
-        - setWeight: 5
-        - pause:
-            duration: 2m
-
-        # Step 2: Run analysis — check error rate and latency
-        - analysis:
-            templates:
-              - templateName: superai-canary-analysis
-            args:
-              - name: service-name
-                value: superai-app-canary
-
-        # Step 3: 20% traffic
-        - setWeight: 20
-        - pause:
-            duration: 3m
-
-        # Step 4: Run analysis again
-        - analysis:
-            templates:
-              - templateName: superai-canary-analysis
-            args:
-              - name: service-name
-                value: superai-app-canary
-
-        # Step 5: 50% traffic
-        - setWeight: 50
-        - pause:
-            duration: 5m
-
-        # Step 6: Final analysis before full rollout
-        - analysis:
-            templates:
-              - templateName: superai-canary-analysis
-            args:
-              - name: service-name
-                value: superai-app-canary
-
-        # Step 7: Full rollout
-        - setWeight: 100
-
-      # --- Anti-affinity for canary pods ---
       antiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
           weight: 100
-
-      # --- Automatic rollback on failure ---
+      canaryService: superai-app-canary
       maxSurge: 1
       maxUnavailable: 0
-
+      stableService: superai-app
+      steps:
+      - setWeight: 5
+      - pause:
+          duration: 2m
+      - analysis:
+          args:
+          - name: service-name
+            value: superai-app-canary
+          templates:
+          - templateName: superai-canary-analysis
+      - setWeight: 20
+      - pause:
+          duration: 3m
+      - analysis:
+          args:
+          - name: service-name
+            value: superai-app-canary
+          templates:
+          - templateName: superai-canary-analysis
+      - setWeight: 50
+      - pause:
+          duration: 5m
+      - analysis:
+          args:
+          - name: service-name
+            value: superai-app-canary
+          templates:
+          - templateName: superai-canary-analysis
+      - setWeight: 100
+      trafficRouting:
+        nginx:
+          annotationPrefix: nginx.ingress.kubernetes.io
+          stableIngress: superai-ingress
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: '8000'
+        prometheus.io/scrape: 'true'
+      labels:
+        app.kubernetes.io/component: app
+        app.kubernetes.io/name: superai-platform
+        app.kubernetes.io/version: 1.0.0
+    spec:
+      containers:
+      - env:
+        - name: APP_ENV
+          value: production
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        envFrom:
+        - configMapRef:
+            name: superai-config
+        - secretRef:
+            name: superai-secrets
+        image: ghcr.io/indestructibleautoops/superai-platform:latest
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /api/v1/health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 5
+        name: app
+        ports:
+        - containerPort: 8000
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /api/v1/health
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          limits:
+            cpu: '2'
+            memory: 2Gi
+          requests:
+            cpu: 500m
+            memory: 1Gi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+        startupProbe:
+          failureThreshold: 12
+          httpGet:
+            path: /api/v1/health
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+        - mountPath: /app/logs
+          name: app-logs
+        - mountPath: /app/tmp
+          name: tmp
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      serviceAccountName: superai-app
+      terminationGracePeriodSeconds: 60
+      volumes:
+      - emptyDir:
+          sizeLimit: 500Mi
+        name: app-logs
+      - emptyDir:
+          sizeLimit: 100Mi
+        name: tmp
 ---
-# ============================================================================
-# Canary Analysis Template
-# ============================================================================
-
 apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
+  labels:
+    app.kubernetes.io/component: analysis
+    app.kubernetes.io/name: superai-platform
   name: superai-canary-analysis
   namespace: eco-superai
-  labels:
-    app.kubernetes.io/name: superai-platform
-    app.kubernetes.io/component: analysis
 spec:
   args:
-    - name: service-name
+  - name: service-name
   metrics:
-    # Error rate must be below 1%
-    - name: error-rate
-      interval: 30s
-      count: 5
-      successCondition: result[0] < 0.01
-      failureLimit: 2
-      provider:
-        prometheus:
-          address: http://prometheus.observability:9090
-          query: |
-            sum(rate(superai_http_requests_total{status=~"5..",service="{{args.service-name}}"}[2m]))
-            /
-            sum(rate(superai_http_requests_total{service="{{args.service-name}}"}[2m]))
+  - count: 5
+    failureLimit: 2
+    interval: 30s
+    name: error-rate
+    provider:
+      prometheus:
+        address: http://prometheus.observability:9090
+        query: 'sum(rate(superai_http_requests_total{status=~"5..",service="{{args.service-name}}"}[2m]))
 
-    # p95 latency must be below 500ms
-    - name: latency-p95
-      interval: 30s
-      count: 5
-      successCondition: result[0] < 0.5
-      failureLimit: 2
-      provider:
-        prometheus:
-          address: http://prometheus.observability:9090
-          query: |
-            histogram_quantile(0.95,
-              sum(rate(superai_http_request_duration_seconds_bucket{service="{{args.service-name}}"}[2m]))
-              by (le)
-            )
+          /
 
-    # Health endpoint must return 200
-    - name: health-check
-      interval: 30s
-      count: 5
-      successCondition: result.status == 200
-      failureLimit: 1
-      provider:
-        web:
-          url: "http://{{args.service-name}}.superai/api/v1/health"
-          jsonPath: "{$.status}"
+          sum(rate(superai_http_requests_total{service="{{args.service-name}}"}[2m]))
 
+          '
+    successCondition: result[0] < 0.01
+  - count: 5
+    failureLimit: 2
+    interval: 30s
+    name: latency-p95
+    provider:
+      prometheus:
+        address: http://prometheus.observability:9090
+        query: "histogram_quantile(0.95,\n  sum(rate(superai_http_request_duration_seconds_bucket{service=\"\
+          {{args.service-name}}\"}[2m]))\n  by (le)\n)\n"
+    successCondition: result[0] < 0.5
+  - count: 5
+    failureLimit: 1
+    interval: 30s
+    name: health-check
+    provider:
+      web:
+        jsonPath: '{$.status}'
+        url: http://{{args.service-name}}.superai/api/v1/health
+    successCondition: result.status == 200
 ---
-# ============================================================================
-# Canary Service
-# ============================================================================
-
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/service/superai-app-canary
+    eco-base/urn: urn:eco-base:k8s:core:service:superai-app-canary:sha256-67e21e4555a842473756eaafa44e8f6326c92ca2ac9f47cd69d18e45f46b8139
+  labels:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/part-of: eco-base
+    app.kubernetes.io/version: 1.0.0
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
+    role: canary
   name: superai-app-canary
   namespace: eco-superai
-  labels:
-    app.kubernetes.io/name: superai-platform
-    app.kubernetes.io/component: app
-    role: canary
 spec:
-  type: ClusterIP
-  selector:
-    app.kubernetes.io/name: superai-platform
-    app.kubernetes.io/component: app
   ports:
-    - name: http
-      port: 80
-      targetPort: http
-      protocol: TCP
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: http
+  selector:
+    app.kubernetes.io/component: app
+    app.kubernetes.io/name: superai-platform
+  type: ClusterIP

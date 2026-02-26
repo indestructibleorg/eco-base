@@ -1,120 +1,122 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: govops-engine
-  namespace: eco-govops
+  annotations:
+    eco-base/audit-log-level: full
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/platform-govops/deployment/govops-engine
+    eco-base/urn: urn:eco-base:k8s:platform-govops:deployment:govops-engine:sha256-169e686868ed57c70a132608d1217b98e809fc6e910862a663581b3e29a1e6e1
   labels:
-    app.kubernetes.io/name: govops-engine
-    app.kubernetes.io/instance: govops-engine-prod
-    app.kubernetes.io/part-of: eco-base
     app.kubernetes.io/component: engine
-    app.kubernetes.io/version: "1.0.0"
-    eco-base/platform: platform-govops
+    app.kubernetes.io/instance: govops-engine-prod
+    app.kubernetes.io/name: govops-engine
+    app.kubernetes.io/part-of: eco-base
+    app.kubernetes.io/version: 1.0.0
     eco-base/environment: production
     eco-base/owner: governance-operations-team
-    governance.io/managed: "true"
-  annotations:
-    eco-base/uri: "eco-base://k8s/platform-govops/deployment/govops-engine"
-    eco-base/urn: "urn:eco-base:k8s:platform-govops:deployment:govops-engine:gl.gov.ops-platform"
-    eco-base/audit-log-level: "full"
+    eco-base/platform: platform-govops
+    governance.io/managed: 'true'
+  name: govops-engine
+  namespace: eco-govops
 spec:
   replicas: 2
   revisionHistoryLimit: 5
   selector:
     matchLabels:
-      app.kubernetes.io/name: govops-engine
       app.kubernetes.io/component: engine
+      app.kubernetes.io/name: govops-engine
   strategy:
-    type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
-      labels:
-        app.kubernetes.io/name: govops-engine
-        app.kubernetes.io/instance: govops-engine-prod
-        app.kubernetes.io/part-of: eco-base
-        app.kubernetes.io/component: engine
-        app.kubernetes.io/version: "1.0.0"
-        eco-base/platform: platform-govops
-        eco-base/environment: production
-        governance.io/managed: "true"
       annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "8090"
-        prometheus.io/path: "/metrics"
+        prometheus.io/path: /metrics
+        prometheus.io/port: '8090'
+        prometheus.io/scrape: 'true'
+      labels:
+        app.kubernetes.io/component: engine
+        app.kubernetes.io/instance: govops-engine-prod
+        app.kubernetes.io/name: govops-engine
+        app.kubernetes.io/part-of: eco-base
+        app.kubernetes.io/version: 1.0.0
+        eco-base/environment: production
+        eco-base/platform: platform-govops
+        governance.io/managed: 'true'
     spec:
-      serviceAccountName: govops-engine
-      automountServiceAccountToken: false
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        seccompProfile:
-          type: RuntimeDefault
-      containers:
-        - name: govops-engine
-          image: govops/govops-engine:1.0.0
-          imagePullPolicy: IfNotPresent
-          ports:
-            - name: http
-              containerPort: 8090
-              protocol: TCP
-          envFrom:
-            - configMapRef:
-                name: govops-engine-config
-            - secretRef:
-                name: govops-engine-secrets
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: http
-            initialDelaySeconds: 15
-            periodSeconds: 20
-            timeoutSeconds: 5
-            failureThreshold: 3
-            successThreshold: 1
-          readinessProbe:
-            httpGet:
-              path: /readyz
-              port: http
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            timeoutSeconds: 3
-            failureThreshold: 3
-            successThreshold: 1
-          resources:
-            limits:
-              memory: 512Mi
-              cpu: 500m
-            requests:
-              memory: 256Mi
-              cpu: 250m
-          securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            capabilities:
-              drop:
-                - ALL
-          volumeMounts:
-            - name: tmp
-              mountPath: /tmp
-      volumes:
-        - name: tmp
-          emptyDir:
-            sizeLimit: 64Mi
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: app.kubernetes.io/name
-                      operator: In
-                      values:
-                        - govops-engine
-                topologyKey: kubernetes.io/hostname
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - govops-engine
+              topologyKey: kubernetes.io/hostname
+            weight: 100
+      automountServiceAccountToken: false
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: govops-engine-config
+        - secretRef:
+            name: govops-engine-secrets
+        image: govops/govops-engine:1.0.0
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: http
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: govops-engine
+        ports:
+        - containerPort: 8090
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /readyz
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 3
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            memory: 256Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: govops-engine
       terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir:
+          sizeLimit: 64Mi
+        name: tmp

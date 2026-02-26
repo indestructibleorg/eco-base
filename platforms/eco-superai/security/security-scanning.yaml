@@ -1,497 +1,420 @@
-# Security Scanning Integration
-# P0 Critical: Automated security scanning for vulnerabilities and compliance
-
 ---
-# Trivy Scanner for Image Vulnerability Scanning
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: trivy-image-scanner
-  namespace: default
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/cronjob/trivy-image-scanner
+    eco-base/urn: urn:eco-base:k8s:core:cronjob:trivy-image-scanner:sha256-d55d030e48ad22b5ff0d693664ffc8d5519c0561b5a9a4d1523ae8022f012dab
   labels:
     app: superai-platform
+    app.kubernetes.io/component: eco-component
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: trivy-image-scanner
+    app.kubernetes.io/part-of: eco-base
+    app.kubernetes.io/version: 1.0.0
     component: security-scan
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
+  name: trivy-image-scanner
+  namespace: default
 spec:
-  schedule: "0 2 * * *"  # Daily at 2 AM
   concurrencyPolicy: Forbid
-  successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
   jobTemplate:
     spec:
-      backoffLimit: 3
       activeDeadlineSeconds: 1800
+      backoffLimit: 3
       template:
         spec:
-          serviceAccountName: superai-monitoring
-          restartPolicy: OnFailure
           containers:
-          - name: trivy
-            image: aquasec/trivy:0.48.0
-            command: ["/bin/sh", "-c"]
-            args:
-              - |
-                # Scan all images in the namespace
-                echo "Starting security scan at $(date)"
-                
-                # Get all running pods and scan their images
-                kubectl get pods -n default -o json | \
-                jq -r '.items[].spec.containers[].image' | \
-                sort -u | while read image; do
-                  echo "Scanning image: $image"
-                  
-                  # Run Trivy scan
-                  trivy image --severity HIGH,CRITICAL \
-                    --format json \
-                    --output /tmp/trivy-$(echo $image | sed 's/[\/:]/_/g').json \
-                    "$image" || true
-                  
-                  # Parse results and send to Prometheus
-                  CRITICAL=$(jq '.Results[].Vulnerabilities[]? | select(.Severity=="CRITICAL") | length' /tmp/trivy-$(echo $image | sed 's/[\/:]/_/g').json | awk '{s+=$1} END {print s+0}')
-                  HIGH=$(jq '.Results[].Vulnerabilities[]? | select(.Severity=="HIGH") | length' /tmp/trivy-$(echo $image | sed 's/[\/:]/_/g').json | awk '{s+=$1} END {print s+0}')
-                  
-                  # Send metrics
-                  cat <<EOF | curl --data-binary @- http://pushgateway.monitoring.svc.cluster.local:9091/metrics/job/trivy_scan/instance/$(echo $image | sed 's/[\/:]/_/g')
-                  # HELP trivy_vulnerabilities_critical Number of CRITICAL vulnerabilities
-                  # TYPE trivy_vulnerabilities_critical gauge
-                  trivy_vulnerabilities_critical{image="$image"} ${CRITICAL}
-                  
-                  # HELP trivy_vulnerabilities_high Number of HIGH vulnerabilities
-                  # TYPE trivy_vulnerabilities_high gauge
-                  trivy_vulnerabilities_high{image="$image"} ${HIGH}
-                  EOF
-                  
-                  # Generate report
-                  if [ ${CRITICAL} -gt 0 ] || [ ${HIGH} -gt 0 ]; then
-                    echo "VULNERABILITIES FOUND in $image: CRITICAL=${CRITICAL}, HIGH=${HIGH}"
-                    trivy image --severity HIGH,CRITICAL "$image" > /tmp/trivy-report-$(echo $image | sed 's/[\/:]/_/g').txt
-                  fi
-                done
-                
-                echo "Security scan completed at $(date)"
-            volumeMounts:
-            - name: reports
-              mountPath: /tmp
-            resources:
-              requests:
-                cpu: 500m
-                memory: 1Gi
-              limits:
-                cpu: 2000m
-                memory: 4Gi
+          - args:
+            - "# Scan all images in the namespace\necho \"Starting security scan at\
+              \ $(date)\"\n\n# Get all running pods and scan their images\nkubectl\
+              \ get pods -n default -o json | \\\njq -r '.items[].spec.containers[].image'\
+              \ | \\\nsort -u | while read image; do\n  echo \"Scanning image: $image\"\
+              \n  \n  # Run Trivy scan\n  trivy image --severity HIGH,CRITICAL \\\n\
+              \    --format json \\\n    --output /tmp/trivy-$(echo $image | sed 's/[\\\
+              /:]/_/g').json \\\n    \"$image\" || true\n  \n  # Parse results and\
+              \ send to Prometheus\n  CRITICAL=$(jq '.Results[].Vulnerabilities[]?\
+              \ | select(.Severity==\"CRITICAL\") | length' /tmp/trivy-$(echo $image\
+              \ | sed 's/[\\/:]/_/g').json | awk '{s+=$1} END {print s+0}')\n  HIGH=$(jq\
+              \ '.Results[].Vulnerabilities[]? | select(.Severity==\"HIGH\") | length'\
+              \ /tmp/trivy-$(echo $image | sed 's/[\\/:]/_/g').json | awk '{s+=$1}\
+              \ END {print s+0}')\n  \n  # Send metrics\n  cat <<EOF | curl --data-binary\
+              \ @- http://pushgateway.monitoring.svc.cluster.local:9091/metrics/job/trivy_scan/instance/$(echo\
+              \ $image | sed 's/[\\/:]/_/g')\n  # HELP trivy_vulnerabilities_critical\
+              \ Number of CRITICAL vulnerabilities\n  # TYPE trivy_vulnerabilities_critical\
+              \ gauge\n  trivy_vulnerabilities_critical{image=\"$image\"} ${CRITICAL}\n\
+              \  \n  # HELP trivy_vulnerabilities_high Number of HIGH vulnerabilities\n\
+              \  # TYPE trivy_vulnerabilities_high gauge\n  trivy_vulnerabilities_high{image=\"\
+              $image\"} ${HIGH}\n  EOF\n  \n  # Generate report\n  if [ ${CRITICAL}\
+              \ -gt 0 ] || [ ${HIGH} -gt 0 ]; then\n    echo \"VULNERABILITIES FOUND\
+              \ in $image: CRITICAL=${CRITICAL}, HIGH=${HIGH}\"\n    trivy image --severity\
+              \ HIGH,CRITICAL \"$image\" > /tmp/trivy-report-$(echo $image | sed 's/[\\\
+              /:]/_/g').txt\n  fi\ndone\n\necho \"Security scan completed at $(date)\"\
+              \n"
+            command:
+            - /bin/sh
+            - -c
             env:
             - name: TRIVY_CACHE_DIR
               value: /tmp/.cache
-          volumes:
-          - name: reports
-            emptyDir: {}
----
-# Kube-Bench for CIS Benchmark Compliance
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: kube-bench-scanner
-  namespace: default
-  labels:
-    app: superai-platform
-    component: security-scan
-spec:
-  schedule: "0 3 * * 0"  # Weekly on Sunday at 3 AM
-  concurrencyPolicy: Forbid
-  successfulJobsHistoryLimit: 3
-  failedJobsHistoryLimit: 3
-  jobTemplate:
-    spec:
-      backoffLimit: 3
-      activeDeadlineSeconds: 1800
-      template:
-        spec:
-          serviceAccountName: superai-monitoring
-          hostPID: true
-          restartPolicy: OnFailure
-          containers:
-          - name: kube-bench
-            image: aquasec/kube-bench:0.7.2
-            command: ["/bin/sh", "-c"]
-            args:
-              - |
-                echo "Starting CIS Benchmark scan at $(date)"
-                
-                # Run CIS Kubernetes Benchmark
-                kube-bench --benchmark cis-1.26 \
-                  --json \
-                  --output /tmp/kube-bench-results.json \
-                  --outputfile /tmp/kube-bench-report.txt
-                
-                # Parse results
-                TOTAL=$(jq '.totals.total' /tmp/kube-bench-results.json)
-                PASS=$(jq '.totals.pass' /tmp/kube-bench-results.json)
-                FAIL=$(jq '.totals.fail' /tmp/kube-bench-results.json)
-                WARN=$(jq '.totals.warnings' /tmp/kube-bench-results.json)
-                INFO=$(jq '.totals.info' /tmp/kube-bench-results.json)
-                
-                # Send metrics to Prometheus
-                cat <<EOF | curl --data-binary @- http://pushgateway.monitoring.svc.cluster.local:9091/metrics/job/kube_bench
-                # HELP kube_bench_compliance_score CIS Benchmark compliance score
-                # TYPE kube_bench_compliance_score gauge
-                kube_bench_compliance_score ${PASS}
-                
-                # HELP kube_bench_failures_total Number of failed CIS checks
-                # TYPE kube_bench_failures_total gauge
-                kube_bench_failures_total ${FAIL}
-                
-                # HELP kube_bench_warnings_total Number of CIS warnings
-                # TYPE kube_bench_warnings_total gauge
-                kube_bench_warnings_total ${WARN}
-                EOF
-                
-                # Generate report
-                echo "CIS Benchmark Scan Results:"
-                echo "  Total: ${TOTAL}"
-                echo "  Pass: ${PASS}"
-                echo "  Fail: ${FAIL}"
-                echo "  Warn: ${WARN}"
-                echo "  Info: ${INFO}"
-                echo "  Compliance: $(awk "BEGIN {printf &quot;%.2f&quot;, (${PASS}/${TOTAL})*100}")%"
-                
-                if [ ${FAIL} -gt 0 ]; then
-                  echo "WARNING: ${FAIL} CIS checks failed"
-                fi
-                
-                echo "CIS Benchmark scan completed at $(date)"
-            volumeMounts:
-            - name: reports
-              mountPath: /tmp
-            - name: etc-kubernetes
-              mountPath: /etc/kubernetes
-              readOnly: true
-            - name: var-lib-kubelet
-              mountPath: /var/lib/kubelet
-              readOnly: true
-            - name: var-lib-etcd
-              mountPath: /var/lib/etcd
-              readOnly: true
-            - name: usr-local-bin
-              mountPath: /usr/local/bin
-              readOnly: true
-            - name: etc-cni-netd
-              mountPath: /etc/cni/net.d
-              readOnly: true
-            - name: opt-cni-bin
-              mountPath: /opt/cni/bin
-              readOnly: true
+            image: aquasec/trivy:0.48.0
+            name: trivy
             resources:
-              requests:
-                cpu: 200m
-                memory: 500Mi
               limits:
-                cpu: 1000m
-                memory: 1Gi
-          volumes:
-          - name: reports
-            emptyDir: {}
-          - name: etc-kubernetes
-            hostPath:
-              path: /etc/kubernetes
-          - name: var-lib-kubelet
-            hostPath:
-              path: /var/lib/kubelet
-          - name: var-lib-etcd
-            hostPath:
-              path: /var/lib/etcd
-          - name: usr-local-bin
-            hostPath:
-              path: /usr/local/bin
-          - name: etc-cni-netd
-            hostPath:
-              path: /etc/cni/net.d
-          - name: opt-cni-bin
-            hostPath:
-              path: /opt/cni/bin
----
-# Kube-Hunter for Security Threat Hunting
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: kube-hunter-scanner
-  namespace: default
-  labels:
-    app: superai-platform
-    component: security-scan
-spec:
-  schedule: "0 4 * * 6"  # Weekly on Saturday at 4 AM
-  concurrencyPolicy: Forbid
-  successfulJobsHistoryLimit: 3
-  failedJobsHistoryLimit: 3
-  jobTemplate:
-    spec:
-      backoffLimit: 3
-      activeDeadlineSeconds: 1800
-      template:
-        spec:
-          serviceAccountName: superai-monitoring
-          restartPolicy: OnFailure
-          containers:
-          - name: kube-hunter
-            image: aquasec/kube-hunter:0.7.2
-            command: ["/bin/sh", "-c"]
-            args:
-              - |
-                echo "Starting security threat hunting at $(date)"
-                
-                # Run kube-hunter in pod mode
-                kube-hunter --pod \
-                  --report json \
-                  --output /tmp/kube-hunter-results.json \
-                  --report-file /tmp/kube-hunter-report.txt
-                
-                # Parse results
-                VULN_COUNT=$(jq '.vulnerabilities | length' /tmp/kube-hunter-results.json)
-                HIGH_VULN=$(jq '[.vulnerabilities[]? | select(.severity=="high")] | length' /tmp/kube-hunter-results.json)
-                MED_VULN=$(jq '[.vulnerabilities[]? | select(.severity=="medium")] | length' /tmp/kube-hunter-results.json)
-                LOW_VULN=$(jq '[.vulnerabilities[]? | select(.severity=="low")] | length' /tmp/kube-hunter-results.json)
-                
-                # Send metrics to Prometheus
-                cat <<EOF | curl --data-binary @- http://pushgateway.monitoring.svc.cluster.local:9091/metrics/job/kube_hunter
-                # HELP kube_hunter_vulnerabilities_total Total number of vulnerabilities found
-                # TYPE kube_hunter_vulnerabilities_total gauge
-                kube_hunter_vulnerabilities_total ${VULN_COUNT}
-                
-                # HELP kube_hunter_high_severity_vulnerabilities Number of high severity vulnerabilities
-                # TYPE kube_hunter_high_severity_vulnerabilities gauge
-                kube_hunter_high_severity_vulnerabilities ${HIGH_VULN}
-                
-                # HELP kube_hunter_medium_severity_vulnerabilities Number of medium severity vulnerabilities
-                # TYPE kube_hunter_medium_severity_vulnerabilities gauge
-                kube_hunter_medium_severity_vulnerabilities ${MED_VULN}
-                
-                # HELP kube_hunter_low_severity_vulnerabilities Number of low severity vulnerabilities
-                # TYPE kube_hunter_low_severity_vulnerabilities gauge
-                kube_hunter_low_severity_vulnerabilities ${LOW_VULN}
-                EOF
-                
-                # Generate report
-                echo "Security Threat Hunting Results:"
-                echo "  Total vulnerabilities: ${VULN_COUNT}"
-                echo "  High severity: ${HIGH_VULN}"
-                echo "  Medium severity: ${MED_VULN}"
-                echo "  Low severity: ${LOW_VULN}"
-                
-                if [ ${HIGH_VULN} -gt 0 ]; then
-                  echo "CRITICAL: ${HIGH_VULN} high severity vulnerabilities found!"
-                  jq '.vulnerabilities[]? | select(.severity=="high")' /tmp/kube-hunter-results.json
-                fi
-                
-                echo "Security threat hunting completed at $(date)"
-            volumeMounts:
-            - name: reports
-              mountPath: /tmp
-            resources:
-              requests:
-                cpu: 200m
-                memory: 500Mi
-              limits:
-                cpu: 1000m
-                memory: 1Gi
-          volumes:
-          - name: reports
-            emptyDir: {}
----
-# Code Scanning with Bandit
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: code-scanner
-  namespace: default
-  labels:
-    app: superai-platform
-    component: security-scan
-spec:
-  schedule: "0 1 * * *"  # Daily at 1 AM
-  concurrencyPolicy: Forbid
-  successfulJobsHistoryLimit: 3
-  failedJobsHistoryLimit: 3
-  jobTemplate:
-    spec:
-      backoffLimit: 3
-      activeDeadlineSeconds: 1800
-      template:
-        spec:
-          serviceAccountName: superai-monitoring
-          restartPolicy: OnFailure
-          containers:
-          - name: bandit
-            image: python:3.11-slim
-            command: ["/bin/sh", "-c"]
-            args:
-              - |
-                # Install Bandit
-                pip install bandit[toml] -q
-                
-                echo "Starting code security scan at $(date)"
-                
-                # Scan source code
-                bandit -r /app/src \
-                  -f json \
-                  -o /tmp/bandit-results.json \
-                  || true
-                
-                # Generate human-readable report
-                bandit -r /app/src \
-                  -f txt \
-                  -o /tmp/bandit-report.txt \
-                  || true
-                
-                # Parse results
-                TOTAL=$(jq '.results | length' /tmp/bandit-results.json)
-                HIGH=$(jq '[.results[]? | select(.issue_severity=="HIGH")] | length' /tmp/bandit-results.json)
-                MEDIUM=$(jq '[.results[]? | select(.issue_severity=="MEDIUM")] | length' /tmp/bandit-results.json)
-                LOW=$(jq '[.results[]? | select(.issue_severity=="LOW")] | length' /tmp/bandit-results.json)
-                
-                # Send metrics
-                cat <<EOF | curl --data-binary @- http://pushgateway.monitoring.svc.cluster.local:9091/metrics/job/bandit_scan
-                # HELP bandit_issues_total Total number of code security issues found
-                # TYPE bandit_issues_total gauge
-                bandit_issues_total ${TOTAL}
-                
-                # HELP bandit_high_severity_issues Number of high severity issues
-                # TYPE bandit_high_severity_issues gauge
-                bandit_high_severity_issues ${HIGH}
-                
-                # HELP bandit_medium_severity_issues Number of medium severity issues
-                # TYPE bandit_medium_severity_issues gauge
-                bandit_medium_severity_issues ${MEDIUM}
-                
-                # HELP bandit_low_severity_issues Number of low severity issues
-                # TYPE bandit_low_severity_issues gauge
-                bandit_low_severity_issues ${LOW}
-                EOF
-                
-                echo "Code Security Scan Results:"
-                echo "  Total issues: ${TOTAL}"
-                echo "  High severity: ${HIGH}"
-                echo "  Medium severity: ${MEDIUM}"
-                echo "  Low severity: ${LOW}"
-                
-                if [ ${HIGH} -gt 0 ]; then
-                  echo "WARNING: ${HIGH} high severity code security issues found"
-                fi
-                
-                echo "Code security scan completed at $(date)"
-            volumeMounts:
-            - name: app-source
-              mountPath: /app
-            - name: reports
-              mountPath: /tmp
-            resources:
+                cpu: 2000m
+                memory: 4Gi
               requests:
                 cpu: 500m
                 memory: 1Gi
+            volumeMounts:
+            - mountPath: /tmp
+              name: reports
+          restartPolicy: OnFailure
+          serviceAccountName: superai-monitoring
+          volumes:
+          - emptyDir: {}
+            name: reports
+  schedule: 0 2 * * *
+  successfulJobsHistoryLimit: 3
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/cronjob/kube-bench-scanner
+    eco-base/urn: urn:eco-base:k8s:core:cronjob:kube-bench-scanner:sha256-8b6917523b01506ad50fc7d163284a33042a3d9b806f51e77a81853e3a6e1d0c
+  labels:
+    app: superai-platform
+    app.kubernetes.io/component: eco-component
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: kube-bench-scanner
+    app.kubernetes.io/part-of: eco-base
+    app.kubernetes.io/version: 1.0.0
+    component: security-scan
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
+  name: kube-bench-scanner
+  namespace: default
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 1800
+      backoffLimit: 3
+      template:
+        spec:
+          containers:
+          - args:
+            - "echo \"Starting CIS Benchmark scan at $(date)\"\n\n# Run CIS Kubernetes\
+              \ Benchmark\nkube-bench --benchmark cis-1.26 \\\n  --json \\\n  --output\
+              \ /tmp/kube-bench-results.json \\\n  --outputfile /tmp/kube-bench-report.txt\n\
+              \n# Parse results\nTOTAL=$(jq '.totals.total' /tmp/kube-bench-results.json)\n\
+              PASS=$(jq '.totals.pass' /tmp/kube-bench-results.json)\nFAIL=$(jq '.totals.fail'\
+              \ /tmp/kube-bench-results.json)\nWARN=$(jq '.totals.warnings' /tmp/kube-bench-results.json)\n\
+              INFO=$(jq '.totals.info' /tmp/kube-bench-results.json)\n\n# Send metrics\
+              \ to Prometheus\ncat <<EOF | curl --data-binary @- http://pushgateway.monitoring.svc.cluster.local:9091/metrics/job/kube_bench\n\
+              # HELP kube_bench_compliance_score CIS Benchmark compliance score\n\
+              # TYPE kube_bench_compliance_score gauge\nkube_bench_compliance_score\
+              \ ${PASS}\n\n# HELP kube_bench_failures_total Number of failed CIS checks\n\
+              # TYPE kube_bench_failures_total gauge\nkube_bench_failures_total ${FAIL}\n\
+              \n# HELP kube_bench_warnings_total Number of CIS warnings\n# TYPE kube_bench_warnings_total\
+              \ gauge\nkube_bench_warnings_total ${WARN}\nEOF\n\n# Generate report\n\
+              echo \"CIS Benchmark Scan Results:\"\necho \"  Total: ${TOTAL}\"\necho\
+              \ \"  Pass: ${PASS}\"\necho \"  Fail: ${FAIL}\"\necho \"  Warn: ${WARN}\"\
+              \necho \"  Info: ${INFO}\"\necho \"  Compliance: $(awk \"BEGIN {printf\
+              \ &quot;%.2f&quot;, (${PASS}/${TOTAL})*100}\")%\"\n\nif [ ${FAIL} -gt\
+              \ 0 ]; then\n  echo \"WARNING: ${FAIL} CIS checks failed\"\nfi\n\necho\
+              \ \"CIS Benchmark scan completed at $(date)\"\n"
+            command:
+            - /bin/sh
+            - -c
+            image: aquasec/kube-bench:0.7.2
+            name: kube-bench
+            resources:
+              limits:
+                cpu: 1000m
+                memory: 1Gi
+              requests:
+                cpu: 200m
+                memory: 500Mi
+            volumeMounts:
+            - mountPath: /tmp
+              name: reports
+            - mountPath: /etc/kubernetes
+              name: etc-kubernetes
+              readOnly: true
+            - mountPath: /var/lib/kubelet
+              name: var-lib-kubelet
+              readOnly: true
+            - mountPath: /var/lib/etcd
+              name: var-lib-etcd
+              readOnly: true
+            - mountPath: /usr/local/bin
+              name: usr-local-bin
+              readOnly: true
+            - mountPath: /etc/cni/net.d
+              name: etc-cni-netd
+              readOnly: true
+            - mountPath: /opt/cni/bin
+              name: opt-cni-bin
+              readOnly: true
+          hostPID: true
+          restartPolicy: OnFailure
+          serviceAccountName: superai-monitoring
+          volumes:
+          - emptyDir: {}
+            name: reports
+          - hostPath:
+              path: /etc/kubernetes
+            name: etc-kubernetes
+          - hostPath:
+              path: /var/lib/kubelet
+            name: var-lib-kubelet
+          - hostPath:
+              path: /var/lib/etcd
+            name: var-lib-etcd
+          - hostPath:
+              path: /usr/local/bin
+            name: usr-local-bin
+          - hostPath:
+              path: /etc/cni/net.d
+            name: etc-cni-netd
+          - hostPath:
+              path: /opt/cni/bin
+            name: opt-cni-bin
+  schedule: 0 3 * * 0
+  successfulJobsHistoryLimit: 3
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/cronjob/kube-hunter-scanner
+    eco-base/urn: urn:eco-base:k8s:core:cronjob:kube-hunter-scanner:sha256-e2e369d7c8be14d696a4b523a1a3b787c3d998de8fe377805a92dde8ccf344ff
+  labels:
+    app: superai-platform
+    app.kubernetes.io/component: eco-component
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: kube-hunter-scanner
+    app.kubernetes.io/part-of: eco-base
+    app.kubernetes.io/version: 1.0.0
+    component: security-scan
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
+  name: kube-hunter-scanner
+  namespace: default
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 1800
+      backoffLimit: 3
+      template:
+        spec:
+          containers:
+          - args:
+            - "echo \"Starting security threat hunting at $(date)\"\n\n# Run kube-hunter\
+              \ in pod mode\nkube-hunter --pod \\\n  --report json \\\n  --output\
+              \ /tmp/kube-hunter-results.json \\\n  --report-file /tmp/kube-hunter-report.txt\n\
+              \n# Parse results\nVULN_COUNT=$(jq '.vulnerabilities | length' /tmp/kube-hunter-results.json)\n\
+              HIGH_VULN=$(jq '[.vulnerabilities[]? | select(.severity==\"high\")]\
+              \ | length' /tmp/kube-hunter-results.json)\nMED_VULN=$(jq '[.vulnerabilities[]?\
+              \ | select(.severity==\"medium\")] | length' /tmp/kube-hunter-results.json)\n\
+              LOW_VULN=$(jq '[.vulnerabilities[]? | select(.severity==\"low\")] |\
+              \ length' /tmp/kube-hunter-results.json)\n\n# Send metrics to Prometheus\n\
+              cat <<EOF | curl --data-binary @- http://pushgateway.monitoring.svc.cluster.local:9091/metrics/job/kube_hunter\n\
+              # HELP kube_hunter_vulnerabilities_total Total number of vulnerabilities\
+              \ found\n# TYPE kube_hunter_vulnerabilities_total gauge\nkube_hunter_vulnerabilities_total\
+              \ ${VULN_COUNT}\n\n# HELP kube_hunter_high_severity_vulnerabilities\
+              \ Number of high severity vulnerabilities\n# TYPE kube_hunter_high_severity_vulnerabilities\
+              \ gauge\nkube_hunter_high_severity_vulnerabilities ${HIGH_VULN}\n\n\
+              # HELP kube_hunter_medium_severity_vulnerabilities Number of medium\
+              \ severity vulnerabilities\n# TYPE kube_hunter_medium_severity_vulnerabilities\
+              \ gauge\nkube_hunter_medium_severity_vulnerabilities ${MED_VULN}\n\n\
+              # HELP kube_hunter_low_severity_vulnerabilities Number of low severity\
+              \ vulnerabilities\n# TYPE kube_hunter_low_severity_vulnerabilities gauge\n\
+              kube_hunter_low_severity_vulnerabilities ${LOW_VULN}\nEOF\n\n# Generate\
+              \ report\necho \"Security Threat Hunting Results:\"\necho \"  Total\
+              \ vulnerabilities: ${VULN_COUNT}\"\necho \"  High severity: ${HIGH_VULN}\"\
+              \necho \"  Medium severity: ${MED_VULN}\"\necho \"  Low severity: ${LOW_VULN}\"\
+              \n\nif [ ${HIGH_VULN} -gt 0 ]; then\n  echo \"CRITICAL: ${HIGH_VULN}\
+              \ high severity vulnerabilities found!\"\n  jq '.vulnerabilities[]?\
+              \ | select(.severity==\"high\")' /tmp/kube-hunter-results.json\nfi\n\
+              \necho \"Security threat hunting completed at $(date)\"\n"
+            command:
+            - /bin/sh
+            - -c
+            image: aquasec/kube-hunter:0.7.2
+            name: kube-hunter
+            resources:
+              limits:
+                cpu: 1000m
+                memory: 1Gi
+              requests:
+                cpu: 200m
+                memory: 500Mi
+            volumeMounts:
+            - mountPath: /tmp
+              name: reports
+          restartPolicy: OnFailure
+          serviceAccountName: superai-monitoring
+          volumes:
+          - emptyDir: {}
+            name: reports
+  schedule: 0 4 * * 6
+  successfulJobsHistoryLimit: 3
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/cronjob/code-scanner
+    eco-base/urn: urn:eco-base:k8s:core:cronjob:code-scanner:sha256-b71ac73211066bda3e65a824a5d5b06226e23d5401348e74409f1eb9047765fd
+  labels:
+    app: superai-platform
+    app.kubernetes.io/component: eco-component
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: code-scanner
+    app.kubernetes.io/part-of: eco-base
+    app.kubernetes.io/version: 1.0.0
+    component: security-scan
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
+  name: code-scanner
+  namespace: default
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 1800
+      backoffLimit: 3
+      template:
+        spec:
+          containers:
+          - args:
+            - "# Install Bandit\npip install bandit[toml] -q\n\necho \"Starting code\
+              \ security scan at $(date)\"\n\n# Scan source code\nbandit -r /app/src\
+              \ \\\n  -f json \\\n  -o /tmp/bandit-results.json \\\n  || true\n\n\
+              # Generate human-readable report\nbandit -r /app/src \\\n  -f txt \\\
+              \n  -o /tmp/bandit-report.txt \\\n  || true\n\n# Parse results\nTOTAL=$(jq\
+              \ '.results | length' /tmp/bandit-results.json)\nHIGH=$(jq '[.results[]?\
+              \ | select(.issue_severity==\"HIGH\")] | length' /tmp/bandit-results.json)\n\
+              MEDIUM=$(jq '[.results[]? | select(.issue_severity==\"MEDIUM\")] | length'\
+              \ /tmp/bandit-results.json)\nLOW=$(jq '[.results[]? | select(.issue_severity==\"\
+              LOW\")] | length' /tmp/bandit-results.json)\n\n# Send metrics\ncat <<EOF\
+              \ | curl --data-binary @- http://pushgateway.monitoring.svc.cluster.local:9091/metrics/job/bandit_scan\n\
+              # HELP bandit_issues_total Total number of code security issues found\n\
+              # TYPE bandit_issues_total gauge\nbandit_issues_total ${TOTAL}\n\n#\
+              \ HELP bandit_high_severity_issues Number of high severity issues\n\
+              # TYPE bandit_high_severity_issues gauge\nbandit_high_severity_issues\
+              \ ${HIGH}\n\n# HELP bandit_medium_severity_issues Number of medium severity\
+              \ issues\n# TYPE bandit_medium_severity_issues gauge\nbandit_medium_severity_issues\
+              \ ${MEDIUM}\n\n# HELP bandit_low_severity_issues Number of low severity\
+              \ issues\n# TYPE bandit_low_severity_issues gauge\nbandit_low_severity_issues\
+              \ ${LOW}\nEOF\n\necho \"Code Security Scan Results:\"\necho \"  Total\
+              \ issues: ${TOTAL}\"\necho \"  High severity: ${HIGH}\"\necho \"  Medium\
+              \ severity: ${MEDIUM}\"\necho \"  Low severity: ${LOW}\"\n\nif [ ${HIGH}\
+              \ -gt 0 ]; then\n  echo \"WARNING: ${HIGH} high severity code security\
+              \ issues found\"\nfi\n\necho \"Code security scan completed at $(date)\"\
+              \n"
+            command:
+            - /bin/sh
+            - -c
+            image: python:3.11-slim
+            name: bandit
+            resources:
               limits:
                 cpu: 2000m
                 memory: 2Gi
+              requests:
+                cpu: 500m
+                memory: 1Gi
+            volumeMounts:
+            - mountPath: /app
+              name: app-source
+            - mountPath: /tmp
+              name: reports
+          restartPolicy: OnFailure
+          serviceAccountName: superai-monitoring
           volumes:
-          - name: app-source
-            configMap:
+          - configMap:
               name: app-source-code
               optional: true
-          - name: reports
-            emptyDir: {}
+            name: app-source
+          - emptyDir: {}
+            name: reports
+  schedule: 0 1 * * *
+  successfulJobsHistoryLimit: 3
 ---
-# Security Scanning Dashboard
 apiVersion: v1
+data:
+  security-scan-dashboard.json: "{\n  \"dashboard\": {\n    \"title\": \"Security\
+    \ Scanning Dashboard\",\n    \"tags\": [\"security\", \"vulnerabilities\", \"\
+    compliance\"],\n    \"timezone\": \"browser\",\n    \"panels\": [\n      {\n \
+    \       \"id\": 1,\n        \"title\": \"Critical Vulnerabilities (Trivy)\",\n\
+    \        \"type\": \"graph\",\n        \"targets\": [\n          {\n         \
+    \   \"expr\": \"sum(trivy_vulnerabilities_critical)\",\n            \"legendFormat\"\
+    : \"Critical\"\n          }\n        ],\n        \"gridPos\": {\"h\": 8, \"w\"\
+    : 8, \"x\": 0, \"y\": 0}\n      },\n      {\n        \"id\": 2,\n        \"title\"\
+    : \"High Vulnerabilities (Trivy)\",\n        \"type\": \"graph\",\n        \"\
+    targets\": [\n          {\n            \"expr\": \"sum(trivy_vulnerabilities_high)\"\
+    ,\n            \"legendFormat\": \"High\"\n          }\n        ],\n        \"\
+    gridPos\": {\"h\": 8, \"w\": 8, \"x\": 8, \"y\": 0}\n      },\n      {\n     \
+    \   \"id\": 3,\n        \"title\": \"CIS Benchmark Compliance\",\n        \"type\"\
+    : \"gauge\",\n        \"targets\": [\n          {\n            \"expr\": \"kube_bench_compliance_score\"\
+    ,\n            \"legendFormat\": \"Compliance\"\n          }\n        ],\n   \
+    \     \"gridPos\": {\"h\": 8, \"w\": 8, \"x\": 16, \"y\": 0},\n        \"options\"\
+    : {\n          \"max\": 100,\n          \"min\": 0,\n          \"unit\": \"percent\"\
+    \n        }\n      },\n      {\n        \"id\": 4,\n        \"title\": \"Code\
+    \ Security Issues (Bandit)\",\n        \"type\": \"graph\",\n        \"targets\"\
+    : [\n          {\n            \"expr\": \"bandit_high_severity_issues\",\n   \
+    \         \"legendFormat\": \"High\"\n          },\n          {\n            \"\
+    expr\": \"bandit_medium_severity_issues\",\n            \"legendFormat\": \"Medium\"\
+    \n          },\n          {\n            \"expr\": \"bandit_low_severity_issues\"\
+    ,\n            \"legendFormat\": \"Low\"\n          }\n        ],\n        \"\
+    gridPos\": {\"h\": 8, \"w\": 12, \"x\": 0, \"y\": 8}\n      },\n      {\n    \
+    \    \"id\": 5,\n        \"title\": \"Kube Hunter Vulnerabilities\",\n       \
+    \ \"type\": \"graph\",\n        \"targets\": [\n          {\n            \"expr\"\
+    : \"kube_hunter_high_severity_vulnerabilities\",\n            \"legendFormat\"\
+    : \"High\"\n          },\n          {\n            \"expr\": \"kube_hunter_medium_severity_vulnerabilities\"\
+    ,\n            \"legendFormat\": \"Medium\"\n          }\n        ],\n       \
+    \ \"gridPos\": {\"h\": 8, \"w\": 12, \"x\": 12, \"y\": 8}\n      }\n    ]\n  }\n\
+    }"
 kind: ConfigMap
 metadata:
+  annotations:
+    eco-base/audit-log-level: minimal
+    eco-base/governance-policy: standard-v1
+    eco-base/uri: eco-base://k8s/core/configmap/grafana-dashboard-security-scan
+    eco-base/urn: urn:eco-base:k8s:core:configmap:grafana-dashboard-security-scan:sha256-d3f4b5c95bee6ebbc012e17695eb4e7cdf44f457d525c03c1e6ca5d41344a279
+  labels:
+    app: superai-platform
+    app.kubernetes.io/component: eco-component
+    app.kubernetes.io/instance: eco-instance
+    app.kubernetes.io/name: grafana-dashboard-security-scan
+    app.kubernetes.io/part-of: eco-base
+    app.kubernetes.io/version: 1.0.0
+    component: security-scan
+    eco-base/environment: development
+    eco-base/owner: eco-system
+    eco-base/platform: core
+    grafana_dashboard: '1'
   name: grafana-dashboard-security-scan
   namespace: monitoring
-  labels:
-    grafana_dashboard: "1"
-    app: superai-platform
-    component: security-scan
-data:
-  security-scan-dashboard.json: |
-    {
-      "dashboard": {
-        "title": "Security Scanning Dashboard",
-        "tags": ["security", "vulnerabilities", "compliance"],
-        "timezone": "browser",
-        "panels": [
-          {
-            "id": 1,
-            "title": "Critical Vulnerabilities (Trivy)",
-            "type": "graph",
-            "targets": [
-              {
-                "expr": "sum(trivy_vulnerabilities_critical)",
-                "legendFormat": "Critical"
-              }
-            ],
-            "gridPos": {"h": 8, "w": 8, "x": 0, "y": 0}
-          },
-          {
-            "id": 2,
-            "title": "High Vulnerabilities (Trivy)",
-            "type": "graph",
-            "targets": [
-              {
-                "expr": "sum(trivy_vulnerabilities_high)",
-                "legendFormat": "High"
-              }
-            ],
-            "gridPos": {"h": 8, "w": 8, "x": 8, "y": 0}
-          },
-          {
-            "id": 3,
-            "title": "CIS Benchmark Compliance",
-            "type": "gauge",
-            "targets": [
-              {
-                "expr": "kube_bench_compliance_score",
-                "legendFormat": "Compliance"
-              }
-            ],
-            "gridPos": {"h": 8, "w": 8, "x": 16, "y": 0},
-            "options": {
-              "max": 100,
-              "min": 0,
-              "unit": "percent"
-            }
-          },
-          {
-            "id": 4,
-            "title": "Code Security Issues (Bandit)",
-            "type": "graph",
-            "targets": [
-              {
-                "expr": "bandit_high_severity_issues",
-                "legendFormat": "High"
-              },
-              {
-                "expr": "bandit_medium_severity_issues",
-                "legendFormat": "Medium"
-              },
-              {
-                "expr": "bandit_low_severity_issues",
-                "legendFormat": "Low"
-              }
-            ],
-            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8}
-          },
-          {
-            "id": 5,
-            "title": "Kube Hunter Vulnerabilities",
-            "type": "graph",
-            "targets": [
-              {
-                "expr": "kube_hunter_high_severity_vulnerabilities",
-                "legendFormat": "High"
-              },
-              {
-                "expr": "kube_hunter_medium_severity_vulnerabilities",
-                "legendFormat": "Medium"
-              }
-            ],
-            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8}
-          }
-        ]
-      }
-    }
