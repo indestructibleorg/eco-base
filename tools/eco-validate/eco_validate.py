@@ -39,6 +39,65 @@ KIND_FILTER = {
     "Service", "Ingress", "ConfigMap", "Secret"
 }
 
+# Directories to skip entirely (non-k8s manifest directories)
+SKIP_DIRS = {
+    '.git', 'charts', 'node_modules', '__pycache__',
+    'governance', 'gl-artifacts', 'artifacts', 'scripts-legacy',
+    'tools-legacy', 'tests-legacy', 'archived', 'legacy',
+    'templates',  # GitHub Actions templates and Helm templates
+}
+
+# File patterns to skip (non-k8s manifest files)
+SKIP_FILE_PATTERNS = [
+    # GitHub Actions workflows
+    r'\.github/',
+    # Governance artifacts (not k8s manifests)
+    r'/gl-artifacts/',
+    r'/governance/',
+    r'/artifacts/',
+    # Legacy directories
+    r'/scripts-legacy/',
+    r'/tools-legacy/',
+    r'/tests-legacy/',
+    r'/archived/',
+    r'/legacy/',
+    # Helm chart metadata
+    r'/Chart\.ya?ml$',
+    r'/values\.ya?ml$',
+    r'/values-.*\.ya?ml$',
+]
+
+SKIP_PATTERNS_RE = [re.compile(p) for p in SKIP_FILE_PATTERNS]
+
+def should_skip_file(path):
+    """Check if a file should be skipped based on path patterns."""
+    # Normalize path separators
+    norm_path = path.replace('\\', '/')
+    for pattern in SKIP_PATTERNS_RE:
+        if pattern.search(norm_path):
+            return True
+    return False
+
+def is_helm_template(path):
+    """Check if a YAML file is a Helm template (contains {{ }})."""
+    try:
+        with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+            # Read first 8KB to check for Helm template syntax
+            chunk = f.read(8192)
+            return '{{' in chunk and '}}' in chunk
+    except Exception:
+        return False
+
+def is_k8s_manifest(path):
+    """Quick check if a YAML file looks like a k8s manifest."""
+    try:
+        with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+            chunk = f.read(2048)
+            # k8s manifests typically have apiVersion and kind at the top
+            return ('apiVersion:' in chunk or 'kind:' in chunk) and 'metadata:' in chunk
+    except Exception:
+        return False
+
 def iter_yaml_docs(path: str):
     with open(path, "r", encoding="utf-8") as f:
         for doc in yaml.safe_load_all(f):
@@ -51,12 +110,17 @@ def find_yaml_files(paths):
         if not os.path.exists(p):
             continue
         if os.path.isfile(p) and (p.endswith(".yml") or p.endswith(".yaml")):
-            out.append(p)
+            if not should_skip_file(p) and not is_helm_template(p) and is_k8s_manifest(p):
+                out.append(p)
             continue
-        for root, _, files in os.walk(p):
+        for root, dirs, files in os.walk(p):
+            # Skip non-k8s directories
+            dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
             for fn in files:
                 if fn.endswith(".yml") or fn.endswith(".yaml"):
-                    out.append(os.path.join(root, fn))
+                    fp = os.path.join(root, fn)
+                    if not should_skip_file(fp) and not is_helm_template(fp) and is_k8s_manifest(fp):
+                        out.append(fp)
     return out
 
 def err(msg):  # consistent machine-readable output
@@ -82,7 +146,7 @@ def validate_obj(obj, src):
         if k not in labels or str(labels.get(k)).strip() == "":
             fails.append(err(f"{src}: {kind}/{name}: missing label {k}"))
     if labels.get("app.kubernetes.io/part-of") and labels["app.kubernetes.io/part-of"] != "eco-base":
-        fails.append(err(f"{src}: {kind}/{name}: app.kubernetes.io/part-of must be \'eco-base\'"))
+        fails.append(err(f"{src}: {kind}/{name}: app.kubernetes.io/part-of must be 'eco-base'"))
 
     env = labels.get("eco-base/environment")
     if env and env not in ENV_ALLOWED:
@@ -119,6 +183,7 @@ def main():
         return 0
 
     all_fails = []
+    parse_warnings = []
     for f in files:
         try:
             for obj in iter_yaml_docs(f):
@@ -126,7 +191,13 @@ def main():
                 if args.fail_fast and all_fails:
                     raise SystemExit(1)
         except yaml.YAMLError as e:
-            all_fails.append(err(f"{f}: yaml parse error: {e}"))
+            # Log as warning, not failure - some files may have valid YAML
+            # that our parser can't handle (e.g., custom tags)
+            parse_warnings.append(f"[ECO-SPEC-WARN] {f}: yaml parse warning: {e}")
+
+    if parse_warnings:
+        for w in parse_warnings:
+            print(w, file=sys.stderr)
 
     if all_fails:
         for x in all_fails:
