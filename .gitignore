@@ -75,3 +75,8 @@ infrastructure/terraform/.terraform/
 infrastructure/terraform/tfplan
 infrastructure/terraform/*.tfstate
 infrastructure/terraform/*.tfstate.backup
+
+# Chaos drill full reports (stored as GitHub Actions artifacts, not in repo)
+# Only tests/reports/drill-summary.json is committed
+tests/reports/drill-eventbus-zone-*.json
+tests/reports/drill-flagger-rollback-*.json

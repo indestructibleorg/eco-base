@@ -353,3 +353,25 @@ indestructibleorg/eco-base/
 |-------|------|------|
 | EventBus Zone | 2026-02-26T01:56:25Z | PASS（2 zones: asia-east1-a, asia-east1-b） |
 | Flagger Rollback | 2026-02-26T01:40:44Z | PASS（phase=Failed, weight=0, ~64s） |
+
+---
+## 週期性演練強化修正（v2）
+
+### 修正項目
+| 項目 | 修正內容 |
+|------|----------|
+| Zone 自適應 gate | Z>=3: 3 pods 3 zones (full); Z=2: 2:1 分布 (degraded); Z=1: node-level only (not_supported) |
+| Cron 時間偏差監控 | 每次 drill 計算 scheduled vs actual 時間差，>3600s 輸出 warning |
+| Report 去 repo 化 | drill-eventbus-zone-*.json / drill-flagger-rollback-*.json 加入 .gitignore；僅 drill-summary.json 提交 |
+| Issue 去重 | 7 天內同 drill 失敗只開 1 張 Issue；重複失敗 append comment |
+
+### EventBus 3-Zone 達成
+- js-0 → asia-east1-b, js-1 → asia-east1-a, js-2 → asia-east1-c
+- PV 手動建立於 asia-east1-c (GCE PD: eventbus-js2-zone-c)
+- zone_resilience=full (Z=3, 3 pods in 3 zones)
+- 驗證時間: 2026-02-26T02:21:05Z
+
+### 最終 drill-summary.json 結構
+- 每種 drill 最多保留 10 筆摘要
+- 完整報告為 GitHub Actions artifacts（90 天保留）
+- repo 內不存放時間戳 JSON

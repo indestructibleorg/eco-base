@@ -1,0 +1,22 @@
+{
+  "_note": "Summary only. Full reports are GitHub Actions artifacts (90d retention).",
+  "last_updated": "2026-02-26T02:21:16Z",
+  "runs": [
+    {
+      "drill": "flagger-rollback",
+      "timestamp": "2026-02-26T01:40:44Z",
+      "gate_result": "PASS",
+      "canary_final_phase": "Failed",
+      "canary_final_weight": "0",
+      "rollback_duration_s": 64
+    },
+    {
+      "drill": "eventbus-zone",
+      "timestamp": "2026-02-26T02:21:16Z",
+      "gate_result": "PASS",
+      "zone_resilience": "full",
+      "unique_zones": 3,
+      "cluster_zones": 3
+    }
+  ]
+}
