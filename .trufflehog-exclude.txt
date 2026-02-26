@@ -1,0 +1,9 @@
+# TruffleHog exclusion paths
+# Format: one glob pattern per line
+tests/fixtures/
+*.example
+*.sample
+docs/pat-audit-report.md
+node_modules/
+vendor/
+.git/
