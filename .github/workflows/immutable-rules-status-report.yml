@@ -1,0 +1,198 @@
+name: Immutable Rules Status Report
+
+# Periodically checks immutable-rules-gate.yml execution history via GitHub API
+# and generates a structured compliance report.
+#
+# Schedule: Every day at 06:00 UTC (non-peak, after weekly drill window)
+# Triggers: schedule | workflow_dispatch | push to report scripts
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      lookback_days:
+        description: 'Days of history to analyze (default: 30)'
+        required: false
+        default: '30'
+      force_issue:
+        description: 'Force create issue even if all rules pass'
+        required: false
+        default: 'false'
+  push:
+    branches: [main]
+    paths:
+      - 'tests/generate-immutable-rules-report.py'
+      - '.github/workflows/immutable-rules-status-report.yml'
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: read
+
+env:
+  REPO: ${{ github.repository }}
+  LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days || '30' }}
+
+jobs:
+  generate-report:
+    name: Generate Immutable Rules Compliance Report
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests python-dateutil
+
+      - name: Record scheduled vs actual execution time
+        id: timing
+        run: |
+          ACTUAL=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          # Expected: 06:00 UTC daily
+          EXPECTED=$(date -u +%Y-%m-%dT06:00:00Z)
+          ACTUAL_EPOCH=$(date -u -d "$ACTUAL" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$ACTUAL" +%s 2>/dev/null || echo 0)
+          EXPECTED_EPOCH=$(date -u -d "$EXPECTED" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%SZ" "$EXPECTED" +%s 2>/dev/null || echo 0)
+          DRIFT_S=$(( ACTUAL_EPOCH - EXPECTED_EPOCH ))
+          DRIFT_ABS=${DRIFT_S#-}
+          echo "actual_time=$ACTUAL" >> $GITHUB_OUTPUT
+          echo "expected_time=$EXPECTED" >> $GITHUB_OUTPUT
+          echo "drift_seconds=$DRIFT_S" >> $GITHUB_OUTPUT
+          if [ "$DRIFT_ABS" -gt 3600 ]; then
+            echo "::warning::Cron drift detected: ${DRIFT_S}s from expected 06:00 UTC"
+          fi
+          echo "drift_ok=$([ $DRIFT_ABS -le 3600 ] && echo true || echo false)" >> $GITHUB_OUTPUT
+
+      - name: Fetch immutable-rules-gate workflow runs
+        id: fetch-runs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 tests/generate-immutable-rules-report.py \
+            --repo "$REPO" \
+            --token "$GH_TOKEN" \
+            --lookback-days "$LOOKBACK_DAYS" \
+            --output-dir tests/reports \
+            --actual-time "${{ steps.timing.outputs.actual_time }}" \
+            --expected-time "${{ steps.timing.outputs.expected_time }}" \
+            --drift-seconds "${{ steps.timing.outputs.drift_seconds }}"
+
+      - name: Read report summary
+        id: report
+        run: |
+          SUMMARY=$(cat tests/reports/immutable-rules-report-latest.json)
+          OVERALL=$(echo "$SUMMARY" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['summary']['overall_status'])")
+          FAIL_COUNT=$(echo "$SUMMARY" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['summary']['total_failures'])")
+          PASS_RATE=$(echo "$SUMMARY" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['summary']['pass_rate_pct'])")
+          TOTAL_RUNS=$(echo "$SUMMARY" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['summary']['total_runs_analyzed'])")
+          echo "overall=$OVERALL" >> $GITHUB_OUTPUT
+          echo "fail_count=$FAIL_COUNT" >> $GITHUB_OUTPUT
+          echo "pass_rate=$PASS_RATE" >> $GITHUB_OUTPUT
+          echo "total_runs=$TOTAL_RUNS" >> $GITHUB_OUTPUT
+
+      - name: Upload report as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: immutable-rules-report-${{ steps.timing.outputs.actual_time }}
+          path: tests/reports/immutable-rules-report-latest.json
+          retention-days: 90
+
+      - name: Commit updated report summary to repo
+        run: |
+          git config user.name "eco-ops-bot"
+          git config user.email "eco-ops-bot@users.noreply.github.com"
+          # Only commit the summary (not full timestamped report — kept as artifact)
+          git add tests/reports/immutable-rules-summary.json || true
+          git diff --staged --quiet || git commit -m "chore(report): update immutable-rules-summary [skip ci]"
+          git push origin main || true
+
+      - name: Create or update tracking issue on failure
+        if: steps.report.outputs.overall == 'FAIL'
+        uses: actions/github-script@v7
+        env:
+          FAIL_COUNT: ${{ steps.report.outputs.fail_count }}
+          PASS_RATE: ${{ steps.report.outputs.pass_rate }}
+          TOTAL_RUNS: ${{ steps.report.outputs.total_runs }}
+          ACTUAL_TIME: ${{ steps.timing.outputs.actual_time }}
+          LOOKBACK: ${{ env.LOOKBACK_DAYS }}
+        with:
+          script: |
+            const failCount = process.env.FAIL_COUNT;
+            const passRate = process.env.PASS_RATE;
+            const totalRuns = process.env.TOTAL_RUNS;
+            const actualTime = process.env.ACTUAL_TIME;
+            const lookback = process.env.LOOKBACK;
+
+            // Dedup: search for open issue with same label within 7 days
+            const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'immutable-rules-failure,automated-report',
+              state: 'open',
+              since: sevenDaysAgo,
+            });
+
+            const body = `## Immutable Rules Gate — Compliance Report FAIL
+
+            **Report generated:** ${actualTime}
+            **Lookback period:** ${lookback} days
+            **Total runs analyzed:** ${totalRuns}
+            **Pass rate:** ${passRate}%
+            **Failure count:** ${failCount}
+
+            ### Action Required
+
+            One or more \`immutable-rules-gate.yml\` jobs failed within the lookback period.
+            Review the [workflow run history](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/workflows/immutable-rules-gate.yml) for details.
+
+            ### Rules Reference
+
+            | Rule | Description | Remediation |
+            |------|-------------|-------------|
+            | Rule-01 | EventBus zone resilience | Restore topologySpreadConstraints + zone affinity |
+            | Rule-02 | PVC zone binding explicit | Pre-create PV with nodeAffinity before PVC |
+            | Rule-03 | PolicyException expiry | Renew or remove expired exceptions |
+            | Rule-04 | Flagger SLI thresholds | Revert threshold changes + attach drill report |
+            | Rule-05 | Chaos drill cron active | Restore weekly-chaos-drill.yml cron schedule |
+
+            > This issue is auto-managed. New failures within 7 days will append a comment instead of opening a new issue.`;
+
+            if (existing.data.length > 0) {
+              // Append comment to existing issue
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing.data[0].number,
+                body: `### Follow-up Failure — ${actualTime}\n\nPass rate: **${passRate}%** | Failures: **${failCount}** | Runs analyzed: **${totalRuns}**\n\nSee [workflow history](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/workflows/immutable-rules-gate.yml) for details.`,
+              });
+            } else {
+              // Open new issue
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `[AUTO] Immutable Rules Gate failures detected (${actualTime})`,
+                body: body,
+                labels: ['immutable-rules-failure', 'automated-report', 'priority:high'],
+              });
+            }
+
+      - name: Post pass summary as workflow annotation
+        if: steps.report.outputs.overall == 'PASS'
+        run: |
+          echo "::notice title=Immutable Rules Gate PASS::Pass rate: ${{ steps.report.outputs.pass_rate }}% | Runs: ${{ steps.report.outputs.total_runs }} | Failures: ${{ steps.report.outputs.fail_count }} | Period: ${LOOKBACK_DAYS}d"
+
+      - name: Fail workflow if overall status is FAIL
+        if: steps.report.outputs.overall == 'FAIL'
+        run: |
+          echo "ERROR: Immutable Rules Gate compliance report — FAIL"
+          echo "Pass rate: ${{ steps.report.outputs.pass_rate }}%"
+          echo "Failures: ${{ steps.report.outputs.fail_count }} in last ${LOOKBACK_DAYS} days"
+          exit 1

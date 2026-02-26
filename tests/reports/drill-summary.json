@@ -1,6 +1,6 @@
 {
-  "_note": "Summary only. Full reports are GitHub Actions artifacts (90d retention).",
-  "last_updated": "2026-02-26T02:21:16Z",
+  "_note": "Summary only. Full reports are GitHub Actions artifacts (90d retention). Max 10 entries per drill type.",
+  "last_updated": "2026-02-26T02:10:00Z",
   "runs": [
     {
       "drill": "flagger-rollback",
@@ -12,10 +12,10 @@
     },
     {
       "drill": "eventbus-zone",
-      "timestamp": "2026-02-26T02:21:16Z",
+      "timestamp": "2026-02-26T01:56:25Z",
       "gate_result": "PASS",
-      "zone_resilience": "full",
-      "unique_zones": 3,
+      "zone_resilience": "degraded(two_zones)",
+      "unique_zones": 2,
       "cluster_zones": 3
     }
   ]

@@ -37,24 +37,11 @@ jobs:
           ACTUAL=$(date -u +%Y-%m-%dT%H:%M:%SZ)
           # For schedule events, expected time is Monday 02:00 UTC of this week
           if [[ "${{ github.event_name }}" == "schedule" ]]; then
-            SCHEDULED=$(python3 -c "
-from datetime import datetime, timezone, timedelta
-now = datetime.now(timezone.utc)
-# Find last Monday 02:00 UTC
-days_since_monday = now.weekday()
-monday = (now - timedelta(days=days_since_monday)).replace(hour=2, minute=0, second=0, microsecond=0)
-print(monday.strftime('%Y-%m-%dT%H:%M:%SZ'))
-")
+            SCHEDULED=$(python3 -c "from datetime import datetime,timezone,timedelta; now=datetime.now(timezone.utc); d=now.weekday(); m=(now-timedelta(days=d)).replace(hour=2,minute=0,second=0,microsecond=0); print(m.strftime('%Y-%m-%dT%H:%M:%SZ'))")
           else
             SCHEDULED="$ACTUAL"
           fi
-          DRIFT_S=$(python3 -c "
-from datetime import datetime, timezone
-fmt = '%Y-%m-%dT%H:%M:%SZ'
-s = datetime.strptime('$SCHEDULED', fmt).replace(tzinfo=timezone.utc)
-a = datetime.strptime('$ACTUAL', fmt).replace(tzinfo=timezone.utc)
-print(int((a - s).total_seconds()))
-")
+          DRIFT_S=$(python3 -c "from datetime import datetime,timezone; fmt='%Y-%m-%dT%H:%M:%SZ'; s=datetime.strptime('$SCHEDULED',fmt).replace(tzinfo=timezone.utc); a=datetime.strptime('$ACTUAL',fmt).replace(tzinfo=timezone.utc); print(int((a-s).total_seconds()))")
           echo "scheduled=$SCHEDULED" >> $GITHUB_OUTPUT
           echo "actual=$ACTUAL" >> $GITHUB_OUTPUT
           echo "drift_s=$DRIFT_S" >> $GITHUB_OUTPUT
@@ -127,23 +114,11 @@ print(int((a - s).total_seconds()))
         run: |
           ACTUAL=$(date -u +%Y-%m-%dT%H:%M:%SZ)
           if [[ "${{ github.event_name }}" == "schedule" ]]; then
-            SCHEDULED=$(python3 -c "
-from datetime import datetime, timezone, timedelta
-now = datetime.now(timezone.utc)
-days_since_monday = now.weekday()
-monday = (now - timedelta(days=days_since_monday)).replace(hour=2, minute=0, second=0, microsecond=0)
-print(monday.strftime('%Y-%m-%dT%H:%M:%SZ'))
-")
+            SCHEDULED=$(python3 -c "from datetime import datetime,timezone,timedelta; now=datetime.now(timezone.utc); d=now.weekday(); m=(now-timedelta(days=d)).replace(hour=2,minute=0,second=0,microsecond=0); print(m.strftime('%Y-%m-%dT%H:%M:%SZ'))")
           else
             SCHEDULED="$ACTUAL"
           fi
-          DRIFT_S=$(python3 -c "
-from datetime import datetime, timezone
-fmt = '%Y-%m-%dT%H:%M:%SZ'
-s = datetime.strptime('$SCHEDULED', fmt).replace(tzinfo=timezone.utc)
-a = datetime.strptime('$ACTUAL', fmt).replace(tzinfo=timezone.utc)
-print(int((a - s).total_seconds()))
-")
+          DRIFT_S=$(python3 -c "from datetime import datetime,timezone; fmt='%Y-%m-%dT%H:%M:%SZ'; s=datetime.strptime('$SCHEDULED',fmt).replace(tzinfo=timezone.utc); a=datetime.strptime('$ACTUAL',fmt).replace(tzinfo=timezone.utc); print(int((a-s).total_seconds()))")
           echo "scheduled=$SCHEDULED" >> $GITHUB_OUTPUT
           echo "actual=$ACTUAL" >> $GITHUB_OUTPUT
           echo "drift_s=$DRIFT_S" >> $GITHUB_OUTPUT
