@@ -10,7 +10,7 @@
         tools-up tools-down \
         db-migrate db-reset db-shell \
         yaml-validate yaml-validate-dir \
-	platforms-refactor-retrieval \
+	platforms-refactor-retrieval platforms-refactor-p0 platforms-refactor-p1 platforms-refactor-p2 \
         status urls
 
 COMPOSE      := docker compose --env-file .env.local
@@ -61,6 +61,9 @@ help:
 	@echo ""
 	@echo "$(GREEN)Platforms Refactor Retrieval:$(RESET)"
 	@echo "  make platforms-refactor-retrieval"
+	@echo "  make platforms-refactor-p0"
+	@echo "  make platforms-refactor-p1"
+	@echo "  make platforms-refactor-p2"
 	@echo ""
 	@echo "$(GREEN)Info:$(RESET)"
 	@echo "  make status          Health check all services"
@@ -190,6 +193,21 @@ platforms-refactor-retrieval:
 	@echo "$(CYAN)▸ Running platforms forced retrieval workflow...$(RESET)"
 	bash ./scripts/platforms_refactor_retrieval.sh
 	@echo "$(GREEN)✓ Retrieval artifacts updated: .tmp/refactor-retrieval$(RESET)"
+
+platforms-refactor-p0:
+	@echo "$(CYAN)▸ Running platforms forced retrieval workflow (P0)...$(RESET)"
+	TASK_ID=P0-platforms-refactor-retrieval TARGET=platforms OUT=.tmp/refactor-retrieval bash ./scripts/platforms_refactor_retrieval.sh
+	@echo "$(GREEN)✓ P0 artifacts updated: .tmp/refactor-retrieval$(RESET)"
+
+platforms-refactor-p1:
+	@echo "$(CYAN)▸ Running platforms forced retrieval workflow (P1)...$(RESET)"
+	PHASE=P1 TASK_ID=P1-platforms-refactor-retrieval TARGET=platforms OUT=.tmp/refactor-retrieval bash ./scripts/platforms_refactor_retrieval.sh
+	@echo "$(GREEN)✓ P1 artifacts updated: .tmp/refactor-retrieval$(RESET)"
+
+platforms-refactor-p2:
+	@echo "$(CYAN)▸ Running platforms forced retrieval workflow (P2)...$(RESET)"
+	PHASE=P2 TASK_ID=P2-platforms-refactor-retrieval TARGET=platforms OUT=.tmp/refactor-retrieval bash ./scripts/platforms_refactor_retrieval.sh
+	@echo "$(GREEN)✓ P2 artifacts updated: .tmp/refactor-retrieval$(RESET)"
 
 # ══════════════════════════════════════════════════════════════════════════════
 # INFO

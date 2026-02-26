@@ -68,14 +68,7 @@ platforms/
 │   │   └── presentation/          # FastAPI routers, CLI
 │   └── tests/
 │
-├── automation/                    # ← Legacy (archived)
-├── gl/                            # ← Legacy (archived)
-├── gov-platform-assistant/        # ← Legacy (archived)
-├── gov-platform-ide/              # ← Legacy (archived)
-├── infrastructure/                # ← Legacy (archived)
-├── ng-era-platforms/              # ← Legacy (archived)
-├── quantum/                       # ← Legacy (archived)
-└── registry/                      # ← Legacy (archived)
+└── ng-era-platforms/              # Legacy consolidated archive (see README)
 ```
 
 ## Sandbox / Container / Environment
@@ -146,16 +139,16 @@ done
 
 ## Migration from Legacy
 
-The legacy directories (`automation/`, `gl/`, `gov-platform-assistant/`, etc.) are preserved
-for reference. Their functionality has been migrated into the new `*-platform/` directories:
+Legacy artifacts are consolidated under `platforms/ng-era-platforms/` for reference and replay.
+Their functionality has been migrated into the new `*-platform/` directories:
 
 | Legacy | New Platform |
 |--------|-------------|
-| `automation/instant/` | `automation-platform/` |
-| `gov-platform-assistant/` | `governance-platform/` |
-| `ng-era2-platforms/runtime/engine/` | `runtime-platform/` |
-| `ng-era2-platforms/*/processing/` | `data-platform/` |
-| `gl/observability/` | `observability-platform/` |
-| `ng-era1-platforms/*/GL90-99-semantic-engine/` | `semantic-platform/` |
-| `infrastructure/` | `infrastructure-platform/` |
-| `registry/` | `registry-platform/` |
+| `ng-era-platforms/ng-era1-platforms/runtime-services/esync-platform/` | `runtime-platform/` |
+| `ng-era-platforms/ng-era1-platforms/gov-platform-assistant/` | `governance-platform/` |
+| `ng-era-platforms/ng-era2-platforms/runtime/engine/` | `runtime-platform/` |
+| `ng-era-platforms/ng-era2-platforms/*/processing/` | `data-platform/` |
+| `ng-era-platforms/ng-era1-platforms/GL80-observability/` | `observability-platform/` |
+| `ng-era-platforms/ng-era1-platforms/*/GL90-99-semantic-engine/` | `semantic-platform/` |
+| `ng-era-platforms/ng-era2-platforms/infrastructure/` | `infrastructure-platform/` |
+| `ng-era-platforms/ng-era2-platforms/registry/` | `registry-platform/` |

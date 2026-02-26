@@ -150,12 +150,31 @@ EOF
 cat > "$OUT/p1.execution.md" << EOF
 # P1 Execution
 
-- task_id: ${PHASE}-platforms-refactor-retrieval
+- task_id: ${TASK_ID}
 - source_next_questions: $OUT/next-questions.txt
 - focused_q1_output: $OUT/focused-q1-legacy-refs.txt
 - focused_q2_output: $OUT/focused-q2-supply-chain-coverage.csv
 - focused_q2_review: $OUT/focused-q2-supply-chain-review.txt
 - focused_q3_output: $OUT/focused-q3-mapping-delta.md
+EOF
+
+cat > "$OUT/emit-actions.md" << EOF
+# Emit Actions
+
+1. 更新平台映射索引：ARCHITECTURE.md ↔ platforms/README.md（Catalog Cross-Reference）
+2. 清理 legacy 對外入口：platforms/DECENTRALIZED-ARCHITECTURE.md 僅保留 ng-era-platforms consolidated path
+3. 刷新檢索產物：PHASE=${PHASE} TASK_ID=${TASK_ID} TARGET=${TARGET} OUT=${OUT}
+4. 交付 artifacts：verification-matrix.csv / decision-2.txt / p1.execution.md
+EOF
+
+cat > "$OUT/p2.execution.md" << EOF
+# P2 Execution
+
+- phase: ${PHASE}
+- task_id: ${TASK_ID}
+- emitted_actions: $OUT/emit-actions.md
+- legacy_entry_cleanup: platforms/DECENTRALIZED-ARCHITECTURE.md
+- decision_2: $(tr '\n' ';' < "$OUT/decision-2.txt" | sed 's/;$/\n/' )
 EOF
 
 echo "READY: $OUT"

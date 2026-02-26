@@ -27,6 +27,8 @@
 - `.tmp/refactor-retrieval/focused-q3-mapping-delta.md`
 - `.tmp/refactor-retrieval/p0.execution.md`
 - `.tmp/refactor-retrieval/p1.execution.md`
+- `.tmp/refactor-retrieval/emit-actions.md`
+- `.tmp/refactor-retrieval/p2.execution.md`
 
 ## Dependency & Reference Mapping
 

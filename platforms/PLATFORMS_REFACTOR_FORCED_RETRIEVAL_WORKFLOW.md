@@ -24,6 +24,12 @@ P1 執行指令：
 PHASE=P1 TASK_ID=P1-platforms-refactor-retrieval TARGET=platforms OUT=.tmp/refactor-retrieval ./scripts/platforms_refactor_retrieval.sh
 ```
 
+P2 執行指令：
+
+```bash
+PHASE=P2 TASK_ID=P2-platforms-refactor-retrieval TARGET=platforms OUT=.tmp/refactor-retrieval ./scripts/platforms_refactor_retrieval.sh
+```
+
 ## 階段 1：內網檢索與剖析（強制）
 
 ### 執行指令
