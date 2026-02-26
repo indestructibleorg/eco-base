@@ -69,3 +69,9 @@ gcp-*.json
 secrets/
 *.secret
 credentials/
+
+# Terraform
+infrastructure/terraform/.terraform/
+infrastructure/terraform/tfplan
+infrastructure/terraform/*.tfstate
+infrastructure/terraform/*.tfstate.backup
