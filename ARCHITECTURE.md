@@ -303,3 +303,53 @@ indestructibleorg/eco-base/
 | Bolt-1 EventBus 跨區 | PASS |
 | Bolt-2 PolicyException 遷移 | PASS |
 | Bolt-3 Flagger Rollback Drill | PASS |
+
+---
+## 週期性演練排程（Weekly Chaos Drill）
+
+### 排程規格
+| 項目 | 值 |
+|------|-----|
+| Workflow | `.github/workflows/weekly-chaos-drill.yml` |
+| 排程 | 每週一 02:00 UTC（亞洲非尖峰） |
+| 觸發 | `schedule` (cron) + `workflow_dispatch` (手動) |
+| 報告目錄 | `tests/reports/drill-*-<timestamp>.json` |
+| 保留期 | 90 天（GitHub Actions artifacts） |
+| 失敗行為 | 自動建立 GitHub Issue（labels: chaos-drill, incident, priority:high） |
+
+### Drill 清單
+| Drill | 腳本 | 驗證項目 |
+|-------|------|----------|
+| EventBus Cross-Zone Distribution | `tests/drill-eventbus-zone.sh` | 3/3 pods Running、≥2 zones、PDB minAvailable=2、zone topology key |
+| Flagger Rollback | `tests/drill-flagger-rollback.sh` | 注入失敗映像 → Flagger phase=Failed、weight=0、rollback_duration_s |
+
+### 驗證執行紀錄（首次本地驗證）
+| Drill | 時間 | 結果 |
+|-------|------|------|
+| EventBus Zone | 2026-02-26T01:56:25Z | PASS（2 zones: asia-east1-a, asia-east1-b） |
+| Flagger Rollback | 2026-02-26T01:40:44Z | PASS（phase=Failed, weight=0, ~64s） |
+
+---
+## 週期性演練排程（Weekly Chaos Drill）
+
+### 排程規格
+| 項目 | 值 |
+|------|-----|
+| Workflow | `.github/workflows/weekly-chaos-drill.yml` |
+| 排程 | 每週一 02:00 UTC（亞洲非尖峰） |
+| 觸發 | schedule (cron) + workflow_dispatch (手動) |
+| 報告目錄 | tests/reports/drill-*-<timestamp>.json |
+| 保留期 | 90 天（GitHub Actions artifacts） |
+| 失敗行為 | 自動建立 GitHub Issue（labels: chaos-drill, incident, priority:high） |
+
+### Drill 清單
+| Drill | 腳本 | 驗證項目 |
+|-------|------|----------|
+| EventBus Cross-Zone Distribution | tests/drill-eventbus-zone.sh | 3/3 pods Running、≥2 zones、PDB minAvailable=2、zone topology key |
+| Flagger Rollback | tests/drill-flagger-rollback.sh | 注入失敗映像 → Flagger phase=Failed、weight=0、rollback_duration_s |
+
+### 驗證執行紀錄（首次本地驗證）
+| Drill | 時間 | 結果 |
+|-------|------|------|
+| EventBus Zone | 2026-02-26T01:56:25Z | PASS（2 zones: asia-east1-a, asia-east1-b） |
+| Flagger Rollback | 2026-02-26T01:40:44Z | PASS（phase=Failed, weight=0, ~64s） |
