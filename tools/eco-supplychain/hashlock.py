@@ -49,15 +49,22 @@ def canonicalize_k8s(obj: dict) -> dict:
     for k in list(o.keys()):
         if k in EXCLUDE_TOP_LEVEL_FIELDS:
             o.pop(k, None)
-
     meta = o.get("metadata") or {}
     # remove noisy metadata
     for k in EXCLUDE_METADATA_FIELDS:
         meta.pop(k, None)
-
+    # remove eco-base/urn and eco-base/uri from annotations to avoid circular dependency
+    # (these annotations contain the content hash itself, so they must be excluded
+    # from hash computation to prevent infinite update loops)
+    ann = meta.get("annotations") or {}
+    ann.pop("eco-base/urn", None)
+    ann.pop("eco-base/uri", None)
+    if ann:
+        meta["annotations"] = ann
+    elif "annotations" in meta:
+        del meta["annotations"]
     o["metadata"] = meta
     return o
-
 def load_yaml_docs(path: str):
     with open(path, "r", encoding="utf-8") as f:
         try:
