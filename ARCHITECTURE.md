@@ -179,3 +179,45 @@ indestructibleorg/eco-base/
 **Triggers**: push to main, PR, manual dispatch  
 **Stages**: SAST → SBOM → cosign sign → OCI push → Terraform plan → ArgoCD sync  
 **Active Workflows**: 17 total
+
+---
+
+## Phase 4 — 平台基線 Gate 套件（2026-02-26）
+
+### 4-A: Argo CD 安全護欄
+
+| 元件 | 配置 | 狀態 |
+|------|------|------|
+| AppProject `eco-platforms` | sourceRepos: indestructibleorg/eco-base, destinations: platform-01/02/03 | Applied |
+| AppProject `eco-infra` | sourceRepos: indestructibleorg/eco-base, destinations: infra/monitoring/keda/flagger-system | Applied |
+| Diff Gate CI | `.github/workflows/argocd-diff-gate.yml` (argocd-diff + drift-detection jobs) | Active |
+
+### 4-B: 供應鏈 Gate
+
+| 元件 | 配置 | 狀態 |
+|------|------|------|
+| Supply Chain CI | `.github/workflows/supply-chain-gate.yml` (cosign sign/verify + syft SBOM + SLSA) | Active |
+| Kyverno Admission | `verify-image-signatures` ClusterPolicy (Audit → Enforce 2026-03-28) | Applied |
+
+### 4-C: SLO / 回滾閉環
+
+| 元件 | 配置 | 狀態 |
+|------|------|------|
+| Flagger Canary | `gitops/slo/flagger-canary-template.yaml` (p99 latency ≤200ms, error rate ≤1%, RPS ≥10) | Template |
+| KEDA ScaledObject | `gitops/slo/keda-scaledobject-template.yaml` (Prometheus SLI, minReplicas=2, maxReplicas=20) | Template |
+
+### P1 雷點修復
+
+| 問題 | 修復 | 狀態 |
+|------|------|------|
+| EventBus required anti-affinity | `eventbus-name: default` label selector, cpu=30m, 3 pods on 3 different nodes | FIXED |
+| Kyverno webhook namespace exclusion | 11 system namespaces excluded via Helm values | FIXED |
+| Loki query limits | max_query_length=720h, parallelism=32, entries=50000, timeout=120s | FIXED |
+
+### EventBus JetStream 最終節點分佈（3 pods × 3 nodes × 2 zones）
+
+| Pod | Node | Zone |
+|-----|------|------|
+| eventbus-default-js-0 | f14d316a-6w8q | asia-east1-b |
+| eventbus-default-js-1 | 9fe3d7b3-6lgk | asia-east1-a |
+| eventbus-default-js-2 | 9fe3d7b3-zjc0 | asia-east1-a |
