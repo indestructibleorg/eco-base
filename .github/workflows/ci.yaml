@@ -77,7 +77,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest pytest-cov pytest-asyncio pydantic pydantic-settings structlog python-jose cryptography httpx fastapi uvicorn
+          pip install pytest pytest-cov pytest-asyncio pydantic "pydantic[email]" pydantic-settings structlog python-jose cryptography httpx fastapi uvicorn bcrypt email-validator
           if [ -f pyproject.toml ]; then
             pip install -e ".[dev]" --no-deps 2>/dev/null || true
           fi
