@@ -191,7 +191,9 @@ jobs:
       - name: Supply chain gate
         run: |
           if [[ "${{ needs.sbom-generate.result }}" == "failure" || \
-                "${{ needs.admission-policy-check.result }}" == "failure" ]]; then
+                "${{ needs.sbom-generate.result }}" == "cancelled" || \
+                "${{ needs.admission-policy-check.result }}" == "failure" || \
+                "${{ needs.admission-policy-check.result }}" == "cancelled" ]]; then
             echo "Supply chain gate FAILED"
             exit 1
           fi
