@@ -1,0 +1,59 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      caps: ${{ steps.caps.outputs.json }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: Detect enabled capabilities
+        id: caps
+        run: |
+          mkdir -p artifacts/_tmp
+          python scripts/capabilities.py capabilities.yaml > artifacts/_tmp/capabilities.enabled.json
+          echo "json=$(cat artifacts/_tmp/capabilities.enabled.json | python -c 'import json,sys; print(json.dumps(json.load(sys.stdin)))')" >> "$GITHUB_OUTPUT"
+      - name: Upload detection artifact (no secrets)
+        uses: actions/upload-artifact@v4
+        with:
+          name: capabilities
+          path: artifacts/_tmp/capabilities.enabled.json
+
+  lint_test_build:
+    runs-on: ubuntu-latest
+    needs: [detect]
+    steps:
+      - uses: actions/checkout@v4
+
+      # 依你 monorepo 工具鏈調整；此處提供最小骨架
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Install deps
+        run: pnpm -w install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm -w lint
+
+      - name: Test
+        run: pnpm -w test
+
+      - name: Build (no deploy)
+        run: pnpm -w build
