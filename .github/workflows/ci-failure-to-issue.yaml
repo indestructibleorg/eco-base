@@ -2,7 +2,7 @@ name: Centralized CI Failure Diagnostics
 
 on:
   workflow_run:
-    workflows: [".github/workflows/ci.yaml", "YAML Governance Lint", ".github/workflows/auto-sync-deploy.yaml"]
+    workflows: ["eco-base CI/CD", "YAML Governance Lint", "auto-sync-deploy"]
     types: [completed]
   workflow_dispatch:
     inputs:
