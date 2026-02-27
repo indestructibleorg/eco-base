@@ -23,7 +23,7 @@ eco-base is an enterprise cloud-native AI inference platform monorepo with Pytho
   - `cd platforms/eco-observops && python3 -m pytest tests/ --ignore=tests/integration --ignore=tests/e2e -q` (22 pass)
   - `cd platforms/eco-seccompops && python3 -m pytest tests/ --ignore=tests/integration --ignore=tests/e2e -q` (6 pass)
   - `cd platforms/eco-dataops && python3 -m pytest tests/ --ignore=tests/integration --ignore=tests/e2e -q` (18 pass)
-  - `cd platforms/eco-superai && python3 -m pytest tests/unit/ -q` (1223 pass; 87 pre-existing failures needing optional deps like celery, openai, chromadb)
+  - `cd platforms/eco-superai && python3 -m pytest tests/unit/ -q` (many tests passing; some pre-existing failures needing optional deps like celery, openai, chromadb)
 
 ### Linting
 
