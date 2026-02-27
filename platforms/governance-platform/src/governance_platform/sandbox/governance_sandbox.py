@@ -117,7 +117,7 @@ class GovernanceSandbox:
 
             # Load and exec the policy script in a restricted namespace
             script_path = os.path.join(os.path.dirname(__file__), "policy_script.py")
-            with open(script_path) as f:
+            with open(script_path, encoding='utf-8') as f:
                 script_source = f.read()
 
             # Provide a safe namespace for the policy script

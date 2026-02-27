@@ -147,7 +147,7 @@ def test_script_execution():
         # Check if output file was created
         output_file = Path("/tmp/test-analysis.json")
         if output_file.exists():
-            with open(output_file, "r") as f:
+            with open(output_file, "r", encoding='utf-8') as f:
                 analysis = json.load(f)
             print("✅ Analysis complete:")
             print(f"   Total errors: {analysis.get('summary', {}).get('total', 0)}")

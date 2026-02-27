@@ -356,7 +356,7 @@ def check_artifact_validity() -> Dict[str, Any]:
         error_count = 0
         for gl_file in gl_files:
             try:
-                with open(gl_file, 'r') as f:
+                with open(gl_file, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                 if data:
                     valid_count += 1
@@ -376,7 +376,7 @@ def check_integration_health() -> Dict[str, Any]:
         # Check for integration markers
         integration_file = Path.cwd() / ".gl-index.json"
         if integration_file.exists():
-            with open(integration_file, 'r') as f:
+            with open(integration_file, 'r', encoding='utf-8') as f:
                 data = json.load(f)
             artifacts = data.get("artifacts", [])
             return {

@@ -11,7 +11,7 @@ import sys
 def main():
     filepath = sys.argv[1] if len(sys.argv) > 1 else "/tmp/python-audit.json"
     try:
-        with open(filepath) as f:
+        with open(filepath, encoding='utf-8') as f:
             data = json.load(f)
         vulns = [
             v

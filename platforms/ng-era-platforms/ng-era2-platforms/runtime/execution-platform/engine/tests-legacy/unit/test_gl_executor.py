@@ -101,7 +101,7 @@ class TestGLArtifact:
         """Test GLArtifact.from_file."""
         import yaml
         file_path = tmp_path / "test-artifact.yaml"
-        with open(file_path, 'w') as f:
+        with open(file_path, 'w', encoding='utf-8') as f:
             yaml.dump(sample_artifact_data, f)
         artifact = GLArtifact.from_file(file_path)
         assert artifact.name == 'test-vision'
@@ -115,7 +115,7 @@ class TestGLArtifact:
         artifact.file_path = str(file_path)
         artifact.save()
         assert file_path.exists()
-        with open(file_path, 'r') as f:
+        with open(file_path, 'r', encoding='utf-8') as f:
             saved_data = yaml.safe_load(f)
         assert saved_data['metadata']['name'] == 'test-vision'
     def test_save_with_explicit_path(self, sample_artifact_data, tmp_path):
@@ -127,7 +127,7 @@ class TestGLArtifact:
         artifact.file_path = str(file_path)
         artifact.save()
         assert file_path.exists()
-        with open(file_path, 'r') as f:
+        with open(file_path, 'r', encoding='utf-8') as f:
             saved_data = yaml.safe_load(f)
         assert saved_data['metadata']['name'] == 'test-vision'
 class TestExecutionContext:
@@ -176,7 +176,7 @@ class TestArtifactManager:
             'spec': {}
         }
         artifact_file = strategic_path / 'test-vision.yaml'
-        with open(artifact_file, 'w') as f:
+        with open(artifact_file, 'w', encoding='utf-8') as f:
             yaml.dump(artifact_data, f)
         return tmp_path
     def test_discover_artifacts(self, setup_test_artifacts):
@@ -263,7 +263,7 @@ class TestGLExecutorIntegration:
             }
         }
         vision_file = layers_path / 'GL00-09-strategic' / 'artifacts' / 'vision.yaml'
-        with open(vision_file, 'w') as f:
+        with open(vision_file, 'w', encoding='utf-8') as f:
             yaml.dump(vision_data, f)
         return tmp_path
     def test_full_workflow(self, setup_full_environment):

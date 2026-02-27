@@ -13,6 +13,7 @@
 # Pod Disruption Budget for High Availability
 apiVersion: policy/v1
 kind: PodDisruptionBudget
+---
 metadata:
   name: machine-native-ops-ha-pdb
   namespace: platform-03
@@ -31,6 +32,7 @@ spec:
 # PriorityClass for Critical Workloads
 apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
+---
 metadata:
   name: critical-priority
   namespace: platform-03
@@ -46,6 +48,7 @@ description: "High priority class for critical workloads during failover"
 # PriorityClass for High Priority Workloads
 apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
+---
 metadata:
   name: high-priority
   namespace: platform-03
@@ -61,6 +64,7 @@ description: "High priority class for important workloads"
 # PriorityClass for Normal Workloads
 apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
+---
 metadata:
   name: normal-priority
   namespace: platform-03
@@ -76,6 +80,7 @@ description: "Normal priority class for standard workloads"
 # HorizontalPodAutoscaler for Main Application
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
+---
 metadata:
   name: machine-native-ops-hpa
   namespace: platform-03
@@ -88,6 +93,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
+---
 metadata:
   name: machine-native-ops
   minReplicas: 9  # Minimum 3 per zone
@@ -133,6 +139,7 @@ metadata:
 # HorizontalPodAutoscaler for API Service
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
+---
 metadata:
   name: machine-native-ops-api-hpa
   namespace: platform-03
@@ -145,6 +152,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
+---
 metadata:
   name: machine-native-ops-api
   minReplicas: 6  # Minimum 2 per zone
@@ -179,6 +187,7 @@ metadata:
 # VerticalPodAutoscaler for Automatic Resource Adjustment
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
+---
 metadata:
   name: machine-native-ops-vpa
   namespace: platform-03
@@ -191,6 +200,7 @@ spec:
   targetRef:
     apiVersion: apps/v1
     kind: Deployment
+---
 metadata:
   name: machine-native-ops
   updatePolicy:
@@ -220,6 +230,7 @@ metadata:
 # Zone Failure Detection ConfigMap
 apiVersion: v1
 kind: ConfigMap
+---
 metadata:
   name: zone-failure-config
   namespace: platform-03
@@ -269,6 +280,7 @@ data:
 # Zone Failover Controller Deployment
 apiVersion: apps/v1
 kind: Deployment
+---
 metadata:
   name: zone-failover-controller
   namespace: platform-03
@@ -360,6 +372,7 @@ spec:
 # Zone Failover Controller ServiceAccount
 apiVersion: v1
 kind: ServiceAccount
+---
 metadata:
   name: zone-failover-controller
   namespace: platform-03
@@ -367,6 +380,7 @@ metadata:
 # Zone Failover Controller Role
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
+---
 metadata:
   name: zone-failover-controller
   namespace: platform-03
@@ -387,16 +401,19 @@ rules:
 # Zone Failover Controller RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
+---
 metadata:
   name: zone-failover-controller
   namespace: platform-03
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
+---
 metadata:
   name: zone-failover-controller
 subjects:
 - kind: ServiceAccount
+---
 metadata:
   name: zone-failover-controller
   namespace: platform-03
@@ -404,6 +421,7 @@ metadata:
 # Circuit Breaker Configuration for Failover
 apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
+---
 metadata:
   name: circuit-breaker-failover
   namespace: platform-03

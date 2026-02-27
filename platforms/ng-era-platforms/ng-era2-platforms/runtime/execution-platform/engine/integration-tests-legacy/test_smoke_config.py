@@ -42,7 +42,7 @@ class TestConfigurationManagerSmoke:
             "version": "1.0.0",
             "test": True,
         }
-        with open(config_file, 'w') as f:
+        with open(config_file, 'w', encoding='utf-8') as f:
             yaml.dump(config_data, f)
         try:
             # Try to load
@@ -69,7 +69,7 @@ class TestConfigHotReloaderSmoke:
                 "version": "1.0.0",
                 "hot_reload_test": True,
             }
-            with open(config_file, 'w') as f:
+            with open(config_file, 'w', encoding='utf-8') as f:
                 yaml.dump(config_data, f)
             reloader = ConfigHotReloader(
                 config_path=config_file,
@@ -104,7 +104,7 @@ class TestConfigFileWatcherSmoke:
                 "version": "1.0.0",
                 "watcher_test": True,
             }
-            with open(config_file, 'w') as f:
+            with open(config_file, 'w', encoding='utf-8') as f:
                 yaml.dump(config_data, f)
             watcher = ConfigFileWatcher(
                 config_path=config_file,
@@ -135,11 +135,11 @@ class TestConfigurationFormatsSmoke:
             "version": "1.0.0",
             "format": "yaml",
         }
-        with open(config_file, 'w') as f:
+        with open(config_file, 'w', encoding='utf-8') as f:
             yaml.dump(config_data, f)
         assert config_file.exists()
         # Try to read
-        with open(config_file, 'r') as f:
+        with open(config_file, 'r', encoding='utf-8') as f:
             loaded = yaml.safe_load(f)
         assert loaded["format"] == "yaml"
     def test_json_format(self, test_config):
@@ -149,11 +149,11 @@ class TestConfigurationFormatsSmoke:
             "version": "1.0.0",
             "format": "json",
         }
-        with open(config_file, 'w') as f:
+        with open(config_file, 'w', encoding='utf-8') as f:
             json.dump(config_data, f)
         assert config_file.exists()
         # Try to read
-        with open(config_file, 'r') as f:
+        with open(config_file, 'r', encoding='utf-8') as f:
             loaded = json.load(f)
         assert loaded["format"] == "json"
 @pytest.mark.smoke

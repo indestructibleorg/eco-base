@@ -101,7 +101,7 @@ class AuditReportGenerator:
         semantic_index = layer_path / "ECO-SEMANTIC-INDEX.json"
         if semantic_index.exists():
             try:
-                with open(semantic_index, 'r') as f:
+                with open(semantic_index, 'r', encoding='utf-8') as f:
                     index_data = json.load(f)
                 if index_data.get('layer') != self.layer:
                     findings.append({
@@ -183,7 +183,7 @@ class AuditReportGenerator:
         """Save audit report to file"""
         filename = f"audit-{self.layer}-{self.timestamp.strftime('%Y%m%d%H%M%S')}.json"
         filepath = self.output_dir / filename
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2)
         return filepath
 def main():

@@ -41,7 +41,7 @@ class NamingMigrationTool:
     def __init__(self, spec_path: str):
         """載入 machine-spec.yaml"""
         try:
-            with open(spec_path, "r") as f:
+            with open(spec_path, "r", encoding='utf-8') as f:
                 self.spec = yaml.safe_load(f)
         except FileNotFoundError:
             print(f"Error: Spec file not found: {spec_path}", file=sys.stderr)
@@ -254,7 +254,7 @@ class NamingMigrationTool:
                 )
             plan["spec"]["batches"].append(batch_plan)
         # 寫入文件
-        with open(output_path, "w") as f:
+        with open(output_path, "w", encoding='utf-8') as f:
             yaml.dump(plan, f, default_flow_style=False, allow_unicode=True)
         print(f"✅ Migration plan generated: {output_path}")
 def main():
@@ -342,7 +342,7 @@ Examples:
             tool.generate_migration_plan(namespaces, args.generate_plan)
         # 寫入輸出文件
         if args.output:
-            with open(args.output, "w") as f:
+            with open(args.output, "w", encoding='utf-8') as f:
                 json.dump(output_data, f, indent=2)
             print(f"\n✅ Results written to: {args.output}")
     else:

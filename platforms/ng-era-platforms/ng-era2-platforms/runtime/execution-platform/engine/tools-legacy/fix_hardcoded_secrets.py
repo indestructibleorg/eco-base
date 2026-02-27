@@ -170,7 +170,7 @@ def main():
         template = fixer.generate_env_template(all_findings)
         env_file = project_root / ".env.example"
         # Security: Writing only placeholder template to file
-        with open(env_file, "w") as f:
+        with open(env_file, "w", encoding='utf-8') as f:
             f.write(template)
         print(f"\n📝 Generated {env_file} (placeholder template only)")
         print(f"   Variables: {len(set(f['type'] for f in all_findings))}")

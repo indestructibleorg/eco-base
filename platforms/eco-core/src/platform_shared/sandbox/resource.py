@@ -96,7 +96,7 @@ class ResourceMonitor:
 
     def _read_memory(self) -> float:
         try:
-            with open(f"/proc/{self._pid}/status") as f:
+            with open(f"/proc/{self._pid}/status", encoding='utf-8') as f:
                 for line in f:
                     if line.startswith("VmRSS:"):
                         return int(line.split()[1]) / 1024  # kB → MB

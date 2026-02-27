@@ -289,7 +289,7 @@ class TestAuditPersistence:
         engine.close()
         files = list(os.listdir(tmp_audit_dir))
         fpath = os.path.join(tmp_audit_dir, files[0])
-        with open(fpath, "r") as f:
+        with open(fpath, "r", encoding='utf-8') as f:
             lines = f.readlines()
         assert len(lines) >= 2
         for line in lines:

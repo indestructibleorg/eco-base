@@ -31,7 +31,7 @@ class DocumentationGenerator:
         return docs
     def save(self, content: str, output_path: str):
         """Save documentation"""
-        with open(output_path, "w") as f:
+        with open(output_path, "w", encoding='utf-8') as f:
             f.write(content)
 def main():
     import argparse

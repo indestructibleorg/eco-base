@@ -38,7 +38,7 @@ class ValidatorGenerator:
         return code
     def save(self, code: str, output_path: str):
         """Save generated validator"""
-        with open(output_path, "w") as f:
+        with open(output_path, "w", encoding='utf-8') as f:
             f.write(code)
 def main():
     import argparse

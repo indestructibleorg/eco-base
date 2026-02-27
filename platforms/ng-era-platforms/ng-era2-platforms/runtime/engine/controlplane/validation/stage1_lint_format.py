@@ -162,7 +162,7 @@ class Stage1LintFormatVerifier:
         evidence_file = (
             self.evidence_dir / f"stage{stage:02d}-{evidence_type.replace(' ', '_')}.json"
         )
-        with open(evidence_file, "w") as f:
+        with open(evidence_file, "w", encoding='utf-8') as f:
             json.dump(
                 {
                     "verification_hash": verification_hash,

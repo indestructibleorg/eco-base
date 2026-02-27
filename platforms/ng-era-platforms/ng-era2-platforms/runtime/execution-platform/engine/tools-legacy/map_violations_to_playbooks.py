@@ -25,12 +25,12 @@ from pathlib import Path
 import yaml
 def load_index(index_path: Path) -> dict:
     """Load index.yaml"""
-    with open(index_path) as f:
+    with open(index_path, encoding='utf-8') as f:
         return yaml.safe_load(f)
 def load_hotspot_data(hotspot_path: Path) -> list:
     """Load hotspot.json data"""
     try:
-        with open(hotspot_path) as f:
+        with open(hotspot_path, encoding='utf-8') as f:
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         return []

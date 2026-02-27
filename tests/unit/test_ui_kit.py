@@ -21,7 +21,7 @@ class TestUIKitComponents:
     def test_index_exports(self):
         idx = os.path.join(UIKIT, "index.ts")
         assert os.path.isfile(idx)
-        content = open(idx).read()
+        content = open(idx, encoding='utf-8').read()
         for comp in ["Modal", "Dropdown", "Table", "ToastProvider", "useToast"]:
             assert comp in content, f"Missing export: {comp}"
 

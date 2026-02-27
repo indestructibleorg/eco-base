@@ -86,7 +86,7 @@ class AutoFixer:
             content = gitignore_path.read_text()
             missing_patterns = [p for p in env_patterns if p not in content]
             if missing_patterns and not self.dry_run:
-                with open(gitignore_path, "a") as f:
+                with open(gitignore_path, "a", encoding='utf-8') as f:
                     f.write("\n# Environment variables (added by auto-fix)\n")
                     for pattern in missing_patterns:
                         f.write(f"{pattern}\n")
@@ -98,7 +98,7 @@ class AutoFixer:
                 print("✅ .gitignore 已包含環境變數模式")
         else:
             if not self.dry_run:
-                with open(gitignore_path, "w") as f:
+                with open(gitignore_path, "w", encoding='utf-8') as f:
                     f.write("# Environment variables\n")
                     for pattern in env_patterns:
                         f.write(f"{pattern}\n")

@@ -14,7 +14,7 @@ class TestAPITypesExist:
 
     def test_types_has_service_health(self):
         path = os.path.join(os.path.dirname(__file__), "..", "..", "backend", "api", "src", "types.ts")
-        with open(path) as f:
+        with open(path, encoding='utf-8') as f:
             content = f.read()
         assert "ServiceHealth" in content
         assert "PaginatedResponse" in content
@@ -25,6 +25,6 @@ class TestAPITypesExist:
 
     def test_types_has_exports(self):
         path = os.path.join(os.path.dirname(__file__), "..", "..", "backend", "api", "src", "types.ts")
-        with open(path) as f:
+        with open(path, encoding='utf-8') as f:
             content = f.read()
         assert content.count("export interface") >= 6

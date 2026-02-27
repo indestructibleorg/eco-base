@@ -115,7 +115,7 @@ class TestHealthCheckSystem(unittest.TestCase):
         self.health_check.export_json(temp_file)
         # Verify file was created and is valid JSON
         self.assertTrue(os.path.exists(temp_file))
-        with open(temp_file, 'r') as f:
+        with open(temp_file, 'r', encoding='utf-8') as f:
             report = json.load(f)
         self.assertIsInstance(report, dict)
         self.assertIn('overall_status', report)
@@ -220,7 +220,7 @@ class TestHealthCheckIntegration(unittest.TestCase):
             hc.export_json(output_path)
             # Verify file
             self.assertTrue(os.path.exists(output_path))
-            with open(output_path, 'r') as f:
+            with open(output_path, 'r', encoding='utf-8') as f:
                 loaded = json.load(f)
             self.assertIn('overall_status', loaded)
             self.assertIn('checks', loaded)

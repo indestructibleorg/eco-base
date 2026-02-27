@@ -9,14 +9,14 @@ from pathlib import Path
 
 # Load staging configmap
 staging_cm_path = Path("k8s/staging/configmap.qyaml")
-with open(staging_cm_path) as f:
+with open(staging_cm_path, encoding='utf-8') as f:
     staging_docs = list(yaml.safe_load_all(f))
     staging_cm = staging_docs[0]
     staging_secret = staging_docs[1]
 
 # Load production configmap
 production_cm_path = Path("k8s/production/configmap.qyaml")
-with open(production_cm_path) as f:
+with open(production_cm_path, encoding='utf-8') as f:
     production_docs = list(yaml.safe_load_all(f))
     production_cm = production_docs[0]
     # Production doesn't have a separate Secret doc

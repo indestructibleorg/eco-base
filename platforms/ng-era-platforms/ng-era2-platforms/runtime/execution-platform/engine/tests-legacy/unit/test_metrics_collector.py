@@ -118,11 +118,11 @@ class TestMetricsCollectorOutput(unittest.TestCase):
         """Test exporting metrics to JSON file."""
         metrics = self.collector.collect_all()
         output_path = os.path.join(self.temp_dir, "metrics.json")
-        with open(output_path, 'w') as f:
+        with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(metrics, f, indent=2)
         # Verify file was created and is valid JSON
         self.assertTrue(os.path.exists(output_path))
-        with open(output_path, 'r') as f:
+        with open(output_path, 'r', encoding='utf-8') as f:
             loaded = json.load(f)
         self.assertEqual(loaded, metrics)
     def test_prometheus_format(self):

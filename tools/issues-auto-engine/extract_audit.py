@@ -17,7 +17,7 @@ def main():
     audit_file = sys.argv[1]
     mode = sys.argv[2]
 
-    with open(audit_file) as f:
+    with open(audit_file, encoding='utf-8') as f:
         data = json.load(f)
 
     if mode == "hash":

@@ -25,7 +25,7 @@ def load_yaml_file(file_path: Path) -> Optional[Dict[str, Any]]:
     if not file_path.exists():
         raise SemanticValidationError(f"File not found: {file_path}")
     try:
-        with open(file_path, 'r') as f:
+        with open(file_path, 'r', encoding='utf-8') as f:
             return yaml.safe_load(f)
     except yaml.YAMLError as e:
         raise SemanticValidationError(f"Invalid YAML in {file_path}: {e}")
@@ -34,7 +34,7 @@ def load_json_file(file_path: Path) -> Optional[Dict[str, Any]]:
     if not file_path.exists():
         raise SemanticValidationError(f"File not found: {file_path}")
     try:
-        with open(file_path, 'r') as f:
+        with open(file_path, 'r', encoding='utf-8') as f:
             return json.load(f)
     except json.JSONDecodeError as e:
         raise SemanticValidationError(f"Invalid JSON in {file_path}: {e}")

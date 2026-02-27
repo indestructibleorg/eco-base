@@ -62,7 +62,7 @@ class Stage6AdmissionPolicyVerifier:
         opa_files = list(self.repo_path.rglob("*.rego"))
         for opa_file in opa_files:
             try:
-                with open(opa_file, "r") as f:
+                with open(opa_file, "r", encoding='utf-8') as f:
                     content = f.read()
                 policy_info = {
                     "file": str(opa_file.relative_to(self.repo_path)),
@@ -112,7 +112,7 @@ class Stage6AdmissionPolicyVerifier:
         )
         for kyverno_file in kyverno_files:
             try:
-                with open(kyverno_file, "r") as f:
+                with open(kyverno_file, "r", encoding='utf-8') as f:
                     policy_docs = list(yaml.safe_load_all(f))
                 for doc in policy_docs:
                     if doc and doc.get("apiVersion") == "kyverno.io/v1":
@@ -199,7 +199,7 @@ class Stage6AdmissionPolicyVerifier:
         evidence_file = (
             self.evidence_dir / f"stage{stage:02d}-{evidence_type.replace(' ', '_')}.json"
         )
-        with open(evidence_file, "w") as f:
+        with open(evidence_file, "w", encoding='utf-8') as f:
             json.dump(
                 {
                     "verification_hash": verification_hash,

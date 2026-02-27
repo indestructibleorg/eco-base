@@ -82,7 +82,7 @@ full_restructure() {
     read -p "確認繼續？(y/N): " -n 1 -r
     echo
     
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
+    if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
         log_info "開始執行完整重構..."
         python3 tools/automated_directory_restructure.py
         log_success "重構完成"

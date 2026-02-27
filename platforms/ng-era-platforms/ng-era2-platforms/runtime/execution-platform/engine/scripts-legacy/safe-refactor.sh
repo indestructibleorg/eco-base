@@ -360,12 +360,12 @@ main() {
             validate
             read -p "Phase 1 完成，是否繼續？(y/n) " -n 1 -r
             echo
-            if [[ $REPLY =~ ^[Yy]$ ]]; then
+            if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
                 phase2
                 validate
                 read -p "Phase 2 完成，是否繼續？(y/n) " -n 1 -r
                 echo
-                if [[ $REPLY =~ ^[Yy]$ ]]; then
+                if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
                     phase3
                     validate
                 fi

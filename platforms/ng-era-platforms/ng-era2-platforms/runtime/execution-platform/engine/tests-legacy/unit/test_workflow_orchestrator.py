@@ -131,7 +131,7 @@ class TestSafeExpressionParserSecurity:
             # SECURITY WARNING: exec() usage - ensure input is trusted
             "exec('print(1)')",
             "ast.literal_eval('1+1')",
-            "open('/etc/passwd').read()",
+            "open('/etc/passwd', encoding='utf-8').read()",
             "lambda: 1",
             "[x for x in range(10)]",
         ]

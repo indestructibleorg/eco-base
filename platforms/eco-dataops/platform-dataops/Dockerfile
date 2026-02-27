@@ -1,7 +1,7 @@
 # =============================================================================
 # DataOps Platform — ECO Namespace: eco-dataops | Port: 8092
 # =============================================================================
-FROM python:3.11-slim AS base
+FROM python:3.11.9-slim AS base
 
 LABEL org.opencontainers.image.title="dataops-platform"
 LABEL org.opencontainers.image.description="Data & Evidence Operations Platform"

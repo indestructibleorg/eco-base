@@ -107,7 +107,7 @@ setup_namespace() {
         print_warning "Namespace $QUANTUM_NAMESPACE already exists"
         read -p "Do you want to recreate it? (y/N): " -n 1 -r
         echo
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
+        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
             kubectl delete namespace $QUANTUM_NAMESPACE
             print_status "Deleted existing namespace"
         else
@@ -130,7 +130,7 @@ install_secrets() {
     echo -e "${BLUE}🔐 Installing quantum secrets...${NC}"
     
     # Generate quantum secrets if they don't exist
-    if ! kubectl get secret quantum-governance-secrets -n $QUANTUM_NAMESPACE &> /dev/null; then
+    if ! kubectl get secret quantum-governance-secrets -n "${QUANTUM_NAMESPACE}" &> /dev/null; then
         print_info "Generating quantum secrets..."
         
         # Generate random secrets (in production, use proper secret management)
@@ -139,7 +139,7 @@ install_secrets() {
         QKD_SECRET=$(openssl rand -base64 48)
         
         kubectl create secret generic quantum-governance-secrets \
-            -n $QUANTUM_NAMESPACE \
+            -n "${QUANTUM_NAMESPACE}" \
             --from-literal=quantum-api-token="$QUANTUM_API_TOKEN" \
             --from-literal=quantum-signature-key="$QUANTUM_SIGNATURE_KEY" \
             --from-literal=qkd-secret="$QKD_SECRET"
@@ -385,7 +385,7 @@ wait_for_deployment() {
     # Wait for pods to be ready
     if kubectl wait --for=condition=ready pod \
         -l app.kubernetes.io/name=quantum-governance \
-        -n $QUANTUM_NAMESPACE \
+        -n "${QUANTUM_NAMESPACE}" \
         --timeout=300s; then
         print_status "Quantum deployment is ready"
     else
@@ -455,19 +455,19 @@ run_validation() {
     echo -e "${BLUE}🧪 Running quantum validation tests...${NC}"
     
     # Test service health
-    if kubectl get pods -n $QUANTUM_NAMESPACE -l app.kubernetes.io/name=quantum-governance | grep -q "Running"; then
+    if kubectl get pods -n "${QUANTUM_NAMESPACE}" -l app.kubernetes.io/name=quantum-governance | grep -q "Running"; then
         print_status "Quantum pods are running"
     else
         print_error "Quantum pods are not running"
-        kubectl get pods -n $QUANTUM_NAMESPACE -l app.kubernetes.io/name=quantum-governance
+        kubectl get pods -n "${QUANTUM_NAMESPACE}" -l app.kubernetes.io/name=quantum-governance
         exit 1
     fi
     
     # Test service endpoints
-    SERVICE_IP=$(kubectl get svc quantum-governance-service -n $QUANTUM_NAMESPACE -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+    SERVICE_IP=$(kubectl get svc quantum-governance-service -n "${QUANTUM_NAMESPACE}" -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
     if [ -z "$SERVICE_IP" ]; then
         SERVICE_IP="localhost"
-        kubectl port-forward -n $QUANTUM_NAMESPACE svc/quantum-governance-service 8080:80 &
+        kubectl port-forward -n "${QUANTUM_NAMESPACE}" svc/quantum-governance-service 8080:80 &
         PORT_FORWARD_PID=$!
         sleep 5
     fi
@@ -503,7 +503,7 @@ display_summary() {
     echo -e "${PURPLE}🔗 Service URLs:${NC}"
     
     # Get service URL
-    SERVICE_IP=$(kubectl get svc quantum-governance-service -n $QUANTUM_NAMESPACE -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null || echo "localhost")
+    SERVICE_IP=$(kubectl get svc quantum-governance-service -n "${QUANTUM_NAMESPACE}" -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null || echo "localhost")
     if [ "$SERVICE_IP" != "localhost" ]; then
         echo -e "   • API: ${CYAN}http://$SERVICE_IP/api/v4/validate${NC}"
         echo -e "   • Metrics: ${CYAN}http://$SERVICE_IP/metrics${NC}"
@@ -514,15 +514,15 @@ display_summary() {
         echo -e "   • Health: ${CYAN}http://localhost:8080/health${NC} (after port-forward)"
         echo ""
         echo -e "${YELLOW}💡 To access services locally, run:${NC}"
-        echo -e "   ${BLUE}kubectl port-forward -n $QUANTUM_NAMESPACE svc/quantum-governance-service 8080:80 &${NC}"
-        echo -e "   ${BLUE}kubectl port-forward -n $QUANTUM_NAMESPACE svc/quantum-governance-service 9090:9090 &${NC}"
+        echo -e "   ${BLUE}kubectl port-forward -n "${QUANTUM_NAMESPACE}" svc/quantum-governance-service 8080:80 &${NC}"
+        echo -e "   ${BLUE}kubectl port-forward -n "${QUANTUM_NAMESPACE}" svc/quantum-governance-service 9090:9090 &${NC}"
     fi
     
     echo ""
     echo -e "${PURPLE}📊 Monitoring Commands:${NC}"
-    echo -e "   • Check pods: ${BLUE}kubectl get pods -n $QUANTUM_NAMESPACE${NC}"
-    echo -e "   • View logs: ${BLUE}kubectl logs -f -n $QUANTUM_NAMESPACE -l app.kubernetes.io/name=quantum-governance${NC}"
-    echo -e "   • Check metrics: ${BLUE}kubectl top pods -n $QUANTUM_NAMESPACE${NC}"
+    echo -e "   • Check pods: ${BLUE}kubectl get pods -n "${QUANTUM_NAMESPACE}"${NC}"
+    echo -e "   • View logs: ${BLUE}kubectl logs -f -n "${QUANTUM_NAMESPACE}" -l app.kubernetes.io/name=quantum-governance${NC}"
+    echo -e "   • Check metrics: ${BLUE}kubectl top pods -n "${QUANTUM_NAMESPACE}"${NC}"
     echo ""
     echo -e "${PURPLE}🧪 Testing Commands:${NC}"
     echo -e "   • Validate naming: ${BLUE}curl -X POST http://localhost:8080/api/v4/validate -d '{&quot;resource_name&quot;:&quot;test-app-service-v1.0&quot;}'${NC}"

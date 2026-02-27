@@ -14,7 +14,7 @@ class TestYAMLStudioPage:
 
     def test_yaml_studio_has_components(self):
         path = os.path.join(os.path.dirname(__file__), "..", "..", "platforms", "web", "app", "src", "pages", "YAMLStudio.tsx")
-        with open(path) as f:
+        with open(path, encoding='utf-8') as f:
             content = f.read()
         assert "handleValidate" in content
         assert "handleGenerate" in content
@@ -24,7 +24,7 @@ class TestYAMLStudioPage:
 
     def test_yaml_studio_has_form(self):
         path = os.path.join(os.path.dirname(__file__), "..", "..", "platforms", "web", "app", "src", "pages", "YAMLStudio.tsx")
-        with open(path) as f:
+        with open(path, encoding='utf-8') as f:
             content = f.read()
         assert "serviceName" in content
         assert "namespace" in content
@@ -36,6 +36,6 @@ class TestYAMLStudioPage:
 
     def test_login_has_form(self):
         path = os.path.join(os.path.dirname(__file__), "..", "..", "platforms", "web", "app", "src", "pages", "Login.tsx")
-        with open(path) as f:
+        with open(path, encoding='utf-8') as f:
             content = f.read()
         assert "email" in content.lower() or "login" in content.lower()

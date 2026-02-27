@@ -335,7 +335,7 @@ class TestGLValidator:
         import yaml
         # Create artifact file
         artifact_file = tmp_path / 'test.yaml'
-        with open(artifact_file, 'w') as f:
+        with open(artifact_file, 'w', encoding='utf-8') as f:
             yaml.dump(valid_artifact, f)
         result = validator.validate_file(artifact_file)
         # Result might be a tuple (passed, findings) or ValidationResult
@@ -351,7 +351,7 @@ class TestGLValidator:
         import yaml
         # Create artifact file
         artifact_file = tmp_path / 'test.yaml'
-        with open(artifact_file, 'w') as f:
+        with open(artifact_file, 'w', encoding='utf-8') as f:
             yaml.dump(invalid_artifact, f)
         result = validator.validate_file(artifact_file)
         # Result might be a tuple (passed, findings) or ValidationResult
@@ -371,7 +371,7 @@ class TestGLValidator:
             artifact['metadata'] = valid_artifact['metadata'].copy()
             artifact['metadata']['name'] = f'test-{i}'
             artifact_file = tmp_path / f'test-{i}.yaml'
-            with open(artifact_file, 'w') as f:
+            with open(artifact_file, 'w', encoding='utf-8') as f:
                 yaml.dump(artifact, f)
         result = validator.validate_directory(tmp_path)
         # Result might be different types
@@ -404,7 +404,7 @@ class TestGLValidator:
         }
         import yaml
         artifact_file = tmp_path / 'test.yaml'
-        with open(artifact_file, 'w') as f:
+        with open(artifact_file, 'w', encoding='utf-8') as f:
             yaml.dump(artifact, f)
         result = validator.validate_file(artifact_file)
         # Should have error for missing custom_field
@@ -439,7 +439,7 @@ class TestGLValidatorIntegration:
                 'vision': {'statement': 'Test vision'}
             }
         }
-        with open(strategic_path / 'vision.yaml', 'w') as f:
+        with open(strategic_path / 'vision.yaml', 'w', encoding='utf-8') as f:
             yaml.dump(vision, f)
         # GL10-29 artifacts
         operational_path = layers_path / 'GL10-29-operational' / 'artifacts'
@@ -458,7 +458,7 @@ class TestGLValidatorIntegration:
                 'plan': {'title': 'Test plan'}
             }
         }
-        with open(operational_path / 'plan.yaml', 'w') as f:
+        with open(operational_path / 'plan.yaml', 'w', encoding='utf-8') as f:
             yaml.dump(plan, f)
         return tmp_path
     def test_validate_all_layers(self, setup_governance_structure):

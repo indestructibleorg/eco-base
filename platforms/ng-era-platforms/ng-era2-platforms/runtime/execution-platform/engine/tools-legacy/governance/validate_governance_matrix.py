@@ -105,7 +105,7 @@ def validate_schemas(verbose: bool = False) -> bool:
     # Validate JSON syntax
     for schema_path in schemas:
         try:
-            with open(schema_path, "r") as f:
+            with open(schema_path, "r", encoding='utf-8') as f:
                 json.load(f)
         except json.JSONDecodeError as e:
             print(f"Error: Invalid JSON in {schema_path}: {e}", file=sys.stderr)

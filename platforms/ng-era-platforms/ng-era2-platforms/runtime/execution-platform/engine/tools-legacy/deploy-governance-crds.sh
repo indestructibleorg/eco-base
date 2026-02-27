@@ -165,7 +165,7 @@ verify_examples() {
         local resource_type=$(echo $resource | cut -d'/' -f1)
         local resource_name=$(echo $resource | cut -d'/' -f2)
         
-        if kubectl get $resource_type $resource_name -n $NAMESPACE &> /dev/null; then
+        if kubectl get $resource_type $resource_name -n "${NAMESPACE}" &> /dev/null; then
             log_success "Resource found: $resource"
         else
             log_warning "Resource not found: $resource"
@@ -182,14 +182,14 @@ show_status() {
     
     echo ""
     echo "=== Resources in $NAMESPACE namespace ==="
-    kubectl get all -n $NAMESPACE
+    kubectl get all -n "${NAMESPACE}"
     
     echo ""
     echo "=== Governance Resources ==="
-    kubectl get riskregisters -n $NAMESPACE 2>/dev/null || echo "No risk registers found"
-    kubectl get implementationroadmaps -n $NAMESPACE 2>/dev/null || echo "No implementation roadmaps found"
-    kubectl get decisionauthoritymatrices -n $NAMESPACE 2>/dev/null || echo "No decision authority matrices found"
-    kubectl get performancetargets -n $NAMESPACE 2>/dev/null || echo "No performance targets found"
+    kubectl get riskregisters -n "${NAMESPACE}" 2>/dev/null || echo "No risk registers found"
+    kubectl get implementationroadmaps -n "${NAMESPACE}" 2>/dev/null || echo "No implementation roadmaps found"
+    kubectl get decisionauthoritymatrices -n "${NAMESPACE}" 2>/dev/null || echo "No decision authority matrices found"
+    kubectl get performancetargets -n "${NAMESPACE}" 2>/dev/null || echo "No performance targets found"
 }
 
 cleanup() {
@@ -198,7 +198,7 @@ cleanup() {
     read -p "Are you sure you want to delete all governance resources? (y/N): " -n 1 -r
     echo
     
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
+    if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
         log_info "Deleting example resources"
         kubectl delete -f $CRD_DIR/00-vision-strategy/k8s/examples/ --ignore-not-found=true
         kubectl delete -f $CRD_DIR/02-decision/k8s/examples/ --ignore-not-found=true

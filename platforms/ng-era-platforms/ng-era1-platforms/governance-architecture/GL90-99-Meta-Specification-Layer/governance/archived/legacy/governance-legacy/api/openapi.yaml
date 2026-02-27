@@ -56,11 +56,6 @@ tags:
     description: Quantum governance operations
   - name: monitoring
     description: Monitoring and metrics operations
-
-paths:
-  /naming/generate:
-    post:
-tags:
         - naming
       summary: Generate standardized resource name
       description: Generates a standardized resource name based on governance rules
@@ -90,10 +85,6 @@ tags:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
-  /naming/validate:
-    post:
-tags:
         - validation
       summary: Validate resource name
       description: Validates a resource name against governance rules
@@ -117,10 +108,6 @@ tags:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
-  /naming/batch-validate:
-    post:
-tags:
         - validation
       summary: Batch validate resource names
       description: Validates multiple resource names in a single request
@@ -138,10 +125,6 @@ tags:
             application/json:
               schema:
                 $ref: '#/components/schemas/BatchValidateResponse'
-
-  /repair/auto:
-    post:
-tags:
         - repair
       summary: Auto-repair naming violations
       description: Automatically repairs naming violations using intelligent algorithms
@@ -165,10 +148,6 @@ tags:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-
-  /migration/analyze:
-    post:
-tags:
         - migration
       summary: Analyze migration requirements
       description: Analyzes resources and provides migration recommendations
@@ -186,10 +165,6 @@ tags:
             application/json:
               schema:
                 $ref: '#/components/schemas/MigrationAnalyzeResponse'
-
-  /migration/execute:
-    post:
-tags:
         - migration
       summary: Execute migration
       description: Executes resource migration with rollback support
@@ -207,10 +182,6 @@ tags:
             application/json:
               schema:
                 $ref: '#/components/schemas/MigrationExecuteResponse'
-
-  /quantum/validate:
-    post:
-tags:
         - quantum
       summary: Quantum-enhanced validation
       description: Validates resource names using quantum algorithms
@@ -230,10 +201,6 @@ tags:
             application/json:
               schema:
                 $ref: '#/components/schemas/QuantumValidateResponse'
-
-  /quantum/metrics:
-    get:
-tags:
         - quantum
         - monitoring
       summary: Get quantum metrics
@@ -248,10 +215,6 @@ tags:
             application/json:
               schema:
                 $ref: '#/components/schemas/QuantumMetrics'
-
-  /health:
-    get:
-tags:
         - monitoring
       summary: Health check
       description: Returns service health status
@@ -263,10 +226,6 @@ tags:
             application/json:
               schema:
                 $ref: '#/components/schemas/HealthStatus'
-
-  /metrics:
-    get:
-tags:
         - monitoring
       summary: Get metrics
       description: Returns Prometheus-compatible metrics
@@ -278,6 +237,37 @@ tags:
             text/plain:
               schema:
                 type: string
+
+paths:
+  /naming/generate:
+    post:
+
+  /naming/validate:
+    post:
+
+  /naming/batch-validate:
+    post:
+
+  /repair/auto:
+    post:
+
+  /migration/analyze:
+    post:
+
+  /migration/execute:
+    post:
+
+  /quantum/validate:
+    post:
+
+  /quantum/metrics:
+    get:
+
+  /health:
+    get:
+
+  /metrics:
+    get:
 
 components:
   schemas:

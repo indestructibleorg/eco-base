@@ -38,7 +38,7 @@ class TestYAMLToolkitGenerate:
     def test_generate_deployment(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             input_path = os.path.join(tmpdir, "module.json")
-            with open(input_path, "w") as f:
+            with open(input_path, "w", encoding='utf-8') as f:
                 json.dump({
                     "name": "eco-pytest-svc",
                     "kind": "Deployment",
@@ -53,7 +53,7 @@ class TestYAMLToolkitGenerate:
             assert "valid=true" in r.stdout
             qyaml_path = os.path.join(out_dir, "eco-pytest-svc.qyaml")
             assert os.path.isfile(qyaml_path)
-            content = open(qyaml_path).read()
+            content = open(qyaml_path, encoding='utf-8').read()
             assert "document_metadata:" in content
             assert "governance_info:" in content
             assert "registry_binding:" in content
@@ -102,7 +102,7 @@ class TestYAMLToolkitConvert:
             assert "Converted:" in r.stdout
             yaml_path = os.path.join(tmpdir, "namespace.yaml")
             assert os.path.isfile(yaml_path)
-            content = open(yaml_path).read()
+            content = open(yaml_path, encoding='utf-8').read()
             assert "document_metadata:" not in content
             assert "governance_info:" not in content
             assert "registry_binding:" not in content
@@ -118,6 +118,6 @@ class TestYAMLToolkitConvert:
             r = run_cli("convert", qyaml, f"--output={tmpdir}")
             assert "Converted:" in r.stdout
             yaml_path = os.path.join(tmpdir, "api-gateway.yaml")
-            content = open(yaml_path).read()
+            content = open(yaml_path, encoding='utf-8').read()
             assert "Deployment" in content
             assert "document_metadata:" not in content

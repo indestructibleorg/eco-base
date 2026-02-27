@@ -62,7 +62,7 @@ class PlatformBootstrapRunner:
     def load_bootstrap_config(self) -> Dict[str, Any]:
         """Load bootstrap configuration"""
         try:
-            with open(self.bootstrap_config_file, "r") as f:
+            with open(self.bootstrap_config_file, "r", encoding='utf-8') as f:
                 return yaml.safe_load(f)
         except FileNotFoundError:
             self.logger.error(
@@ -123,7 +123,7 @@ class PlatformBootstrapRunner:
             # Load validation report
             report_file = self.var_audit / "root-validate-report.json"
             if report_file.exists():
-                with open(report_file, "r") as f:
+                with open(report_file, "r", encoding='utf-8') as f:
                     validation_report = json.load(f)
                 self.bootstrap_context["evidence"][
                     "validation_report"
@@ -193,7 +193,7 @@ class PlatformBootstrapRunner:
         }
         # Save governance status
         status_file = self.var_run / "governance-engine.status"
-        with open(status_file, "w") as f:
+        with open(status_file, "w", encoding='utf-8') as f:
             json.dump(governance_status, f, indent=2)
         self.bootstrap_context["evidence"]["governance_status"] = governance_status
         return {
@@ -212,7 +212,7 @@ class PlatformBootstrapRunner:
                 "message": "Modules configuration file not found",
             }
         try:
-            with open(modules_file, "r") as f:
+            with open(modules_file, "r", encoding='utf-8') as f:
                 modules_config = yaml.safe_load(f)
             modules = modules_config.get("spec", {}).get("modules", [])
             # Check which modules are actually running
@@ -248,7 +248,7 @@ class PlatformBootstrapRunner:
             }
             # Save registry status
             status_file = self.var_run / "module-registry.json"
-            with open(status_file, "w") as f:
+            with open(status_file, "w", encoding='utf-8') as f:
                 json.dump(registry_status, f, indent=2)
             self.bootstrap_context["evidence"][
                 "module_registry_status"
@@ -279,7 +279,7 @@ class PlatformBootstrapRunner:
         }
         # Save trust status
         status_file = self.var_run / "trust-manager.status"
-        with open(status_file, "w") as f:
+        with open(status_file, "w", encoding='utf-8') as f:
             json.dump(trust_status, f, indent=2)
         self.bootstrap_context["evidence"]["trust_status"] = trust_status
         return {
@@ -304,15 +304,15 @@ class PlatformBootstrapRunner:
         }
         # Save provenance
         provenance_file = self.var_audit / "bootstrap-provenance.json"
-        with open(provenance_file, "w") as f:
+        with open(provenance_file, "w", encoding='utf-8') as f:
             json.dump(provenance, f, indent=2)
         # Create platform ready signal
         ready_file = self.var_run / "platform.ready"
-        with open(ready_file, "w") as f:
+        with open(ready_file, "w", encoding='utf-8') as f:
             f.write("MachineNativeOps Platform v1.0.0 - Bootstrap Completed")
         # Create bootstrap status
         status_file = self.var_run / "bootstrap.status"
-        with open(status_file, "w") as f:
+        with open(status_file, "w", encoding='utf-8') as f:
             f.write("completed")
         self.bootstrap_context["evidence"]["provenance_record"] = provenance
         return {
@@ -411,7 +411,7 @@ class PlatformBootstrapRunner:
         }
         # Save final bootstrap result
         result_file = self.var_audit / "bootstrap-result.json"
-        with open(result_file, "w") as f:
+        with open(result_file, "w", encoding='utf-8') as f:
             json.dump(final_result, f, indent=2)
         return final_result
 def main():

@@ -198,7 +198,7 @@ class UltimateSupplyChainVerifier:
             "verification_completed": datetime.now(timezone.utc).isoformat(),
         }
         report_file = self.evidence_dir / "supply-chain-verification-final-report.json"
-        with open(report_file, "w") as f:
+        with open(report_file, "w", encoding='utf-8') as f:
             json.dump(report, f, indent=2, default=str)
         # Also generate Markdown report
         self._generate_markdown_report(report, report_file.with_suffix(".md"))
@@ -240,7 +240,7 @@ class UltimateSupplyChainVerifier:
 #*驗證工具**: MachineNativeOps Supply Chain Verifier v1.0
 #*合規性標準**: 企業級供應鏈安全框架
 """
-        with open(output_file, "w") as f:
+        with open(output_file, "w", encoding='utf-8') as f:
             f.write(md_content)
 def main():
     """Main execution function"""

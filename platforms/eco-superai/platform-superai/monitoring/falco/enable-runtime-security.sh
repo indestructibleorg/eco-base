@@ -434,7 +434,7 @@ main() {
     echo "Deployment summary:"
     echo "  Namespace: $FALCO_NAMESPACE"
     echo "  Version: $FALCO_VERSION"
-    echo "  Web UI: kubectl port-forward -n $FALCO_NAMESPACE svc/falcosidekick-ui 2802:2802"
+    echo "  Web UI: kubectl port-forward -n "${FALCO_NAMESPACE}" svc/falcosidekick-ui 2802:2802"
     echo ""
     log_info "Next steps:"
     echo "  1. Configure alert destinations in falcosidekick"

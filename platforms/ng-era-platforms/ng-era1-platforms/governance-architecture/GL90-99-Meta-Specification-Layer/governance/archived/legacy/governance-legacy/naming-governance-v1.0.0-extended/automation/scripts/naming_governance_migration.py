@@ -156,7 +156,7 @@ class NamingGovernanceMigration:
     def _load_config(self) -> Dict[str, Any]:
         """載入配置文件"""
         try:
-            with open(self.config_path, "r") as f:
+            with open(self.config_path, "r", encoding='utf-8') as f:
                 return yaml.safe_load(f)
         except FileNotFoundError:
             logger.warning(f"配置文件未找到: {self.config_path}，使用默認配置")
@@ -650,7 +650,7 @@ class NamingGovernanceMigration:
             cmd = ["kubectl", "get", "all", "--all-namespaces", "-o", "yaml"]
 
             backup_file = os.path.join(backup_path, "cluster_resources.yaml")
-            with open(backup_file, "w") as f:
+            with open(backup_file, "w", encoding='utf-8') as f:
                 subprocess.run(cmd, stdout=f, check=True)
 
             return backup_path
@@ -774,7 +774,7 @@ class NamingGovernanceMigration:
         report_path = f"/var/log/naming-gl-platform.governance/dry_run_report_{timestamp}.json"
 
         os.makedirs(os.path.dirname(report_path), exist_ok=True)
-        with open(report_path, "w") as f:
+        with open(report_path, "w", encoding='utf-8') as f:
             json.dump(report, f, indent=2)
 
         logger.info(f"Dry-run 報告已保存到: {report_path}")
@@ -1101,7 +1101,7 @@ class NamingGovernanceMigration:
         report_path = f"/var/log/naming-gl-platform.governance/cutover_report_{timestamp}.json"
 
         os.makedirs(os.path.dirname(report_path), exist_ok=True)
-        with open(report_path, "w") as f:
+        with open(report_path, "w", encoding='utf-8') as f:
             json.dump(report, f, indent=2)
 
         logger.info(f"Cutover 報告已保存到: {report_path}")
@@ -1269,7 +1269,7 @@ def main():
 
         # 保存報告
         if args.output:
-            with open(args.output, "w") as f:
+            with open(args.output, "w", encoding='utf-8') as f:
                 json.dump(report, f, indent=2, default=str)
             logger.info(f"遷移報告已保存到: {args.output}")
 

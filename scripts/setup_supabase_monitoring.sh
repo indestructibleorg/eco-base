@@ -62,7 +62,7 @@ kubectl create secret generic prometheus-secrets \
   --dry-run=client -o yaml | kubectl apply -f -
 
 # Restart Prometheus to pick up new secret
-kubectl rollout restart deployment/prometheus -n $NAMESPACE
+kubectl rollout restart deployment/prometheus -n "${NAMESPACE}"
 
 # Deploy Grafana
 echo -e "${GREEN}Deploying Grafana...${NC}"
@@ -77,14 +77,14 @@ kubectl create secret generic grafana-secrets \
   --dry-run=client -o yaml | kubectl apply -f -
 
 # Restart Grafana to pick up new secret
-kubectl rollout restart deployment/grafana -n $NAMESPACE
+kubectl rollout restart deployment/grafana -n "${NAMESPACE}"
 
 # Wait for deployments to be ready
 echo -e "${GREEN}Waiting for deployments to be ready...${NC}"
 kubectl wait --for=condition=available --timeout=300s \
-  deployment/prometheus -n $NAMESPACE
+  deployment/prometheus -n "${NAMESPACE}"
 kubectl wait --for=condition=available --timeout=300s \
-  deployment/grafana -n $NAMESPACE
+  deployment/grafana -n "${NAMESPACE}"
 
 # Get service URLs
 echo ""

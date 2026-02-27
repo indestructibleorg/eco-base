@@ -55,7 +55,7 @@ class ContractGenerator:
         return template
     def save(self, contract: Dict[str, Any], output_path: str):
         """Save contract to file"""
-        with open(output_path, "w") as f:
+        with open(output_path, "w", encoding='utf-8') as f:
             yaml.dump(contract, f, default_flow_style=False)
 def main():
     import argparse

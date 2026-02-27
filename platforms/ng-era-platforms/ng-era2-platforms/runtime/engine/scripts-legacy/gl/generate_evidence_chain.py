@@ -81,7 +81,7 @@ class EvidenceChainGenerator:
                 'reason': f'Semantic index not found: {semantic_index_path}'
             }
         try:
-            with open(semantic_index_path, 'r') as f:
+            with open(semantic_index_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             index_hash = self.generate_hash(content)
             index_data = json.loads(content)
@@ -106,7 +106,7 @@ class EvidenceChainGenerator:
                 'reason': f'Module registry not found: {registry_path}'
             }
         try:
-            with open(registry_path, 'r') as f:
+            with open(registry_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             registry_hash = self.generate_hash(content)
             return {
@@ -160,7 +160,7 @@ class EvidenceChainGenerator:
         """Save evidence chain to file"""
         filename = f"evidence-{self.layer}-{self.timestamp.strftime('%Y%m%d%H%M%S')}.json"
         filepath = self.output_dir / filename
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(evidence_chain, f, indent=2)
         return filepath
 def main():

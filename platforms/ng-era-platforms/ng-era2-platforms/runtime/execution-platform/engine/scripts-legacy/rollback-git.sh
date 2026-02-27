@@ -53,7 +53,7 @@ if [ -f ".last-backup" ]; then
         read -p "是否恢復文件系統備份？(y/n) " -n 1 -r
         echo
         
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
+        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
             # 恢復關鍵目錄
             if [ -d "$BACKUP_DIR/core" ]; then
                 echo -e "${YELLOW}恢復 workspace/src/core/...${NC}"

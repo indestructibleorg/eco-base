@@ -56,7 +56,7 @@ class NamingValidator:
             sys.exit(1)
         for policy_file in self.policies_dir.rglob("*.yaml"):
             try:
-                with open(policy_file) as f:
+                with open(policy_file, encoding='utf-8') as f:
                     policy = yaml.safe_load(f)
                     if policy and policy.get("kind") == "NamingPolicy":
                         policy_name = policy["metadata"]["name"]
@@ -75,7 +75,7 @@ class NamingValidator:
             sys.exit(1)
         for schema_file in self.schemas_dir.glob("*.yaml"):
             try:
-                with open(schema_file) as f:
+                with open(schema_file, encoding='utf-8') as f:
                     schema = yaml.safe_load(f)
                     schema_name = schema_file.stem
                     self.schemas[schema_name] = schema
@@ -135,7 +135,7 @@ class NamingValidator:
         if file_path.suffix not in [".yaml", ".yml"]:
             return violations
         try:
-            with open(file_path) as f:
+            with open(file_path, encoding='utf-8') as f:
                 docs = yaml.safe_load_all(f)
                 for doc in docs:
                     if not doc:
@@ -257,7 +257,7 @@ def main():
     if args.files:
         files_to_validate.extend(args.files)
     if args.files_list:
-        with open(args.files_list) as f:
+        with open(args.files_list, encoding='utf-8') as f:
             for line in f:
                 file_path = Path(line.strip())
                 if file_path.exists():
@@ -302,7 +302,7 @@ def main():
             },
             "violation_details": violations,
         }
-        with open(args.output, "w") as f:
+        with open(args.output, "w", encoding='utf-8') as f:
             json.dump(report, f, indent=2)
         print(f"Report written to: {args.output}")
     # 输出到控制台

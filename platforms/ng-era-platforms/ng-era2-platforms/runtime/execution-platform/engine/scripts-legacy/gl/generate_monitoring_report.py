@@ -38,7 +38,7 @@ def main():
     output_path.mkdir(parents=True, exist_ok=True)
     report = generate_monitoring_report(args.layer, args.output)
     report_file = output_path / f"monitoring-{args.layer}-{datetime.now().strftime('%Y%m%d%H%M%S')}.json"
-    with open(report_file, 'w') as f:
+    with open(report_file, 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=2)
     print(f"Monitoring report generated: {report_file}")
 if __name__ == "__main__":

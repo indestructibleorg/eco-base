@@ -18,7 +18,7 @@ def main():
     count_only = "--count-only" in sys.argv
 
     try:
-        with open(filepath) as f:
+        with open(filepath, encoding='utf-8') as f:
             data = json.load(f)
         count = len(data.get("components", []))
         if count_only:

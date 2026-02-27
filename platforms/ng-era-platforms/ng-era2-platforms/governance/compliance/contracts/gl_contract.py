@@ -175,12 +175,12 @@ class GLContract:
     
     def save_yaml(self, filepath: str):
         """Save contract to YAML file"""
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             f.write(self.to_yaml())
     
     def save_json(self, filepath: str):
         """Save contract to JSON file"""
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             f.write(self.to_json())
     
     @classmethod
@@ -215,7 +215,7 @@ class GLContract:
     def from_yaml(cls, filepath: str) -> 'GLContract':
         """Load contract from YAML file"""
         import yaml
-        with open(filepath, 'r') as f:
+        with open(filepath, 'r', encoding='utf-8') as f:
             data = yaml.safe_load(f)
         return cls.from_dict(data)
     
@@ -223,7 +223,7 @@ class GLContract:
     def from_json(cls, filepath: str) -> 'GLContract':
         """Load contract from JSON file"""
         import json
-        with open(filepath, 'r') as f:
+        with open(filepath, 'r', encoding='utf-8') as f:
             data = json.load(f)
         return cls.from_dict(data)
 

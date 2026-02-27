@@ -40,7 +40,7 @@ class MaturityAssessor:
     def _load_criteria(self) -> dict:
         """加載成熟度標準"""
         if os.path.exists(self.criteria_file):
-            with open(self.criteria_file, 'r') as f:
+            with open(self.criteria_file, 'r', encoding='utf-8') as f:
                 return yaml.safe_load(f)
         return {}
     def assess_component(self, component_name: str, verbose: bool = False) -> Dict:
@@ -307,7 +307,7 @@ class MaturityAssessor:
         requirements = os.path.join(path, "requirements.txt")
         if not os.path.exists(requirements):
             return 5  # 無依賴或未明確聲明
-        with open(requirements, 'r') as f:
+        with open(requirements, 'r', encoding='utf-8') as f:
             deps = f.readlines()
         # 檢查是否有版本固定
         pinned = sum(1 for dep in deps if '==' in dep)
@@ -326,7 +326,7 @@ class MaturityAssessor:
         requirements = os.path.join(path, "requirements.txt")
         if not os.path.exists(requirements):
             return 7  # 無外部依賴
-        with open(requirements, 'r') as f:
+        with open(requirements, 'r', encoding='utf-8') as f:
             deps = [d for d in f.readlines() if d.strip() and not d.startswith('#')]
         count = len(deps)
         if count < 5:

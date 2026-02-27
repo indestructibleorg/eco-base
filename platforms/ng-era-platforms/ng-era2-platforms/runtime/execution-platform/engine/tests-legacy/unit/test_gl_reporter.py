@@ -166,7 +166,7 @@ class TestGLReporter:
             },
             'spec': {}
         }
-        with open(strategic_path / 'vision.yaml', 'w') as f:
+        with open(strategic_path / 'vision.yaml', 'w', encoding='utf-8') as f:
             yaml.dump(vision, f)
         # GL10-29 artifacts
         operational_path = gl-platform.gl-platform.governance_path / 'GL10-29-operational' / 'artifacts'
@@ -183,7 +183,7 @@ class TestGLReporter:
             },
             'spec': {}
         }
-        with open(operational_path / 'plan.yaml', 'w') as f:
+        with open(operational_path / 'plan.yaml', 'w', encoding='utf-8') as f:
             yaml.dump(plan, f)
         return tmp_path
     def test_collect_metrics(self, setup_test_artifacts):
@@ -255,7 +255,7 @@ class TestGLReporter:
             output_format=OutputFormat.MARKDOWN
         )
         # Save manually since output_file param may not exist
-        with open(output_file, 'w') as f:
+        with open(output_file, 'w', encoding='utf-8') as f:
             f.write(report)
         assert output_file.exists()
         content = output_file.read_text()
@@ -322,7 +322,7 @@ class TestGLReporterDashboard:
                 },
                 'spec': {}
             }
-            with open(layer_path / 'artifact.yaml', 'w') as f:
+            with open(layer_path / 'artifact.yaml', 'w', encoding='utf-8') as f:
                 yaml.dump(artifact, f)
         return tmp_path
     def test_generate_dashboard(self, setup_full_environment):

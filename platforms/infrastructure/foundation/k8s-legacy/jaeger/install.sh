@@ -185,11 +185,11 @@ verify_installation() {
     
     # Check Jaeger pods
     print_info "Checking Jaeger pods..."
-    kubectl get pods -n $NAMESPACE
+    kubectl get pods -n "${NAMESPACE}"
     
     # Check services
     print_info "Checking Jaeger services..."
-    kubectl get svc -n $NAMESPACE
+    kubectl get svc -n "${NAMESPACE}"
     
     # Check Elasticsearch
     print_info "Checking Elasticsearch..."
@@ -202,7 +202,7 @@ print_access_info() {
     print_info "Access Information:"
     echo ""
     echo "Jaeger Query UI:"
-    echo "  Port-forward: kubectl port-forward -n $NAMESPACE svc/$RELEASE_NAME-query 16686:16686"
+    echo "  Port-forward: kubectl port-forward -n "${NAMESPACE}" svc/$RELEASE_NAME-query 16686:16686"
     echo "  Open browser:  http://localhost:16686"
     echo ""
     echo "Services:"

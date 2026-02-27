@@ -26,7 +26,7 @@ def load_dag_file(dag_path: str) -> Optional[Dict]:
         return None
     
     try:
-        with open(path, 'r') as f:
+        with open(path, 'r', encoding='utf-8') as f:
             dag_data = yaml.safe_load(f)
         return dag_data
     except yaml.YAMLError as e:

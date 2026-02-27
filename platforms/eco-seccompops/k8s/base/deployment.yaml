@@ -6,12 +6,12 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/deployment/seccompops-engine
-    eco-base/urn: urn:eco-base:k8s:core:deployment:seccompops-engine:sha256-fb7352a0e15d29c171d73e893ed5dd5a81fbe7ffd800f8cbd9a8e82d4324df07
+    eco-base/urn: urn:eco-base:k8s:core:deployment:seccompops-engine:sha256-8e40d1908de4e66965da5ba64c8991913bae0028c8ca6f7798340dfc558b443c
   labels:
     app.kubernetes.io/component: api
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: seccompops-engine
-    app.kubernetes.io/part-of: seccompops-platform
+    app.kubernetes.io/part-of: eco-base
     app.kubernetes.io/version: 1.0.0
     eco-base/environment: development
     eco-base/owner: eco-system
@@ -40,7 +40,7 @@ spec:
             name: seccompops-config
         - secretRef:
             name: seccompops-secrets
-        image: seccompops-platform:latest
+        image: seccompops-platform:v0.1.0
         livenessProbe:
           httpGet:
             path: /livez
@@ -67,11 +67,9 @@ spec:
           limits:
             cpu: '1'
             memory: 512Mi
-            ephemeral-storage: "1Gi"
           requests:
             cpu: 250m
             memory: 256Mi
-            ephemeral-storage: "1Gi"
         volumeMounts:
         - mountPath: /app/evidence
           name: evidence-store
@@ -99,12 +97,12 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/deployment/seccompops-enforcer
-    eco-base/urn: urn:eco-base:k8s:core:deployment:seccompops-enforcer:sha256-cc0b66c0d02f58129c15e10655b64d44c3a0fe513aefa5ed4920818e924e68b1
+    eco-base/urn: urn:eco-base:k8s:core:deployment:seccompops-enforcer:sha256-9d2a05ac02a7cc2de5ebb12e35a13d9194f2f3e78662c1850b5e676739a4ca8e
   labels:
     app.kubernetes.io/component: worker
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: seccompops-enforcer
-    app.kubernetes.io/part-of: seccompops-platform
+    app.kubernetes.io/part-of: eco-base
     app.kubernetes.io/version: 1.0.0
     eco-base/environment: development
     eco-base/owner: eco-system
@@ -132,17 +130,15 @@ spec:
             name: seccompops-config
         - secretRef:
             name: seccompops-secrets
-        image: seccompops-platform:latest
+        image: seccompops-platform:v0.1.0
         name: seccompops-enforcer
         resources:
           limits:
             cpu: 500m
             memory: 256Mi
-            ephemeral-storage: "1Gi"
           requests:
             cpu: 100m
             memory: 128Mi
-            ephemeral-storage: "1Gi"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -155,12 +151,12 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/deployment/seccompops-auditor
-    eco-base/urn: urn:eco-base:k8s:core:deployment:seccompops-auditor:sha256-db94412589d94c0c0a98e36b333d96e9c289ac80d2a40bd2954612bcbbe53ba1
+    eco-base/urn: urn:eco-base:k8s:core:deployment:seccompops-auditor:sha256-5db736596024c3f491211c9a7135a584cf8d83843116cc679cf7fadcb58550a3
   labels:
     app.kubernetes.io/component: worker
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: seccompops-auditor
-    app.kubernetes.io/part-of: seccompops-platform
+    app.kubernetes.io/part-of: eco-base
     app.kubernetes.io/version: 1.0.0
     eco-base/environment: development
     eco-base/owner: eco-system
@@ -188,17 +184,15 @@ spec:
             name: seccompops-config
         - secretRef:
             name: seccompops-secrets
-        image: seccompops-platform:latest
+        image: seccompops-platform:v0.1.0
         name: seccompops-auditor
         resources:
           limits:
             cpu: 500m
             memory: 512Mi
-            ephemeral-storage: "1Gi"
           requests:
             cpu: 100m
             memory: 256Mi
-            ephemeral-storage: "1Gi"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

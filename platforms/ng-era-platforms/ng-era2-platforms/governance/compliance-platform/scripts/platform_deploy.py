@@ -118,7 +118,7 @@ class ZeroResidueEnvironment:
             
             # Clear caches
             subprocess.run(['sync'], capture_output=True)
-            with open('/proc/sys/vm/drop_caches', 'w') as f:
+            with open('/proc/sys/vm/drop_caches', 'w', encoding='utf-8') as f:
                 f.write('3')
                 
         except:

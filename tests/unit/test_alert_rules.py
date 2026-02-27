@@ -11,14 +11,14 @@ ALERT_FILE = os.path.join(
 class TestAlertRules:
     @pytest.fixture
     def rules(self):
-        with open(ALERT_FILE) as f:
+        with open(ALERT_FILE, encoding='utf-8') as f:
             return yaml.safe_load(f)
 
     def test_file_exists(self):
         assert os.path.isfile(ALERT_FILE)
 
     def test_valid_yaml(self):
-        with open(ALERT_FILE) as f:
+        with open(ALERT_FILE, encoding='utf-8') as f:
             data = yaml.safe_load(f)
         assert "groups" in data
 

@@ -41,7 +41,7 @@ class TestCodeDeduplicator(unittest.TestCase):
     def _create_temp_file(self, filename: str, content: str) -> str:
         """Create a temporary Python file."""
         filepath = os.path.join(self.temp_dir, filename)
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
         return filepath
     def test_initialization(self):

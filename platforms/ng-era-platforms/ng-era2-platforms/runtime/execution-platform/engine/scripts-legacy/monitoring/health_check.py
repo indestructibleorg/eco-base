@@ -220,7 +220,7 @@ class HealthChecker:
             "overall_status": self.get_overall_status().value,
             "checks": [r.to_dict() for r in self.results]
         }
-        with open(output_path, "w") as f:
+        with open(output_path, "w", encoding='utf-8') as f:
             json.dump(report, f, indent=2)
 def main():
     checker = HealthChecker()

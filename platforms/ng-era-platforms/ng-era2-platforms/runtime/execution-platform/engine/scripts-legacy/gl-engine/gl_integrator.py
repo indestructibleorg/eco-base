@@ -86,7 +86,7 @@ class GLIntegrator:
         gl_files = list(root_path.glob("GL*.json"))
         for gl_file in gl_files:
             try:
-                with open(gl_file, 'r') as f:
+                with open(gl_file, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                 artifact_id = data.get("id", gl_file.stem)
                 self.artifacts[artifact_id] = {

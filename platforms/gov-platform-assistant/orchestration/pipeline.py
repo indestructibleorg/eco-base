@@ -241,7 +241,7 @@ Consider following your project's internal patterns while incorporating external
         timestamp = datetime.now(timezone.utc).strftime("%Y%m%d")
         log_file = audit_dir / f"audit_{timestamp}.jsonl"
         
-        with open(log_file, 'a') as f:
+        with open(log_file, 'a', encoding='utf-8') as f:
             f.write(json.dumps(audit_log) + '\n')
     
     def submit_feedback(self, request_id: str, feedback_type: str,

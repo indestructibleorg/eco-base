@@ -228,7 +228,7 @@ deploy_backup_jobs() {
     print_info "Deploying backup jobs..."
     
     # Create service account and RBAC for backup jobs
-    cat <<EOF | kubectl apply -n $TESTING_NAMESPACE -f -
+    cat <<EOF | kubectl apply -n "${TESTING_NAMESPACE}" -f -
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -263,7 +263,7 @@ subjects:
 EOF
     
     # Deploy simple backup validation job
-    cat <<EOF | kubectl apply -n $TESTING_NAMESPACE -f -
+    cat <<EOF | kubectl apply -n "${TESTING_NAMESPACE}" -f -
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -324,7 +324,7 @@ verify_velero() {
     
     # Check Velero pods
     print_info "  - Checking Velero pods..."
-    kubectl get pods -n $NAMESPACE
+    kubectl get pods -n "${NAMESPACE}"
     
     # Check backup locations
     print_info "  - Checking backup locations..."
@@ -336,7 +336,7 @@ verify_velero() {
     
     # Check backup schedules
     print_info "  - Checking backup schedules..."
-    kubectl get schedule -n $NAMESPACE
+    kubectl get schedule -n "${NAMESPACE}"
     
     # Check recent backups
     print_info "  - Checking recent backups..."
@@ -407,7 +407,7 @@ print_summary() {
     echo "Next Steps:"
     echo "  1. Check backups: velero backup get"
     echo "  2. View schedules: kubectl get schedule -n $NAMESPACE"
-    echo "  3. Check logs: kubectl logs -n $NAMESPACE deployment/velero"
+    echo "  3. Check logs: kubectl logs -n "${NAMESPACE}" deployment/velero"
     echo "  4. Test restore: velero restore create --from-backup
 # Main execution
 main() {

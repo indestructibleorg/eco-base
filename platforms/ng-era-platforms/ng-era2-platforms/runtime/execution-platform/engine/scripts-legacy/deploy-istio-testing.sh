@@ -141,20 +141,20 @@ verify_istio() {
     
     # Check gateways
     print_info "  - Checking gateways..."
-    kubectl get gateway -n $NAMESPACE
+    kubectl get gateway -n "${NAMESPACE}"
     
     # Check virtual services
     print_info "  - Checking virtual services..."
-    kubectl get virtualservice -n $NAMESPACE
+    kubectl get virtualservice -n "${NAMESPACE}"
     
     # Check destination rules
     print_info "  - Checking destination rules..."
-    kubectl get destinationrule -n $NAMESPACE
+    kubectl get destinationrule -n "${NAMESPACE}"
     
     # Check security policies
     print_info "  - Checking security policies..."
-    kubectl get peerauthentication -n $NAMESPACE
-    kubectl get authorizationpolicy -n $NAMESPACE
+    kubectl get peerauthentication -n "${NAMESPACE}"
+    kubectl get authorizationpolicy -n "${NAMESPACE}"
     
     print_success "Istio verification completed successfully"
 }
@@ -164,7 +164,7 @@ deploy_sample_app() {
     print_info "Deploying sample application for testing..."
     
     # Create a simple HTTP server deployment
-    cat &lt;&lt;EOF | kubectl apply -n $NAMESPACE -f -
+    cat &lt;&lt;EOF | kubectl apply -n "${NAMESPACE}" -f -
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -242,7 +242,7 @@ EOF
     
     # Wait for pods to be ready
     print_info "Waiting for sample app pods to be ready..."
-    kubectl wait --for=condition=ready pod -l app=sample-app -n $NAMESPACE --timeout=60s
+    kubectl wait --for=condition=ready pod -l app=sample-app -n "${NAMESPACE}" --timeout=60s
     
     print_success "Sample application is ready"
 }
@@ -252,15 +252,15 @@ test_istio_routing() {
     print_info "Testing Istio routing..."
     
     # Get a sample pod
-    SAMPLE_POD=$(kubectl get pod -l app=sample-app -n $NAMESPACE -o jsonpath='{.items[0].metadata.name}')
+    SAMPLE_POD=$(kubectl get pod -l app=sample-app -n "${NAMESPACE}" -o jsonpath='{.items[0].metadata.name}')
     
     # Test intra-cluster routing
     print_info "  - Testing intra-cluster routing..."
-    kubectl exec -n $NAMESPACE $SAMPLE_POD -- wget -qO- http://sample-app/ | head -n 5
+    kubectl exec -n "${NAMESPACE}" $SAMPLE_POD -- wget -qO- http://sample-app/ | head -n 5
     
     # Check Istio proxy
     print_info "  - Checking Istio sidecar proxy..."
-    kubectl exec -n $NAMESPACE $SAMPLE_POD -c istio-proxy -- curl -s localhost:15000/clusters | head -n 10
+    kubectl exec -n "${NAMESPACE}" $SAMPLE_POD -c istio-proxy -- curl -s localhost:15000/clusters | head -n 10
     
     print_success "Istio routing test completed"
 }
@@ -281,7 +281,7 @@ print_summary() {
     echo "  2. View services: kubectl get svc -n $NAMESPACE"
     echo "  3. View Istio resources: kubectl get all -n $NAMESPACE"
     echo "  4. Check sidecar: kubectl describe pod <pod-name> -n $NAMESPACE"
-    echo "  5. Test routing: kubectl exec -it <pod-name> -n $NAMESPACE -- sh"
+    echo "  5. Test routing: kubectl exec -it <pod-name> -n "${NAMESPACE}" -- sh"
     echo ""
     echo -e "${GREEN}======================================${NC}"
 }

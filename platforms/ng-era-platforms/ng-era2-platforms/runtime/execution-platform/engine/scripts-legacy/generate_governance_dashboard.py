@@ -19,12 +19,12 @@ from typing import Dict, Any
 def load_module_registry() -> Dict[str, Any]:
     """Load the module registry"""
     registry_path = Path("controlplane/baseline/modules/REGISTRY.yaml")
-    with open(registry_path, 'r') as f:
+    with open(registry_path, 'r', encoding='utf-8') as f:
         return yaml.safe_load(f)
 def load_policy_manifest() -> Dict[str, Any]:
     """Load the policy manifest"""
     manifest_path = Path("controlplane/gl-platform.governance/policies/POLICY_MANIFEST.yaml")
-    with open(manifest_path, 'r') as f:
+    with open(manifest_path, 'r', encoding='utf-8') as f:
         return yaml.safe_load(f)
 def calculate_governance_metrics(registry: Dict[str, Any]) -> Dict[str, Any]:
     """Calculate gl-platform.governance metrics"""
@@ -168,7 +168,7 @@ def generate_dashboard(output_path: str = "docs/LANGUAGE_GOVERNANCE_DASHBOARD.md
         manifest_path = Path(f"controlplane/baseline/modules/{module_id}/module-manifest.yaml")
         concept_count = 0
         if manifest_path.exists():
-            with open(manifest_path, 'r') as f:
+            with open(manifest_path, 'r', encoding='utf-8') as f:
                 manifest = yaml.safe_load(f)
                 concept_count = len(manifest.get('semantic_mappings', []))
         dashboard += f"| {module_id} | {namespace} | {concept_count} | {health}% | {status_emoji} |\n"
@@ -228,7 +228,7 @@ Recommended review: **{(datetime.now()).strftime('%Y-%m-%d')}** (Monthly)
     # Write dashboard
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
-    with open(output, 'w') as f:
+    with open(output, 'w', encoding='utf-8') as f:
         f.write(dashboard)
     print(f"✅ Language Governance Dashboard generated: {output_path}")
     # Also generate JSON report
@@ -239,7 +239,7 @@ Recommended review: **{(datetime.now()).strftime('%Y-%m-%d')}** (Monthly)
         'modules': modules,
         'policies': policies
     }
-    with open(json_output, 'w') as f:
+    with open(json_output, 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=2)
     print(f"✅ JSON report generated: {json_output}")
 if __name__ == "__main__":

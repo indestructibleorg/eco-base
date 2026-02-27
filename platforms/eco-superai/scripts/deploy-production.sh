@@ -168,7 +168,7 @@ apply_rbac() {
     log_step "Applying RBAC configuration..."
     
     if [ -f "k8s/base/rbac.yaml" ]; then
-        kubectl apply -f k8s/base/rbac.yaml -n $NAMESPACE
+        kubectl apply -f k8s/base/rbac.yaml -n "${NAMESPACE}"
         log_info "RBAC configuration applied"
     else
         log_warn "RBAC configuration not found"
@@ -181,7 +181,7 @@ apply_secrets() {
     
     # Apply TLS secrets if generated
     if [ -f "certs/k8s-tls-secrets.yaml" ]; then
-        kubectl apply -f certs/k8s-tls-secrets.yaml -n $NAMESPACE
+        kubectl apply -f certs/k8s-tls-secrets.yaml -n "${NAMESPACE}"
     fi
     
     # Create secrets from environment
@@ -190,7 +190,7 @@ apply_secrets() {
         --from-literal=REDIS_URL="${REDIS_URL}" \
         --from-literal=JWT_SECRET="${JWT_SECRET:-$(openssl rand -hex 32)}" \
         --from-literal=ENCRYPTION_KEY="${ENCRYPTION_KEY:-$(openssl rand -hex 32)}" \
-        --dry-run=client -o yaml | kubectl apply -n $NAMESPACE -f -
+        --dry-run=client -o yaml | kubectl apply -n "${NAMESPACE}" -f -
     
     log_info "Secrets applied"
 }
@@ -218,7 +218,7 @@ deploy_monitoring() {
     
     # Deploy AlertManager with PagerDuty
     if [ -f "monitoring/alertmanager/pagerduty-integration.yaml" ]; then
-        kubectl apply -f monitoring/alertmanager/pagerduty-integration.yaml -n $NAMESPACE
+        kubectl apply -f monitoring/alertmanager/pagerduty-integration.yaml -n "${NAMESPACE}"
         log_info "AlertManager deployed"
     fi
     
@@ -237,13 +237,13 @@ deploy_security() {
     
     # Deploy audit logging
     if [ -f "security/audit-logging.yaml" ]; then
-        kubectl apply -f security/audit-logging.yaml -n $NAMESPACE
+        kubectl apply -f security/audit-logging.yaml -n "${NAMESPACE}"
         log_info "Audit logging deployed"
     fi
     
     # Deploy security scanning
     if [ -f "security/security-scanning.yaml" ]; then
-        kubectl apply -f security/security-scanning.yaml -n $NAMESPACE
+        kubectl apply -f security/security-scanning.yaml -n "${NAMESPACE}"
         log_info "Security scanning deployed"
     fi
     
@@ -286,19 +286,19 @@ smoke_tests() {
     log_step "Running smoke tests..."
     
     # Wait for deployment
-    kubectl wait --for=condition=available deployment/superai-platform -n $NAMESPACE --timeout=300s
+    kubectl wait --for=condition=available deployment/superai-platform -n "${NAMESPACE}" --timeout=300s
     
     # Check pods
     log_info "Checking pod status..."
-    kubectl get pods -n $NAMESPACE
+    kubectl get pods -n "${NAMESPACE}"
     
     # Check services
     log_info "Checking services..."
-    kubectl get svc -n $NAMESPACE
+    kubectl get svc -n "${NAMESPACE}"
     
     # Health check
     log_info "Running health check..."
-    EXTERNAL_IP=$(kubectl get svc superai-platform -n $NAMESPACE -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+    EXTERNAL_IP=$(kubectl get svc superai-platform -n "${NAMESPACE}" -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
     
     if [ -n "$EXTERNAL_IP" ]; then
         if curl -f http://${EXTERNAL_IP}:80/health; then
@@ -326,9 +326,9 @@ Region: $REGION
 Image Tag: $IMAGE_TAG
 
 Components Deployed:
-- SuperAI Platform API: $(kubectl get deployment superai-platform -n $NAMESPACE -o jsonpath='{.status.readyReplicas}' 2>/dev/null || echo "N/A")/$(kubectl get deployment superai-platform -n $NAMESPACE -o jsonpath='{.spec.replicas}' 2>/dev/null || echo "N/A") replicas ready
-- PostgreSQL: $(kubectl get statefulset postgres -n $NAMESPACE -o jsonpath='{.status.readyReplicas}' 2>/dev/null || echo "N/A")/$(kubectl get statefulset postgres -n $NAMESPACE -o jsonpath='{.spec.replicas}' 2>/dev/null || echo "N/A") replicas ready
-- Redis: $(kubectl get statefulset redis -n $NAMESPACE -o jsonpath='{.status.readyReplicas}' 2>/dev/null || echo "N/A")/$(kubectl get statefulset redis -n $NAMESPACE -o jsonpath='{.spec.replicas}' 2>/dev/null || echo "N/A") replicas ready
+- SuperAI Platform API: $(kubectl get deployment superai-platform -n "${NAMESPACE}" -o jsonpath='{.status.readyReplicas}' 2>/dev/null || echo "N/A")/$(kubectl get deployment superai-platform -n "${NAMESPACE}" -o jsonpath='{.spec.replicas}' 2>/dev/null || echo "N/A") replicas ready
+- PostgreSQL: $(kubectl get statefulset postgres -n "${NAMESPACE}" -o jsonpath='{.status.readyReplicas}' 2>/dev/null || echo "N/A")/$(kubectl get statefulset postgres -n "${NAMESPACE}" -o jsonpath='{.spec.replicas}' 2>/dev/null || echo "N/A") replicas ready
+- Redis: $(kubectl get statefulset redis -n "${NAMESPACE}" -o jsonpath='{.status.readyReplicas}' 2>/dev/null || echo "N/A")/$(kubectl get statefulset redis -n "${NAMESPACE}" -o jsonpath='{.spec.replicas}' 2>/dev/null || echo "N/A") replicas ready
 - Prometheus: $(kubectl get deployment prometheus -n monitoring -o jsonpath='{.status.readyReplicas}' 2>/dev/null || echo "N/A")/$(kubectl get deployment prometheus -n monitoring -o jsonpath='{.spec.replicas}' 2>/dev/null || echo "N/A") replicas ready
 - Grafana: $(kubectl get deployment grafana -n monitoring -o jsonpath='{.status.readyReplicas}' 2>/dev/null || echo "N/A")/$(kubectl get deployment grafana -n monitoring -o jsonpath='{.spec.replicas}' 2>/dev/null || echo "N/A") replicas ready
 - Loki: $(kubectl get statefulset loki -n monitoring -o jsonpath='{.status.readyReplicas}' 2>/dev/null || echo "N/A")/$(kubectl get statefulset loki -n monitoring -o jsonpath='{.spec.replicas}' 2>/dev/null || echo "N/A") replicas ready
@@ -337,7 +337,7 @@ Components Deployed:
 Services:
 EOF
 
-    kubectl get svc -n $NAMESPACE >> deployment-report-$(date +%Y%m%d-%H%M%S).txt
+    kubectl get svc -n "${NAMESPACE}" >> deployment-report-$(date +%Y%m%d-%H%M%S).txt
     
     cat >> deployment-report-$(date +%Y%m%d-%H%M%S).txt << EOF
 

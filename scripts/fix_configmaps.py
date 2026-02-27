@@ -13,12 +13,12 @@ from pathlib import Path
 
 def load_qyaml(path):
     """Load a .qyaml file and return all documents."""
-    with open(path) as f:
+    with open(path, encoding='utf-8') as f:
         return list(yaml.safe_load_all(f))
 
 def save_qyaml(path, docs):
     """Save documents to a .qyaml file."""
-    with open(path, 'w') as f:
+    with open(path, 'w', encoding='utf-8') as f:
         for i, doc in enumerate(docs):
             yaml.dump(doc, f, default_flow_style=False, sort_keys=False, allow_unicode=True)
             if i < len(docs) - 1:

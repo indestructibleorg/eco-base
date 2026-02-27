@@ -189,14 +189,14 @@ services/gateway/
             self.repo_root / "apps" / "web" / "public" / "data" / "hotspot.json"
         )
         if hotspot_path.exists():
-            with open(hotspot_path) as f:
+            with open(hotspot_path, encoding='utf-8') as f:
                 self.hotspots = json.load(f)
         else:
             print(f"⚠️ Hotspot data not found: {hotspot_path}")
         # Load semgrep report
         semgrep_path = self.repo_root / "governance" / "semgrep-report.json"
         if semgrep_path.exists():
-            with open(semgrep_path) as f:
+            with open(semgrep_path, encoding='utf-8') as f:
                 self.semgrep_results = json.load(f)
         else:
             print(f"⚠️ Semgrep report not found: {semgrep_path}")
@@ -205,7 +205,7 @@ services/gateway/
             self.repo_root / "apps" / "web" / "public" / "data" / "migration-flow.json"
         )
         if migration_path.exists():
-            with open(migration_path) as f:
+            with open(migration_path, encoding='utf-8') as f:
                 self.migration_flows = json.load(f)
         else:
             print(f"⚠️ Migration flow not found: {migration_path}")
@@ -214,7 +214,7 @@ services/gateway/
             self.repo_root / "apps" / "web" / "public" / "data" / "cluster-heatmap.json"
         )
         if cluster_path.exists():
-            with open(cluster_path) as f:
+            with open(cluster_path, encoding='utf-8') as f:
                 self.clusters = json.load(f)
         else:
             print(f"⚠️ Cluster heatmap not found: {cluster_path}")
@@ -223,7 +223,7 @@ services/gateway/
             self.repo_root / "governance" / "ai-refactor-suggestions.md"
         )
         if ai_suggestions_path.exists():
-            with open(ai_suggestions_path) as f:
+            with open(ai_suggestions_path, encoding='utf-8') as f:
                 self.global_suggestions = f.read()
         else:
             print(f"⚠️ AI suggestions not found: {ai_suggestions_path}")
@@ -237,7 +237,7 @@ services/gateway/
         default_ttl = 24
         if config_path.exists():
             try:
-                with open(config_path) as f:
+                with open(config_path, encoding='utf-8') as f:
                     config = yaml.safe_load(f)
                 cache_config = config.get("refactor", {}).get("cache", {})
                 enabled = cache_config.get("enabled", default_enabled)
@@ -278,7 +278,7 @@ services/gateway/
         if not cache_file.exists():
             return False
         try:
-            with open(cache_file) as f:
+            with open(cache_file, encoding='utf-8') as f:
                 cache_data = json.load(f)
             # Check if data hash matches
             current_hash = self._get_data_hash()
@@ -300,7 +300,7 @@ services/gateway/
             return None
         cache_file = self.cache_dir / f"{cluster_name.replace('/', '_')}.cache"
         try:
-            with open(cache_file) as f:
+            with open(cache_file, encoding='utf-8') as f:
                 cache_data = json.load(f)
             return cache_data.get("playbook")
         except Exception as e:
@@ -329,7 +329,7 @@ services/gateway/
         - **path/to/file.ext** - Reason for violation
         """
         import re
-        with open(report_path) as f:
+        with open(report_path, encoding='utf-8') as f:
             content = f.read()
         # Use regex for more robust parsing
         # Matches: - **file/path** — reason or - **file/path** - reason

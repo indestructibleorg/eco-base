@@ -107,7 +107,7 @@ deploy_multi_az_apps() {
     kubectl label namespace $NAMESPACE istio-injection=enabled --overwrite
     
     # Deploy test application with multi-AZ configuration
-    cat <<EOF | kubectl apply -n $NAMESPACE -f -
+    cat <<EOF | kubectl apply -n "${NAMESPACE}" -f -
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -232,7 +232,7 @@ EOF
     
     # Wait for pods to be ready
     print_info "Waiting for pods to be ready..."
-    kubectl wait --for=condition=ready pod -l app=multi-az-app -n $NAMESPACE --timeout=120s
+    kubectl wait --for=condition=ready pod -l app=multi-az-app -n "${NAMESPACE}" --timeout=120s
     
     print_success "All pods are ready"
 }
@@ -244,7 +244,7 @@ verify_pod_distribution() {
     echo ""
     echo "Pod distribution per zone:"
     for ZONE in "${ZONES[@]}"; do
-        COUNT=$(kubectl get pods -n $NAMESPACE -l app=multi-az-app -o json | jq -r ".items[] | select(.spec.nodeName != null)" | while read -r pod; do
+        COUNT=$(kubectl get pods -n "${NAMESPACE}" -l app=multi-az-app -o json | jq -r ".items[] | select(.spec.nodeName != null)" | while read -r pod; do
             NODE=$(echo "$pod" | jq -r '.spec.nodeName')
             NODE_ZONE=$(kubectl get node $NODE -o jsonpath='{.metadata.labels.topology\.kubernetes\.io/zone}')
             if [ "$NODE_ZONE" = "$ZONE" ]; then
@@ -253,7 +253,7 @@ verify_pod_distribution() {
         done | wc -l)
         
         # Alternative method using pod labels
-        POD_COUNT=$(kubectl get pods -n $NAMESPACE -l app=multi-az-app -o json | jq -r ".items[] | select(.spec.nodeName != null) | .spec.nodeName" | while read NODE; do
+        POD_COUNT=$(kubectl get pods -n "${NAMESPACE}" -l app=multi-az-app -o json | jq -r ".items[] | select(.spec.nodeName != null) | .spec.nodeName" | while read NODE; do
             ZONE_LABEL=$(kubectl get node $NODE -o jsonpath='{.metadata.labels.topology\.kubernetes\.io/zone}')
             if [ "$ZONE_LABEL" = "$ZONE" ]; then
                 echo "1"
@@ -265,7 +265,7 @@ verify_pod_distribution() {
     
     echo ""
     echo "Detailed pod information:"
-    kubectl get pods -n $NAMESPACE -l app=multi-az-app -o wide
+    kubectl get pods -n "${NAMESPACE}" -l app=multi-az-app -o wide
     
     print_success "Pod distribution verified"
 }
@@ -275,7 +275,7 @@ deploy_zone_aware_routing() {
     print_info "Deploying zone-aware routing..."
     
     # Create Istio DestinationRule for zone-aware routing
-    cat <<EOF | kubectl apply -n $NAMESPACE -f -
+    cat <<EOF | kubectl apply -n "${NAMESPACE}" -f -
 apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
@@ -363,7 +363,7 @@ description: "High priority class for important workloads"
 EOF
     
     # Create HorizontalPodAutoscaler
-    cat <<EOF | kubectl apply -n $NAMESPACE -f -
+    cat <<EOF | kubectl apply -n "${NAMESPACE}" -f -
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -411,7 +411,7 @@ test_load_balancing() {
     print_info "Testing load balancing..."
     
     # Create a test pod
-    cat <<EOF | kubectl apply -n $NAMESPACE -f -
+    cat <<EOF | kubectl apply -n "${NAMESPACE}" -f -
 apiVersion: v1
 kind: Pod
 metadata:
@@ -425,17 +425,17 @@ spec:
 EOF
     
     # Wait for test pod to be ready
-    kubectl wait --for=condition=ready pod/load-balancer-test -n $NAMESPACE --timeout=60s
+    kubectl wait --for=condition=ready pod/load-balancer-test -n "${NAMESPACE}" --timeout=60s
     
     # Test load balancing
     print_info "  - Testing load distribution..."
     for i in {1..10}; do
-        kubectl exec -n $NAMESPACE load-balancer-test -- curl -s http://multi-az-app/ | grep -o "Welcome to nginx" || echo "Request $i failed"
+        kubectl exec -n "${NAMESPACE}" load-balancer-test -- curl -s http://multi-az-app/ | grep -o "Welcome to nginx" || echo "Request $i failed"
         sleep 1
     done
     
     # Clean up test pod
-    kubectl delete pod load-balancer-test -n $NAMESPACE --ignore-not-found=true
+    kubectl delete pod load-balancer-test -n "${NAMESPACE}" --ignore-not-found=true
     
     print_success "Load balancing test completed"
 }
@@ -463,7 +463,7 @@ print_summary() {
     echo "  - Failover: Automatic on zone failure"
     echo ""
     echo "Next Steps:"
-    echo "  1. Monitor pod distribution: kubectl get pods -n $NAMESPACE -o wide"
+    echo "  1. Monitor pod distribution: kubectl get pods -n "${NAMESPACE}" -o wide"
     echo "  2. Check HPA status: kubectl get hpa -n $NAMESPACE"
     echo "  3. View routing: istioctl pc destinationrule <pod-name>"
     echo "  4. Test failover: See test-failover-scenarios.sh"

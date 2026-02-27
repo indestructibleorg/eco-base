@@ -2,7 +2,7 @@
 # SecCompOps Platform — ECO Namespace: eco-seccompops | Port: 8095
 # Multi-stage build for production
 # =============================================================================
-FROM python:3.11-slim AS base
+FROM python:3.11.9-slim AS base
 
 LABEL org.opencontainers.image.title="seccompops-platform"
 LABEL org.opencontainers.image.description="Security & Compliance Operations Platform"

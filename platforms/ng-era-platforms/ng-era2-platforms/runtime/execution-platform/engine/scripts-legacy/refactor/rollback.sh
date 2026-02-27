@@ -172,7 +172,7 @@ rollback_phase() {
         read -p "Reset to phase $phase_number start? This will discard all changes after checkpoint. (y/N) " -n 1 -r
         echo
         
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
+        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
             git reset --hard "$phase_start_commit"
             log_success "Phase $phase_number rollback complete"
         else

@@ -174,12 +174,12 @@ class FHSAutomationMaster:
             )
         result = self.run_full_assessment()
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
-        with open(output_path, 'w') as f:
+        with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(result, f, indent=2)
         print(f"\n✓ Assessment report saved: {output_path}")
         # 也保存一個可讀的文本報告
         text_output = output_path.replace('.json', '.txt')
-        with open(text_output, 'w') as f:
+        with open(text_output, 'w', encoding='utf-8') as f:
             f.write(result["report"])
         print(f"✓ Text report saved: {text_output}")
         return output_path

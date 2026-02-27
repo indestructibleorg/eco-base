@@ -11,14 +11,14 @@ DASHBOARD = os.path.join(
 class TestGrafanaDashboard:
     @pytest.fixture
     def dashboard(self):
-        with open(DASHBOARD) as f:
+        with open(DASHBOARD, encoding='utf-8') as f:
             return json.load(f)
 
     def test_dashboard_exists(self):
         assert os.path.isfile(DASHBOARD)
 
     def test_valid_json(self):
-        with open(DASHBOARD) as f:
+        with open(DASHBOARD, encoding='utf-8') as f:
             data = json.load(f)
         assert "panels" in data
 

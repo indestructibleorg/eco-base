@@ -19,7 +19,7 @@ import yaml
 def fix_multi_document_yaml(file_path: Path):
     """Fix multi-document YAML by extracting first document only"""
     try:
-        with open(file_path, "r") as f:
+        with open(file_path, "r", encoding='utf-8') as f:
             documents = list(yaml.safe_load_all(f))
         if len(documents) <= 1:
             print(f"✅ {file_path.name}: Already single document")
@@ -28,10 +28,10 @@ def fix_multi_document_yaml(file_path: Path):
         main_doc = documents[0]
         # Create backup
         backup_path = file_path.with_suffix(f"{file_path.suffix}.backup")
-        with open(backup_path, "w") as f:
+        with open(backup_path, "w", encoding='utf-8') as f:
             f.write(file_path.read_text())
         # Write back only first document
-        with open(file_path, "w") as f:
+        with open(file_path, "w", encoding='utf-8') as f:
             yaml.dump(main_doc, f, default_flow_style=False, sort_keys=False)
         # Save additional documents as schema files if needed
         if len(documents) > 1:
@@ -39,7 +39,7 @@ def fix_multi_document_yaml(file_path: Path):
             schemas_dir.mkdir(exist_ok=True)
             for i, doc in enumerate(documents[1:], 1):
                 schema_file = schemas_dir / f"{file_path.stem}.schema{i}.yaml"
-                with open(schema_file, "w") as f:
+                with open(schema_file, "w", encoding='utf-8') as f:
                     yaml.dump(doc, f, default_flow_style=False, sort_keys=False)
         print(
             f"🔧 {file_path.name}: Fixed - {len(documents)} docs -> 1 main + {len(documents)-1} schemas"
@@ -51,7 +51,7 @@ def fix_multi_document_yaml(file_path: Path):
 def fix_metadata_issues(file_path: Path):
     """Fix missing metadata fields"""
     try:
-        with open(file_path, "r") as f:
+        with open(file_path, "r", encoding='utf-8') as f:
             content = yaml.safe_load(f)
         if not isinstance(content, dict):
             return False
@@ -74,7 +74,7 @@ def fix_metadata_issues(file_path: Path):
             kind = content.get("kind", "config").lower().replace(" ", "-")
             metadata["urn"] = f"urn:machinenativeops:root:{kind}:v1"
         # Write back
-        with open(file_path, "w") as f:
+        with open(file_path, "w", encoding='utf-8') as f:
             yaml.dump(content, f, default_flow_style=False, sort_keys=False)
         print(f"📝 {file_path.name}: Fixed metadata")
         return True

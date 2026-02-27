@@ -778,7 +778,6 @@ tags:
           post:
             summary: Create user
             operationId: createUser
-tags:
               - Users
             requestBody:
               required: true

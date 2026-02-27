@@ -8,6 +8,7 @@
 
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
+---
 metadata:
   name: aep-engine-hpa
   namespace: platform-03
@@ -21,6 +22,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
+---
 metadata:
   name: aep-engine
   minReplicas: 3

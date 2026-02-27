@@ -35,7 +35,7 @@ def main():
     default = sys.argv[3] if len(sys.argv) > 3 else ""
 
     try:
-        with open(filepath) as f:
+        with open(filepath, encoding='utf-8') as f:
             data = json.load(f)
         result = get_nested(data, field_path, default)
         print(result)

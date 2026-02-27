@@ -40,7 +40,7 @@ class ConfigValidator:
             self.warnings.append(f"Filename should be lowercase kebab-case: {path.name}")
         # Load and validate content
         try:
-            with open(path, "r") as f:
+            with open(path, "r", encoding='utf-8') as f:
                 if path.suffix == ".json":
                     config = json.load(f)
                 else:

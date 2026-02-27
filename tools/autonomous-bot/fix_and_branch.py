@@ -54,7 +54,7 @@ for problem in fixable:
     elif strategy == "pin_actions":
         changed = False
         for wf_file in glob.glob(".github/workflows/*.yaml") + glob.glob(".github/workflows/*.yml"):
-            with open(wf_file) as f:
+            with open(wf_file, encoding='utf-8') as f:
                 content = f.read()
             original = content
             for action, sha in KNOWN_SHAS.items():
@@ -62,7 +62,7 @@ for problem in fixable:
                 content = re.sub(pattern, rf'\g<1>{sha}', content)
             if content != original:
                 if not dry_run:
-                    with open(wf_file, 'w') as f:
+                    with open(wf_file, 'w', encoding='utf-8') as f:
                         f.write(content)
                 changed = True
                 print(f"  Pinned actions in {wf_file}")

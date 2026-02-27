@@ -44,7 +44,7 @@ class SubtreeHelper:
         if not self.config_path.exists():
             print(f"❌ Config not found: {self.config_path}", file=sys.stderr)
             sys.exit(1)
-        with open(self.config_path) as f:
+        with open(self.config_path, encoding='utf-8') as f:
             return yaml.safe_load(f)
     def list_repositories(
         self, core_only: bool = False, repo_name: Optional[str] = None

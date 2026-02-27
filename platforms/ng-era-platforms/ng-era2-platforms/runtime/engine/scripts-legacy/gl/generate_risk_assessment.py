@@ -35,7 +35,7 @@ def main():
     output_path.mkdir(parents=True, exist_ok=True)
     assessment = generate_risk_assessment(args.layer, args.output)
     assessment_file = output_path / f"risk-{args.layer}-{datetime.now().strftime('%Y%m%d%H%M%S')}.json"
-    with open(assessment_file, 'w') as f:
+    with open(assessment_file, 'w', encoding='utf-8') as f:
         json.dump(assessment, f, indent=2)
     print(f"Risk assessment generated: {assessment_file}")
 if __name__ == "__main__":

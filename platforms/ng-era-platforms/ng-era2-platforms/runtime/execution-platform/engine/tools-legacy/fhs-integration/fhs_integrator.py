@@ -162,7 +162,7 @@ class FHSIntegrator:
             action = f"Create wrapper: {wrapper_path}"
             results["actions"].append(action)
             if not self.dry_run:
-                with open(wrapper_path, 'w') as f:
+                with open(wrapper_path, 'w', encoding='utf-8') as f:
                     f.write(wrapper_content)
                 os.chmod(wrapper_path, 0o755)
                 print(f"✓ {action}")
@@ -327,7 +327,7 @@ They can be removed in a future cleanup once all references are updated.
         results["actions"].append(action)
         if not self.dry_run:
             os.makedirs(os.path.dirname(doc_path), exist_ok=True)
-            with open(doc_path, 'w') as f:
+            with open(doc_path, 'w', encoding='utf-8') as f:
                 f.write(doc_content)
             print(f"✓ {action}")
         else:

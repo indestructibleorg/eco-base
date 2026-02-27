@@ -5,6 +5,7 @@
 
 apiVersion: apps/v1
 kind: Deployment
+---
 metadata:
   name: auto-labeler
   namespace: monitoring
@@ -37,7 +38,7 @@ spec:
       
       containers:
       - name: auto-labeler
-        image: ghcr.io/machinenativeops/auto-labeler:latest
+        image: ghcr.io/machinenativeops/auto-labeler:v0.1.0
         imagePullPolicy: Always
         
         env:
@@ -78,6 +79,7 @@ spec:
 ---
 apiVersion: v1
 kind: ServiceAccount
+---
 metadata:
   name: auto-labeler
   namespace: monitoring
@@ -85,6 +87,7 @@ metadata:
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
+---
 metadata:
   name: auto-labeler
   namespace: monitoring
@@ -96,16 +99,19 @@ rules:
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
+---
 metadata:
   name: auto-labeler
   namespace: monitoring
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
+---
 metadata:
   name: auto-labeler
 subjects:
 - kind: ServiceAccount
+---
 metadata:
   name: auto-labeler
   namespace: monitoring
@@ -114,6 +120,7 @@ metadata:
 # Example labels that will be automatically applied
 apiVersion: v1
 kind: ConfigMap
+---
 metadata:
   name: auto-labeler-labels
   namespace: monitoring
@@ -165,6 +172,7 @@ data:
 # Auto-labeler annotation templates
 apiVersion: v1
 kind: ConfigMap
+---
 metadata:
   name: auto-labeler-annotations
   namespace: monitoring
@@ -195,6 +203,7 @@ data:
 # Label naming conventions
 apiVersion: v1
 kind: ConfigMap
+---
 metadata:
   name: auto-labeler-naming
   namespace: monitoring

@@ -103,7 +103,7 @@ class FileLoader(BaseLoader):
 
         loaded = 0
         try:
-            with output_path.open("a") as fh:
+            with output_path.open("a", encoding='utf-8') as fh:
                 for record in records:
                     line = json.dumps(
                         {

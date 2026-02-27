@@ -4,7 +4,7 @@
 # Full test suite with service dependencies via docker-compose
 # ============================================================================
 
-FROM python:3.11-slim
+FROM python:3.11.9-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \

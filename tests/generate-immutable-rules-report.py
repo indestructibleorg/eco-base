@@ -191,7 +191,7 @@ def update_summary(output_dir, report):
     entries = []
     if summary_path.exists():
         try:
-            with open(summary_path) as f:
+            with open(summary_path, encoding='utf-8') as f:
                 data = json.load(f)
                 entries = data.get("entries", [])
         except Exception:
@@ -208,7 +208,7 @@ def update_summary(output_dir, report):
     })
     entries = entries[-MAX_SUMMARY_RUNS:]
 
-    with open(summary_path, "w") as f:
+    with open(summary_path, "w", encoding='utf-8') as f:
         json.dump({
             "_note": ("Immutable Rules Gate compliance summary. "
                       "Full reports are GitHub Actions artifacts (90d retention)."),
@@ -264,7 +264,7 @@ def main():
     latest_path = output_dir / "immutable-rules-report-latest.json"
 
     for path in (full_path, latest_path):
-        with open(path, "w") as f:
+        with open(path, "w", encoding='utf-8') as f:
             json.dump(report, f, indent=2)
     print(f"Report: {full_path}")
 

@@ -113,7 +113,7 @@ class MetricsCollector:
         return docs
     def export_json(self, output_path: str) -> None:
         """Export metrics to JSON file."""
-        with open(output_path, "w") as f:
+        with open(output_path, "w", encoding='utf-8') as f:
             json.dump(self.metrics, f, indent=2)
     def export_prometheus(self) -> str:
         """Export metrics in Prometheus format."""

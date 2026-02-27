@@ -36,24 +36,24 @@ class TestHelper:
     def load_yaml(self, file_path: str) -> Dict:
         """Load YAML file"""
         full_path = self.test_data_dir / file_path
-        with open(full_path, "r") as f:
+        with open(full_path, "r", encoding='utf-8') as f:
             return yaml.safe_load(f)
     def load_json(self, file_path: str) -> Dict:
         """Load JSON file"""
         full_path = self.test_data_dir / file_path
-        with open(full_path, "r") as f:
+        with open(full_path, "r", encoding='utf-8') as f:
             return json.load(f)
     def save_yaml(self, data: Dict, file_path: str):
         """Save data to YAML file"""
         full_path = self.test_data_dir / file_path
         full_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(full_path, "w") as f:
+        with open(full_path, "w", encoding='utf-8') as f:
             yaml.dump(data, f, default_flow_style=False)
     def save_json(self, data: Dict, file_path: str):
         """Save data to JSON file"""
         full_path = self.test_data_dir / file_path
         full_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(full_path, "w") as f:
+        with open(full_path, "w", encoding='utf-8') as f:
             json.dump(data, f, indent=2)
     def create_sample_artifact(self, **kwargs) -> Dict:
         """Create a sample artifact for testing"""

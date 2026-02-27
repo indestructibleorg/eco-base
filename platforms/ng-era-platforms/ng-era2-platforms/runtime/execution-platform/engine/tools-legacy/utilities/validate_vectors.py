@@ -80,7 +80,7 @@ def generate_slsa_evidence(
         "version": "1.0.0",
     }
     output_file = evidence_dir / f"{file_path.stem}-validation.json"
-    with open(output_file, "w") as f:
+    with open(output_file, "w", encoding='utf-8') as f:
         json.dump(evidence, f, indent=2)
     print(f"📊 Evidence written to: {output_file}")
 def main():

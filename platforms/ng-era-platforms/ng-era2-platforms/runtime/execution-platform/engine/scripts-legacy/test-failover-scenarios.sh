@@ -92,20 +92,20 @@ test_pod_failover() {
     local start_time=$(date +%s)
     
     print_info "  - Getting current pod count..."
-    local initial_count=$(kubectl get pods -n $NAMESPACE -l app=$APP_NAME --no-headers | wc -l)
+    local initial_count=$(kubectl get pods -n "${NAMESPACE}" -l app=$APP_NAME --no-headers | wc -l)
     print_info "  - Initial pod count: $initial_count"
     
     # Delete a pod
     print_info "  - Deleting a pod..."
-    local pod_to_delete=$(kubectl get pods -n $NAMESPACE -l app=$APP_NAME -o jsonpath='{.items[0].metadata.name}')
-    kubectl delete pod $pod_to_delete -n $NAMESPACE --ignore-not-found=true
+    local pod_to_delete=$(kubectl get pods -n "${NAMESPACE}" -l app=$APP_NAME -o jsonpath='{.items[0].metadata.name}')
+    kubectl delete pod $pod_to_delete -n "${NAMESPACE}" --ignore-not-found=true
     
     # Wait for pod to be recreated
     print_info "  - Waiting for pod to be recreated..."
-    kubectl wait --for=condition=ready pod -l app=$APP_NAME -n $NAMESPACE --timeout=60s
+    kubectl wait --for=condition=ready pod -l app=$APP_NAME -n "${NAMESPACE}" --timeout=60s
     
     # Check final pod count
-    local final_count=$(kubectl get pods -n $NAMESPACE -l app=$APP_NAME --no-headers | wc -l)
+    local final_count=$(kubectl get pods -n "${NAMESPACE}" -l app=$APP_NAME --no-headers | wc -l)
     print_info "  - Final pod count: $final_count"
     
     local end_time=$(date +%s)
@@ -134,7 +134,7 @@ test_zone_failure() {
     print_info "  - Testing zone: $first_zone"
     
     print_info "  - Getting pod count in zone $first_zone..."
-    local initial_zone_pods=$(kubectl get pods -n $NAMESPACE -l app=$APP_NAME -o json | jq -r ".items[] | select(.spec.nodeName != null)" | while read pod; do
+    local initial_zone_pods=$(kubectl get pods -n "${NAMESPACE}" -l app=$APP_NAME -o json | jq -r ".items[] | select(.spec.nodeName != null)" | while read pod; do
         node=$(echo "$pod" | jq -r '.spec.nodeName')
         zone=$(kubectl get node $node -o jsonpath='{.metadata.labels.topology\.kubernetes\.io/zone}')
         if [ "$zone" = "$first_zone" ]; then
@@ -154,7 +154,7 @@ test_zone_failure() {
     
     # Check if pods moved to other zones
     print_info "  - Checking pod redistribution..."
-    kubectl get pods -n $NAMESPACE -l app=$APP_NAME -o wide
+    kubectl get pods -n "${NAMESPACE}" -l app=$APP_NAME -o wide
     
     # Uncordon nodes to restore zone
     print_info "  - Restoring zone by uncordoning nodes..."
@@ -175,7 +175,7 @@ test_database_failover() {
     local start_time=$(date +%s)
     
     print_info "  - Deploying test database..."
-    cat <<EOF | kubectl apply -n $NAMESPACE -f -
+    cat <<EOF | kubectl apply -n "${NAMESPACE}" -f -
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -202,18 +202,18 @@ spec:
 EOF
     
     print_info "  - Waiting for database pods to be ready..."
-    kubectl wait --for=condition=ready pod -l app=test-db -n $NAMESPACE --timeout=120s
+    kubectl wait --for=condition=ready pod -l app=test-db -n "${NAMESPACE}" --timeout=120s
     
     print_info "  - Simulating primary failure by deleting pod..."
-    local primary_pod=$(kubectl get pods -n $NAMESPACE -l app=test-db -o jsonpath='{.items[0].metadata.name}')
-    kubectl delete pod $primary_pod -n $NAMESPACE
+    local primary_pod=$(kubectl get pods -n "${NAMESPACE}" -l app=test-db -o jsonpath='{.items[0].metadata.name}')
+    kubectl delete pod $primary_pod -n "${NAMESPACE}"
     
     print_info "  - Waiting for pod to be recreated..."
-    kubectl wait --for=condition=ready pod -l app=test-db -n $NAMESPACE --timeout=120s
+    kubectl wait --for=condition=ready pod -l app=test-db -n "${NAMESPACE}" --timeout=120s
     
     print_info "  - Checking database connectivity..."
     # Cleanup
-    kubectl delete statefulset test-db -n $NAMESPACE --ignore-not-found=true
+    kubectl delete statefulset test-db -n "${NAMESPACE}" --ignore-not-found=true
     
     local end_time=$(date +%s)
     local duration=$((end_time - start_time))
@@ -232,11 +232,11 @@ test_circuit_breaker() {
     print_info "  - Checking Istio circuit breaker configuration..."
     
     # Check if DestinationRule exists
-    if kubectl get destinationrule multi-az-app-dr -n $NAMESPACE >/dev/null 2>&1; then
+    if kubectl get destinationrule multi-az-app-dr -n "${NAMESPACE}" >/dev/null 2>&1; then
         print_info "  - Circuit breaker configuration found"
         
         # Get circuit breaker settings
-        kubectl get destinationrule multi-az-app-dr -n $NAMESPACE -o yaml | grep -A 5 outlierDetection
+        kubectl get destinationrule multi-az-app-dr -n "${NAMESPACE}" -o yaml | grep -A 5 outlierDetection
         
         print_success "  ✓ Circuit breaker configuration verified"
         record_result "$test_name" "PASSED" "$duration" "Circuit breaker configured correctly"
@@ -255,16 +255,16 @@ test_automatic_recovery() {
     local start_time=$(date +%s)
     
     print_info "  - Deleting multiple pods..."
-    local pods_to_delete=$(kubectl get pods -n $NAMESPACE -l app=$APP_NAME -o jsonpath='{.items[:3].metadata.name}' | tr ' ' '\n')
+    local pods_to_delete=$(kubectl get pods -n "${NAMESPACE}" -l app=$APP_NAME -o jsonpath='{.items[:3].metadata.name}' | tr ' ' '\n')
     
     for pod in $pods_to_delete; do
-        kubectl delete pod $pod -n $NAMESPACE --ignore-not-found=true
+        kubectl delete pod $pod -n "${NAMESPACE}" --ignore-not-found=true
     done
     
     print_info "  - Waiting for automatic recovery..."
-    kubectl wait --for=condition=ready pod -l app=$APP_NAME -n $NAMESPACE --timeout=120s
+    kubectl wait --for=condition=ready pod -l app=$APP_NAME -n "${NAMESPACE}" --timeout=120s
     
-    local final_count=$(kubectl get pods -n $NAMESPACE -l app=$APP_NAME --no-headers | wc -l)
+    local final_count=$(kubectl get pods -n "${NAMESPACE}" -l app=$APP_NAME --no-headers | wc -l)
     print_info "  - Final pod count: $final_count"
     
     local end_time=$(date +%s)
@@ -290,25 +290,25 @@ generate_detailed_report() {
     
     echo "### Pod Status" >> $TEST_RESULTS_DIR/test-report.md
     echo "\`\`\`" >> $TEST_RESULTS_DIR/test-report.md
-    kubectl get pods -n $NAMESPACE -l app=$APP_NAME >> $TEST_RESULTS_DIR/test-report.md
+    kubectl get pods -n "${NAMESPACE}" -l app=$APP_NAME >> $TEST_RESULTS_DIR/test-report.md
     echo "\`\`\`" >> $TEST_RESULTS_DIR/test-report.md
     echo "" >> $TEST_RESULTS_DIR/test-report.md
     
     echo "### Pod Distribution" >> $TEST_RESULTS_DIR/test-report.md
     echo "\`\`\`" >> $TEST_RESULTS_DIR/test-report.md
-    kubectl get pods -n $NAMESPACE -l app=$APP_NAME -o wide >> $TEST_RESULTS_DIR/test-report.md
+    kubectl get pods -n "${NAMESPACE}" -l app=$APP_NAME -o wide >> $TEST_RESULTS_DIR/test-report.md
     echo "\`\`\`" >> $TEST_RESULTS_DIR/test-report.md
     echo "" >> $TEST_RESULTS_DIR/test-report.md
     
     echo "### Service Status" >> $TEST_RESULTS_DIR/test-report.md
     echo "\`\`\`" >> $TEST_RESULTS_DIR/test-report.md
-    kubectl get svc -n $NAMESPACE -l app=$APP_NAME >> $TEST_RESULTS_DIR/test-report.md
+    kubectl get svc -n "${NAMESPACE}" -l app=$APP_NAME >> $TEST_RESULTS_DIR/test-report.md
     echo "\`\`\`" >> $TEST_RESULTS_DIR/test-report.md
     echo "" >> $TEST_RESULTS_DIR/test-report.md
     
     echo "### HPA Status" >> $TEST_RESULTS_DIR/test-report.md
     echo "\`\`\`" >> $TEST_RESULTS_DIR/test-report.md
-    kubectl get hpa -n $NAMESPACE 2>/dev/null || echo "No HPA configured"
+    kubectl get hpa -n "${NAMESPACE}" 2>/dev/null || echo "No HPA configured"
     echo "\`\`\`" >> $TEST_RESULTS_DIR/test-report.md
 }
 

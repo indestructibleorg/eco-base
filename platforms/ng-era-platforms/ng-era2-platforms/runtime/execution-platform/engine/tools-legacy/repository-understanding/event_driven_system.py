@@ -190,7 +190,7 @@ class EventDrivenAutomationSystem:
             # 檢查知識庫是否存在和有效
             if os.path.exists('knowledge_base.json'):
                 try:
-                    with open('knowledge_base.json', 'r') as f:
+                    with open('knowledge_base.json', 'r', encoding='utf-8') as f:
                         kb = json.load(f)
                     # 檢查知識庫是否需要更新
                     if self._knowledge_base_needs_update(kb):

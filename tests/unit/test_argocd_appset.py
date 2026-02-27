@@ -10,14 +10,14 @@ STAGING = os.path.join(os.path.dirname(__file__), "..", "..", "helm", "values-st
 class TestApplicationSet:
     @pytest.fixture
     def appset(self):
-        with open(APPSET) as f:
+        with open(APPSET, encoding='utf-8') as f:
             return yaml.safe_load(f)
 
     def test_file_exists(self):
         assert os.path.isfile(APPSET)
 
     def test_valid_yaml(self):
-        with open(APPSET) as f:
+        with open(APPSET, encoding='utf-8') as f:
             data = yaml.safe_load(f)
         assert data["kind"] == "ApplicationSet"
 
@@ -50,7 +50,7 @@ class TestApplicationSet:
         assert os.path.isfile(STAGING)
 
     def test_staging_values_valid(self):
-        with open(STAGING) as f:
+        with open(STAGING, encoding='utf-8') as f:
             data = yaml.safe_load(f)
         assert data["global"]["namespace"] == "eco-base-staging"
         assert data["api"]["replicaCount"] == 1

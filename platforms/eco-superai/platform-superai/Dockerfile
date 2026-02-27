@@ -1,7 +1,7 @@
 # =============================================================================
 # SuperAI Platform — ECO Namespace: eco-superai | Port: 8094
 # =============================================================================
-FROM python:3.11-slim AS base
+FROM python:3.11.9-slim AS base
 
 LABEL org.opencontainers.image.title="superai-platform"
 LABEL org.opencontainers.image.description="SuperAI Quantum-Enhanced Operations Platform"

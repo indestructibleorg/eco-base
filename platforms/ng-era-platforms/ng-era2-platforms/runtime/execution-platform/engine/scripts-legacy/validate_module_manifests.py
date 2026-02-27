@@ -22,7 +22,7 @@ def main():
     if not schema_path.exists():
         print(f"❌ Schema file not found: {schema_path}")
         sys.exit(1)
-    with open(schema_path, 'r') as f:
+    with open(schema_path, 'r', encoding='utf-8') as f:
         schema = json.load(f)
     # Validate each module manifest
     modules_dir = Path("controlplane/baseline/modules")
@@ -32,7 +32,7 @@ def main():
         if module_dir.is_dir():
             manifest_path = module_dir / "module-manifest.yaml"
             if manifest_path.exists():
-                with open(manifest_path, 'r') as f:
+                with open(manifest_path, 'r', encoding='utf-8') as f:
                     manifest = yaml.safe_load(f)
                 try:
                     validate(instance=manifest, schema=schema)

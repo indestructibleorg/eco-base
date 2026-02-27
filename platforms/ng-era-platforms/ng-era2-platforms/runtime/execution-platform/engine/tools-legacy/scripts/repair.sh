@@ -439,7 +439,7 @@ main() {
     if [ "$verification_passed" = "false" ] && [ "$AUTO_APPLY" = "false" ]; then
         read -p "驗證失敗。是否回滾修復? (y/n) " -n 1 -r
         echo
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
+        if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
             rollback_repairs
         fi
     fi

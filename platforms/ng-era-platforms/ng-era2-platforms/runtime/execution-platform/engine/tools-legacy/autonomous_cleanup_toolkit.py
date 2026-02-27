@@ -691,7 +691,7 @@ class AutonomousCleanupEngine:
         # Save to file if requested
         if output_path:
             output_path.parent.mkdir(parents=True, exist_ok=True)
-            with open(output_path, "w") as f:
+            with open(output_path, "w", encoding='utf-8') as f:
                 json.dump(asdict(report), f, indent=2, ensure_ascii=False)
             self.logger.info(f"📄 Report saved to {output_path}")
         # Print summary
@@ -825,7 +825,7 @@ def main():
             status_emoji = status_emojis.get(check["status"], "❓")
             print(f"  {status_emoji} {check['name']}: {check['message']}")
         if args.output:
-            with open(args.output, "w") as f:
+            with open(args.output, "w", encoding='utf-8') as f:
                 json.dump(results, f, indent=2, ensure_ascii=False)
             print(f"\n📄 Safety report saved to {args.output}")
     elif args.command == "git":

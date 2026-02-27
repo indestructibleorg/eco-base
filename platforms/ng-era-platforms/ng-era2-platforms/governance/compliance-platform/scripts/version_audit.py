@@ -49,7 +49,7 @@ class VersionAuditor:
             return
         
         try:
-            with open(pkg_json_path, 'r') as f:
+            with open(pkg_json_path, 'r', encoding='utf-8') as f:
                 pkg = json.load(f)
             
             version = pkg.get('version', 'unknown')
@@ -77,14 +77,14 @@ class VersionAuditor:
             return
         
         try:
-            with open(agent_yml_path, 'r') as f:
+            with open(agent_yml_path, 'r', encoding='utf-8') as f:
                 agent_config = yaml.safe_load(f)
             
             metadata_version = agent_config.get('metadata', {}).get('version', 'unknown')
             comment_version = None
             
             # 從註釋中提取版本
-            with open(agent_yml_path, 'r') as f:
+            with open(agent_yml_path, 'r', encoding='utf-8') as f:
                 first_lines = [f.readline() for _ in range(10)]
                 for line in first_lines:
                     if 'v' in line and '.0.0' in line:
@@ -205,7 +205,7 @@ if __name__ == '__main__':
     
     # 保存報告
     report_path = Path(repo_path) / 'VERSION_AUDIT_REPORT.json'
-    with open(report_path, 'w') as f:
+    with open(report_path, 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=2, ensure_ascii=False)
     
     print(f"\n📊 報告已保存: {report_path}")

@@ -337,7 +337,7 @@ def main():
     # Output for GitHub Actions
     output_file = os.environ.get("GITHUB_OUTPUT", "")
     if output_file:
-        with open(output_file, "a") as f:
+        with open(output_file, "a", encoding='utf-8') as f:
             f.write(f"prs_processed={len(results)}\n")
             f.write(f"actions_executed={executed}\n")
             f.write(f"results_json={json.dumps(results)}\n")

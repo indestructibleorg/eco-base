@@ -66,7 +66,7 @@ class RepoSyncer:
             log_info("Creating example config...")
             self._create_example_config()
             sys.exit(1)
-        with open(self.config_path) as f:
+        with open(self.config_path, encoding='utf-8') as f:
             return yaml.safe_load(f)
     def _create_example_config(self):
         """Create example configuration file"""
@@ -104,7 +104,7 @@ class RepoSyncer:
         }
         config_file = self.repo_root / "config" / "external_repos.yaml"
         config_file.parent.mkdir(parents=True, exist_ok=True)
-        with open(config_file, "w") as f:
+        with open(config_file, "w", encoding='utf-8') as f:
             yaml.dump(example_config, f, default_flow_style=False, allow_unicode=True)
         log_success(f"Example config created: {config_file}")
         log_info("Please edit this file and add your repositories")
@@ -201,7 +201,7 @@ class RepoSyncer:
             "description": repo_config.get("description", ""),
         }
         metadata_file = target_dir / ".sync_metadata.json"
-        with open(metadata_file, "w") as f:
+        with open(metadata_file, "w", encoding='utf-8') as f:
             json.dump(metadata, f, indent=2)
     def sync_all(
         self, core_only: bool = False, exclude_core: bool = False, dry_run: bool = False

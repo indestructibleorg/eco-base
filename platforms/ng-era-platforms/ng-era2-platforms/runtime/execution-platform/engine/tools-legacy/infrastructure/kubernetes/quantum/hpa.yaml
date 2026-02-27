@@ -8,6 +8,7 @@
 
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
+---
 metadata:
   name: quantumflow-backend-hpa
   namespace: quantumflow
@@ -15,6 +16,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
+---
 metadata:
   name: quantumflow-backend
   minReplicas: 3
@@ -53,6 +55,7 @@ metadata:
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
+---
 metadata:
   name: quantumflow-frontend-hpa
   namespace: quantumflow
@@ -60,6 +63,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
+---
 metadata:
   name: quantumflow-frontend
   minReplicas: 2

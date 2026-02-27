@@ -36,7 +36,7 @@ def load_playbook(cluster_id: str, index_path: Path, repo_root: Path) -> dict:
     - p2_actions: P2 priority actions
     """
     # Load index
-    with open(index_path) as f:
+    with open(index_path, encoding='utf-8') as f:
         index = yaml.safe_load(f)
     # Find cluster in index
     cluster = None

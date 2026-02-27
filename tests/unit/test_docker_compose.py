@@ -10,14 +10,14 @@ COMPOSE_ECO = os.path.join(os.path.dirname(__file__), "..", "..", "docker-compos
 class TestDockerCompose:
     @pytest.fixture
     def compose(self):
-        with open(COMPOSE) as f:
+        with open(COMPOSE, encoding='utf-8') as f:
             return yaml.safe_load(f)
 
     def test_file_exists(self):
         assert os.path.isfile(COMPOSE)
 
     def test_valid_yaml(self):
-        with open(COMPOSE) as f:
+        with open(COMPOSE, encoding='utf-8') as f:
             data = yaml.safe_load(f)
         assert "services" in data
 
@@ -70,16 +70,16 @@ class TestDockerComposeEcosystem:
         assert os.path.isfile(COMPOSE_ECO)
 
     def test_ecosystem_valid_yaml(self):
-        with open(COMPOSE_ECO) as f:
+        with open(COMPOSE_ECO, encoding='utf-8') as f:
             data = yaml.safe_load(f)
         assert "services" in data
 
     def test_ecosystem_has_prometheus(self):
-        with open(COMPOSE_ECO) as f:
+        with open(COMPOSE_ECO, encoding='utf-8') as f:
             data = yaml.safe_load(f)
         assert "prometheus" in data["services"]
 
     def test_ecosystem_has_grafana(self):
-        with open(COMPOSE_ECO) as f:
+        with open(COMPOSE_ECO, encoding='utf-8') as f:
             data = yaml.safe_load(f)
         assert "grafana" in data["services"]

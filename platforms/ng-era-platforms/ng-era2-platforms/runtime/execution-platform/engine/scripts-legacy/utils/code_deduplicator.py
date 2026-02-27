@@ -147,7 +147,7 @@ def main():
     duplicates = deduplicator.get_duplicates()
     output_dir = Path("reports")
     output_dir.mkdir(exist_ok=True)
-    with open(output_dir / "code_duplicates.json", "w") as f:
+    with open(output_dir / "code_duplicates.json", "w", encoding='utf-8') as f:
         json.dump(duplicates, f, indent=2)
     print("\nDetailed report saved to: reports/code_duplicates.json")
 if __name__ == "__main__":

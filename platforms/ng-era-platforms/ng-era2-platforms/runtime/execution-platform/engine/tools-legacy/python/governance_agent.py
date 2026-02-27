@@ -43,7 +43,7 @@ class GovernanceAgent:
             raise FileNotFoundError(
                 f"Governance manifest not found: {self.manifest_path}"
             )
-        with open(self.manifest_path, "r") as f:
+        with open(self.manifest_path, "r", encoding='utf-8') as f:
             self.manifest = yaml.safe_load(f)
         print(f"[INFO] Loaded gl-platform.governance manifest: {self.manifest['metadata']['name']}")
         print(f"[INFO] Version: {self.manifest['metadata']['version']}")
@@ -52,7 +52,7 @@ class GovernanceAgent:
         schema_dir = Path("schemas")
         if schema_dir.exists():
             for schema_file in schema_dir.glob("*.yaml"):
-                with open(schema_file, "r") as f:
+                with open(schema_file, "r", encoding='utf-8') as f:
                     schema = yaml.safe_load(f)
                     # Extract schema name without ".schema" suffix
                     schema_name = schema_file.stem.replace(".schema", "")
@@ -168,7 +168,7 @@ class GovernanceAgent:
         )
         if policy_path.exists():
             try:
-                with open(policy_path, "r") as f:
+                with open(policy_path, "r", encoding='utf-8') as f:
                     yaml.safe_load(f)
                     # Add policy-specific validation here
                     # This is a simplified version
@@ -244,7 +244,7 @@ class GovernanceAgent:
         # Load naming patterns
         patterns_path = Path("workspace/src/gl-platform.governance/35-scripts/naming-patterns.yaml")
         if patterns_path.exists():
-            with open(patterns_path, "r") as f:
+            with open(patterns_path, "r", encoding='utf-8') as f:
                 patterns_data = yaml.safe_load(f)
                 patterns_data.get("patterns", {})
         # Get resource type suffix

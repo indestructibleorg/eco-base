@@ -291,14 +291,14 @@ def main():
     report = scanner.generate_report()
     
     if args.output:
-        with open(args.output, 'w') as f:
+        with open(args.output, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2)
         print(f"\nDetailed report saved to: {args.output}")
     else:
         # Default output location
         output_path = scanner.root_path / "logs" / f"naming-violations-{datetime.now().strftime('%Y%m%d-%H%M%S')}.json"
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(output_path, 'w') as f:
+        with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2)
         print(f"\nDetailed report saved to: {output_path}")
 

@@ -17,7 +17,7 @@ SHA_PATTERN = re.compile(r'^[a-f0-9]{40}$', re.IGNORECASE)
 def extract_actions_from_workflow(workflow_file: Path, repo_root: Path) -> List[Dict]:
     """Extract all 'uses:' statements from a workflow file"""
     try:
-        with open(workflow_file, 'r') as f:
+        with open(workflow_file, 'r', encoding='utf-8') as f:
             content = f.read()
         
         # Find all 'uses:' statements in actual workflow steps
@@ -233,7 +233,7 @@ def load_policy_file(policy_file: Path) -> tuple[Optional[Dict], Optional[str]]:
         return (None, "PyYAML not installed; using default policy. Install PyYAML to use custom policy file.")
     
     try:
-        with open(policy_file, 'r') as f:
+        with open(policy_file, 'r', encoding='utf-8') as f:
             loaded = yaml.safe_load(f)
         
         if loaded is None:

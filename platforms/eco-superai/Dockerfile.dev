@@ -4,7 +4,7 @@
 # Hot-reload, debug tools, full dev dependencies
 # ============================================================================
 
-FROM python:3.11-slim
+FROM python:3.11.9-slim
 
 LABEL maintainer="Enterprise Engineering Team" \
       description="SuperAI Platform — Development Image"

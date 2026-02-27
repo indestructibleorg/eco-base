@@ -58,29 +58,29 @@ echo ""
 echo -e "${GREEN}Phase 3: Waiting for Deployments${NC}"
 echo "----------------------------------------"
 echo "Waiting for Prometheus to be ready..."
-kubectl wait --for=condition=available --timeout=300s deployment/prometheus -n $MONITORING_NAMESPACE || true
+kubectl wait --for=condition=available --timeout=300s deployment/prometheus -n "${MONITORING_NAMESPACE}" || true
 
 echo "Waiting for Grafana to be ready..."
-kubectl wait --for=condition=available --timeout=300s deployment/grafana -n $MONITORING_NAMESPACE || true
+kubectl wait --for=condition=available --timeout=300s deployment/grafana -n "${MONITORING_NAMESPACE}" || true
 
 echo ""
 
 echo -e "${GREEN}Phase 4: Verifying Deployment${NC}"
 echo "----------------------------------------"
 echo "Deployment Status:"
-kubectl get deployments -n $MONITORING_NAMESPACE
+kubectl get deployments -n "${MONITORING_NAMESPACE}"
 echo ""
 
 echo "Pod Status:"
-kubectl get pods -n $MONITORING_NAMESPACE
+kubectl get pods -n "${MONITORING_NAMESPACE}"
 echo ""
 
 echo "Service Status:"
-kubectl get services -n $MONITORING_NAMESPACE
+kubectl get services -n "${MONITORING_NAMESPACE}"
 echo ""
 
 echo "Ingress Status:"
-kubectl get ingress -n $MONITORING_NAMESPACE
+kubectl get ingress -n "${MONITORING_NAMESPACE}"
 echo ""
 
 echo -e "${GREEN}Phase 5: Testing Supabase Metrics API${NC}"

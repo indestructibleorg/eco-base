@@ -77,7 +77,7 @@ class ArtifactValidator:
         semantic_root_path = repo_root / "root" / ".root.semantic-root.yaml"
         if semantic_root_path.exists():
             try:
-                with open(semantic_root_path, "r") as f:
+                with open(semantic_root_path, "r", encoding='utf-8') as f:
                     self.semantic_root = yaml.safe_load(f)
             except Exception as e:
                 print(f"⚠️  Warning: Could not load semantic root: {e}")
@@ -85,7 +85,7 @@ class ArtifactValidator:
         gates_map_path = repo_root / "root" / ".root.gates.map.yaml"
         if gates_map_path.exists():
             try:
-                with open(gates_map_path, "r") as f:
+                with open(gates_map_path, "r", encoding='utf-8') as f:
                     self.gates_map = yaml.safe_load(f)
             except Exception as e:
                 print(f"⚠️  Warning: Could not load gates map: {e}")
@@ -114,7 +114,7 @@ class ArtifactValidator:
                 )
                 continue
             try:
-                with open(path, "r") as f:
+                with open(path, "r", encoding='utf-8') as f:
                     # Try to load YAML
                     artifact = yaml.safe_load(f)
                     if artifact:
@@ -1108,7 +1108,7 @@ class ArtifactValidator:
         if output_path:
             output_file = Path(output_path)
             output_file.parent.mkdir(parents=True, exist_ok=True)
-            with open(output_file, "w") as f:
+            with open(output_file, "w", encoding='utf-8') as f:
                 yaml.dump(
                     attestation,
                     f,

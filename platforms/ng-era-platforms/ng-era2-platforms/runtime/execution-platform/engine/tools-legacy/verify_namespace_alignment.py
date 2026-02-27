@@ -78,14 +78,14 @@ def run_basic_verification(report: VerificationReport):
     print("\n🔍 Running Basic Verification...")
     # 1. YAML syntax validation
     try:
-        with open("mno-namespace.yaml", "r") as f:
+        with open("mno-namespace.yaml", "r", encoding='utf-8') as f:
             yaml.safe_load(f)
         report.add_result("basic", "YAML syntax (mno-namespace.yaml)", True)
     except Exception as e:
         report.add_result("basic", "YAML syntax (mno-namespace.yaml)", False, str(e))
     # 2. Namespace consistency check
     try:
-        with open("mno-namespace.yaml", "r") as f:
+        with open("mno-namespace.yaml", "r", encoding='utf-8') as f:
             config = yaml.safe_load(f)
         checks = [
             config["spec"]["namespaces"]["primary"]["name"] == "machinenativeops",

@@ -134,7 +134,7 @@ class NamingGovernanceRepair:
     def _load_config(self) -> Dict[str, Any]:
         """載入配置文件"""
         try:
-            with open(self.config_path, "r") as f:
+            with open(self.config_path, "r", encoding='utf-8') as f:
                 return yaml.safe_load(f)
         except FileNotFoundError:
             logger.warning(f"配置文件未找到: {self.config_path}，使用默認配置")
@@ -858,7 +858,7 @@ class NamingGovernanceRepair:
 
         try:
             os.makedirs(os.path.dirname(output_path), exist_ok=True)
-            with open(output_path, "w") as f:
+            with open(output_path, "w", encoding='utf-8') as f:
                 json.dump(report, f, indent=2, default=str)
             logger.info(f"修復報告已保存到: {output_path}")
         except Exception as e:

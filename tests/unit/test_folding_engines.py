@@ -112,7 +112,7 @@ class TestWALWriter:
         wal.append("update", {"id": "test-2"})
         wal.close()
         files = list(tmp_path.glob("wal-*.jsonl"))
-        with open(files[0]) as f:
+        with open(files[0], encoding='utf-8') as f:
             lines = f.readlines()
         assert len(lines) == 2
         for line in lines:

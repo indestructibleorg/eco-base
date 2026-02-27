@@ -137,7 +137,7 @@ class ArtifactCLI:
             return 1
             
         try:
-            with open(artifact_file, 'r') as f:
+            with open(artifact_file, 'r', encoding='utf-8') as f:
                 if artifact_file.suffix == '.json':
                     data = json.load(f)
                 elif artifact_file.suffix in ['.yaml', '.yml']:

@@ -152,7 +152,7 @@ def run_count_script_in_temp_dir(report_data) -> Tuple[str, int]:
         os.chdir(temp_dir)
         try:
             # Create bandit-report.json
-            with open(BANDIT_REPORT_FILENAME, "w") as f:
+            with open(BANDIT_REPORT_FILENAME, "w", encoding='utf-8') as f:
                 if isinstance(report_data, dict):
                     json.dump(report_data, f)
                 else:

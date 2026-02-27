@@ -110,7 +110,7 @@ class LogExtractor(BaseExtractor):
             self._log.error("log_file_not_found", path=str(log_path))
             return
 
-        with log_path.open("r") as fh:
+        with log_path.open("r", encoding='utf-8') as fh:
             for line_num, line in enumerate(fh, 1):
                 line = line.strip()
                 if not line:

@@ -19,7 +19,7 @@ def main():
     if not registry_path.exists():
         print(f"❌ Registry file not found: {registry_path}")
         sys.exit(1)
-    with open(registry_path, 'r') as f:
+    with open(registry_path, 'r', encoding='utf-8') as f:
         registry = yaml.safe_load(f)
     print("📋 Module Registry Validation")
     print("=" * 50)

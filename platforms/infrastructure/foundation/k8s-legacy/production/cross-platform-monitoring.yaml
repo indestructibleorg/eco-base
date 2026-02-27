@@ -10,6 +10,7 @@
 
 apiVersion: v1
 kind: ConfigMap
+---
 metadata:
   name: cross-platform-monitoring-config
   namespace: production
@@ -375,6 +376,7 @@ data:
   grafana-dashboards.yaml: |
     apiVersion: v1
     kind: ConfigMap
+---
 metadata:
   name: grafana-dashboards
   namespace: monitoring

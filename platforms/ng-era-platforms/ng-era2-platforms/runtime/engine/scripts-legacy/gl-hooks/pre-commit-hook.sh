@@ -70,10 +70,10 @@ STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(yam
 
 if [ -n "$STAGED_FILES" ]; then
     for file in $STAGED_FILES; do
-        if [[ $file == gl/* ]]; then
+        if [[ "${file}" == gl/* ]]; then
             echo "  ✓ Validating $file"
             # Check if file follows GL structure
-            if [[ $file =~ ^gl/[0-9]{2}-[a-z]+/ ]]; then
+            if [[ "${file}" =~ ^gl/[0-9]{2}-[a-z]+/ ]]; then
                 echo "    ✅ GL structure compliant"
             else
                 echo "    ⚠️  Warning: File may not follow GL structure"

@@ -79,7 +79,7 @@ class ErrorPatternAnalyzer:
         """Generate analysis report"""
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         report_file = f"pattern_analysis_report_{timestamp}.md"
-        with open(report_file, 'w') as f:
+        with open(report_file, 'w', encoding='utf-8') as f:
             f.write("# Error Pattern Analysis Report\n\n")
             f.write(f"**Generated:** {datetime.now().isoformat()}\n\n")
             # Top error patterns

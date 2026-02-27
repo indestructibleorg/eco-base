@@ -2,7 +2,7 @@
 # SuperAI Platform — Development Dockerfile
 # ============================================================================
 # Optimized for fast rebuilds and hot-reload during development
-FROM python:3.11-slim AS base
+FROM python:3.11.9-slim AS base
 
 # System dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \

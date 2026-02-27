@@ -1,7 +1,7 @@
 # =============================================================================
 # ObservOps Platform — ECO Namespace: eco-observops | Port: 8093
 # =============================================================================
-FROM python:3.11-slim AS base
+FROM python:3.11.9-slim AS base
 
 LABEL org.opencontainers.image.title="observops-platform"
 LABEL org.opencontainers.image.description="Observability Operations Platform"

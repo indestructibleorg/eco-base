@@ -2,7 +2,7 @@
 # Platform Core — ECO Namespace: eco-core | Port: 8080
 # Multi-stage build for production
 # =============================================================================
-FROM python:3.11-slim AS base
+FROM python:3.11.9-slim AS base
 
 LABEL org.opencontainers.image.title="platform-core"
 LABEL org.opencontainers.image.description="Shared Kernel — Auth, Memory Hub, Event Bus, Policy & Audit, Infra Manager"

@@ -422,7 +422,7 @@ def main():
         print(f"  {category}: {len(findings)}")
     # Save report if requested
     if args.output:
-        with open(args.output, "w") as f:
+        with open(args.output, "w", encoding='utf-8') as f:
             json.dump(report, f, indent=2)
         print(f"\n📄 Report saved to: {args.output}")
     # Verbose output

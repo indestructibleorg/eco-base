@@ -183,7 +183,7 @@ class PipelineValidator:
             'validation_results': self.validation_results,
             'evidence_chain': self.evidence_chain
         }
-        with open(output_path, 'w') as f:
+        with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2)
         logger.info(f"Validation report saved to {output_path}")
 def main():

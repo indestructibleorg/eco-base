@@ -87,7 +87,7 @@ class SemanticEngine:
         Returns:
             SemanticGraph containing folded semantic nodes
         """
-        with open(file_path, 'r') as f:
+        with open(file_path, 'r', encoding='utf-8') as f:
             spec_yaml = f.read()
         return self.load_specification(spec_yaml)
     

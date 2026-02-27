@@ -88,7 +88,7 @@ deploy_elasticsearch() {
     # Wait for operator to be ready
     print_info "  - Waiting for Elasticsearch operator..."
     kubectl wait --for=condition=available \
-        -n $ES_NAMESPACE \
+        -n "${ES_NAMESPACE}" \
         deployment/elastic-operator \
         --timeout=5m || print_warn "Operator check timed out"
     
@@ -130,7 +130,7 @@ EOF
     
     print_info "  - Waiting for Elasticsearch to be ready..."
     kubectl wait --for=condition=ready \
-        -n $NAMESPACE \
+        -n "${NAMESPACE}" \
         elasticsearch/jaeger-es \
         --timeout=10m || print_warn "Elasticsearch readiness check timed out"
     
@@ -150,7 +150,7 @@ install_jaeger() {
     
     # Get Elasticsearch password
     print_info "  - Getting Elasticsearch credentials..."
-    ES_PASSWORD=$(kubectl get secret jaeger-es-es-elastic-user -n $NAMESPACE -o jsonpath='{.data.elastic}' | base64 --decode 2>/dev/null || echo "changeme")
+    ES_PASSWORD=$(kubectl get secret jaeger-es-es-elastic-user -n "${NAMESPACE}" -o jsonpath='{.data.elastic}' | base64 --decode 2>/dev/null || echo "changeme")
     
     # Install Jaeger
     print_info "  - Installing Jaeger with Elasticsearch backend..."
@@ -207,7 +207,7 @@ EOF
 deploy_tracing_app() {
     print_info "Deploying sample application with tracing..."
     
-    cat <<EOF | kubectl apply -n $TESTING_NAMESPACE -f -
+    cat <<EOF | kubectl apply -n "${TESTING_NAMESPACE}" -f -
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -295,7 +295,7 @@ spec:
 EOF
     
     print_info "Waiting for tracing demo pods to be ready..."
-    kubectl wait --for=condition=ready pod -l app=tracing-demo -n $TESTING_NAMESPACE --timeout=60s
+    kubectl wait --for=condition=ready pod -l app=tracing-demo -n "${TESTING_NAMESPACE}" --timeout=60s
     
     print_success "Tracing demo application deployed"
 }
@@ -306,24 +306,24 @@ verify_jaeger() {
     
     # Check Jaeger pods
     print_info "  - Checking Jaeger pods..."
-    kubectl get pods -n $NAMESPACE
+    kubectl get pods -n "${NAMESPACE}"
     
     # Check Jaeger services
     print_info "  - Checking Jaeger services..."
-    kubectl get svc -n $NAMESPACE
+    kubectl get svc -n "${NAMESPACE}"
     
     # Check Elasticsearch
     print_info "  - Checking Elasticsearch..."
-    kubectl get elasticsearch -n $NAMESPACE
+    kubectl get elasticsearch -n "${NAMESPACE}"
     
     # Check tracing demo
     print_info "  - Checking tracing demo..."
-    kubectl get pods -n $TESTING_NAMESPACE -l app=tracing-demo
+    kubectl get pods -n "${TESTING_NAMESPACE}" -l app=tracing-demo
     
     # Test Jaeger UI endpoint
     print_info "  - Testing Jaeger query endpoint..."
-    JAEGER_POD=$(kubectl get pod -n $NAMESPACE -l app.kubernetes.io/component=query -o jsonpath='{.items[0].metadata.name}')
-    kubectl exec -n $NAMESPACE $JAEGER_POD -- curl -s http://localhost:16686/api/services | head -c 200
+    JAEGER_POD=$(kubectl get pod -n "${NAMESPACE}" -l app.kubernetes.io/component=query -o jsonpath='{.items[0].metadata.name}')
+    kubectl exec -n "${NAMESPACE}" $JAEGER_POD -- curl -s http://localhost:16686/api/services | head -c 200
     
     print_success "Jaeger verification completed"
 }
@@ -333,12 +333,12 @@ generate_test_traffic() {
     print_info "Generating test traffic for tracing..."
     
     # Get tracing demo service
-    TRACING_DEMO_POD=$(kubectl get pod -n $TESTING_NAMESPACE -l app=tracing-demo -o jsonpath='{.items[0].metadata.name}')
+    TRACING_DEMO_POD=$(kubectl get pod -n "${TESTING_NAMESPACE}" -l app=tracing-demo -o jsonpath='{.items[0].metadata.name}')
     
     # Generate traffic
     print_info "  - Generating HTTP requests..."
     for i in {1..10}; do
-        kubectl exec -n $TESTING_NAMESPACE $TRACING_DEMO_POD -- curl -s http://localhost:8080/api/drivers > /dev/null || true
+        kubectl exec -n "${TESTING_NAMESPACE}" $TRACING_DEMO_POD -- curl -s http://localhost:8080/api/drivers > /dev/null || true
         sleep 1
     done
     
@@ -351,17 +351,17 @@ check_jaeger_ui() {
     
     echo ""
     echo -e "${YELLOW}To access Jaeger UI, run:${NC}"
-    echo "  kubectl port-forward -n $NAMESPACE svc/jaeger-query 16686:16686"
+    echo "  kubectl port-forward -n "${NAMESPACE}" svc/jaeger-query 16686:16686"
     echo ""
     echo "Then open browser at: http://localhost:16686"
     echo ""
     
     # Check if port-forward is possible
     print_info "  - Testing Jaeger query endpoint..."
-    JAEGER_POD=$(kubectl get pod -n $NAMESPACE -l app.kubernetes.io/component=query -o jsonpath='{.items[0].metadata.name}')
+    JAEGER_POD=$(kubectl get pod -n "${NAMESPACE}" -l app.kubernetes.io/component=query -o jsonpath='{.items[0].metadata.name}')
     
     # Test API endpoint
-    kubectl exec -n $NAMESPACE $JAEGER_POD -- curl -s http://localhost:16686/api/services | jq . | head -n 20 || echo "No services found yet (needs more traffic)"
+    kubectl exec -n "${NAMESPACE}" $JAEGER_POD -- curl -s http://localhost:16686/api/services | jq . | head -n 20 || echo "No services found yet (needs more traffic)"
     
     print_success "Jaeger UI access verified"
 }
@@ -385,7 +385,7 @@ print_summary() {
     echo "  - Tracing Demo: Deployed (2 replicas)"
     echo ""
     echo "Access Jaeger UI:"
-    echo "  kubectl port-forward -n $NAMESPACE svc/jaeger-query 16686:16686"
+    echo "  kubectl port-forward -n "${NAMESPACE}" svc/jaeger-query 16686:16686"
     echo "  Open: http://localhost:16686"
     echo ""
     echo "Next Steps:"

@@ -89,19 +89,19 @@ echo ""
 echo -e "${GREEN}Step 6: Verifying Secrets${NC}"
 echo ""
 echo "GCP Service Account Secret:"
-kubectl get secret gcp-sa-key -n $NAMESPACE
+kubectl get secret gcp-sa-key -n "${NAMESPACE}"
 echo ""
 echo "Supabase Secrets:"
-kubectl get secret supabase-secrets -n $NAMESPACE
+kubectl get secret supabase-secrets -n "${NAMESPACE}"
 echo ""
 echo "Cloudflare Certificate:"
-kubectl get secret cloudflare-origin-cert -n $MONITORING_NAMESPACE
+kubectl get secret cloudflare-origin-cert -n "${MONITORING_NAMESPACE}"
 echo ""
 echo "Prometheus Secrets:"
-kubectl get secret prometheus-secrets -n $MONITORING_NAMESPACE
+kubectl get secret prometheus-secrets -n "${MONITORING_NAMESPACE}"
 echo ""
 echo "Grafana Secrets:"
-kubectl get secret grafana-secrets -n $MONITORING_NAMESPACE
+kubectl get secret grafana-secrets -n "${MONITORING_NAMESPACE}"
 echo ""
 
 echo -e "${GREEN}=== Configuration Complete ===${NC}"

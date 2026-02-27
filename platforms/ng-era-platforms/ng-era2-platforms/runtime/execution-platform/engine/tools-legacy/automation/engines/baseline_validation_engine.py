@@ -442,7 +442,7 @@ class BaselineValidationEngine:
         timestamp_str = datetime.now().strftime("%Y%m%d-%H%M%S")
         unique_id = uuid.uuid4().hex[:8]
         json_file = f"/tmp/baseline-validation-{timestamp_str}-{unique_id}.json"
-        with open(json_file, "w") as f:
+        with open(json_file, "w", encoding='utf-8') as f:
             json.dump(report, f, indent=2)
         self.log(f"JSON report saved to: {json_file}")
         if report["failed"] == 0:

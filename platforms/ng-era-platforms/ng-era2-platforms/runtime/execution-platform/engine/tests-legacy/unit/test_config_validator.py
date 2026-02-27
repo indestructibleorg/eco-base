@@ -42,13 +42,13 @@ class TestConfigValidator(unittest.TestCase):
     def _create_yaml_file(self, filename: str, content: dict) -> str:
         """Create a temporary YAML file."""
         filepath = os.path.join(self.temp_dir, filename)
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             yaml.dump(content, f)
         return filepath
     def _create_json_file(self, filename: str, content: dict) -> str:
         """Create a temporary JSON file."""
         filepath = os.path.join(self.temp_dir, filename)
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(content, f)
         return filepath
     def test_initialization(self):
@@ -159,7 +159,7 @@ class TestConfigValidator(unittest.TestCase):
     def test_invalid_yaml_syntax(self):
         """Test validation of file with invalid YAML syntax."""
         filepath = os.path.join(self.temp_dir, "invalid.yaml")
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             f.write("invalid: yaml: content: [")
         is_valid, errors, warnings = self.validator.validate_file(filepath)
         self.assertFalse(is_valid)

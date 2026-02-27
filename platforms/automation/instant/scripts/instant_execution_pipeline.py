@@ -596,7 +596,7 @@ async def main():
         summary = {"validation": "passed"}
     # Save output if requested
     if args.output:
-        with open(args.output, "w") as f:
+        with open(args.output, "w", encoding='utf-8') as f:
             json.dump(summary, f, indent=2)
         pipeline.log(f"Results saved to: {args.output}", level="SUCCESS")
     # Exit with appropriate code

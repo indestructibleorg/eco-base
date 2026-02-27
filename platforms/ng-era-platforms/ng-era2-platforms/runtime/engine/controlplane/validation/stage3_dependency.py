@@ -82,7 +82,7 @@ class Stage3DependencyVerifier:
                 lock_info["status"] = "present"
                 # 嘗試驗證 lock 檔案完整性
                 try:
-                    with open(lock_path, "r") as f:
+                    with open(lock_path, "r", encoding='utf-8') as f:
                         content = f.read()
                     # 基本完整性檢查
                     if len(content) > 0:
@@ -171,7 +171,7 @@ class Stage3DependencyVerifier:
         evidence_file = (
             self.evidence_dir / f"stage{stage:02d}-{evidence_type.replace(' ', '_')}.json"
         )
-        with open(evidence_file, "w") as f:
+        with open(evidence_file, "w", encoding='utf-8') as f:
             json.dump(
                 {
                     "verification_hash": verification_hash,

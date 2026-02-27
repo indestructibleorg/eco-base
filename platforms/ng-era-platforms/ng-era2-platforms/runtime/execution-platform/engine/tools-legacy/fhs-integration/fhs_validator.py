@@ -388,7 +388,7 @@ class FHSIntegrationValidator:
                 f"validation-{component_name}-{datetime.now().strftime('%Y%m%d-%H%M%S')}.json"
             )
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
-        with open(output_path, 'w') as f:
+        with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(self.validation_report, f, indent=2)
         print(f"\nValidation report saved: {output_path}")
         return output_path
@@ -404,7 +404,7 @@ def main():
     validator = FHSIntegrationValidator(repo_root=args.repo_root)
     # 加載整合計劃
     if args.plan_file and os.path.exists(args.plan_file):
-        with open(args.plan_file, 'r') as f:
+        with open(args.plan_file, 'r', encoding='utf-8') as f:
             plan = json.load(f)
     else:
         # 創建一個示例計劃用於測試

@@ -34,8 +34,7 @@ def execute_instant_deployment():
             "4",
         ],
         stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
+        stderr=subprocess.DEVNULL, encoding='utf-8')
     # 4. 等待服務啟動
     time.sleep(2)
     # 5. 驗證服務運行

@@ -111,7 +111,7 @@ class Stage7RuntimeMonitoringVerifier:
         )
         for falco_file in falco_files:
             try:
-                with open(falco_file, "r") as f:
+                with open(falco_file, "r", encoding='utf-8') as f:
                     content = f.read()
                 rule_info = {
                     "file": str(falco_file.relative_to(self.repo_path)),
@@ -194,7 +194,7 @@ class Stage7RuntimeMonitoringVerifier:
         evidence_file = (
             self.evidence_dir / f"stage{stage:02d}-{evidence_type.replace(' ', '_')}.json"
         )
-        with open(evidence_file, "w") as f:
+        with open(evidence_file, "w", encoding='utf-8') as f:
             json.dump(
                 {
                     "verification_hash": verification_hash,

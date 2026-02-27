@@ -187,11 +187,11 @@ class InstantArchiver:
             "format": "tar.gz"
         }
         metadata_path = self.archive_dir / f"metadata_{self.timestamp}.json"
-        with open(metadata_path, 'w') as f:
+        with open(metadata_path, 'w', encoding='utf-8') as f:
             json.dump(metadata, f, indent=2)
         # Create tar.gz archive
         logger.info(f"Creating archive: {archive_path}")
-        with tarfile.open(archive_path, "w:gz") as tar:
+        with tarfile.open(archive_path, "w:gz", encoding='utf-8') as tar:
             tar.add(self.source_dir, arcname=self.source_dir.name)
         # Calculate actual compression ratio
         archive_size = archive_path.stat().st_size
@@ -202,7 +202,7 @@ class InstantArchiver:
         # Update metadata with actual compression
         metadata["actual_compression_ratio"] = round(actual_ratio, 3)
         metadata["archive_size"] = archive_size
-        with open(metadata_path, 'w') as f:
+        with open(metadata_path, 'w', encoding='utf-8') as f:
             json.dump(metadata, f, indent=2)
         return archive_path
     def _instant_validation(self, archive_path: Path, analysis: Dict) -> Dict:
@@ -219,7 +219,7 @@ class InstantArchiver:
         }
         try:
             # 1. Integrity Check - verify tar can be opened
-            with tarfile.open(archive_path, "r:gz") as tar:
+            with tarfile.open(archive_path, "r:gz", encoding='utf-8') as tar:
                 members = tar.getmembers()
                 archive_file_count = len([m for m in members if m.isfile()])
                 validation["integrity_check"] = True
@@ -266,7 +266,7 @@ def main():
     result = archiver.execute_instant_archive()
     # Save result
     result_path = Path(archive_dir) / f"archive_result_{result['timestamp']}.json"
-    with open(result_path, 'w') as f:
+    with open(result_path, 'w', encoding='utf-8') as f:
         json.dump(result, f, indent=2)
     # Print summary
     print("\n" + "="*70)

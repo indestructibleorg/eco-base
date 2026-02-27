@@ -40,7 +40,7 @@ class QuantumValidator:
             return result
         # Load and validate semantic index
         try:
-            with open(semantic_index_path, 'r') as f:
+            with open(semantic_index_path, 'r', encoding='utf-8') as f:
                 semantic_index = json.load(f)
             # Validate layer consistency
             if semantic_index.get('layer') != self.layer:

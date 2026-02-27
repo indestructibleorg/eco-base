@@ -33,7 +33,7 @@ def gh_api(path: str, token: str, repo: str) -> list | dict:
     }
     req = urllib.request.Request(url, headers=headers)
     try:
-        with urllib.request.urlopen(req) as r:
+        with urllib.request.urlopen(req, encoding='utf-8') as r:
             return json.loads(r.read())
     except Exception as e:
         print(f"API error {path}: {e}")
@@ -130,14 +130,14 @@ def main():
     if existing:
         print(f"DEDUP: Duplicate found → #{existing} (skipping creation)")
         if output_file:
-            with open(output_file, "a") as f:
+            with open(output_file, "a", encoding='utf-8') as f:
                 f.write(f"dedup_result=skip\n")
                 f.write(f"existing_issue={existing}\n")
         sys.exit(1)
     else:
         print(f"DEDUP: No duplicate found → safe to create")
         if output_file:
-            with open(output_file, "a") as f:
+            with open(output_file, "a", encoding='utf-8') as f:
                 f.write(f"dedup_result=create\n")
                 f.write(f"existing_issue=0\n")
         sys.exit(0)

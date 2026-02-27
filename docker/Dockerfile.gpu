@@ -4,7 +4,7 @@
 # Build: docker build -t ghcr.io/indestructibleorg/vllm:v1.0.0 -f docker/Dockerfile.gpu --target vllm .
 
 # ── Stage: Base (CUDA 12.4 + Python 3.11) ────────────────────────────
-FROM nvidia/cuda:13.1.1-devel-ubuntu22.04 AS base
+FROM nvidia/cuda:12.4.1-devel-ubuntu22.04 AS base
 
 LABEL org.opencontainers.image.title="IndestructibleEco GPU Engine Base" \
       org.opencontainers.image.version="1.0.0" \

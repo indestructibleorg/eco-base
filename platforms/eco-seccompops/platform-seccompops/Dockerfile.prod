@@ -6,7 +6,7 @@
 # ---------------------------------------------------------------------------
 # Stage 1: Builder — install dependencies and build the wheel
 # ---------------------------------------------------------------------------
-FROM python:3.11-slim AS builder
+FROM python:3.11.9-slim AS builder
 
 LABEL stage="builder"
 
@@ -45,7 +45,7 @@ RUN . /opt/venv/bin/activate && \
 # ---------------------------------------------------------------------------
 # Stage 2: Runtime — minimal image with only what is needed to run
 # ---------------------------------------------------------------------------
-FROM python:3.11-slim AS runtime
+FROM python:3.11.9-slim AS runtime
 
 LABEL maintainer="IndestructibleAutoOps Security Team" \
       org.opencontainers.image.title="seccompops-platform" \

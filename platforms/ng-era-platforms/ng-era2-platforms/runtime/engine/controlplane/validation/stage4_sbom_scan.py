@@ -76,7 +76,7 @@ class Stage4SbomScanVerifier:
         dependencies = []
         # Python 依賴
         if (self.repo_path / "requirements.txt").exists():
-            with open(self.repo_path / "requirements.txt") as f:
+            with open(self.repo_path / "requirements.txt", encoding='utf-8') as f:
                 for line in f:
                     line = line.strip()
                     if line and not line.startswith("#"):
@@ -96,7 +96,7 @@ class Stage4SbomScanVerifier:
         # Go 依賴
         if (self.repo_path / "go.mod").exists():
             try:
-                with open(self.repo_path / "go.mod") as f:
+                with open(self.repo_path / "go.mod", encoding='utf-8') as f:
                     content = f.read()
                     # 簡單解析 go.mod
                     for line in content.split("\n"):
@@ -121,7 +121,7 @@ class Stage4SbomScanVerifier:
         # Node.js 依賴
         if (self.repo_path / "package.json").exists():
             try:
-                with open(self.repo_path / "package.json") as f:
+                with open(self.repo_path / "package.json", encoding='utf-8') as f:
                     package_data = json.load(f)
                     deps = package_data.get("dependencies", {})
                     for name, version in deps.items():
@@ -298,7 +298,7 @@ class Stage4SbomScanVerifier:
         evidence_file = (
             self.evidence_dir / f"stage{stage:02d}-{evidence_type.replace(' ', '_')}.json"
         )
-        with open(evidence_file, "w") as f:
+        with open(evidence_file, "w", encoding='utf-8') as f:
             json.dump(
                 {
                     "verification_hash": verification_hash,

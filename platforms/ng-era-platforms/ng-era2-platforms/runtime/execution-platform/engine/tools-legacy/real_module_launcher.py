@@ -54,7 +54,7 @@ class RealModuleLauncher:
             if not modules_file.exists():
                 logger.error(f"Modules config file not found: {modules_file}")
                 return False
-            with open(modules_file, "r") as f:
+            with open(modules_file, "r", encoding='utf-8') as f:
                 import yaml
                 modules_config = yaml.safe_load(f)
             # Extract module configurations

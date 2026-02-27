@@ -16,7 +16,7 @@ def main():
         print(f"Error: {hashlock_path} not found")
         sys.exit(1)
         
-    with open(hashlock_path, "r") as f:
+    with open(hashlock_path, "r", encoding='utf-8') as f:
         hashlock_data = json.load(f)
         
     hashlock_sha = sha256_file(hashlock_path)
@@ -41,7 +41,7 @@ def main():
         }
     }
     
-    with open(attestation_path, "w") as f:
+    with open(attestation_path, "w", encoding='utf-8') as f:
         json.dump(statement, f, indent=2)
         
     print(f"Attestation generated: {attestation_path}")

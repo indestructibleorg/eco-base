@@ -1,7 +1,7 @@
 # =============================================================================
 # GovOps Platform — ECO Namespace: eco-govops | Port: 8091
 # =============================================================================
-FROM python:3.11-slim AS base
+FROM python:3.11.9-slim AS base
 
 LABEL org.opencontainers.image.title="govops-platform"
 LABEL org.opencontainers.image.description="Governance Operations Platform"

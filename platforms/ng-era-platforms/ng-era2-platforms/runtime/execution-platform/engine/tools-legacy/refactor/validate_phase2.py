@@ -108,7 +108,7 @@ class Phase2Validator:
             print(f"❌ {filename} - {str(e)}")
     def _validate_yaml(self, filepath: Path, spec: Dict):
         """Validate YAML file."""
-        with open(filepath, "r") as f:
+        with open(filepath, "r", encoding='utf-8') as f:
             data = yaml.safe_load(f)
         if data is None:
             raise ValueError("Empty YAML file")
@@ -119,7 +119,7 @@ class Phase2Validator:
                 raise ValueError(f"Missing required key: {key}")
     def _validate_markdown(self, filepath: Path, spec: Dict):
         """Validate Markdown file."""
-        with open(filepath, "r") as f:
+        with open(filepath, "r", encoding='utf-8') as f:
             content = f.read()
         if len(content.strip()) == 0:
             raise ValueError("Empty Markdown file")
@@ -194,7 +194,7 @@ def main():
     success, report = validator.validate()
     # Save report if requested
     if args.output:
-        with open(args.output, "w") as f:
+        with open(args.output, "w", encoding='utf-8') as f:
             json.dump(report, f, indent=2)
         print(f"📄 Report saved to: {args.output}")
     # Exit with appropriate code

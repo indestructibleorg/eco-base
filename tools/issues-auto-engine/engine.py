@@ -137,7 +137,7 @@ def gh_api(
             req.add_header("Authorization", f"Bearer {TOKEN}")
             req.add_header("Accept", "application/vnd.github.v3+json")
             req.add_header("Content-Type", "application/json")
-            with urllib.request.urlopen(req, timeout=30) as r:
+            with urllib.request.urlopen(req, timeout=30, encoding='utf-8') as r:
                 _circuit_failures[path] = 0  # Reset on success
                 return json.loads(r.read())
         except urllib.error.HTTPError as e:
@@ -679,7 +679,7 @@ def run(
     # Set GitHub Actions outputs
     github_output = os.environ.get("GITHUB_OUTPUT", "")
     if github_output:
-        with open(github_output, "a") as f:
+        with open(github_output, "a", encoding='utf-8') as f:
             f.write(f"issues_closed={stats['closed']}\n")
             f.write(f"duplicates_closed={stats['duplicates']}\n")
             f.write(f"labels_applied={stats['labeled']}\n")

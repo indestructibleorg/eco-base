@@ -125,7 +125,7 @@ def validate_test_vectors(repo_root: Path) -> Tuple[bool, List[str]]:
         vector_files = list(vectors_path.glob('*.json'))
         for vector_file in vector_files:
             try:
-                with open(vector_file, 'r') as f:
+                with open(vector_file, 'r', encoding='utf-8') as f:
                     vector_data = json.load(f)
                 # For invalid test cases, we expect them to fail validation
                 if 'invalid' in vector_file.stem:

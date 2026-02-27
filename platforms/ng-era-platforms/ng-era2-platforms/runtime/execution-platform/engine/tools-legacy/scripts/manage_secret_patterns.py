@@ -150,7 +150,7 @@ class SecretPatternManager:
         patterns = self.list_custom_patterns(org)
         if patterns:
             try:
-                with open(output_file, "w") as f:
+                with open(output_file, "w", encoding='utf-8') as f:
                     json.dump(patterns, f, indent=2)
                 print(f"✅ Patterns exported to {output_file}")
             except Exception as e:
@@ -158,7 +158,7 @@ class SecretPatternManager:
     def import_patterns(self, org: str, input_file: str) -> None:
         """從 JSON 文件導入模式"""
         try:
-            with open(input_file, "r") as f:
+            with open(input_file, "r", encoding='utf-8') as f:
                 patterns = json.load(f)
             print(f"Importing {len(patterns)} patterns from {input_file}...")
             success_count = 0

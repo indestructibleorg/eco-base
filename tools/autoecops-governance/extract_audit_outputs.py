@@ -25,7 +25,7 @@ def main():
         return
 
     try:
-        with open(audit_file) as f:
+        with open(audit_file, encoding='utf-8') as f:
             d = json.load(f)
     except Exception as e:
         print(f"Could not parse audit file: {e}")
@@ -53,7 +53,7 @@ def main():
 def write_outputs(action: str, outcome: str, audit_hash: str):
     github_output = os.environ.get("GITHUB_OUTPUT", "")
     if github_output:
-        with open(github_output, "a") as f:
+        with open(github_output, "a", encoding='utf-8') as f:
             f.write(f"action={action}\n")
             f.write(f"outcome={outcome}\n")
             f.write(f"audit_hash={audit_hash}\n")

@@ -16,7 +16,7 @@ from typing import Dict, List, Set
 def load_module_registry() -> Dict:
     """Load the module registry"""
     registry_path = Path("controlplane/baseline/modules/REGISTRY.yaml")
-    with open(registry_path, 'r') as f:
+    with open(registry_path, 'r', encoding='utf-8') as f:
         return yaml.safe_load(f)
 def build_dependency_graph(registry: Dict) -> Dict[str, List[str]]:
     """Build dependency graph from registry"""
@@ -273,11 +273,11 @@ mmdc -i docs/DAG_VISUALIZATION.md -o dag-visualization.png
 #This visualization is automatically generated from the module registry.*
 """
     # Write main documentation
-    with open(output_path / "DAG_VISUALIZATION.md", 'w') as f:
+    with open(output_path / "DAG_VISUALIZATION.md", 'w', encoding='utf-8') as f:
         f.write(doc)
     print(f"✅ Generated: {output_path}/DAG_VISUALIZATION.md")
     # Write DOT file
-    with open(output_path / "module-dependencies.dot", 'w') as f:
+    with open(output_path / "module-dependencies.dot", 'w', encoding='utf-8') as f:
         f.write(generate_dot_graph(graph, registry))
     print(f"✅ Generated: {output_path}/module-dependencies.dot")
     # Write JSON data
@@ -292,7 +292,7 @@ mmdc -i docs/DAG_VISUALIZATION.md -o dag-visualization.png
             'max_depth': max(depths.values()) if depths else 0
         }
     }
-    with open(output_path / "module-dependencies.json", 'w') as f:
+    with open(output_path / "module-dependencies.json", 'w', encoding='utf-8') as f:
         json.dump(json_data, f, indent=2)
     print(f"✅ Generated: {output_path}/module-dependencies.json")
     print(f"\n✅ All DAG visualizations generated in: {output_dir}")

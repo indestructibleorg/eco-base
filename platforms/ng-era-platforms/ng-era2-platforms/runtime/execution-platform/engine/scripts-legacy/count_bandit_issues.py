@@ -14,7 +14,7 @@ def main() -> None:
     MEDIUM severity issues are shown as warnings only and do not block CI.
     """
     try:
-        with open('bandit-report.json') as f:
+        with open('bandit-report.json', encoding='utf-8') as f:
             data = json.load(f)
             results = data.get('results', [])
             high_only = [

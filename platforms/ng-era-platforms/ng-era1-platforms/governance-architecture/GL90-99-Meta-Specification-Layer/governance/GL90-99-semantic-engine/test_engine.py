@@ -50,7 +50,7 @@ def test_governance_semantic_engine():
     spec_file = "/workspace/machine-native-ops/gl-enterprise-architecture/contracts/semantic-unification-spec.yaml"
     
     try:
-        with open(spec_file, 'r') as f:
+        with open(spec_file, 'r', encoding='utf-8') as f:
             spec_yaml = f.read()
         print(f"✓ Loaded specification from {spec_file}")
     except Exception as e:

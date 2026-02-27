@@ -66,7 +66,7 @@ class TestAutoFixBotValidatorLoad(unittest.TestCase):
     def _create_config_file(self, config: Dict[str, Any]) -> str:
         """Create a temporary config file."""
         filepath = os.path.join(self.temp_dir, "test-config.yml")
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             yaml.dump(config, f)
         return filepath
     def test_load_valid_config(self):
@@ -88,7 +88,7 @@ class TestAutoFixBotValidatorLoad(unittest.TestCase):
     def test_load_invalid_yaml(self):
         """Test loading an invalid YAML file."""
         filepath = os.path.join(self.temp_dir, "invalid.yml")
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             f.write("invalid: yaml: content: [")
         result = self.validator.load_config(filepath)
         self.assertFalse(result)
@@ -444,7 +444,7 @@ class TestValidateAll(unittest.TestCase):
     def _create_config_file(self, config: Dict[str, Any]) -> str:
         """Create a temporary config file."""
         filepath = os.path.join(self.temp_dir, "test-config.yml")
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             yaml.dump(config, f)
         return filepath
     def test_validate_all_with_valid_config(self):
@@ -534,7 +534,7 @@ class TestValidateAutoFixConfig(unittest.TestCase):
     def _create_config_file(self, config: Dict[str, Any]) -> str:
         """Create a temporary config file."""
         filepath = os.path.join(self.temp_dir, "test-config.yml")
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             yaml.dump(config, f)
         return filepath
     def test_validate_auto_fix_config_valid(self):

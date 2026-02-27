@@ -76,7 +76,7 @@ class RootValidator:
     def load_schema(self) -> Dict[str, Any]:
         """Load validation schema"""
         try:
-            with open(self.schema_file, "r") as f:
+            with open(self.schema_file, "r", encoding='utf-8') as f:
                 return yaml.safe_load(f)
         except FileNotFoundError:
             self.logger.error(f"Schema file not found: {self.schema_file}")
@@ -147,7 +147,7 @@ class RootValidator:
     def validate_yaml_structure(self, file_path: Path) -> Dict[str, Any]:
         """Stage 2: Validate YAML structure and basic schema"""
         try:
-            with open(file_path, "r") as f:
+            with open(file_path, "r", encoding='utf-8') as f:
                 content = yaml.safe_load(f)
             # Basic structure validation
             if not isinstance(content, dict):
@@ -224,7 +224,7 @@ class RootValidator:
             )
             return results
         try:
-            with open(modules_file, "r") as f:
+            with open(modules_file, "r", encoding='utf-8') as f:
                 modules_content = yaml.safe_load(f)
         except Exception as e:
             results.append(
@@ -365,7 +365,7 @@ class RootValidator:
         # Ensure directory exists
         self.report_file.parent.mkdir(parents=True, exist_ok=True)
         # Save report
-        with open(self.report_file, "w") as f:
+        with open(self.report_file, "w", encoding='utf-8') as f:
             json.dump(self.results, f, indent=2)
         self.logger.info(f"Validation report saved to: {self.report_file}")
     def run_validation(self) -> Dict[str, Any]:

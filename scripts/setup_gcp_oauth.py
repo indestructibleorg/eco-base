@@ -106,7 +106,7 @@ data:
         """Save Kubernetes manifest to file"""
         try:
             Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-            with open(output_path, 'w') as f:
+            with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(manifest)
             print(f"✓ Saved manifest: {output_path}")
             return True
