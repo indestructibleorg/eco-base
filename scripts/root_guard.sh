@@ -4,7 +4,7 @@ set -euo pipefail
 allow="infra/root-guard/allowed-roots.txt"
 test -f "$allow"
 
-mapfile -t allowed < <(sed '/^\s*$/d' "$allow")
+mapfile -t allowed < <(sed '/^[[:space:]]*$/d' "$allow")
 
 declare -A ok=()
 for x in "${allowed[@]}"; do ok["$x"]=1; done
