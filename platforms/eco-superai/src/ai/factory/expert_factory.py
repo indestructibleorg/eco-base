@@ -136,3 +136,13 @@ def clear_experts() -> None:
     `ExpertFactory.clear_experts`.
     """
     ExpertFactory().clear_experts()
+
+
+def clear_experts() -> None:
+    """Clear all registered experts from the global expert store.
+
+    This function is kept for backward compatibility with existing code and tests
+    that import `clear_experts` at the module level. Internally it delegates to
+    `ExpertFactory.clear_experts`.
+    """
+    ExpertFactory().clear_experts()
