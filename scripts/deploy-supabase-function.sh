@@ -52,45 +52,56 @@ check_cli() {
     log_info "Supabase CLI version: $version"
 }
 
-# Deploy function
-deploy_function() {
-    local function_name="hello-world"
+# Deploy a single function
+deploy_single_function() {
+    local function_name="$1"
     local function_dir="supabase/functions/$function_name"
     
     if [[ ! -d "$function_dir" ]]; then
         log_error "Function directory not found: $function_dir"
-        exit 1
+        return 1
     fi
     
     log_info "Deploying function: $function_name"
     
-    cd "$function_dir"
-    
-    # Deploy function with JWT verification enabled
     supabase functions deploy "$function_name" \
         --project-ref "$SUPABASE_PROJECT_REF"
     
     if [[ $? -eq 0 ]]; then
-        log_info "Function deployed successfully"
-        
-        # Get function URL
+        log_info "Function $function_name deployed successfully"
         local function_url="https://${SUPABASE_PROJECT_REF}.supabase.co/functions/v1/${function_name}"
         log_info "Function URL: $function_url"
-        
-        # Test deployment
-        log_info "Testing deployment..."
+    else
+        log_error "Function $function_name deployment failed"
+        return 1
+    fi
+}
+
+# Deploy all edge functions
+deploy_function() {
+    local functions=("hello-world" "audit-log" "webhook-handler" "health-check")
+    local failed=0
+    
+    for fn in "${functions[@]}"; do
+        deploy_single_function "$fn" || ((failed++))
+    done
+    
+    if [[ $failed -gt 0 ]]; then
+        log_warn "$failed function(s) failed to deploy"
+    fi
+    
+    # Test hello-world endpoint
+    if [[ -n "${SUPABASE_ANON_KEY:-}" ]]; then
+        local test_url="https://${SUPABASE_PROJECT_REF}.supabase.co/functions/v1/hello-world"
+        log_info "Testing hello-world deployment..."
         sleep 2
-        
-        curl -X POST "$function_url" \
+        curl -X POST "$test_url" \
             -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${SUPABASE_ANON_KEY:-}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" \
             -d '{"name": "DeployTest"}' \
             --fail --silent --show-error || {
             log_warn "Function test failed (may need JWT verification)"
         }
-    else
-        log_error "Function deployment failed"
-        exit 1
     fi
 }
 
