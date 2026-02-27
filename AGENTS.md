@@ -46,4 +46,29 @@ Five platform deploy workflows exist in `.github/workflows/`:
 - **GKE**: `gke-deploy.yml` does Helm deploy to staging/production. Argo CD apps in `k8s/argocd/`. Helm chart in `helm/`
 - **Cloudflare**: `cloudflare-deploy.yml` deploys webhook router Worker. Config: `backend/cloudflare/wrangler.toml`
 
-All deploy workflows require secrets configured in GitHub repository settings. See `platform_config_summary.log` or each workflow file for required secret names.
+All deploy workflows require secrets configured in GitHub repository settings. See each workflow file for required secret names.
+
+### Capability modules system
+
+The repo uses a pluggable capability-based deployment model:
+- `capabilities.yaml` — feature flags for modules (vercel, cloudflare, supabase, keycloak, n8n)
+- `secrets.required.yaml` — per-module required secrets
+- `scripts/capabilities.py` — parses flags, outputs enabled modules JSON
+- `scripts/preflight_secrets.sh` — CD pre-gate that fails fast on missing secrets
+- `.github/workflows/deploy.yml` — CD workflow with per-module jobs gated by capabilities + preflight
+
+To check which modules are enabled: `python3 scripts/capabilities.py capabilities.yaml`
+To validate secrets: `bash scripts/preflight_secrets.sh artifacts/_tmp/capabilities.enabled.json secrets.required.yaml`
+
+### AutoOps enforced workflow
+
+- `scripts/autoops/run.py` — Stage 0→1→Core execution engine producing `artifacts/_internal/*`
+- `scripts/autoops/guards.sh` — hard-fail guards (manifest, secrets, write scope)
+- `.github/workflows/autoops.yml` — triggers: ChatOps (`/autoops run`), CI-failure, manual
+- Spec: `docs/prompt-workflow.enforced.md`
+
+### Repo guards
+
+- `scripts/root_guard.sh` — top-level directory whitelist enforcement (`infra/root-guard/allowed-roots.txt`)
+- `scripts/import_guard.sh` — cross-domain import boundary (apps↔ops↔infra)
+- `.github/workflows/guards.yml` — runs both guards on PR/push
