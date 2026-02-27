@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { ChatInterface } from '@/components/chat/ChatInterface';
 import { CursorIDE } from '@/components/ide/CursorIDE';
@@ -104,6 +105,7 @@ function App() {
           </motion.div>
         </AnimatePresence>
       </main>
+      <Analytics />
     </div>
   );
 }
