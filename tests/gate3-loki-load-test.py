@@ -131,7 +131,7 @@ else:
 log("Test 7: Loki write + query via port-forward (spike simulation)")
 pf = subprocess.Popen(
     ["kubectl", "port-forward", "-n", "monitoring", "svc/loki-gateway", "3100:80"],
-    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, encoding='utf-8')
+    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 time.sleep(3)
 
 write_success = 0
@@ -155,7 +155,7 @@ try:
             method="POST"
         )
         try:
-            with urllib.request.urlopen(req, timeout=5, encoding='utf-8') as resp:
+            with urllib.request.urlopen(req, timeout=5) as resp:
                 if resp.status == 204:
                     write_success += 1
         except Exception:
@@ -171,7 +171,7 @@ try:
     time.sleep(2)
     query_url = "http://localhost:3100/loki/api/v1/query_range?query={job%3D%22gate3-load-test%22}&limit=10&start=" + str(ts_ns - int(1e9)) + "&end=" + str(ts_ns + int(200e9))
     try:
-        with urllib.request.urlopen(query_url, timeout=10, encoding='utf-8') as resp:
+        with urllib.request.urlopen(query_url, timeout=10) as resp:
             data = json.loads(resp.read())
             result_count = sum(len(s.get("values", [])) for s in data.get("data", {}).get("result", []))
             if result_count > 0:

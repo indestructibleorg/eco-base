@@ -8,10 +8,9 @@
 # GL Root Semantic Anchor: gov-enterprise-architecture/governance/ECO-ROOT-SEMANTIC-ANCHOR.yaml
 # GL Unified Naming Charter: gov-enterprise-architecture/governance/ECO-UNIFIED-NAMING-CHARTER.yaml
 
-
+---
 apiVersion: upgrade.cattle.io/v1
 kind: Plan
----
 metadata:
   name: k3s-server-upgrade
   namespace: system-upgrade
@@ -50,7 +49,6 @@ spec:
 ---
 apiVersion: upgrade.cattle.io/v1
 kind: Plan
----
 metadata:
   name: k3s-agent-upgrade
   namespace: system-upgrade
@@ -89,7 +87,6 @@ spec:
 ---
 apiVersion: v1
 kind: ServiceAccount
----
 metadata:
   name: system-upgrade
   namespace: system-upgrade
@@ -102,7 +99,6 @@ metadata:
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
----
 metadata:
   name: system-upgrade
   namespace: system-upgrade
@@ -128,7 +124,6 @@ rules:
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
----
 metadata:
   name: system-upgrade
   namespace: system-upgrade
@@ -140,8 +135,6 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
----
-metadata:
   name: system-upgrade
 subjects:
   - kind: ServiceAccount
