@@ -1,8 +1,8 @@
 """Data Transfer Objects — layer boundary crossing types."""
 from __future__ import annotations
 
-from datetime import datetime
 import math
+from datetime import datetime
 from typing import Any
 
 from pydantic import BaseModel, Field
