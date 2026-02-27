@@ -1,7 +1,7 @@
 # IndestructibleEco v1.0 — Web Frontend
 # Build: docker build -t eco-web:latest platforms/web/
 # Context: platforms/web/
-FROM node:25.2.1-alpine3.21 AS builder
+FROM node:22-alpine3.21 AS builder
 WORKDIR /app
 
 # Copy the app/ subdirectory which contains the TypeScript React app
