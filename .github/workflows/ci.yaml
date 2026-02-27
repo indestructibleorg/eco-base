@@ -466,12 +466,12 @@ jobs:
             "${{ needs.test-eco-dataops.result }}"
           )
           for r in "${results[@]}"; do
-            if [[ "$r" == "failure" ]]; then
-              echo "One or more test jobs failed"
+            if [[ "$r" == "failure" || "$r" == "cancelled" ]]; then
+              echo "One or more test jobs failed or were cancelled"
               exit 1
             fi
           done
-          echo "All test jobs passed or were skipped"
+          echo "All test jobs completed successfully or were skipped"
 
   # ================================================================
   # Summary: All CI jobs completed
