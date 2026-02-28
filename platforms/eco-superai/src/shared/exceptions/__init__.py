@@ -1,4 +1,4 @@
-"""Infrastructure exception hierarchy for the SuperAI Platform.
+"""Infrastructure exception hierarchy for the eco-base Platform.
 
 Provides a structured exception taxonomy for infrastructure-level failures
 (database, cache, external services, configuration, serialization) that is

@@ -47,7 +47,7 @@
 | `indestructiblemachinen/get-gke-credentials` | Public |
 | `indestructiblemachinen/circleci-docs` | Public |
 | `indestructibleorg/circleci-docs` | Public |
-| `indestructiblemachinen/superai-platform` | Public |
+| `indestructiblemachinen/eco-base` | Public |
 
 ---
 

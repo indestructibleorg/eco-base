@@ -9,7 +9,7 @@ logger = structlog.get_logger(__name__)
 
 
 def setup_telemetry(
-    service_name: str = "superai-platform",
+    service_name: str = "eco-base",
     otlp_endpoint: str = "http://localhost:4317",
     enabled: bool = True,
     sample_rate: float = 1.0,
@@ -104,7 +104,7 @@ def instrument_httpx() -> None:
         logger.warning("httpx_instrumentation_failed", error=str(exc))
 
 
-def get_tracer(name: str = "superai") -> Any:
+def get_tracer(name: str = "eco-base") -> Any:
     """Get an OpenTelemetry tracer instance."""
     try:
         from opentelemetry import trace

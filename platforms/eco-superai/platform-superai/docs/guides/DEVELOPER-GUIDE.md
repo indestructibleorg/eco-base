@@ -1,4 +1,4 @@
-# SuperAI Platform — Developer Guide
+# eco-base Platform — Developer Guide
 
 > Getting started with development, testing, and contributing.
 
@@ -20,8 +20,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/superai-platform.git
-cd superai-platform
+git clone https://github.com/your-org/eco-base.git
+cd eco-base
 
 # Create virtual environment
 python3 -m venv .venv
@@ -301,7 +301,7 @@ make rebuild       # Build and restart
 ```bash
 make logs                                    # Tail all logs
 docker compose exec app bash                 # Shell into app container
-docker compose exec postgres psql -U superai # PostgreSQL shell
+docker compose exec postgres psql -U eco-base # PostgreSQL shell
 docker compose exec redis redis-cli          # Redis CLI
 ```
 

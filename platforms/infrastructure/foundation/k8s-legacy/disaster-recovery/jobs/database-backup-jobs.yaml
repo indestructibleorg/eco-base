@@ -7,7 +7,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/cronjob/postgres-backup
-    eco-base/urn: urn:eco-base:k8s:core:cronjob:postgres-backup:sha256-ed3e39ac20a1c1881b5028f5c2bb009d6d5e56024f7425fecf97e0ec5da37b29
+    eco-base/urn: urn:eco-base:k8s:core:cronjob:postgres-backup:sha256-4bcb1171ad49f883228e9bd0acf1c2d01142aa5fa7f49dce624189deb0e267ef
   labels:
     app.kubernetes.io/component: backup
     app.kubernetes.io/instance: eco-instance
@@ -102,7 +102,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/cronjob/redis-backup
-    eco-base/urn: urn:eco-base:k8s:core:cronjob:redis-backup:sha256-9e01c3b25fe54647e2146a0e72280fc154a252493af5b930b1375cb4d1893c23
+    eco-base/urn: urn:eco-base:k8s:core:cronjob:redis-backup:sha256-99d04312aa34ad099b55c4b64ec66cc44cc3eae272cba71da5d5cf04ee72cb51
   labels:
     app.kubernetes.io/component: backup
     app.kubernetes.io/instance: eco-instance
@@ -195,7 +195,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/cronjob/config-backup
-    eco-base/urn: urn:eco-base:k8s:core:cronjob:config-backup:sha256-bd92beb2ddbc92612e106721a8a3e1dc3e121794fd5a435cf6ba166dd5635ae1
+    eco-base/urn: urn:eco-base:k8s:core:cronjob:config-backup:sha256-0109d0961948fcf710ab1b8c865b9dbc72ec4f9b564ca0e0a0adff94fc6dfa50
   labels:
     app.kubernetes.io/component: backup
     app.kubernetes.io/instance: eco-instance
@@ -296,7 +296,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/cronjob/backup-validation
-    eco-base/urn: urn:eco-base:k8s:core:cronjob:backup-validation:sha256-676403f5f6964e58d8671252063ef613e021f9255e5935c7ddd7f8adccaa4ae9
+    eco-base/urn: urn:eco-base:k8s:core:cronjob:backup-validation:sha256-1f8180b1019178868d50d2c04374fdbf7d5bd30eec10e34d5bd197349f2f5280
   labels:
     app.kubernetes.io/component: backup
     app.kubernetes.io/instance: eco-instance

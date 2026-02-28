@@ -1,4 +1,4 @@
-# SuperAI Platform — API Reference
+# eco-base Platform — API Reference
 
 > Version 1.0 | Base URL: `http://localhost:8000/api/v1`
 

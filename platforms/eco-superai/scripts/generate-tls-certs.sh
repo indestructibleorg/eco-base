@@ -30,7 +30,7 @@ log_step() {
 # Default configuration
 CERTS_DIR="${CERTS_DIR:-./certs}"
 ENVIRONMENT="${ENVIRONMENT:-prod}"
-DOMAIN="${DOMAIN:-superai.platform}"
+DOMAIN="${DOMAIN:-eco-base.platform}"
 VALIDITY_DAYS="${VALIDITY_DAYS:-365}"
 
 # Check if running as root
@@ -60,9 +60,9 @@ prompt = no
 C = US
 ST = California
 L = San Francisco
-O = SuperAI Platform
+O = eco-base Platform
 OU = Certificate Authority
-CN = SuperAI Root CA
+CN = eco-base Root CA
 
 [v3_ca]
 basicConstraints = critical,CA:TRUE,pathlen:1
@@ -90,9 +90,9 @@ prompt = no
 C = US
 ST = California
 L = San Francisco
-O = SuperAI Platform
+O = eco-base Platform
 OU = Certificate Authority
-CN = SuperAI Intermediate CA
+CN = eco-base Intermediate CA
 
 [v3_intermediate_ca]
 basicConstraints = critical,CA:TRUE,pathlen:0
@@ -123,7 +123,7 @@ prompt = no
 C = US
 ST = California
 L = San Francisco
-O = SuperAI Platform
+O = eco-base Platform
 OU = $ENVIRONMENT Environment
 CN = $DOMAIN
 
@@ -169,9 +169,9 @@ prompt = no
 C = US
 ST = California
 L = San Francisco
-O = SuperAI Platform
+O = eco-base Platform
 OU = Client Authentication
-CN = SuperAI Client
+CN = eco-base Client
 
 [v3_req]
 basicConstraints = critical,CA:FALSE
@@ -204,8 +204,8 @@ log_info "Certificate chain generated: server-chain.crt"
 # Step 7: Generate Trust Store (Java format)
 log_step "Generating Java trust store..."
 if command -v keytool &> /dev/null; then
-    keytool -importcert -alias superai-root-ca -file root-ca.crt -keystore truststore.jks -storepass changeit -noprompt 2>/dev/null || log_warn "keytool not available, skipping Java trust store"
-    keytool -importcert -alias superai-intermediate-ca -file intermediate-ca.crt -keystore truststore.jks -storepass changeit -noprompt 2>/dev/null || true
+    keytool -importcert -alias eco-root-ca -file root-ca.crt -keystore truststore.jks -storepass changeit -noprompt 2>/dev/null || log_warn "keytool not available, skipping Java trust store"
+    keytool -importcert -alias eco-intermediate-ca -file intermediate-ca.crt -keystore truststore.jks -storepass changeit -noprompt 2>/dev/null || true
     log_info "Java trust store generated: truststore.jks"
 else
     log_warn "keytool not available, skipping Java trust store"
@@ -235,7 +235,7 @@ if command -v kubectl &> /dev/null; then
 apiVersion: v1
 kind: Secret
 metadata:
-  name: superai-tls
+  name: eco-tls
   namespace: default
 type: kubernetes.io/tls
 data:
@@ -245,7 +245,7 @@ data:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: superai-ca
+  name: eco-ca
   namespace: default
 type: Opaque
 data:
@@ -254,7 +254,7 @@ data:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: superai-client-tls
+  name: eco-client-tls
   namespace: default
 type: kubernetes.io/tls
 data:

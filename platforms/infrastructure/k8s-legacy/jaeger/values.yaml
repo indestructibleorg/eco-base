@@ -110,7 +110,7 @@ agent:
   annotations: {}
   service:
     annotations: {}
-      type: ClusterIP
+    type: ClusterIP
     # Service headless is required for agent
     headless: true
     ports:
@@ -190,7 +190,7 @@ collector:
   annotations: {}
   service:
     annotations: {}
-      type: ClusterIP
+    type: ClusterIP
     ports:
       grpc:
         enabled: true
@@ -279,7 +279,7 @@ query:
   annotations: {}
   service:
     annotations: {}
-      type: ClusterIP
+    type: ClusterIP
     ports:
       http-query:
         enabled: true

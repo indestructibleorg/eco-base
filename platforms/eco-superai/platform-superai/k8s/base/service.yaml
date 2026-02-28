@@ -5,22 +5,22 @@ metadata:
   annotations:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
-    eco-base/uri: eco-base://k8s/core/service/superai-app
-    eco-base/urn: urn:eco-base:k8s:core:service:superai-app:sha256-ac71ff0686de6bbd8d89b01837f9c93743afb513670ee7ba04f05fa777d643e9
+    eco-base/uri: eco-base://k8s/core/service/eco-app
+    eco-base/urn: urn:eco-base:k8s:core:service:eco-app:sha256-35fa5d6d67331815b564f24bca5349b4a1ed9529d3eb720dc12ba8bee35d8cc1
     prometheus.io/path: /metrics
     prometheus.io/port: '8000'
     prometheus.io/scrape: 'true'
   labels:
     app.kubernetes.io/component: app
     app.kubernetes.io/instance: eco-instance
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/part-of: eco-base
     app.kubernetes.io/version: 1.0.0
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: superai-app
-  namespace: eco-superai
+  name: eco-app
+  namespace: eco-eco-base
 spec:
   ports:
   - name: http
@@ -33,7 +33,7 @@ spec:
     targetPort: http
   selector:
     app.kubernetes.io/component: app
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
   sessionAffinity: None
   type: ClusterIP
 ---
@@ -43,19 +43,19 @@ metadata:
   annotations:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
-    eco-base/uri: eco-base://k8s/core/service/superai-app-headless
-    eco-base/urn: urn:eco-base:k8s:core:service:superai-app-headless:sha256-699298fab87ee797c4a30d0ccc48f6612f24f99f0387315cb07bd7f9f520c4e1
+    eco-base/uri: eco-base://k8s/core/service/eco-app-headless
+    eco-base/urn: urn:eco-base:k8s:core:service:eco-app-headless:sha256-c19baf25f09ecbde63a514da57fa0da4630e911e379eaf0bbfbf3a5bea697631
   labels:
     app.kubernetes.io/component: app
     app.kubernetes.io/instance: eco-instance
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/part-of: eco-base
     app.kubernetes.io/version: 1.0.0
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: superai-app-headless
-  namespace: eco-superai
+  name: eco-app-headless
+  namespace: eco-eco-base
 spec:
   clusterIP: None
   ports:
@@ -65,5 +65,5 @@ spec:
     targetPort: http
   selector:
     app.kubernetes.io/component: app
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
   type: ClusterIP

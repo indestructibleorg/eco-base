@@ -8,7 +8,7 @@ metadata:
     eco-base/uri: eco-base://k8s/core/statefulset/loki
     eco-base/urn: urn:eco-base:k8s:core:statefulset:loki:sha256-0e68eb2be0948943afd40883075b847bfcf212d89ce41b26215fd81d5ae07f5a
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: loki
@@ -24,7 +24,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: superai-platform
+      app: eco-base
       component: loki
   serviceName: loki-headless
   template:
@@ -33,7 +33,7 @@ spec:
         prometheus.io/port: '3100'
         prometheus.io/scrape: 'true'
       labels:
-        app: superai-platform
+        app: eco-base
         component: loki
     spec:
       containers:
@@ -71,7 +71,7 @@ spec:
           name: config
         - mountPath: /loki
           name: storage
-      serviceAccountName: superai-monitoring
+      serviceAccountName: eco-monitoring
       volumes:
       - configMap:
           name: loki-config
@@ -112,7 +112,7 @@ metadata:
     eco-base/uri: eco-base://k8s/core/configmap/loki-config
     eco-base/urn: urn:eco-base:k8s:core:configmap:loki-config:sha256-6ff276934045b6a0a47e4041b80704eba575e3db29cb4fdf920671529f01a5da
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: loki-config
@@ -134,7 +134,7 @@ metadata:
     eco-base/uri: eco-base://k8s/core/service/loki
     eco-base/urn: urn:eco-base:k8s:core:service:loki:sha256-485c011f926ca2bb8d127fd0588c21dd4f9b41a1f39107ca946fb4e79cbdbcbc
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: loki
@@ -155,7 +155,7 @@ spec:
     port: 9096
     targetPort: grpc
   selector:
-    app: superai-platform
+    app: eco-base
     component: loki
   type: ClusterIP
 ---
@@ -168,7 +168,7 @@ metadata:
     eco-base/uri: eco-base://k8s/core/service/loki-headless
     eco-base/urn: urn:eco-base:k8s:core:service:loki-headless:sha256-b53f9984c50e6f78807e28a57e9467433be93790c50a3e5d71e3704ba228ff77
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: loki-headless
@@ -187,7 +187,7 @@ spec:
     port: 3100
     targetPort: http-metrics
   selector:
-    app: superai-platform
+    app: eco-base
     component: loki
 ---
 apiVersion: apps/v1
@@ -199,7 +199,7 @@ metadata:
     eco-base/uri: eco-base://k8s/core/daemonset/promtail
     eco-base/urn: urn:eco-base:k8s:core:daemonset:promtail:sha256-996eb1e584d1c7893eb4800c36ae611c00e589db0f1c32b17006ba27bd2f7b43
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: promtail
@@ -214,12 +214,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: superai-platform
+      app: eco-base
       component: promtail
   template:
     metadata:
       labels:
-        app: superai-platform
+        app: eco-base
         component: promtail
     spec:
       containers:
@@ -250,7 +250,7 @@ spec:
         - mountPath: /var/lib/docker/containers
           name: docker
           readOnly: true
-      serviceAccountName: superai-monitoring
+      serviceAccountName: eco-monitoring
       volumes:
       - configMap:
           name: promtail-config
@@ -268,10 +268,10 @@ spec:
 apiVersion: v1
 data:
   config.yml: "server:\n  http_listen_port: 3101\n  grpc_listen_port: 0\n\nclients:\n\
-    \  - url: http://loki:3100/loki/api/v1/push\n\nscrape_configs:\n  # SuperAI Platform\
-    \ Application Logs\n  - job_name: superai-platform\n    kubernetes_sd_configs:\n\
+    \  - url: http://loki:3100/loki/api/v1/push\n\nscrape_configs:\n  # eco-base Platform\
+    \ Application Logs\n  - job_name: eco-base\n    kubernetes_sd_configs:\n\
     \      - role: pod\n    relabel_configs:\n      - source_labels: [__meta_kubernetes_pod_label_app]\n\
-    \        regex: superai-platform\n        action: keep\n      - source_labels:\
+    \        regex: eco-base\n        action: keep\n      - source_labels:\
     \ [__meta_kubernetes_pod_label_component]\n        target_label: component\n \
     \     - source_labels: [__meta_kubernetes_pod_node_name]\n        target_label:\
     \ node\n      - source_labels: [__meta_kubernetes_namespace]\n        target_label:\
@@ -284,7 +284,7 @@ data:
     \          job: varlogs\n          __path__: /var/log/*.log\n  \n  # Kubernetes\
     \ Events\n  - job_name: kubernetes-events\n    kubernetes_sd_configs:\n      -\
     \ role: pod\n    relabel_configs:\n      - source_labels: [__meta_kubernetes_pod_label_app]\n\
-    \        regex: superai-platform\n        action: keep\n    pipeline_stages:\n\
+    \        regex: eco-base\n        action: keep\n    pipeline_stages:\n\
     \      - cri: {}\n  \n  # Security Logs (Falco)\n  - job_name: falco\n    kubernetes_sd_configs:\n\
     \      - role: pod\n    relabel_configs:\n      - source_labels: [__meta_kubernetes_pod_label_app]\n\
     \        regex: falco\n        action: keep\n      - source_labels: [__meta_kubernetes_pod_name]\n\
@@ -301,7 +301,7 @@ metadata:
     eco-base/uri: eco-base://k8s/core/configmap/promtail-config
     eco-base/urn: urn:eco-base:k8s:core:configmap:promtail-config:sha256-b17304fc5e06034b80aeee61e2054279ed9a19a8c8ed1460c2bdfe014572cfe2
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: promtail-config
@@ -318,7 +318,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   labels:
-    app: superai-platform
+    app: eco-base
     component: loki
   name: loki
   namespace: monitoring
@@ -329,14 +329,14 @@ spec:
     port: http-metrics
   selector:
     matchLabels:
-      app: superai-platform
+      app: eco-base
       component: loki
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   labels:
-    app: superai-platform
+    app: eco-base
     component: promtail
   name: promtail
   namespace: monitoring
@@ -347,7 +347,7 @@ spec:
     port: http-metrics
   selector:
     matchLabels:
-      app: superai-platform
+      app: eco-base
       component: promtail
 ---
 apiVersion: v1

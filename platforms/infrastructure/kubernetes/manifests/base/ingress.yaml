@@ -6,7 +6,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/ingress/machine-native-ops-ingress
-    eco-base/urn: urn:eco-base:k8s:core:ingress:machine-native-ops-ingress:sha256-b2fbdef686c0368b866632d840f11c0fc72e861cca627bc55b1cc42520f15e96
+    eco-base/urn: urn:eco-base:k8s:core:ingress:machine-native-ops-ingress:sha256-f243a7dc2ee6ee8bc7a80fa8ddf4a78dea4dbda3ff8a5cce4b8711c56b059132
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: 'true'
   labels:

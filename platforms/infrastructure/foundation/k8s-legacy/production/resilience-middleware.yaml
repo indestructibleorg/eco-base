@@ -6,7 +6,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/deployment/resilience-middleware
-    eco-base/urn: urn:eco-base:k8s:core:deployment:resilience-middleware:sha256-f2eb994b9ba4cb60a7e5ca23430fdbbf1bb6315fa16883a8aaa22e295e74f520
+    eco-base/urn: urn:eco-base:k8s:core:deployment:resilience-middleware:sha256-704d82ed24fdb3ba4cf2dca49f4697d27e8645fa36c473e373aacb772e539c08
   labels:
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
@@ -29,23 +29,23 @@ spec:
       environment: production
   template:
     metadata:
-  annotations:
-    prometheus.io/path: /metrics
-    prometheus.io/port: '8001'
-    prometheus.io/scrape: 'true'
-  labels:
-    app.kubernetes.io/name: resilience-middleware
-    eco-base/governance: aligned
-    eco-base/part-of: eco-base
-    environment: production
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: '8001'
+        prometheus.io/scrape: 'true'
+      labels:
+        app.kubernetes.io/name: resilience-middleware
+        eco-base/governance: aligned
+        eco-base/part-of: eco-base
+        environment: production
     spec:
       containers:
       - env:
-      - name: ENVIRONMENT
+        - name: ENVIRONMENT
           value: production
-      - name: LOG_LEVEL
+        - name: LOG_LEVEL
           value: INFO
-      - name: RESILIENCE_CONFIG_PATH
+        - name: RESILIENCE_CONFIG_PATH
           value: /config/resilience-policies.yaml
         image: ghcr.io/machinenativeops/resilience-middleware:v0.1.0
         imagePullPolicy: Always
@@ -59,7 +59,7 @@ spec:
           timeoutSeconds: 5
         name: middleware
         ports:
-      - containerPort: 8001
+        - containerPort: 8001
           name: http
           protocol: TCP
         readinessProbe:
@@ -78,7 +78,7 @@ spec:
             cpu: 200m
             memory: 256Mi
         volumeMounts:
-      - mountPath: /config
+        - mountPath: /config
           name: config
           readOnly: true
       serviceAccountName: resilience-middleware
@@ -94,7 +94,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/service/resilience-middleware
-    eco-base/urn: urn:eco-base:k8s:core:service:resilience-middleware:sha256-84dfd5ee6012b490ae0e415b114246cdb40378e3d9915cf57014b7510817435b
+    eco-base/urn: urn:eco-base:k8s:core:service:resilience-middleware:sha256-de716b94435fa7deb421e14367580ce02d87948a12eaae7ab3f5d056175dc2be
     prometheus.io/path: /stats/prometheus
     prometheus.io/port: '15020'
     prometheus.io/scrape: 'true'
@@ -126,39 +126,41 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
+  name: resilience-middleware
+  namespace: production
+spec:
   behavior:
-  scaleDown:
-  policies:
-  - periodSeconds: 60
-  type: Percent
-  value: 10
-  stabilizationWindowSeconds: 300
-  scaleUp:
-  policies:
-  - periodSeconds: 60
-  type: Percent
-  value: 50
-  stabilizationWindowSeconds: 0
+    scaleDown:
+      policies:
+      - periodSeconds: 60
+        type: Percent
+        value: 10
+      stabilizationWindowSeconds: 300
+    scaleUp:
+      policies:
+      - periodSeconds: 60
+        type: Percent
+        value: 50
+      stabilizationWindowSeconds: 0
   maxReplicas: 5
   metrics:
   - resource:
-  name: cpu
-  target:
-  averageUtilization: 70
-  type: Utilization
-  type: Resource
+      name: cpu
+      target:
+        averageUtilization: 70
+        type: Utilization
+    type: Resource
   - resource:
-  name: memory
-  target:
-  averageUtilization: 80
-  type: Utilization
-  type: Resource
+      name: memory
+      target:
+        averageUtilization: 80
+        type: Utilization
+    type: Resource
   minReplicas: 2
-  name: resilience-middleware
-spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
+    name: resilience-middleware
 ---
 apiVersion: v1
 automountServiceAccountToken: false

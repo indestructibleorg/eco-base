@@ -3,28 +3,28 @@ apiVersion: v1
 kind: Namespace
 metadata:
   labels:
-    app: superai-platform
+    app: eco-base
     component: federation
   name: fleet-management
 ---
 apiVersion: v1
 data:
-  clusters.yaml: "clusters:\n  - name: production-us-east-1\n    apiEndpoint: https://api.prod-useast.superai.platform\n\
+  clusters.yaml: "clusters:\n  - name: production-us-east-1\n    apiEndpoint: https://api.prod-useast.eco-base.platform\n\
     \    location: us-east-1\n    provider: AWS\n    environment: production\n   \
     \ capabilities:\n      - quantum-computing\n      - ml-inference\n      - vector-database\n\
     \    capacity:\n      cpu: \"1000\"\n      memory: \"4000Gi\"\n      nodes: 50\n\
     \    status: active\n    health: healthy\n    lastSync: \"2024-02-11T10:00:00Z\"\
-    \n  \n  - name: production-eu-central-1\n    apiEndpoint: https://api.prod-eu.superai.platform\n\
+    \n  \n  - name: production-eu-central-1\n    apiEndpoint: https://api.prod-eu.eco-base.platform\n\
     \    location: eu-central-1\n    provider: AWS\n    environment: production\n\
     \    capabilities:\n      - quantum-computing\n      - ml-training\n      - data-processing\n\
     \    capacity:\n      cpu: \"800\"\n      memory: \"3200Gi\"\n      nodes: 40\n\
     \    status: active\n    health: healthy\n    lastSync: \"2024-02-11T10:00:00Z\"\
-    \n  \n  - name: staging-us-west-2\n    apiEndpoint: https://api.staging-uswest.superai.platform\n\
+    \n  \n  - name: staging-us-west-2\n    apiEndpoint: https://api.staging-uswest.eco-base.platform\n\
     \    location: us-west-2\n    provider: AWS\n    environment: staging\n    capabilities:\n\
     \      - ml-inference\n      - data-processing\n    capacity:\n      cpu: \"200\"\
     \n      memory: \"800Gi\"\n      nodes: 10\n    status: active\n    health: healthy\n\
     \    lastSync: \"2024-02-11T10:00:00Z\"\n  \n  - name: development-ap-southeast-1\n\
-    \    apiEndpoint: https://api.dev-apse.superai.platform\n    location: ap-southeast-1\n\
+    \    apiEndpoint: https://api.dev-apse.eco-base.platform\n    location: ap-southeast-1\n\
     \    provider: AWS\n    environment: development\n    capabilities:\n      - development\n\
     \      - testing\n    capacity:\n      cpu: \"100\"\n      memory: \"400Gi\"\n\
     \      nodes: 5\n    status: active\n    health: healthy\n    lastSync: \"2024-02-11T10:00:00Z\"\
@@ -35,9 +35,9 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/configmap/cluster-registry
-    eco-base/urn: urn:eco-base:k8s:core:configmap:cluster-registry:sha256-c84db3225631575c064e18c2b4d94f87567373e18ea386cb9b69ad70eb0a3294
+    eco-base/urn: urn:eco-base:k8s:core:configmap:cluster-registry:sha256-f8ad93a9f8d9d102b5a8e37327f081d7980f5dffee2a90a7c0978e9221562699
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: cluster-registry
@@ -57,9 +57,9 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/secret/cluster-secrets
-    eco-base/urn: urn:eco-base:k8s:core:secret:cluster-secrets:sha256-d8c3cf05f18c943d82e4bba279be6d0ce7f553f4ce666b5c9191a51273c13445
+    eco-base/urn: urn:eco-base:k8s:core:secret:cluster-secrets:sha256-f1213b66f508423b58acf607ba7acc511ab2659717c76a374d795165cc8bce88
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: cluster-secrets
@@ -74,12 +74,12 @@ metadata:
 stringData:
   production-eu-central-1-kubeconfig: "apiVersion: v1\nkind: Config\nclusters:\n-\
     \ cluster:\n    certificate-authority-data: BASE64_ENCODED_CA_DATA\n    server:\
-    \ https://api.prod-eu.superai.platform\n  name: production-eu-central-1\ncontexts:\n\
+    \ https://api.prod-eu.eco-base.platform\n  name: production-eu-central-1\ncontexts:\n\
     - context:\n    cluster: production-eu-central-1\n    user: production-admin\n\
     \  name: production-eu-central-1\nusers:\n- name: production-admin\n  user:\n\
     \    token: SERVICE_ACCOUNT_TOKEN\n"
   production-us-east-1-kubeconfig: "apiVersion: v1\nkind: Config\nclusters:\n- cluster:\n\
-    \    certificate-authority-data: BASE64_ENCODED_CA_DATA\n    server: https://api.prod-useast.superai.platform\n\
+    \    certificate-authority-data: BASE64_ENCODED_CA_DATA\n    server: https://api.prod-useast.eco-base.platform\n\
     \  name: production-us-east-1\ncontexts:\n- context:\n    cluster: production-us-east-1\n\
     \    user: production-admin\n  name: production-us-east-1\nusers:\n- name: production-admin\n\
     \  user:\n    token: SERVICE_ACCOUNT_TOKEN\n"
@@ -92,9 +92,9 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/deployment/cluster-registry-operator
-    eco-base/urn: urn:eco-base:k8s:core:deployment:cluster-registry-operator:sha256-d73075ea8db7e87dcf63ccfabca71b16aabe6bf21652e96871e9299c72b2d19f
+    eco-base/urn: urn:eco-base:k8s:core:deployment:cluster-registry-operator:sha256-de1205cf0675b7a9e4c6596e734218749c33e1c463f96a7fd4f6fcd10300ee58
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: cluster-registry-operator
@@ -114,7 +114,7 @@ spec:
   template:
     metadata:
       labels:
-        app: superai-platform
+        app: eco-base
         component: federation
     spec:
       containers:
@@ -127,7 +127,7 @@ spec:
           value: fleet-management
         - name: LOG_LEVEL
           value: info
-        image: ghcr.io/superai-platform/cluster-registry-operator:v0.1.0
+        image: ghcr.io/eco-base/cluster-registry-operator:v0.1.0
         livenessProbe:
           httpGet:
             path: /healthz
@@ -176,9 +176,9 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/service/cluster-registry-service
-    eco-base/urn: urn:eco-base:k8s:core:service:cluster-registry-service:sha256-667bba520f5e2d6518796041fc341f22dcbc7945101bf8b155b4f27067715a3f
+    eco-base/urn: urn:eco-base:k8s:core:service:cluster-registry-service:sha256-5ed2f3f26820d69f8c7e0ef0d1bdd82d43d4b14ad0b281b0747a535b25237e6f
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: cluster-registry-service
@@ -206,7 +206,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   labels:
-    app: superai-platform
+    app: eco-base
     component: federation
   name: cluster-registry
   namespace: fleet-management
@@ -217,5 +217,5 @@ spec:
     port: metrics
   selector:
     matchLabels:
-      app: superai-platform
+      app: eco-base
       component: federation

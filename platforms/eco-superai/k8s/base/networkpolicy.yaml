@@ -1,15 +1,15 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: superai-app-netpol
-  namespace: eco-superai
+  name: eco-app-netpol
+  namespace: eco-eco-base
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: app
 spec:
   podSelector:
     matchLabels:
-      app.kubernetes.io/name: superai-platform
+      app.kubernetes.io/name: eco-base
       app.kubernetes.io/component: app
   policyTypes:
     - Ingress
@@ -109,15 +109,15 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: superai-worker-netpol
-  namespace: eco-superai
+  name: eco-worker-netpol
+  namespace: eco-eco-base
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: worker
 spec:
   podSelector:
     matchLabels:
-      app.kubernetes.io/name: superai-platform
+      app.kubernetes.io/name: eco-base
       app.kubernetes.io/component: worker
   policyTypes:
     - Ingress

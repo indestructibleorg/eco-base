@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ResourceQuota
 metadata:
-  name: superai-quota
-  namespace: eco-superai
+  name: eco-quota
+  namespace: eco-eco-base
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
 spec:
   hard:
     requests.cpu: "16"

@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: eco-superai-dev
+namespace: eco-eco-dev
 
 namePrefix: dev-
 
@@ -12,7 +12,7 @@ patches:
   # --- App: single replica, lower resources, debug logging ---
   - target:
       kind: Deployment
-      name: superai-app
+      name: eco-app
     patch: |
       - op: replace
         path: /spec/replicas
@@ -36,7 +36,7 @@ patches:
   # --- Worker: single replica, lower concurrency ---
   - target:
       kind: Deployment
-      name: superai-worker
+      name: eco-worker
     patch: |
       - op: replace
         path: /spec/replicas
@@ -69,7 +69,7 @@ patches:
   # --- HPA: disable in dev ---
   - target:
       kind: HorizontalPodAutoscaler
-      name: superai-app-hpa
+      name: eco-app-hpa
     patch: |
       - op: replace
         path: /spec/minReplicas
@@ -80,7 +80,7 @@ patches:
 
   - target:
       kind: HorizontalPodAutoscaler
-      name: superai-worker-hpa
+      name: eco-worker-hpa
     patch: |
       - op: replace
         path: /spec/minReplicas
@@ -92,20 +92,20 @@ patches:
   # --- Ingress: dev host ---
   - target:
       kind: Ingress
-      name: superai-ingress
+      name: eco-ingress
     patch: |
       - op: replace
         path: /spec/rules/0/host
-        value: api-dev.superai.example.com
+        value: api-dev.eco-base.example.com
       - op: replace
         path: /spec/tls/0/hosts/0
-        value: api-dev.superai.example.com
+        value: api-dev.eco-base.example.com
       - op: replace
         path: /spec/tls/0/secretName
-        value: superai-dev-tls
+        value: eco-dev-tls
 
 configMapGenerator:
-  - name: superai-config
+  - name: eco-config
     behavior: merge
     literals:
       - APP_ENV=development

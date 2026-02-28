@@ -2,7 +2,7 @@
 apiVersion: v1
 data:
   falco.yaml: "rules_file:\n  - /etc/falco/falco_rules.yaml\n  - /etc/falco/falco_rules.local.yaml\n\
-    \  - /etc/falco/superai_rules.yaml\n\njson_output: true\njson_include_output_property:\
+    \  - /etc/falco/eco-base_rules.yaml\n\njson_output: true\njson_include_output_property:\
     \ true\njson_include_tags_property: true\n\nlog_stderr: true\nlog_syslog: false\n\
     log_level: info\n\npriority: warning\n\nbuffered_outputs: false\nsyscall_event_drops:\n\
     \  threshold: 0.1\n  actions:\n    - log\n    - alert\n  rate: 0.03333\n  max_burst:\
@@ -20,7 +20,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/configmap/falco-config
-    eco-base/urn: urn:eco-base:k8s:core:configmap:falco-config:sha256-187df0802e7678868cc026b2657e9e0501b5bcba203e7128ffb50e81759cbe1e
+    eco-base/urn: urn:eco-base:k8s:core:configmap:falco-config:sha256-cf3e5ea2424c389bb93cafb8dd32900a3763a4efa0030eba8ce7d6db4ac74018
   labels:
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
@@ -31,4 +31,4 @@ metadata:
     eco-base/owner: eco-system
     eco-base/platform: core
   name: falco-config
-  namespace: eco-superai
+  namespace: eco-eco-base

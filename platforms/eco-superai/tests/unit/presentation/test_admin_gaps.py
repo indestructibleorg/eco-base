@@ -132,8 +132,8 @@ class TestFlushCachePattern:
 
         # scan_iter returns some keys
         async def _scan_iter(match=None):
-            yield "superai:prefix:key1"
-            yield "superai:prefix:key2"
+            yield "eco-base:prefix:key1"
+            yield "eco-base:prefix:key2"
 
         mock_redis.scan_iter = _scan_iter
 

@@ -8,8 +8,8 @@ SRC_DIR = os.path.join(PLATFORM_ROOT, "src")
 
 # Patterns that indicate cross-platform coupling
 FORBIDDEN_PATTERNS = [
-    "from superai",
-    "import superai",
+    "from eco-base",
+    "import eco-base",
     "from govops",
     "import govops",
     "from seccompops",

@@ -1,4 +1,4 @@
-# SuperAI Platform — System Architecture Document
+# eco-base Platform — System Architecture Document
 
 > Version 1.0 | Last Updated: 2025-02-11
 
@@ -6,7 +6,7 @@
 
 ## 1. Architectural Overview
 
-SuperAI Platform adopts a **Clean Architecture** (also known as Hexagonal Architecture or Ports & Adapters) design philosophy. This ensures that business logic remains independent of frameworks, databases, and external services, enabling maximum testability, maintainability, and evolutionary capability.
+eco-base Platform adopts a **Clean Architecture** (also known as Hexagonal Architecture or Ports & Adapters) design philosophy. This ensures that business logic remains independent of frameworks, databases, and external services, enabling maximum testability, maintainability, and evolutionary capability.
 
 ### 1.1 Layer Hierarchy
 
@@ -200,7 +200,7 @@ Response ← QuantumResult ← Result Processing
 ┌─────────────────────────────────────────────┐
 │              Kubernetes Cluster              │
 │  ┌─────────────────────────────────────┐    │
-│  │         Namespace: superai          │    │
+│  │         Namespace: eco-base          │    │
 │  │  ┌─────────┐  ┌─────────┐          │    │
 │  │  │ API Pod │  │ API Pod │  (HPA)   │    │
 │  │  │ :8000   │  │ :8000   │          │    │

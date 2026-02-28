@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: LimitRange
 metadata:
-  name: superai-limits
-  namespace: eco-superai
+  name: eco-limits
+  namespace: eco-eco-base
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
 spec:
   limits:
     - type: Container

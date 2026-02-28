@@ -3,7 +3,7 @@ requires = ["hatchling>=1.21.0"]
 build-backend = "hatchling.build"
 
 [project]
-name = "superai-platform"
+name = "eco-base"
 version = "1.0.0"
 description = "超級AI自開發雲原生平台 - 量子-AI混合框架與完整科學計算生態"
 readme = "README.md"
@@ -137,10 +137,10 @@ docs = [
 ]
 
 [project.scripts]
-superai = "src.presentation.api.main:cli"
-superai-worker = "src.infrastructure.tasks.worker:main"
-superai-health = "tools.health_check:main"
-superai-artifact = "src.artifact_converter.cli:app"
+eco-base = "src.presentation.api.main:cli"
+eco-worker = "src.infrastructure.tasks.worker:main"
+eco-health = "tools.health_check:main"
+eco-artifact = "src.artifact_converter.cli:app"
 yaml2json = "tools.yaml2json:main"
 
 [tool.hatch.build.targets.wheel]

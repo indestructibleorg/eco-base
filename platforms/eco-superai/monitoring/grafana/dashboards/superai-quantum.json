@@ -12,7 +12,7 @@
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
       "targets": [
         {
-          "expr": "sum(rate(superai_http_requests_total{endpoint=~&quot;/api/v1/quantum.*&quot;, method=&quot;POST&quot;}[5m]))",
+          "expr": "sum(rate(eco-base_http_requests_total{endpoint=~&quot;/api/v1/quantum.*&quot;, method=&quot;POST&quot;}[5m]))",
           "legendFormat": "Jobs/s"
         }
       ],
@@ -24,7 +24,7 @@
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
       "targets": [
         {
-          "expr": "sum(rate(superai_http_requests_total{endpoint=~&quot;/api/v1/quantum.*&quot;}[1h])) by (status)",
+          "expr": "sum(rate(eco-base_http_requests_total{endpoint=~&quot;/api/v1/quantum.*&quot;}[1h])) by (status)",
           "legendFormat": "HTTP {{status}}"
         }
       ]
@@ -35,15 +35,15 @@
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
       "targets": [
         {
-          "expr": "histogram_quantile(0.50, sum(rate(superai_http_request_duration_seconds_bucket{endpoint=~&quot;/api/v1/quantum.*&quot;}[5m])) by (le))",
+          "expr": "histogram_quantile(0.50, sum(rate(eco-base_http_request_duration_seconds_bucket{endpoint=~&quot;/api/v1/quantum.*&quot;}[5m])) by (le))",
           "legendFormat": "p50"
         },
         {
-          "expr": "histogram_quantile(0.95, sum(rate(superai_http_request_duration_seconds_bucket{endpoint=~&quot;/api/v1/quantum.*&quot;}[5m])) by (le))",
+          "expr": "histogram_quantile(0.95, sum(rate(eco-base_http_request_duration_seconds_bucket{endpoint=~&quot;/api/v1/quantum.*&quot;}[5m])) by (le))",
           "legendFormat": "p95"
         },
         {
-          "expr": "histogram_quantile(0.99, sum(rate(superai_http_request_duration_seconds_bucket{endpoint=~&quot;/api/v1/quantum.*&quot;}[5m])) by (le))",
+          "expr": "histogram_quantile(0.99, sum(rate(eco-base_http_request_duration_seconds_bucket{endpoint=~&quot;/api/v1/quantum.*&quot;}[5m])) by (le))",
           "legendFormat": "p99"
         }
       ],
@@ -55,19 +55,19 @@
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
       "targets": [
         {
-          "expr": "sum(rate(superai_http_requests_total{endpoint=&quot;/api/v1/quantum/circuit&quot;}[5m]))",
+          "expr": "sum(rate(eco-base_http_requests_total{endpoint=&quot;/api/v1/quantum/circuit&quot;}[5m]))",
           "legendFormat": "circuit"
         },
         {
-          "expr": "sum(rate(superai_http_requests_total{endpoint=&quot;/api/v1/quantum/vqe&quot;}[5m]))",
+          "expr": "sum(rate(eco-base_http_requests_total{endpoint=&quot;/api/v1/quantum/vqe&quot;}[5m]))",
           "legendFormat": "VQE"
         },
         {
-          "expr": "sum(rate(superai_http_requests_total{endpoint=&quot;/api/v1/quantum/qaoa&quot;}[5m]))",
+          "expr": "sum(rate(eco-base_http_requests_total{endpoint=&quot;/api/v1/quantum/qaoa&quot;}[5m]))",
           "legendFormat": "QAOA"
         },
         {
-          "expr": "sum(rate(superai_http_requests_total{endpoint=&quot;/api/v1/quantum/qml&quot;}[5m]))",
+          "expr": "sum(rate(eco-base_http_requests_total{endpoint=&quot;/api/v1/quantum/qml&quot;}[5m]))",
           "legendFormat": "QML"
         }
       ],
@@ -100,7 +100,7 @@
       "gridPos": { "h": 6, "w": 8, "x": 8, "y": 16 },
       "targets": [
         {
-          "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~&quot;superai-worker.*&quot;}[5m])) by (pod)",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~&quot;eco-worker.*&quot;}[5m])) by (pod)",
           "legendFormat": "{{pod}}"
         }
       ],
@@ -112,7 +112,7 @@
       "gridPos": { "h": 6, "w": 8, "x": 16, "y": 16 },
       "targets": [
         {
-          "expr": "sum(container_memory_working_set_bytes{pod=~&quot;superai-worker.*&quot;}) by (pod)",
+          "expr": "sum(container_memory_working_set_bytes{pod=~&quot;eco-worker.*&quot;}) by (pod)",
           "legendFormat": "{{pod}}"
         }
       ],
@@ -121,12 +121,12 @@
   ],
   "refresh": "30s",
   "schemaVersion": 39,
-  "tags": ["superai", "quantum", "compute"],
+  "tags": ["eco-base", "quantum", "compute"],
   "templating": { "list": [] },
   "time": { "from": "now-3h", "to": "now" },
   "timepicker": {},
   "timezone": "utc",
-  "title": "SuperAI — Quantum Computing",
-  "uid": "superai-quantum",
+  "title": "eco-base — Quantum Computing",
+  "uid": "eco-quantum",
   "version": 1
 }

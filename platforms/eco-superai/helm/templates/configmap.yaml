@@ -6,7 +6,7 @@ metadata:
   labels:
     app: {{ .Release.Name }}
 data:
-  APP_NAME: {{ .Values.appName | default "superai-platform" | quote }}
+  APP_NAME: {{ .Values.appName | default "eco-base" | quote }}
   APP_ENV: {{ .Values.env | default "production" | quote }}
   LOG_LEVEL: {{ .Values.logLevel | default "INFO" | quote }}
   QUANTUM_BACKEND: {{ .Values.quantum.backend | default "aer_simulator" | quote }}

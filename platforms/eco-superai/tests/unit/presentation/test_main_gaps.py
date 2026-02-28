@@ -77,7 +77,7 @@ class TestCreateAppProductionMiddleware:
 
         # Create a production settings object
         prod_settings = MagicMock()
-        prod_settings.app_name = "SuperAI Platform"
+        prod_settings.app_name = "eco-base Platform"
         prod_settings.app_version = "1.0.0"
         prod_settings.is_development = False
         prod_settings.is_production = True

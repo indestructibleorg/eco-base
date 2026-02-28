@@ -16,7 +16,7 @@ eco-base-platforms/
 ├── platform-dataops/       # DataOps — 資料與證據操作平台 (port: 8093/9093)
 ├── platform-observops/     # ObservOps — 可觀測性操作平台 (port: 8094/9094)
 ├── platform-seccompops/    # SecCompOps — 安全與合規操作平台 (port: 8095/9095)
-├── platform-superai/       # SuperAI — AI 與量子計算平台 (port: 8096/9096)
+├── platform-eco-base/       # eco-base — AI 與量子計算平台 (port: 8096/9096)
 ├── platform-eco/           # Platform-ECO — AutoEcoOps 主平台
 ├── ECO_PLATFORM_INTEGRATION_MASTER.md  ← 本文件
 ├── ECO_NAMESPACE_ALIGNMENT.md
@@ -34,7 +34,7 @@ eco-base-platforms/
 | platform-dataops | `platform-dataops-` | `gl.data-ops.evidence-platform` | `eco-dataops` | 8093 | 9093 |
 | platform-observops | `platform-observops-` | `gl.observ-ops.platform` | `eco-observops` | 8094 | 9094 |
 | platform-seccompops | `platform-seccompops-` | `gl.sec-ops.compliance-platform` | `eco-seccompops` | 8095 | 9095 |
-| platform-superai | `platform-superai-` | `gl.super-ai.quantum-platform` | `eco-superai` | 8096 | 9096 |
+| platform-eco-base | `platform-eco-` | `gl.super-ai.quantum-platform` | `eco-eco-base` | 8096 | 9096 |
 
 ---
 
@@ -74,7 +74,7 @@ eco-base-platforms/
 
 **優先級 P2（可觀測性與補充）：**
 5. platform-observops — 監控告警，部署後立即啟用
-6. platform-superai — AI/量子計算，補充層
+6. platform-eco-base — AI/量子計算，補充層
 
 ---
 
@@ -142,7 +142,7 @@ Phase 3 — 可觀測性 (P2)
   └─ 告警規則與 SLO 配置
 
 Phase 4 — AI/量子補充層 (P3)
-  └─ platform-superai → eco-superai
+  └─ platform-eco-base → eco-eco-base
   └─ Qiskit 量子模擬環境
   └─ AI 推論引擎
 ```
@@ -181,7 +181,7 @@ platform-core (共享內核)
     ├── platform-govops (消費: 策略執行、事件匯流排)
     ├── platform-dataops (消費: 事件匯流排、向量檢索)
     ├── platform-observops (消費: 所有平台指標)
-    └── platform-superai (消費: 事件匯流排、Memory Hub)
+    └── platform-eco-base (消費: 事件匯流排、Memory Hub)
 
 通信協議: EventBus (Kafka/Redis Streams) + HTTP API
 認證: ECO Auth Service (OIDC/JWT)
@@ -198,4 +198,4 @@ platform-core (共享內核)
 | platform-govops | CA, CM, PL | A.6, A.18 | CC1, CC2 | Art.5 |
 | platform-dataops | AU, SI, MP | A.8, A.12 | CC4, CC5 | Art.17 |
 | platform-observops | AU, IR, SI | A.12, A.16 | CC7, CC8 | Art.33 |
-| platform-superai | SA, SC, SI | A.14, A.15 | CC3, CC9 | Art.22 |
+| platform-eco-base | SA, SC, SI | A.14, A.15 | CC3, CC9 | Art.22 |

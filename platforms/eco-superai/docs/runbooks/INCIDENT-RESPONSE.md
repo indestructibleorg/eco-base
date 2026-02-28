@@ -1,4 +1,4 @@
-# SuperAI Platform — Incident Response Runbook
+# eco-base Platform — Incident Response Runbook
 
 > Operational procedures for common incidents and failure scenarios.
 
@@ -14,29 +14,29 @@
 ### Diagnosis
 ```bash
 # Check pod status
-kubectl get pods -n superai -l app=superai-api
+kubectl get pods -n eco-base -l app=eco-api
 
 # Check pod logs
-kubectl logs -n superai -l app=superai-api --tail=200
+kubectl logs -n eco-base -l app=eco-api --tail=200
 
 # Check resource usage
-kubectl top pods -n superai
+kubectl top pods -n eco-base
 
 # Check service endpoints
-kubectl get endpoints -n superai superai-service
+kubectl get endpoints -n eco-base eco-service
 ```
 
 ### Resolution
 
 **Step 1:** Check if pods are in CrashLoopBackOff:
 ```bash
-kubectl describe pod -n superai <pod-name>
+kubectl describe pod -n eco-base <pod-name>
 ```
 If OOMKilled → increase memory limits in `helm/values.yaml` and redeploy.
 
 **Step 2:** Check database connectivity:
 ```bash
-kubectl exec -n superai <pod-name> -- python -c "
+kubectl exec -n eco-base <pod-name> -- python -c "
 from src.infrastructure.config.settings import Settings
 s = Settings()
 print(s.DATABASE_URL)
@@ -45,8 +45,8 @@ print(s.DATABASE_URL)
 
 **Step 3:** Rolling restart:
 ```bash
-kubectl rollout restart deployment/superai-api -n superai
-kubectl rollout status deployment/superai-api -n superai
+kubectl rollout restart deployment/eco-api -n eco-base
+kubectl rollout status deployment/eco-api -n eco-base
 ```
 
 ---
@@ -61,12 +61,12 @@ kubectl rollout status deployment/superai-api -n superai
 ### Diagnosis
 ```bash
 # Check active connections
-kubectl exec -n superai <postgres-pod> -- psql -U superai -c "
+kubectl exec -n eco-base <postgres-pod> -- psql -U eco-base -c "
 SELECT count(*) FROM pg_stat_activity WHERE state = 'active';
 "
 
 # Check long-running queries
-kubectl exec -n superai <postgres-pod> -- psql -U superai -c "
+kubectl exec -n eco-base <postgres-pod> -- psql -U eco-base -c "
 SELECT pid, now() - pg_stat_activity.query_start AS duration, query
 FROM pg_stat_activity
 WHERE state != 'idle'
@@ -79,7 +79,7 @@ LIMIT 10;
 
 **Step 1:** Kill long-running queries:
 ```bash
-kubectl exec -n superai <postgres-pod> -- psql -U superai -c "
+kubectl exec -n eco-base <postgres-pod> -- psql -U eco-base -c "
 SELECT pg_terminate_backend(pid)
 FROM pg_stat_activity
 WHERE duration > interval '5 minutes' AND state = 'active';
@@ -103,25 +103,25 @@ Update `DATABASE_POOL_SIZE` and `DATABASE_MAX_OVERFLOW` in environment config.
 ### Diagnosis
 ```bash
 # Check Redis pod
-kubectl get pods -n superai -l app=redis
+kubectl get pods -n eco-base -l app=redis
 
 # Test Redis connectivity
-kubectl exec -n superai <redis-pod> -- redis-cli ping
+kubectl exec -n eco-base <redis-pod> -- redis-cli ping
 
 # Check Redis memory
-kubectl exec -n superai <redis-pod> -- redis-cli info memory
+kubectl exec -n eco-base <redis-pod> -- redis-cli info memory
 ```
 
 ### Resolution
 
 **Step 1:** If Redis is down, restart:
 ```bash
-kubectl rollout restart statefulset/redis -n superai
+kubectl rollout restart statefulset/redis -n eco-base
 ```
 
 **Step 2:** If memory full, flush non-critical caches:
 ```bash
-kubectl exec -n superai <redis-pod> -- redis-cli FLUSHDB
+kubectl exec -n eco-base <redis-pod> -- redis-cli FLUSHDB
 ```
 
 **Step 3:** The application is designed to degrade gracefully — all cache misses fall through to the database. Monitor DB load during Redis recovery.
@@ -137,10 +137,10 @@ kubectl exec -n superai <redis-pod> -- redis-cli FLUSHDB
 ### Diagnosis
 ```bash
 # Check quantum worker logs
-kubectl logs -n superai -l component=quantum-worker --tail=100
+kubectl logs -n eco-base -l component=quantum-worker --tail=100
 
 # Check job queue
-kubectl exec -n superai <app-pod> -- python -c "
+kubectl exec -n eco-base <app-pod> -- python -c "
 from src.quantum.runtime.executor import QuantumExecutor
 executor = QuantumExecutor()
 print(executor.list_pending_jobs())
@@ -152,12 +152,12 @@ print(executor.list_pending_jobs())
 **Step 1:** If backend is unresponsive, switch to simulator:
 ```bash
 # Update QUANTUM_BACKEND to aer_simulator
-kubectl set env deployment/superai-api -n superai QUANTUM_BACKEND=aer_simulator
+kubectl set env deployment/eco-api -n eco-base QUANTUM_BACKEND=aer_simulator
 ```
 
 **Step 2:** Retry stuck jobs:
 ```bash
-kubectl exec -n superai <app-pod> -- python -m tools.health_check --retry-stuck-jobs
+kubectl exec -n eco-base <app-pod> -- python -m tools.health_check --retry-stuck-jobs
 ```
 
 **Step 3:** If IBM Quantum backend issue, check [IBM Quantum Status](https://quantum-computing.ibm.com/services/resources).
@@ -173,10 +173,10 @@ kubectl exec -n superai <app-pod> -- python -m tools.health_check --retry-stuck-
 ### Diagnosis
 ```bash
 # Check pod resource usage
-kubectl top pods -n superai --sort-by=memory
+kubectl top pods -n eco-base --sort-by=memory
 
 # Check OOM events
-kubectl get events -n superai --field-selector reason=OOMKilling
+kubectl get events -n eco-base --field-selector reason=OOMKilling
 ```
 
 ### Resolution

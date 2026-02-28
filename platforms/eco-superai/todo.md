@@ -1,4 +1,4 @@
-# SuperAI Platform v1.0 Enterprise Production Implementation
+# eco-base Platform v1.0 Enterprise Production Implementation
 
 ## Phase 0: Internal Retrieval & Baseline Analysis
 

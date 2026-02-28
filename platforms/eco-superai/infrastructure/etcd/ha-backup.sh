@@ -108,7 +108,7 @@ replicate_to_regions() {
         log_info "Replicating to region: $region"
         
         aws s3 cp "$compressed_file" \
-            "s3://superai-etcd-backup-${region}/${BACKUP_NAME_PREFIX}.tar.gz" \
+            "s3://eco-etcd-backup-${region}/${BACKUP_NAME_PREFIX}.tar.gz" \
             --storage-class STANDARD_IA
     done
     

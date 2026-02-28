@@ -30,7 +30,7 @@ log_step() {
 # Configuration
 SCAN_TYPE="${SCAN_TYPE:-daily}"  # daily or weekly
 NAMESPACE="${NAMESPACE:-default}"
-REGISTRY="${REGISTRY:-ghcr.io/superai-platform}"
+REGISTRY="${REGISTRY:-ghcr.io/eco-base}"
 
 log_info "Starting Periodic Vulnerability Scan - ${SCAN_TYPE}"
 log_info "Namespace: $NAMESPACE"

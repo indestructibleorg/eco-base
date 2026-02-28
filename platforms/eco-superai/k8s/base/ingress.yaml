@@ -6,8 +6,8 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
-    eco-base/uri: eco-base://k8s/core/ingress/superai-ingress
-    eco-base/urn: urn:eco-base:k8s:core:ingress:superai-ingress:sha256-7a9350cbff556cc31520dcfb4b372a7d989eb17b52aa9232bf428ab6900075a5
+    eco-base/uri: eco-base://k8s/core/ingress/eco-ingress
+    eco-base/urn: urn:eco-base:k8s:core:ingress:eco-ingress:sha256-65a6115dd271e84af6a35eb4b8e81be21a773dcee4d4634ca61d59393d240d22
     nginx.ingress.kubernetes.io/configuration-snippet: 'more_set_headers "X-Frame-Options:
       DENY";
 
@@ -24,7 +24,7 @@ metadata:
     nginx.ingress.kubernetes.io/cors-allow-headers: Authorization, Content-Type, X-Request-ID
     nginx.ingress.kubernetes.io/cors-allow-methods: GET, POST, PUT, DELETE, PATCH,
       OPTIONS
-    nginx.ingress.kubernetes.io/cors-allow-origin: https://app.superai.example.com
+    nginx.ingress.kubernetes.io/cors-allow-origin: https://app.eco-base.example.com
     nginx.ingress.kubernetes.io/cors-max-age: '600'
     nginx.ingress.kubernetes.io/enable-cors: 'true'
     nginx.ingress.kubernetes.io/proxy-body-size: 50m
@@ -38,35 +38,35 @@ metadata:
   labels:
     app.kubernetes.io/component: ingress
     app.kubernetes.io/instance: eco-instance
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/part-of: eco-base
     app.kubernetes.io/version: 1.0.0
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: superai-ingress
-  namespace: eco-superai
+  name: eco-ingress
+  namespace: eco-eco-base
 spec:
   ingressClassName: nginx
   rules:
-  - host: api.superai.example.com
+  - host: api.eco-base.example.com
     http:
       paths:
       - backend:
           service:
-            name: superai-app
+            name: eco-app
             port:
               name: http
         path: /api/v1
         pathType: Prefix
       - backend:
           service:
-            name: superai-app
+            name: eco-app
             port:
               name: http
         path: /metrics
         pathType: Exact
   tls:
   - hosts:
-    - api.superai.example.com
-    secretName: superai-tls
+    - api.eco-base.example.com
+    secretName: eco-tls

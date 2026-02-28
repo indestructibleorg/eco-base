@@ -61,4 +61,4 @@ class TestUserWorkflow:
         """Verify Prometheus metrics are exposed."""
         resp = client.get("/metrics")
         assert resp.status_code == 200
-        assert "superai" in resp.text or "http" in resp.text
+        assert "eco-base" in resp.text or "http" in resp.text

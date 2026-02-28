@@ -32,7 +32,7 @@ data:
     \ 90  # days\n  model_retention: 30  # days\n  retrain_threshold: 0.85  # Retrain\
     \ if accuracy drops below this\n  validation:\n    enabled: true\n    split_ratio:\
     \ 0.2  # 20% for validation\n    cross_validation_folds: 5\n\nstorage:\n  features_backend:\
-    \ \"redis\"\n  models_backend: \"s3://superai-ml-models\"\n  metrics_backend:\
+    \ \"redis\"\n  models_backend: \"s3://eco-ml-models\"\n  metrics_backend:\
     \ \"prometheus\"\n  logs_backend: \"loki\"\n  \nperformance:\n  batch_size: 1000\n\
     \  max_concurrent_predictions: 10\n  prediction_timeout: 5  # seconds\n  model_loading_timeout:\
     \ 30  # seconds\n\nsecurity:\n  encryption:\n    enabled: true\n    algorithm:\
@@ -46,7 +46,7 @@ metadata:
     eco-base/uri: eco-base://k8s/core/configmap/anomaly-detection-config
     eco-base/urn: urn:eco-base:k8s:core:configmap:anomaly-detection-config:sha256-b15f50d85e837be29b097308652fc5dc17898b5dad51e1d696c7bf6b62baab45
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: anomaly-detection-config
@@ -68,7 +68,7 @@ metadata:
     eco-base/uri: eco-base://k8s/core/cronjob/anomaly-model-training
     eco-base/urn: urn:eco-base:k8s:core:cronjob:anomaly-model-training:sha256-af238090c0eedcb4101b39359a10f6d25609fd95b0ff0e5314e6ebd3eb97dec6
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: anomaly-model-training
@@ -94,7 +94,7 @@ spec:
             - "python train_models.py \\\n  --config /etc/config/config.yaml \\\n\
               \  --metrics-backend http://prometheus.monitoring.svc.cluster.local:9090\
               \ \\\n  --logs-backend http://loki.monitoring.svc.cluster.local:3100\
-              \ \\\n  --output s3://superai-ml-models/anomaly-detection\n"
+              \ \\\n  --output s3://eco-ml-models/anomaly-detection\n"
             command:
             - /bin/sh
             - -c
@@ -112,7 +112,7 @@ spec:
             envFrom:
             - secretRef:
                 name: anomaly-detection-secrets
-            image: ghcr.io/superai-platform/anomaly-detection-trainer:v0.1.0
+            image: ghcr.io/eco-base/anomaly-detection-trainer:v0.1.0
             name: trainer
             resources:
               limits:
@@ -128,7 +128,7 @@ spec:
             - mountPath: /models
               name: models
           restartPolicy: OnFailure
-          serviceAccountName: superai-monitoring
+          serviceAccountName: eco-monitoring
           volumes:
           - configMap:
               name: anomaly-detection-config
@@ -147,7 +147,7 @@ metadata:
     eco-base/uri: eco-base://k8s/core/deployment/anomaly-detection-service
     eco-base/urn: urn:eco-base:k8s:core:deployment:anomaly-detection-service:sha256-068f2a0ccb03d6df119504c42c2c27813622b432f502bfb57a7820dbe7cb343c
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: anomaly-detection-service
@@ -167,7 +167,7 @@ spec:
   template:
     metadata:
       labels:
-        app: superai-platform
+        app: eco-base
         component: ai-anomaly-detection
     spec:
       containers:
@@ -184,7 +184,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-        image: ghcr.io/superai-platform/anomaly-detection-service:v0.1.0
+        image: ghcr.io/eco-base/anomaly-detection-service:v0.1.0
         livenessProbe:
           httpGet:
             path: /healthz
@@ -214,7 +214,7 @@ spec:
         - mountPath: /etc/config
           name: config
           readOnly: true
-      serviceAccountName: superai-monitoring
+      serviceAccountName: eco-monitoring
       volumes:
       - configMap:
           name: anomaly-detection-config
@@ -229,7 +229,7 @@ metadata:
     eco-base/uri: eco-base://k8s/core/service/anomaly-detection-service
     eco-base/urn: urn:eco-base:k8s:core:service:anomaly-detection-service:sha256-1add5408b350091fdc46997600d5fd6934d33dcd62f7176efe709fa5dac80e03
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: anomaly-detection-service
@@ -262,7 +262,7 @@ metadata:
     eco-base/uri: eco-base://k8s/core/secret/anomaly-detection-secrets
     eco-base/urn: urn:eco-base:k8s:core:secret:anomaly-detection-secrets:sha256-5690ed0e228feb3c37a88a16e853d6abaee2dedd31b125951bc715e9339a942a
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: anomaly-detection-secrets

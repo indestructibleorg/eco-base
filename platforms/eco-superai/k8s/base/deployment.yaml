@@ -5,26 +5,26 @@ metadata:
   annotations:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
-    eco-base/uri: eco-base://k8s/core/deployment/superai-app
-    eco-base/urn: urn:eco-base:k8s:core:deployment:superai-app:sha256-82853160c98f4dd4d138f51543692154681b8f7261a433f733f8840f6756bba4
+    eco-base/uri: eco-base://k8s/core/deployment/eco-app
+    eco-base/urn: urn:eco-base:k8s:core:deployment:eco-app:sha256-8d39868fcba50b82fa02c95fd8df26394e92484147c37ea4533a8677093fec54
   labels:
     app.kubernetes.io/component: app
     app.kubernetes.io/instance: eco-instance
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/part-of: eco-base
     app.kubernetes.io/version: 1.0.0
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: superai-app
-  namespace: eco-superai
+  name: eco-app
+  namespace: eco-eco-base
 spec:
   replicas: 2
   revisionHistoryLimit: 5
   selector:
     matchLabels:
       app.kubernetes.io/component: app
-      app.kubernetes.io/name: superai-platform
+      app.kubernetes.io/name: eco-base
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -38,7 +38,7 @@ spec:
         prometheus.io/scrape: 'true'
       labels:
         app.kubernetes.io/component: app
-        app.kubernetes.io/name: superai-platform
+        app.kubernetes.io/name: eco-base
         app.kubernetes.io/version: 1.0.0
     spec:
       containers:
@@ -59,10 +59,10 @@ spec:
               fieldPath: status.podIP
         envFrom:
         - configMapRef:
-            name: superai-config
+            name: eco-config
         - secretRef:
-            name: superai-secrets
-        image: ghcr.io/indestructibleautoops/superai-platform:v0.1.0
+            name: eco-secrets
+        image: ghcr.io/indestructibleautoops/eco-base:v0.1.0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -117,7 +117,7 @@ spec:
         runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
-      serviceAccountName: superai-app
+      serviceAccountName: eco-app
       terminationGracePeriodSeconds: 60
       volumes:
       - emptyDir:
@@ -136,26 +136,26 @@ metadata:
   annotations:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
-    eco-base/uri: eco-base://k8s/core/deployment/superai-worker
-    eco-base/urn: urn:eco-base:k8s:core:deployment:superai-worker:sha256-7ab7484d28106886a8e8684848f4ea0b4a7fbb32489d43f48ac589ab825a3316
+    eco-base/uri: eco-base://k8s/core/deployment/eco-worker
+    eco-base/urn: urn:eco-base:k8s:core:deployment:eco-worker:sha256-4736c04e1f58bda4f27a4570eb409bb0d00f8793bc96e93fd961fee24f1ca698
   labels:
     app.kubernetes.io/component: worker
     app.kubernetes.io/instance: eco-instance
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/part-of: eco-base
     app.kubernetes.io/version: 1.0.0
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: superai-worker
-  namespace: eco-superai
+  name: eco-worker
+  namespace: eco-eco-base
 spec:
   replicas: 2
   revisionHistoryLimit: 5
   selector:
     matchLabels:
       app.kubernetes.io/component: worker
-      app.kubernetes.io/name: superai-platform
+      app.kubernetes.io/name: eco-base
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -165,7 +165,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/component: worker
-        app.kubernetes.io/name: superai-platform
+        app.kubernetes.io/name: eco-base
         app.kubernetes.io/version: 1.0.0
     spec:
       containers:
@@ -184,10 +184,10 @@ spec:
           value: production
         envFrom:
         - configMapRef:
-            name: superai-config
+            name: eco-config
         - secretRef:
-            name: superai-secrets
-        image: ghcr.io/indestructibleautoops/superai-platform:v0.1.0
+            name: eco-secrets
+        image: ghcr.io/indestructibleautoops/eco-base:v0.1.0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           exec:
@@ -226,7 +226,7 @@ spec:
         runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
-      serviceAccountName: superai-worker
+      serviceAccountName: eco-worker
       terminationGracePeriodSeconds: 120
       volumes:
       - emptyDir:
@@ -242,32 +242,32 @@ metadata:
   annotations:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
-    eco-base/uri: eco-base://k8s/core/deployment/superai-beat
-    eco-base/urn: urn:eco-base:k8s:core:deployment:superai-beat:sha256-202548d66d448e25515410054b619f8b85106cb71235ddc4505fee0894e20907
+    eco-base/uri: eco-base://k8s/core/deployment/eco-beat
+    eco-base/urn: urn:eco-base:k8s:core:deployment:eco-beat:sha256-45a02a7c9383b73afb00c03ec49cfa390a5b5d3e1d03b616c532dd521fd8d549
   labels:
     app.kubernetes.io/component: beat
     app.kubernetes.io/instance: eco-instance
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/part-of: eco-base
     app.kubernetes.io/version: 1.0.0
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: superai-beat
-  namespace: eco-superai
+  name: eco-beat
+  namespace: eco-eco-base
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/component: beat
-      app.kubernetes.io/name: superai-platform
+      app.kubernetes.io/name: eco-base
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         app.kubernetes.io/component: beat
-        app.kubernetes.io/name: superai-platform
+        app.kubernetes.io/name: eco-base
         app.kubernetes.io/version: 1.0.0
     spec:
       containers:
@@ -280,10 +280,10 @@ spec:
         - --schedule=/app/tmp/celerybeat-schedule
         envFrom:
         - configMapRef:
-            name: superai-config
+            name: eco-config
         - secretRef:
-            name: superai-secrets
-        image: ghcr.io/indestructibleautoops/superai-platform:v0.1.0
+            name: eco-secrets
+        image: ghcr.io/indestructibleautoops/eco-base:v0.1.0
         imagePullPolicy: IfNotPresent
         name: beat
         resources:
@@ -306,7 +306,7 @@ spec:
         runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
-      serviceAccountName: superai-worker
+      serviceAccountName: eco-worker
       terminationGracePeriodSeconds: 30
       volumes:
       - emptyDir:

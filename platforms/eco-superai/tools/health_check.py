@@ -60,7 +60,7 @@ class HealthChecker:
     async def _check_database(self) -> dict[str, Any]:
         try:
             import asyncpg
-            conn = await asyncio.wait_for(asyncpg.connect("postgresql://superai:superai_secret@localhost:5432/superai_db"), timeout=5)
+            conn = await asyncio.wait_for(asyncpg.connect("postgresql://eco-base:eco-base_secret@localhost:5432/eco-base_db"), timeout=5)
             version = await conn.fetchval("SELECT version()")
             await conn.close()
             return {"status": "healthy", "version": version[:50]}
@@ -81,7 +81,7 @@ class HealthChecker:
     async def _check_rabbitmq(self) -> dict[str, Any]:
         try:
             async with httpx.AsyncClient(timeout=5) as client:
-                resp = await client.get("http://localhost:15672/api/overview", auth=("superai", "superai_secret"))
+                resp = await client.get("http://localhost:15672/api/overview", auth=("eco-base", "eco-base_secret"))
                 if resp.status_code == 200:
                     data = resp.json()
                     return {"status": "healthy", "version": data.get("rabbitmq_version", "unknown"), "node": data.get("node", "")}
@@ -119,7 +119,7 @@ class HealthChecker:
 
 def main() -> None:
     import argparse
-    parser = argparse.ArgumentParser(description="SuperAI Platform Health Check")
+    parser = argparse.ArgumentParser(description="eco-base Platform Health Check")
     parser.add_argument("--url", default="http://localhost:8000", help="Base API URL")
     parser.add_argument("--json", action="store_true", help="Output as JSON")
     parser.add_argument("--watch", type=int, default=0, help="Watch interval in seconds (0=once)")
@@ -134,7 +134,7 @@ def main() -> None:
             else:
                 status_icon = {"healthy": "✅", "degraded": "⚠️", "unhealthy": "❌"}
                 print(f"\n{'='*60}")
-                print(f"  SuperAI Platform Health: {status_icon.get(result['overall_status'], '?')} {result['overall_status'].upper()}")
+                print(f"  eco-base Platform Health: {status_icon.get(result['overall_status'], '?')} {result['overall_status'].upper()}")
                 print(f"  Services: {result['healthy_services']} healthy")
                 print(f"  Duration: {result['check_duration_ms']:.1f}ms")
                 print(f"{'='*60}")

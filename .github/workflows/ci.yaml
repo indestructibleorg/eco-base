@@ -47,14 +47,14 @@ jobs:
   # ================================================================
   # Gate 3: Platform Tests & Codacy Coverage
   # ================================================================
-  test-eco-superai:
-    name: "Test: eco-superai"
+  test-eco-eco-base:
+    name: "Test: eco-eco-base"
     needs: validate
     runs-on: ubuntu-latest
     timeout-minutes: 30
     defaults:
       run:
-        working-directory: platforms/eco-superai
+        working-directory: platforms/eco-eco-base
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -92,7 +92,6 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: coverage.xml
-        continue-on-error: true
 
   test-eco-govops:
     name: "Test: eco-govops"
@@ -138,7 +137,6 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: coverage.xml
-        continue-on-error: true
 
   test-eco-core:
     name: "Test: eco-core"
@@ -184,7 +182,6 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: coverage.xml
-        continue-on-error: true
 
   test-eco-observops:
     name: "Test: eco-observops"
@@ -230,7 +227,6 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: coverage.xml
-        continue-on-error: true
 
   test-eco-seccompops:
     name: "Test: eco-seccompops"
@@ -276,7 +272,6 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: coverage.xml
-        continue-on-error: true
 
   test-eco-dataops:
     name: "Test: eco-dataops"
@@ -322,7 +317,6 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: coverage.xml
-        continue-on-error: true
 
   # ================================================================
   # Summary: All tests passed
@@ -332,7 +326,7 @@ jobs:
     needs:
       - validate
       - security
-      - test-eco-superai
+      - test-eco-eco-base
       - test-eco-govops
       - test-eco-core
       - test-eco-observops
@@ -346,7 +340,7 @@ jobs:
           echo "All CI jobs completed."
           echo "Validate: ${{ needs.validate.result }}"
           echo "Security: ${{ needs.security.result }}"
-          echo "eco-superai: ${{ needs.test-eco-superai.result }}"
+          echo "eco-eco-base: ${{ needs.test-eco-eco-base.result }}"
           echo "eco-govops: ${{ needs.test-eco-govops.result }}"
           echo "eco-core: ${{ needs.test-eco-core.result }}"
           echo "eco-observops: ${{ needs.test-eco-observops.result }}"

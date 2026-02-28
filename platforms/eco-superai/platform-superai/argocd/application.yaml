@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: superai
+  name: eco-base
   namespace: argocd
 spec:
-  description: SuperAI Cloud-Native Platform
+  description: eco-base Cloud-Native Platform
   sourceRepos:
-    - "https://github.com/superai/platform.git"
+    - "https://github.com/eco-base/platform.git"
     - "https://charts.bitnami.com/bitnami"
   destinations:
-    - namespace: eco-superai
+    - namespace: eco-eco-base
       server: https://kubernetes.default.svc
-    - namespace: eco-superai-staging
+    - namespace: eco-eco-staging
       server: https://kubernetes.default.svc
   clusterResourceWhitelist:
     - group: ""
@@ -33,17 +33,17 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: superai-production
+  name: eco-production
   namespace: argocd
   labels:
-    app: superai
+    app: eco-base
     env: production
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: superai
+  project: eco-base
   source:
-    repoURL: https://github.com/superai/platform.git
+    repoURL: https://github.com/eco-base/platform.git
     targetRevision: main
     path: helm
     helm:
@@ -55,7 +55,7 @@ spec:
           value: "1.0.0"
   destination:
     server: https://kubernetes.default.svc
-    namespace: eco-superai
+    namespace: eco-eco-base
   syncPolicy:
     automated:
       prune: true
@@ -82,15 +82,15 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: superai-staging
+  name: eco-staging
   namespace: argocd
   labels:
-    app: superai
+    app: eco-base
     env: staging
 spec:
-  project: superai
+  project: eco-base
   source:
-    repoURL: https://github.com/superai/platform.git
+    repoURL: https://github.com/eco-base/platform.git
     targetRevision: develop
     path: helm
     helm:
@@ -99,7 +99,7 @@ spec:
         - values-staging.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: eco-superai-staging
+    namespace: eco-eco-staging
   syncPolicy:
     automated:
       prune: true

@@ -52,7 +52,8 @@ spec:
               enum: ["root", "config", "policy", "engine"]
             machinenativeops.io/version:
               type: string
-            machinenativeops.io/app.kubernetes.io/component: type: string
+            machinenativeops.io/app.kubernetes.io/component:
+              type: string
         annotations:
           type: object
           properties:

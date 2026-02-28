@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SuperAI Platform — Migration runner
+# eco-base Platform — Migration runner
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

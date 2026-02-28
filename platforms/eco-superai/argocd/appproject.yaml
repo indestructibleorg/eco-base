@@ -1,15 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: superai
+  name: eco-base
   namespace: argocd
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: gitops
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  description: "SuperAI Platform — Quantum-AI Hybrid Cloud-Native Platform"
+  description: "eco-base Platform — Quantum-AI Hybrid Cloud-Native Platform"
 
   # Source repositories
   sourceRepos:
@@ -19,11 +19,11 @@ spec:
   # Destination clusters and namespaces
   destinations:
     - server: "https://kubernetes.default.svc"
-      namespace: eco-superai
+      namespace: eco-eco-base
     - server: "https://kubernetes.default.svc"
-      namespace: eco-superai-staging
+      namespace: eco-eco-staging
     - server: "https://kubernetes.default.svc"
-      namespace: eco-superai-dev
+      namespace: eco-eco-dev
 
   # Allowed cluster-scoped resources
   clusterResourceWhitelist:
@@ -63,42 +63,42 @@ spec:
   # Roles for RBAC within ArgoCD
   roles:
     - name: admin
-      description: "Full access to SuperAI project"
+      description: "Full access to eco-base project"
       policies:
-        - p, proj:superai:admin, applications, *, superai/*, allow
-        - p, proj:superai:admin, repositories, *, superai/*, allow
+        - p, proj:eco-base:admin, applications, *, eco-base/*, allow
+        - p, proj:eco-base:admin, repositories, *, eco-base/*, allow
       groups:
-        - superai-admins
+        - eco-admins
 
     - name: developer
       description: "Read-only + sync for dev/staging"
       policies:
-        - p, proj:superai:developer, applications, get, superai/*, allow
-        - p, proj:superai:developer, applications, sync, superai/*-dev, allow
-        - p, proj:superai:developer, applications, sync, superai/*-staging, allow
+        - p, proj:eco-base:developer, applications, get, eco-base/*, allow
+        - p, proj:eco-base:developer, applications, sync, eco-base/*-dev, allow
+        - p, proj:eco-base:developer, applications, sync, eco-base/*-staging, allow
       groups:
-        - superai-developers
+        - eco-developers
 
     - name: viewer
       description: "Read-only access"
       policies:
-        - p, proj:superai:viewer, applications, get, superai/*, allow
+        - p, proj:eco-base:viewer, applications, get, eco-base/*, allow
       groups:
-        - superai-viewers
+        - eco-viewers
 
   # Sync windows — restrict production deploys to business hours
   syncWindows:
     - kind: allow
       schedule: "0 9 * * 1-5"
       duration: 10h
-      applications: ["superai-prod"]
-      namespaces: ["superai"]
+      applications: ["eco-prod"]
+      namespaces: ["eco-base"]
       timeZone: "Asia/Taipei"
     - kind: deny
       schedule: "0 0 * * *"
       duration: 24h
-      applications: ["superai-prod"]
-      namespaces: ["superai"]
+      applications: ["eco-prod"]
+      namespaces: ["eco-base"]
       manualSync: true
 
   # Orphaned resources monitoring

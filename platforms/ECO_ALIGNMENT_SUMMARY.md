@@ -15,7 +15,7 @@
 | platform-dataops | ✅ `eco-dataops` | ✅ | ✅ | ✅ | ✅ |
 | platform-seccompops | ✅ `eco-seccompops` | ✅ | ✅ | ✅ | ✅ |
 | platform-observops | ✅ `eco-observops` | ✅ | ✅ | ✅ (新建) | ✅ |
-| platform-superai | ✅ `eco-superai` | ✅ | ✅ | ✅ | ✅ |
+| platform-eco-base | ✅ `eco-eco-base` | ✅ | ✅ | ✅ | ✅ |
 | platform-eco | ✅ `eco-platform` | ✅ | ✅ | ✅ | ✅ |
 | platform-core | ✅ `eco-core` | ✅ | ✅ | ✅ | ✅ |
 
@@ -37,7 +37,7 @@ Phase 1  platform-seccompops (eco-seccompops)  ← P0 安全基線
 Phase 2  platform-govops (eco-govops)           ← P1 治理
 Phase 3  platform-dataops (eco-dataops)         ← P1 資料
 Phase 4  platform-observops (eco-observops)     ← P2 可觀測性
-Phase 5  platform-superai (eco-superai)         ← P3 AI/量子補充層
+Phase 5  platform-eco-base (eco-eco-base)         ← P3 AI/量子補充層
 ```
 
 ---

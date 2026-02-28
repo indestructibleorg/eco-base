@@ -92,7 +92,7 @@ class RedisClient:
 
     def __init__(
         self,
-        prefix: str = "superai",
+        prefix: str = "eco-base",
         default_ttl: int = 3600,
     ) -> None:
         self._prefix = prefix

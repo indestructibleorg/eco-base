@@ -1,5 +1,5 @@
 """
-SuperAI Platform - Centralized Configuration Management
+eco-base Platform - Centralized Configuration Management
 Pydantic Settings with multi-environment support, validation, and secret management.
 """
 from __future__ import annotations
@@ -23,8 +23,8 @@ class Environment(str, Enum):
 class DatabaseSettings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="DATABASE_")
 
-    url: str = "postgresql+asyncpg://superai:superai_secret@localhost:5432/superai_db"
-    url_sync: str = "postgresql://superai:superai_secret@localhost:5432/superai_db"
+    url: str = "postgresql+asyncpg://eco-base:eco-base_secret@localhost:5432/eco-base_db"
+    url_sync: str = "postgresql://eco-base:eco-base_secret@localhost:5432/eco-base_db"
     pool_size: int = Field(default=20, ge=5, le=100)
     max_overflow: int = Field(default=10, ge=0, le=50)
     pool_timeout: int = Field(default=30, ge=5)
@@ -37,7 +37,7 @@ class RedisSettings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="REDIS_")
 
     url: str = "redis://localhost:6379/0"
-    password: str = "superai_redis_secret"
+    password: str = "eco-base_redis_secret"
     max_connections: int = Field(default=50, ge=10)
     socket_timeout: int = Field(default=5, ge=1)
     socket_connect_timeout: int = Field(default=5, ge=1)
@@ -48,7 +48,7 @@ class RedisSettings(BaseSettings):
 class CelerySettings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="CELERY_")
 
-    broker_url: str = "amqp://superai:superai_secret@localhost:5672//"
+    broker_url: str = "amqp://eco-base:eco-base_secret@localhost:5672//"
     result_backend: str = "redis://localhost:6379/1"
     task_serializer: str = "json"
     result_serializer: str = "json"
@@ -69,15 +69,15 @@ class JWTSettings(BaseSettings):
     algorithm: str = "HS256"
     expiration_minutes: int = Field(default=30, ge=5, le=1440)
     refresh_expiration_days: int = Field(default=7, ge=1, le=30)
-    issuer: str = "superai-platform"
-    audience: str = "superai-users"
+    issuer: str = "eco-base"
+    audience: str = "eco-users"
 
 
 class ElasticsearchSettings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="ELASTICSEARCH_")
 
     url: str = "http://localhost:9200"
-    index_prefix: str = "superai"
+    index_prefix: str = "eco-base"
     number_of_shards: int = 1
     number_of_replicas: int = 0
     request_timeout: int = 30
@@ -118,7 +118,7 @@ class MonitoringSettings(BaseSettings):
     jaeger_endpoint: str = "http://localhost:4317"
     tracing_enabled: bool = True
     tracing_sample_rate: float = Field(default=1.0, ge=0.0, le=1.0)
-    metrics_prefix: str = "superai"
+    metrics_prefix: str = "eco-base"
 
 
 class CORSSettings(BaseSettings):
@@ -142,7 +142,7 @@ class Settings(BaseSettings):
     )
 
     # --- Application ---
-    app_name: str = "SuperAI Platform"
+    app_name: str = "eco-base Platform"
     app_version: str = "1.0.0"
     app_env: Environment = Environment.DEVELOPMENT
     app_debug: bool = False

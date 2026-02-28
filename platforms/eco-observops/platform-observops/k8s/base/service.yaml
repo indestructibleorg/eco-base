@@ -6,7 +6,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/platform-observops/service/observops-engine
-    eco-base/urn: urn:eco-base:k8s:platform-observops:service:observops-engine:sha256-8118fc0d741c1dd884adc538319482decc26ba18a5287795a4e7fa549cdb9de1
+    eco-base/urn: urn:eco-base:k8s:platform-observops:service:observops-engine:sha256-313022aea91dc3800df3783c51eb7c44d596ef15047c68a79d3130c07b0ad11d
   labels:
     app.kubernetes.io/component: engine
     app.kubernetes.io/instance: observops-engine-prod

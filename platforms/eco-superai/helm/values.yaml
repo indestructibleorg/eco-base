@@ -1,17 +1,17 @@
-# SuperAI Platform - Helm Values
+# eco-base Platform - Helm Values
 replicaCount: 3
 
 image:
-  repository: superai-platform
+  repository: eco-base
   tag: "1.0.0"
   pullPolicy: IfNotPresent
 
 nameOverride: ""
-fullnameOverride: "superai"
+fullnameOverride: "eco-base"
 
 serviceAccount:
   create: true
-  name: "superai-sa"
+  name: "eco-sa"
 
 service:
   type: ClusterIP
@@ -25,14 +25,14 @@ ingress:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/rate-limit: "100"
   hosts:
-    - host: api.superai.example.com
+    - host: api.eco-base.example.com
       paths:
         - path: /
           pathType: Prefix
   tls:
-    - secretName: superai-tls
+    - secretName: eco-tls
       hosts:
-        - api.superai.example.com
+        - api.eco-base.example.com
 
 resources:
   requests:
@@ -76,9 +76,9 @@ env:
 
 secrets:
   secretKey: "CHANGE-ME"
-  databaseUrl: "postgresql+asyncpg://superai:CHANGE@postgres:5432/superai_db"
+  databaseUrl: "postgresql+asyncpg://eco-base:CHANGE@postgres:5432/eco-base_db"
   redisUrl: "redis://:CHANGE@redis:6379/0"
-  celeryBrokerUrl: "amqp://superai:CHANGE@rabbitmq:5672//"
+  celeryBrokerUrl: "amqp://eco-base:CHANGE@rabbitmq:5672//"
   jwtSecretKey: "CHANGE-ME"
   openaiApiKey: ""
 
@@ -110,8 +110,8 @@ monitoring:
 postgresql:
   enabled: true
   auth:
-    database: superai_db
-    username: superai
+    database: eco-base_db
+    username: eco-base
     password: CHANGE-ME
   primary:
     persistence:
@@ -128,7 +128,7 @@ redis:
 rabbitmq:
   enabled: true
   auth:
-    username: superai
+    username: eco-base
     password: CHANGE-ME
   persistence:
     size: 5Gi

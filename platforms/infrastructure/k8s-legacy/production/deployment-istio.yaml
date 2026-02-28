@@ -6,7 +6,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/deployment/machine-native-ops
-    eco-base/urn: urn:eco-base:k8s:core:deployment:machine-native-ops:sha256-2b78aa61fe77c3beb857ddeb86d49b7fb42907c62f9880142f91e41853910f26
+    eco-base/urn: urn:eco-base:k8s:core:deployment:machine-native-ops:sha256-3fa252b60c8760de078b09cbf5f637504d5e7a3fbe91a725466022f06e97b85d
   labels:
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
@@ -36,36 +36,36 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-  annotations:
-    prometheus.io/path: /metrics
-    prometheus.io/port: '8000'
-    prometheus.io/scrape: 'true'
-    sidecar.istio.io/inject: 'true'
-    sidecar.istio.io/proxyCPU: 200m
-    sidecar.istio.io/proxyMemory: 256Mi
-    traffic.sidecar.istio.io/includeInboundIPRanges: '*'
-    traffic.sidecar.istio.io/includeOutboundIPRanges: '*'
-  labels:
-    app.kubernetes.io/name: machine-native-ops
-    eco-base/governance: aligned
-    eco-base/part-of: eco-base
-    environment: production
-    version: v1
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: '8000'
+        prometheus.io/scrape: 'true'
+        sidecar.istio.io/inject: 'true'
+        sidecar.istio.io/proxyCPU: 200m
+        sidecar.istio.io/proxyMemory: 256Mi
+        traffic.sidecar.istio.io/includeInboundIPRanges: '*'
+        traffic.sidecar.istio.io/includeOutboundIPRanges: '*'
+      labels:
+        app.kubernetes.io/name: machine-native-ops
+        eco-base/governance: aligned
+        eco-base/part-of: eco-base
+        environment: production
+        version: v1
     spec:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-      - podAffinityTerm:
+          - podAffinityTerm:
               labelSelector:
                 matchExpressions:
-      - key: app
+                - key: app
                   operator: In
                   values:
-      - machine-native-ops
+                  - machine-native-ops
               topologyKey: kubernetes.io/hostname
             weight: 100
         topologySpreadConstraints:
-      - labelSelector:
+        - labelSelector:
             matchLabels:
               app.kubernetes.io/name: machine-native-ops
               environment: production
@@ -74,34 +74,34 @@ spec:
           whenUnsatisfiable: DoNotSchedule
       containers:
       - env:
-      - name: ENVIRONMENT
+        - name: ENVIRONMENT
           value: production
-      - name: LOG_LEVEL
+        - name: LOG_LEVEL
           value: INFO
-      - name: REDIS_HOST
+        - name: REDIS_HOST
           value: redis-master.production.svc.cluster.local
-      - name: REDIS_PORT
+        - name: REDIS_PORT
           value: '6379'
-      - name: POSTGRES_HOST
+        - name: POSTGRES_HOST
           value: postgresql.production.svc.cluster.local
-      - name: POSTGRES_PORT
+        - name: POSTGRES_PORT
           value: '5432'
-      - name: POSTGRES_DB
+        - name: POSTGRES_DB
           valueFrom:
             secretKeyRef:
               key: postgres-db
               name: machine-native-ops-secrets
-      - name: POSTGRES_USER
+        - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
               key: postgres-user
               name: machine-native-ops-secrets
-      - name: POSTGRES_PASSWORD
+        - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               key: postgres-password
               name: machine-native-ops-secrets
-      - name: SECRET_KEY
+        - name: SECRET_KEY
           valueFrom:
             secretKeyRef:
               key: secret-key
@@ -118,7 +118,7 @@ spec:
           timeoutSeconds: 5
         name: app
         ports:
-      - containerPort: 8000
+        - containerPort: 8000
           name: http
           protocol: TCP
         readinessProbe:
@@ -140,7 +140,7 @@ spec:
           allowPrivilegeEscalation: false
           capabilities:
             drop:
-      - ALL
+            - ALL
           readOnlyRootFilesystem: true
           runAsGroup: 1000
           runAsUser: 1000
@@ -153,11 +153,11 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 3
         volumeMounts:
-      - mountPath: /app/logs
+        - mountPath: /app/logs
           name: logs
-      - mountPath: /app/data
+        - mountPath: /app/data
           name: data
-      - mountPath: /app/cache
+        - mountPath: /app/cache
           name: cache
       nodeSelector:
         node-role.kubernetes.io/worker: 'true'
@@ -188,7 +188,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/service/machine-native-ops
-    eco-base/urn: urn:eco-base:k8s:core:service:machine-native-ops:sha256-0a851dca9efb7b228b9abe1f384f2c7936005fcadd9402e5d3605354a90532f8
+    eco-base/urn: urn:eco-base:k8s:core:service:machine-native-ops:sha256-14aabf27884b08a95b170003bec2bb1c6bd657bb07da737993a8563493587f37
     prometheus.io/path: /stats/prometheus
     prometheus.io/port: '15020'
     prometheus.io/scrape: 'true'
@@ -227,40 +227,42 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
+  name: machine-native-ops
+  namespace: production
+spec:
   behavior:
-  scaleDown:
-  policies:
-  - periodSeconds: 60
-  type: Percent
-  value: 10
-  stabilizationWindowSeconds: 300
-  scaleUp:
-  policies:
-  - periodSeconds: 60
-  type: Percent
-  value: 50
-  - periodSeconds: 60
-  type: Pods
-  value: 2
-  selectPolicy: Max
-  stabilizationWindowSeconds: 0
+    scaleDown:
+      policies:
+      - periodSeconds: 60
+        type: Percent
+        value: 10
+      stabilizationWindowSeconds: 300
+    scaleUp:
+      policies:
+      - periodSeconds: 60
+        type: Percent
+        value: 50
+      - periodSeconds: 60
+        type: Pods
+        value: 2
+      selectPolicy: Max
+      stabilizationWindowSeconds: 0
   maxReplicas: 10
   metrics:
   - resource:
-  name: cpu
-  target:
-  averageUtilization: 70
-  type: Utilization
-  type: Resource
+      name: cpu
+      target:
+        averageUtilization: 70
+        type: Utilization
+    type: Resource
   - resource:
-  name: memory
-  target:
-  averageUtilization: 80
-  type: Utilization
-  type: Resource
+      name: memory
+      target:
+        averageUtilization: 80
+        type: Utilization
+    type: Resource
   minReplicas: 3
-  name: machine-native-ops
-spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
+    name: machine-native-ops

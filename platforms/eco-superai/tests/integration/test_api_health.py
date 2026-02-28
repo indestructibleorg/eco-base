@@ -31,7 +31,7 @@ class TestHealthEndpoints:
     def test_metrics_endpoint(self, client):
         response = client.get("/metrics")
         assert response.status_code == 200
-        assert "superai_http_requests_total" in response.text or response.status_code == 200
+        assert "eco-base_http_requests_total" in response.text or response.status_code == 200
 
     def test_nonexistent_route_returns_404(self, client):
         response = client.get("/api/v1/nonexistent")

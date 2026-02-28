@@ -78,7 +78,7 @@ install_falco() {
     
     # Create Falco values file
     cat > /tmp/falco-values.yaml << EOF
-# Falco Configuration for SuperAI Platform
+# Falco Configuration for eco-base Platform
 
 image:
   pullPolicy: IfNotPresent
@@ -191,34 +191,34 @@ customRules:
           output: >
             Python code execution in production (user=%user.name container=%container.name cmdline=%proc.cmdline)
           priority: NOTICE
-          tags: [process, python, superai]
+          tags: [process, python, eco-base]
         
         - rule: Quantum Circuit File Access
           desc: Detect access to quantum circuit files
           condition: >
             open_read and fd.name endswith (.qasm, .py)
-            and container.labels.app = superai-platform
+            and container.labels.app = eco-base
             and not user.name in (system, root)
           output: >
             Quantum circuit file access (user=%user.name container=%container.name file=%fd.name)
           priority: INFO
-          tags: [superai, quantum, file]
+          tags: [eco-base, quantum, file]
         
         - rule: AI Model File Modification
           desc: Detect modification of AI model files
           condition: >
             open_write and fd.name endswith (.pkl, .h5, .onnx, .pt)
-            and container.labels.app = superai-platform
+            and container.labels.app = eco-base
           output: >
             AI model file modification (user=%user.name container=%container.name file=%fd.name)
           priority: WARNING
-          tags: [superai, ai, model]
+          tags: [eco-base, ai, model]
         
         - rule: Database Connection from Unusual Source
           desc: Detect database connections from unexpected containers
           condition: >
             outbound and fd.sport in (5432, 3306, 6379)
-            and not container.labels.app = superai-platform
+            and not container.labels.app = eco-base
             and not container.name in (falco, monitoring)
           output: >
             Database connection from unusual source (user=%user.name container=%container.name fd.sip=%fd.sip)

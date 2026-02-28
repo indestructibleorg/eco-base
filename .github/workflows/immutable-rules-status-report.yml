@@ -88,10 +88,19 @@ jobs:
         id: report
         run: |
           SUMMARY=$(cat tests/reports/immutable-rules-report-latest.json)
-          OVERALL=$(echo "$SUMMARY" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['summary']['overall_status'])")
-          FAIL_COUNT=$(echo "$SUMMARY" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['summary']['total_failures'])")
-          PASS_RATE=$(echo "$SUMMARY" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['summary']['pass_rate_pct'])")
-          TOTAL_RUNS=$(echo "$SUMMARY" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['summary']['total_runs_analyzed'])")
+          python3 << 'PYEOF'
+          import sys,json; d=json.load(sys.stdin); print(d['summary']['overall_status'])
+          PYEOF
+          python3 << 'PYEOF'
+          import sys,json; d=json.load(sys.stdin); print(d['summary']['total_failures'])
+          PYEOF
+          python3 << 'PYEOF'
+          import sys,json; d=json.load(sys.stdin); print(d['summary']['pass_rate_pct'])
+          PYEOF
+          TOTAL_RUNS=$(echo "$SUMMARY" | python3 << 'PYEOF'
+import sys,json; d=json.load(sys.stdin); print(d['summary']['total_runs_analyzed'])
+PYEOF
+)
           echo "overall=$OVERALL" >> $GITHUB_OUTPUT
           echo "fail_count=$FAIL_COUNT" >> $GITHUB_OUTPUT
           echo "pass_rate=$PASS_RATE" >> $GITHUB_OUTPUT

@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 # ============================================================================
-# SuperAI Platform — Database Restore Script
+# eco-base Platform — Database Restore Script
 # ============================================================================
-# Usage: ./scripts/restore-db.sh <backup_file> [--target-db superai_db]
+# Usage: ./scripts/restore-db.sh <backup_file> [--target-db eco-base_db]
 # ============================================================================
 set -euo pipefail
 
 DB_HOST="${DB_HOST:-localhost}"
 DB_PORT="${DB_PORT:-5432}"
-DB_NAME="${DB_NAME:-superai_db}"
-DB_USER="${DB_USER:-superai}"
+DB_NAME="${DB_NAME:-eco-base_db}"
+DB_USER="${DB_USER:-eco-base}"
 
 log_info()  { echo "[restore] $(date -u +%FT%TZ) INFO  $*"; }
 log_warn()  { echo "[restore] $(date -u +%FT%TZ) WARN  $*" >&2; }
@@ -76,7 +76,7 @@ RESTORE_FILE="${BACKUP_FILE}"
 TEMP_FILE=""
 if [[ "${BACKUP_FILE}" == *.gz ]]; then
     log_info "Decompressing backup..."
-    TEMP_FILE=$(mktemp /tmp/superai_restore_XXXXXX.sql)
+    TEMP_FILE=$(mktemp /tmp/eco-base_restore_XXXXXX.sql)
     gunzip -c "${BACKUP_FILE}" > "${TEMP_FILE}"
     RESTORE_FILE="${TEMP_FILE}"
     log_info "Decompressed to ${RESTORE_FILE}"

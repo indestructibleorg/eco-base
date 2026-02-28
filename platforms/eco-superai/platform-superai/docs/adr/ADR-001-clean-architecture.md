@@ -6,7 +6,7 @@
 
 ## Context
 
-The SuperAI Platform integrates multiple complex domains (quantum computing, AI/ML, scientific computing) that evolve at different rates and have distinct dependency profiles. We need an architecture that allows each domain to evolve independently while maintaining a cohesive system.
+The eco-base Platform integrates multiple complex domains (quantum computing, AI/ML, scientific computing) that evolve at different rates and have distinct dependency profiles. We need an architecture that allows each domain to evolve independently while maintaining a cohesive system.
 
 ## Decision
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# SuperAI Platform - Collect CI/CD Issues
+# eco-base Platform - Collect CI/CD Issues
 # ============================================================================
 # Parses workflow run logs, classifies issues into categories (lint, type,
 # security, dependency), and outputs a structured JSON report.
@@ -379,7 +379,7 @@ report = {
         'tool': 'collect-issues',
         'run_id': '${RUN_ID}' if '${RUN_ID}' else None,
         'mode': 'local' if ${LOCAL_MODE:+True}${LOCAL_MODE:+}$( [[ "${LOCAL_MODE}" == "false" ]] && echo "False") else 'github',
-        'project': 'superai-platform'
+        'project': 'eco-base'
     },
     'summary': {
         'total_issues': len(unique_issues),

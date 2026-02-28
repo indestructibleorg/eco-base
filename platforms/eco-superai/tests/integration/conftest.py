@@ -26,11 +26,11 @@ import pytest_asyncio
 os.environ.setdefault("APP_ENV", "testing")
 os.environ.setdefault(
     "DATABASE_URL",
-    "postgresql+asyncpg://superai_test:superai_test_secret@localhost:5433/superai_test",
+    "postgresql+asyncpg://eco-base_test:eco-base_test_secret@localhost:5433/eco-base_test",
 )
 os.environ.setdefault(
     "DATABASE_URL_SYNC",
-    "postgresql://superai_test:superai_test_secret@localhost:5433/superai_test",
+    "postgresql://eco-base_test:eco-base_test_secret@localhost:5433/eco-base_test",
 )
 os.environ.setdefault("REDIS_URL", "redis://localhost:6380/15")
 os.environ.setdefault("REDIS_PASSWORD", "")

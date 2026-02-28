@@ -1,5 +1,5 @@
 # ============================================================================
-# RBAC Configuration for SuperAI Platform
+# RBAC Configuration for eco-base Platform
 # ============================================================================
 # ServiceAccounts are defined in serviceaccount.yaml
 # This file contains Roles, ClusterRoles, and their Bindings
@@ -10,10 +10,10 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: superai-app-role
-  namespace: eco-superai
+  name: eco-app-role
+  namespace: eco-eco-base
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: rbac
     app.kubernetes.io/managed-by: argocd
 rules:
@@ -39,10 +39,10 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: superai-worker-role
-  namespace: eco-superai
+  name: eco-worker-role
+  namespace: eco-eco-base
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: rbac
     app.kubernetes.io/managed-by: argocd
 rules:
@@ -72,9 +72,9 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: superai-monitoring
+  name: eco-monitoring
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: monitoring
     app.kubernetes.io/managed-by: argocd
 rules:
@@ -91,9 +91,9 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: superai-platform-admin
+  name: eco-base-admin
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: rbac
     app.kubernetes.io/managed-by: argocd
 rules:
@@ -141,75 +141,75 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: superai-app-rolebinding
-  namespace: eco-superai
+  name: eco-app-rolebinding
+  namespace: eco-eco-base
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: rbac
     app.kubernetes.io/managed-by: argocd
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: superai-app-role
+  name: eco-app-role
 subjects:
   - kind: ServiceAccount
-    name: superai-app
-    namespace: eco-superai
+    name: eco-app
+    namespace: eco-eco-base
 
 ---
 # RoleBinding: Worker service account -> worker role
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: superai-worker-rolebinding
-  namespace: eco-superai
+  name: eco-worker-rolebinding
+  namespace: eco-eco-base
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: rbac
     app.kubernetes.io/managed-by: argocd
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: superai-worker-role
+  name: eco-worker-role
 subjects:
   - kind: ServiceAccount
-    name: superai-worker
-    namespace: eco-superai
+    name: eco-worker
+    namespace: eco-eco-base
 
 ---
 # ClusterRoleBinding: Monitoring service account -> monitoring cluster role
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: superai-monitoring-binding
+  name: eco-monitoring-binding
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: monitoring
     app.kubernetes.io/managed-by: argocd
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: superai-monitoring
+  name: eco-monitoring
 subjects:
   - kind: ServiceAccount
-    name: superai-app
-    namespace: eco-superai
+    name: eco-app
+    namespace: eco-eco-base
 
 ---
 # ClusterRoleBinding: Platform admin group -> admin cluster role
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: superai-platform-admin-binding
+  name: eco-base-admin-binding
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: rbac
     app.kubernetes.io/managed-by: argocd
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: superai-platform-admin
+  name: eco-base-admin
 subjects:
   - kind: Group
-    name: superai-platform-admins
+    name: eco-base-admins
     apiGroup: rbac.authorization.k8s.io

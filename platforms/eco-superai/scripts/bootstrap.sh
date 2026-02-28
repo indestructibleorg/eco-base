@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# SuperAI Platform - Full Environment Bootstrap
+# eco-base Platform - Full Environment Bootstrap
 # ============================================================================
 # Bootstraps the complete local development environment from scratch.
 # Checks prerequisites, configures environment, installs dependencies,
@@ -253,7 +253,7 @@ run_migrations() {
         info "  Waiting for PostgreSQL to be ready..."
         local retries=30
         local count=0
-        while ! ${DOCKER_COMPOSE} exec -T postgres pg_isready -U superai -d superai_db &>/dev/null; do
+        while ! ${DOCKER_COMPOSE} exec -T postgres pg_isready -U eco-base -d eco-base_db &>/dev/null; do
             count=$((count + 1))
             if [[ ${count} -ge ${retries} ]]; then
                 warn "  PostgreSQL did not become ready in time; skipping migrations"
@@ -383,7 +383,7 @@ verify_health() {
 print_summary() {
     echo ""
     echo "============================================================================"
-    echo "  SuperAI Platform - Bootstrap Summary"
+    echo "  eco-base Platform - Bootstrap Summary"
     echo "============================================================================"
     echo ""
 
@@ -430,7 +430,7 @@ print_summary() {
 # Main
 # ---------------------------------------------------------------------------
 main() {
-    info "Starting SuperAI Platform bootstrap..."
+    info "Starting eco-base Platform bootstrap..."
     info "Project root: ${PROJECT_ROOT}"
     echo ""
 

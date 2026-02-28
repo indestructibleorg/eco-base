@@ -1,4 +1,4 @@
-# SuperAI Platform — Structured Logging Configuration
+# eco-base Platform — Structured Logging Configuration
 # Compatible with Python structlog + stdlib logging
 ---
 version: 1
@@ -29,7 +29,7 @@ handlers:
     class: logging.handlers.RotatingFileHandler
     level: INFO
     formatter: json
-    filename: /var/log/superai/app.log
+    filename: /var/log/eco-base/app.log
     maxBytes: 52428800  # 50MB
     backupCount: 10
     encoding: utf-8
@@ -39,7 +39,7 @@ handlers:
     class: logging.handlers.RotatingFileHandler
     level: ERROR
     formatter: json
-    filename: /var/log/superai/error.log
+    filename: /var/log/eco-base/error.log
     maxBytes: 52428800
     backupCount: 20
     encoding: utf-8
@@ -49,7 +49,7 @@ handlers:
     class: logging.handlers.RotatingFileHandler
     level: INFO
     formatter: json
-    filename: /var/log/superai/audit.log
+    filename: /var/log/eco-base/audit.log
     maxBytes: 104857600  # 100MB
     backupCount: 30
     encoding: utf-8

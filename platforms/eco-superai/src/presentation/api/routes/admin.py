@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 class SystemStatusResponse(BaseModel):
-    platform: str = "SuperAI Platform"
+    platform: str = "eco-base Platform"
     version: str = "1.0.0"
     environment: str
     services: dict[str, Any]
@@ -62,7 +62,7 @@ async def system_status() -> dict[str, Any]:
         services["redis"] = {"status": "unhealthy", "error": str(e)}
 
     return {
-        "platform": "SuperAI Platform",
+        "platform": "eco-base Platform",
         "version": "1.0.0",
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "environment": "production",

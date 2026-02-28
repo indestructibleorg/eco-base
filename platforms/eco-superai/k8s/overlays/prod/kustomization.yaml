@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: eco-superai
+namespace: eco-eco-base
 
 resources:
   - ../../base
@@ -10,7 +10,7 @@ patches:
   # --- App: production resources, 3 replicas ---
   - target:
       kind: Deployment
-      name: superai-app
+      name: eco-app
     patch: |
       - op: replace
         path: /spec/replicas
@@ -38,13 +38,13 @@ patches:
             whenUnsatisfiable: DoNotSchedule
             labelSelector:
               matchLabels:
-                app.kubernetes.io/name: superai-platform
+                app.kubernetes.io/name: eco-base
                 app.kubernetes.io/component: app
 
   # --- Worker: production resources, 3 replicas ---
   - target:
       kind: Deployment
-      name: superai-worker
+      name: eco-worker
     patch: |
       - op: replace
         path: /spec/replicas
@@ -69,13 +69,13 @@ patches:
             whenUnsatisfiable: DoNotSchedule
             labelSelector:
               matchLabels:
-                app.kubernetes.io/name: superai-platform
+                app.kubernetes.io/name: eco-base
                 app.kubernetes.io/component: worker
 
   # --- HPA: production scaling ---
   - target:
       kind: HorizontalPodAutoscaler
-      name: superai-app-hpa
+      name: eco-app-hpa
     patch: |
       - op: replace
         path: /spec/minReplicas
@@ -86,7 +86,7 @@ patches:
 
   - target:
       kind: HorizontalPodAutoscaler
-      name: superai-worker-hpa
+      name: eco-worker-hpa
     patch: |
       - op: replace
         path: /spec/minReplicas
@@ -98,7 +98,7 @@ patches:
   # --- PDB: stricter in production ---
   - target:
       kind: PodDisruptionBudget
-      name: superai-app-pdb
+      name: eco-app-pdb
     patch: |
       - op: replace
         path: /spec/minAvailable
@@ -106,7 +106,7 @@ patches:
 
   - target:
       kind: PodDisruptionBudget
-      name: superai-worker-pdb
+      name: eco-worker-pdb
     patch: |
       - op: replace
         path: /spec/minAvailable
@@ -115,20 +115,20 @@ patches:
   # --- Ingress: production host ---
   - target:
       kind: Ingress
-      name: superai-ingress
+      name: eco-ingress
     patch: |
       - op: replace
         path: /spec/rules/0/host
-        value: api.superai.example.com
+        value: api.eco-base.example.com
       - op: replace
         path: /spec/tls/0/hosts/0
-        value: api.superai.example.com
+        value: api.eco-base.example.com
       - op: replace
         path: /spec/tls/0/secretName
-        value: superai-prod-tls
+        value: eco-prod-tls
 
 configMapGenerator:
-  - name: superai-config
+  - name: eco-config
     behavior: merge
     literals:
       - APP_ENV=production

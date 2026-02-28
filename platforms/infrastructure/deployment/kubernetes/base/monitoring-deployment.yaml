@@ -1,75 +1,72 @@
-# @ECO-governed
-# @ECO-layer: infrastructure
-# @ECO-semantic: monitoring-deployment
-# @ECO-audit-trail: ../../engine/governance/GL_SEMANTIC_ANCHOR.json
-# 
-# GL Unified Architecture Governance Framework Activated
-
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    eco-base/uri: eco-base://k8s/core/deployment/prometheus
+    eco-base/urn: urn:eco-base:k8s:core:deployment:prometheus:sha256-ca9f2752cd204c45abb98a07069cf1c726b83935b3b9ac58cd8c81e5be3955a6
+  labels:
+    app.kubernetes.io/component: monitoring
+    app.kubernetes.io/name: prometheus
+    eco-base/governance: aligned
+    eco-base/part-of: eco-base
   name: prometheus
   namespace: platform-03
-  labels:
-    eco-base/part-of: eco-base
-    eco-base/governance: aligned
-    app.kubernetes.io/name: prometheus
-    app.kubernetes.io/component: monitoring
 spec:
   replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/name: prometheus
   template:
-    
+    metadata:
       labels:
-        eco-base/part-of: eco-base
-        eco-base/governance: aligned
-        app.kubernetes.io/name: prometheus
         app.kubernetes.io/component: monitoring
+        app.kubernetes.io/name: prometheus
+        eco-base/governance: aligned
+        eco-base/part-of: eco-base
     spec:
-      serviceAccountName: machine-native-ops
       containers:
-      - name: prometheus
+      - args:
+        - --config.file=/etc/prometheus/prometheus.yml
+        - --storage.tsdb.path=/prometheus
+        - --storage.tsdb.retention.time=15d
+        - --web.console.libraries=/usr/share/prometheus/console_libraries
+        - --web.console.templates=/usr/share/prometheus/consoles
+        - --web.enable-lifecycle
         image: prom/prometheus:v2.45.0
-        ports:
-        - containerPort: 9090
-          name: web
-        args:
-        - '--config.file=/etc/prometheus/prometheus.yml'
-        - '--storage.tsdb.path=/prometheus'
-        - '--storage.tsdb.retention.time=15d'
-        - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-        - '--web.console.templates=/usr/share/prometheus/consoles'
-        - '--web.enable-lifecycle'
-        resources:
-          requests:
-            memory: "512Mi"
-            cpu: "250m"
-          limits:
-            memory: "2Gi"
-            cpu: "1000m"
-        volumeMounts:
-        - name: prometheus-config
-          mountPath: /etc/prometheus
-        - name: prometheus-storage
-          mountPath: /prometheus
         livenessProbe:
           httpGet:
             path: /-/healthy
             port: 9090
           initialDelaySeconds: 30
           periodSeconds: 10
+        name: prometheus
+        ports:
+        - containerPort: 9090
+          name: web
         readinessProbe:
           httpGet:
             path: /-/ready
             port: 9090
           initialDelaySeconds: 10
           periodSeconds: 5
-      volumes:
-      - name: prometheus-config
-        configMap:
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+          requests:
+            cpu: 250m
+            memory: 512Mi
+        volumeMounts:
+        - mountPath: /etc/prometheus
           name: prometheus-config
+        - mountPath: /prometheus
+          name: prometheus-storage
+      serviceAccountName: machine-native-ops
+      volumes:
+      - configMap:
+          name: prometheus-config
+        name: prometheus-config
       - name: prometheus-storage
         persistentVolumeClaim:
           claimName: prometheus-pvc
@@ -77,114 +74,123 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    eco-base/uri: eco-base://k8s/core/deployment/grafana
+    eco-base/urn: urn:eco-base:k8s:core:deployment:grafana:sha256-01eb3dcf6438f80cbe0cf64685409eb4d78a1aee817886c40992e2ff40d5d05a
+  labels:
+    app.kubernetes.io/component: monitoring
+    app.kubernetes.io/name: grafana
+    eco-base/governance: aligned
+    eco-base/part-of: eco-base
   name: grafana
   namespace: platform-03
-  labels:
-    eco-base/part-of: eco-base
-    eco-base/governance: aligned
-    app.kubernetes.io/name: grafana
-    app.kubernetes.io/component: monitoring
 spec:
   replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/name: grafana
   template:
-    
+    metadata:
       labels:
-        eco-base/part-of: eco-base
-        eco-base/governance: aligned
-        app.kubernetes.io/name: grafana
         app.kubernetes.io/component: monitoring
+        app.kubernetes.io/name: grafana
+        eco-base/governance: aligned
+        eco-base/part-of: eco-base
     spec:
-      serviceAccountName: machine-native-ops
       containers:
-      - name: grafana
-        image: grafana/grafana:10.0.0
-        ports:
-        - containerPort: 3000
-          name: http
-        env:
+      - env:
         - name: GF_SECURITY_ADMIN_USER
           valueFrom:
             secretKeyRef:
-              name: machine-native-ops-secrets
               key: prometheus-basic-auth-username
+              name: machine-native-ops-secrets
         - name: GF_SECURITY_ADMIN_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: machine-native-ops-secrets
               key: prometheus-basic-auth-password
+              name: machine-native-ops-secrets
         - name: GF_INSTALL_PLUGINS
-          value: ""
+          value: ''
         - name: GF_SERVER_ROOT_URL
-          value: "http://grafana.machine-native-ops.svc.cluster.local"
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "100m"
-          limits:
-            memory: "1Gi"
-            cpu: "500m"
-        volumeMounts:
-        - name: grafana-storage
-          mountPath: /var/lib/grafana
-        - name: grafana-config
-          mountPath: /etc/grafana/provisioning
+          value: http://grafana.machine-native-ops.svc.cluster.local
+        image: grafana/grafana:10.0.0
         livenessProbe:
           httpGet:
             path: /api/health
             port: 3000
           initialDelaySeconds: 30
           periodSeconds: 10
+        name: grafana
+        ports:
+        - containerPort: 3000
+          name: http
         readinessProbe:
           httpGet:
             path: /api/health
             port: 3000
           initialDelaySeconds: 10
           periodSeconds: 5
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+        volumeMounts:
+        - mountPath: /var/lib/grafana
+          name: grafana-storage
+        - mountPath: /etc/grafana/provisioning
+          name: grafana-config
+      serviceAccountName: machine-native-ops
       volumes:
       - name: grafana-storage
         persistentVolumeClaim:
           claimName: grafana-pvc
-      - name: grafana-config
-        configMap:
+      - configMap:
           name: grafana-config
+        name: grafana-config
 ---
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    eco-base/uri: eco-base://k8s/core/service/prometheus
+    eco-base/urn: urn:eco-base:k8s:core:service:prometheus:sha256-b0a1011b78080b6aca0890e961a03d77db7aafebde42c592d09e0c54ed40c3f8
+  labels:
+    app.kubernetes.io/component: monitoring
+    app.kubernetes.io/name: prometheus
+    eco-base/governance: aligned
+    eco-base/part-of: eco-base
   name: prometheus
   namespace: platform-03
-  labels:
-    eco-base/part-of: eco-base
-    eco-base/governance: aligned
-    app.kubernetes.io/name: prometheus
-    app.kubernetes.io/component: monitoring
 spec:
-  type: ClusterIP
   ports:
-  - port: 9090
+  - name: web
+    port: 9090
     targetPort: 9090
-    name: web
   selector:
     app.kubernetes.io/name: prometheus
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    eco-base/uri: eco-base://k8s/core/service/grafana
+    eco-base/urn: urn:eco-base:k8s:core:service:grafana:sha256-ae5dfd89ff790ed0e992ec581beb9c6cb6b25ad913ab0ef683df5d6fe1eef7c4
+  labels:
+    app.kubernetes.io/component: monitoring
+    app.kubernetes.io/name: grafana
+    eco-base/governance: aligned
+    eco-base/part-of: eco-base
   name: grafana
   namespace: platform-03
-  labels:
-    eco-base/part-of: eco-base
-    eco-base/governance: aligned
-    app.kubernetes.io/name: grafana
-    app.kubernetes.io/component: monitoring
 spec:
-  type: ClusterIP
   ports:
-  - port: 3000
+  - name: http
+    port: 3000
     targetPort: 3000
-    name: http
   selector:
     app.kubernetes.io/name: grafana
+  type: ClusterIP

@@ -20,7 +20,7 @@ eco-base/
 │   │   ├── docs/
 │   │   └── README.md
 │   │
-│   ├── platform-superai/          # Platform-02 (SuperAI) / Platform-03 (MachineNativeOps)
+│   ├── platform-eco-base/          # Platform-02 (eco-base) / Platform-03 (MachineNativeOps)
 │   │   ├── k8s/
 │   │   ├── helm/
 │   │   ├── infrastructure/
@@ -58,8 +58,8 @@ eco-base/
 |--------|-------------------|-----------|------|
 | 基礎設施 | `k8s-namespace-infra-prod` | `platform-core/infra` | Argo Events, Tekton, Harbor, Argo CD, Prometheus, Grafana, Loki |
 | Platform-01 | `k8s-namespace-platform-01-prod` | `platform-eco/` | IndestructibleAutoOps (觀測、自癒、修復編排) |
-| Platform-02 | `k8s-namespace-platform-02-prod` | `platform-superai/` | IAOps (IaC、GitOps、供應鏈合規) |
-| Platform-03 | `k8s-namespace-platform-03-prod` | `platform-superai/` | MachineNativeOps (節點基線、硬體納管、邊緣代理) |
+| Platform-02 | `k8s-namespace-platform-02-prod` | `platform-eco-base/` | IAOps (IaC、GitOps、供應鏈合規) |
+| Platform-03 | `k8s-namespace-platform-03-prod` | `platform-eco-base/` | MachineNativeOps (節點基線、硬體納管、邊緣代理) |
 
 ---
 
@@ -77,16 +77,16 @@ eco-base/
 | Secret | `eco-secret-<service>-<type>` | `eco-secret-github-actions-token` |
 | Service Account | `eco-sa-<component>-<env>` | `eco-sa-github-actions-prod` |
 
-### 2.2 Platform-SuperAI 資源命名
+### 2.2 Platform-eco-base 資源命名
 
-**前綴**: `superai-` 或 `platform-02-` / `platform-03-`
+**前綴**: `eco-` 或 `platform-02-` / `platform-03-`
 
 | 資源類型 | 命名模式 | 範例 |
 |---------|--------|------|
-| AI 服務部署 | `k8s-deployment-superai-ai-<model>-<env>` | `k8s-deployment-superai-ai-llm-prod` |
-| 量子模擬 | `k8s-job-superai-quantum-<circuit>-<env>` | `k8s-job-superai-quantum-vqe-staging` |
-| IaC 配置 | `k8s-configmap-superai-iac-<provider>` | `k8s-configmap-superai-iac-terraform` |
-| 機械硬體 | `k8s-daemonset-superai-hardware-<type>` | `k8s-daemonset-superai-hardware-edge-agent` |
+| AI 服務部署 | `k8s-deployment-eco-ai-<model>-<env>` | `k8s-deployment-eco-ai-llm-prod` |
+| 量子模擬 | `k8s-job-eco-quantum-<circuit>-<env>` | `k8s-job-eco-quantum-vqe-staging` |
+| IaC 配置 | `k8s-configmap-eco-iac-<provider>` | `k8s-configmap-eco-iac-terraform` |
+| 機械硬體 | `k8s-daemonset-eco-hardware-<type>` | `k8s-daemonset-eco-hardware-edge-agent` |
 
 ---
 
@@ -122,30 +122,30 @@ ECO_GRAFANA_NAMESPACE=infra
 ECO_LOKI_NAMESPACE=infra
 ```
 
-### 3.2 Platform-SuperAI 環境變數
+### 3.2 Platform-eco-base 環境變數
 
 ```bash
-# SuperAI 基礎設施
-SUPERAI_NAMESPACE=platform-02
-SUPERAI_REGION=asia-east1
+# eco-base 基礎設施
+ECO_NAMESPACE=platform-02
+ECO_REGION=asia-east1
 
 # AI 服務
-SUPERAI_AI_MODEL_REGISTRY=asia-east1-docker.pkg.dev/my-project-ops-1991/superai-models
-SUPERAI_AI_SERVICE_URL=http://svc-ai.platform-02.svc.cluster.local:8001
-SUPERAI_AI_API_KEY=${SUPERAI_AI_API_KEY_SECRET}
+ECO_AI_MODEL_REGISTRY=asia-east1-docker.pkg.dev/my-project-ops-1991/eco-models
+ECO_AI_SERVICE_URL=http://svc-ai.platform-02.svc.cluster.local:8001
+ECO_AI_API_KEY=${ECO_AI_API_KEY_SECRET}
 
 # 量子計算
-SUPERAI_QUANTUM_SIMULATOR=qiskit
-SUPERAI_QUANTUM_BACKEND=qasm_simulator
-SUPERAI_QUANTUM_SHOTS=1024
+ECO_QUANTUM_SIMULATOR=qiskit
+ECO_QUANTUM_BACKEND=qasm_simulator
+ECO_QUANTUM_SHOTS=1024
 
 # IaC (Terraform)
-SUPERAI_TERRAFORM_BACKEND=gs://eco-base-terraform-state
-SUPERAI_TERRAFORM_WORKSPACE=superai-prod
+ECO_TERRAFORM_BACKEND=gs://eco-base-terraform-state
+ECO_TERRAFORM_WORKSPACE=eco-prod
 
 # 機械硬體
-SUPERAI_HARDWARE_EDGE_AGENTS=5
-SUPERAI_HARDWARE_MONITORING_INTERVAL=30s
+ECO_HARDWARE_EDGE_AGENTS=5
+ECO_HARDWARE_MONITORING_INTERVAL=30s
 ```
 
 ---
@@ -166,7 +166,7 @@ SUPERAI_HARDWARE_MONITORING_INTERVAL=30s
 - URI: `eco-base://gh/platform-01/workflow/ci-cd-pipeline`
 - URN: `urn:eco-base:gh:platform-01:workflow:ci-cd-pipeline:github-action-123456`
 
-### 4.2 Platform-SuperAI 資源 URI/URN
+### 4.2 Platform-eco-base 資源 URI/URN
 
 **AI 服務**:
 - URI: `eco-base://service/platform-02/ai/llm-inference`
@@ -208,13 +208,13 @@ metadata:
     eco-base/audit-log-level: "full"
 ```
 
-### 5.2 Platform-SuperAI 標籤示例
+### 5.2 Platform-eco-base 標籤示例
 
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: k8s-deployment-superai-ai-llm-prod
+  name: k8s-deployment-eco-ai-llm-prod
   namespace: platform-02
   labels:
     app.kubernetes.io/name: ai-service
@@ -225,14 +225,14 @@ metadata:
     eco-base/platform: platform-02
     eco-base/environment: production
     eco-base/owner: ai-team
-    superai/model: llm
-    superai/inference-type: batch
+    eco-base/model: llm
+    eco-base/inference-type: batch
   annotations:
     eco-base/uri: "eco-base://service/platform-02/ai/llm-inference"
     eco-base/urn: "urn:eco-base:service:platform-02:ai:llm-inference:6ba7b811-9dad-11d1-80b4-00c04fd430c8"
     eco-base/governance-policy: "qyaml-governance.rego"
     eco-base/audit-log-level: "full"
-    superai/quantum-optimization: "enabled"
+    eco-base/quantum-optimization: "enabled"
 ```
 
 ---
@@ -257,10 +257,10 @@ Platform-01 (ECO)
 └── 依賴: svc-harbor (Harbor)
 ```
 
-### 6.2 Platform-SuperAI 依賴關係
+### 6.2 Platform-eco-base 依賴關係
 
 ```
-Platform-02 (SuperAI)
+Platform-02 (eco-base)
 ├── 依賴: core-auth (Auth Service)
 ├── 依賴: core-memory-hub (Memory Hub)
 ├── 依賴: core-event-bus (Event Bus)
@@ -293,23 +293,23 @@ Platform-03 (MachineNativeOps)
 - [ ] 所有依賴關係明確聲明
 - [ ] 所有資源通過 OPA 政策驗證
 
-### 7.2 Platform-SuperAI 合規性
+### 7.2 Platform-eco-base 合規性
 
-- [ ] 所有資源使用 `superai-`、`platform-02-` 或 `platform-03-` 前綴
+- [ ] 所有資源使用 `eco-`、`platform-02-` 或 `platform-03-` 前綴
 - [ ] 所有 Kubernetes 資源包含強制標籤
 - [ ] 所有 Kubernetes 資源包含強制註解（URI、URN、治理政策、審計日誌級別）
-- [ ] 所有環境變數遵循 `SUPERAI_*` 或 `PLATFORM_02_*` 命名規範
+- [ ] 所有環境變數遵循 `ECO_*` 或 `PLATFORM_02_*` 命名規範
 - [ ] 所有敏感資訊通過 Secrets 管理系統管理
 - [ ] 所有依賴關係明確聲明
 - [ ] 所有資源通過 OPA 政策驗證
-- [ ] 量子模擬資源包含 `superai/quantum-*` 標籤
-- [ ] 機械硬體資源包含 `superai/hardware-*` 標籤
+- [ ] 量子模擬資源包含 `eco-base/quantum-*` 標籤
+- [ ] 機械硬體資源包含 `eco-base/hardware-*` 標籤
 
 ---
 
 ## 8. 後續行動 (Next Steps)
 
-1. **驗證現有資源**: 掃描 `platform-eco` 和 `platform-superai` 中的所有資源，確保符合命名規範
+1. **驗證現有資源**: 掃描 `platform-eco` 和 `platform-eco-base` 中的所有資源，確保符合命名規範
 2. **更新配置**: 根據本文件更新所有 Kubernetes 配置、Helm Charts 和 Terraform 代碼
 3. **實施 OPA 政策**: 部署 OPA/Kyverno 政策以強制執行命名規範
 4. **文檔更新**: 更新所有平台文檔以反映新的命名規範
@@ -318,5 +318,5 @@ Platform-03 (MachineNativeOps)
 ---
 
 **版本歷史**:
-- v1.0 (2026-02-25): 初始版本，定義 Platform-ECO 和 Platform-SuperAI 的命名規範對齊
+- v1.0 (2026-02-25): 初始版本，定義 Platform-ECO 和 Platform-eco-base 的命名規範對齊
 

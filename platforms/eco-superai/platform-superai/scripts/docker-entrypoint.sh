@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# SuperAI Platform — Container Entrypoint
+# eco-base Platform — Container Entrypoint
 # ============================================================================
 # Handles pre-flight checks, migrations, and process startup.
 # ============================================================================
@@ -67,7 +67,7 @@ run_migrations() {
 # Main
 # ---------------------------------------------------------------------------
 main() {
-    log_info "SuperAI Platform entrypoint — env=${APP_ENV}"
+    log_info "eco-base Platform entrypoint — env=${APP_ENV}"
 
     wait_for_database
     run_migrations

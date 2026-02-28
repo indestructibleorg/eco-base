@@ -241,8 +241,10 @@ spec:
     
     ## Label Spec
     labels:
-      eco-base/part-of: eco-base
-      eco-base/governance: aligned
+      required:
+        eco-base/part-of: eco-base
+        eco-base/governance: aligned
+      definitions:
       - label_id: baseline.component
         description: "基線組件標籤"
         semantics:

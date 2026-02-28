@@ -8,7 +8,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: superai
+  name: eco-base
   labels:
     pod-security.kubernetes.io/enforce: restricted
     pod-security.kubernetes.io/enforce-version: latest
@@ -21,16 +21,16 @@ metadata:
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
-  name: superai-pod-security
+  name: eco-pod-security
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: security
   annotations:
-    policies.kyverno.io/title: SuperAI Pod Security Policy
+    policies.kyverno.io/title: eco-base Pod Security Policy
     policies.kyverno.io/category: Security
     policies.kyverno.io/severity: high
     policies.kyverno.io/description: >-
-      Enforces security best practices for all SuperAI platform pods.
+      Enforces security best practices for all eco-base platform pods.
 spec:
   validationFailureAction: Enforce
   background: true
@@ -41,7 +41,7 @@ spec:
         any:
           - resources:
               kinds: ["Pod"]
-              namespaces: ["superai", "superai-staging", "superai-dev"]
+              namespaces: ["eco-base", "eco-staging", "eco-dev"]
       validate:
         message: "Pods must run as non-root"
         pattern:
@@ -58,7 +58,7 @@ spec:
         any:
           - resources:
               kinds: ["Pod"]
-              namespaces: ["superai"]
+              namespaces: ["eco-base"]
       validate:
         message: "Production pods must use read-only root filesystem"
         pattern:
@@ -73,7 +73,7 @@ spec:
         any:
           - resources:
               kinds: ["Pod"]
-              namespaces: ["superai", "superai-staging", "superai-dev"]
+              namespaces: ["eco-base", "eco-staging", "eco-dev"]
       validate:
         message: "Containers must drop ALL capabilities"
         pattern:
@@ -89,7 +89,7 @@ spec:
         any:
           - resources:
               kinds: ["Pod"]
-              namespaces: ["superai", "superai-staging"]
+              namespaces: ["eco-base", "eco-staging"]
       validate:
         message: "Containers must specify resource limits"
         pattern:
@@ -109,7 +109,7 @@ spec:
         any:
           - resources:
               kinds: ["Pod"]
-              namespaces: ["superai"]
+              namespaces: ["eco-base"]
       validate:
         message: "Production images must come from ghcr.io/indestructibleautoops"
         pattern:
@@ -123,7 +123,7 @@ spec:
         any:
           - resources:
               kinds: ["Deployment"]
-              namespaces: ["superai"]
+              namespaces: ["eco-base"]
       validate:
         message: "Production deployments must have liveness and readiness probes"
         pattern:
@@ -144,7 +144,7 @@ spec:
         any:
           - resources:
               kinds: ["Pod"]
-              namespaces: ["superai", "superai-staging", "superai-dev"]
+              namespaces: ["eco-base", "eco-staging", "eco-dev"]
       validate:
         message: "Privileged containers are not allowed"
         pattern:
@@ -162,7 +162,7 @@ spec:
         any:
           - resources:
               kinds: ["Pod"]
-              namespaces: ["superai", "superai-staging", "superai-dev"]
+              namespaces: ["eco-base", "eco-staging", "eco-dev"]
       validate:
         message: "HostPath volumes are not allowed"
         deny:

@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-COPY pyproject.toml ./
+COPY ./pyproject.toml ./
 RUN pip install --upgrade pip setuptools wheel \
     && pip install \
         fastapi uvicorn[standard] sqlalchemy[asyncio] asyncpg \

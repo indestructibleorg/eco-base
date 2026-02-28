@@ -4,14 +4,14 @@ kind: RootModulesConfig
 metadata:
   annotations:
     machinenativeops.io/description: Root layer modules registration and dependency
-  management
-  machinenativeops.io/last-modified: '2025-12-20T22:00:00Z'
+      management
   labels:
     eco-base/governance: aligned
     eco-base/part-of: eco-base
     machinenativeops.io/app.kubernetes.io/component: modules-registry
     machinenativeops.io/tier: modules
     machinenativeops.io/version: v1.0.0
+  machinenativeops.io/last-modified: '2025-12-20T22:00:00Z'
   name: modules-registry-config
   namespace: machinenativenops-modules
 spec:
@@ -588,7 +588,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/configmap/modules-schema
-    eco-base/urn: urn:eco-base:k8s:core:configmap:modules-schema:sha256-622e2f7831938f380f7f2162c6c34671a034f04600f9d8860cf410b6dca38027
+    eco-base/urn: urn:eco-base:k8s:core:configmap:modules-schema:sha256-e370e13294e87b378d6553827b7d581554cf6816f72a525a8714db295dcf0ad8
   labels:
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance

@@ -4,26 +4,26 @@ kind: Rollout
 metadata:
   labels:
     app.kubernetes.io/component: app
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/version: 1.0.0
-  name: superai-app
-  namespace: eco-superai
+  name: eco-app
+  namespace: eco-eco-base
 spec:
   replicas: 3
   revisionHistoryLimit: 5
   selector:
     matchLabels:
       app.kubernetes.io/component: app
-      app.kubernetes.io/name: superai-platform
+      app.kubernetes.io/name: eco-base
   strategy:
     canary:
       antiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
           weight: 100
-      canaryService: superai-app-canary
+      canaryService: eco-app-canary
       maxSurge: 1
       maxUnavailable: 0
-      stableService: superai-app
+      stableService: eco-app
       steps:
       - setWeight: 5
       - pause:
@@ -31,32 +31,32 @@ spec:
       - analysis:
           args:
           - name: service-name
-            value: superai-app-canary
+            value: eco-app-canary
           templates:
-          - templateName: superai-canary-analysis
+          - templateName: eco-canary-analysis
       - setWeight: 20
       - pause:
           duration: 3m
       - analysis:
           args:
           - name: service-name
-            value: superai-app-canary
+            value: eco-app-canary
           templates:
-          - templateName: superai-canary-analysis
+          - templateName: eco-canary-analysis
       - setWeight: 50
       - pause:
           duration: 5m
       - analysis:
           args:
           - name: service-name
-            value: superai-app-canary
+            value: eco-app-canary
           templates:
-          - templateName: superai-canary-analysis
+          - templateName: eco-canary-analysis
       - setWeight: 100
       trafficRouting:
         nginx:
           annotationPrefix: nginx.ingress.kubernetes.io
-          stableIngress: superai-ingress
+          stableIngress: eco-ingress
   template:
     metadata:
       annotations:
@@ -65,7 +65,7 @@ spec:
         prometheus.io/scrape: 'true'
       labels:
         app.kubernetes.io/component: app
-        app.kubernetes.io/name: superai-platform
+        app.kubernetes.io/name: eco-base
         app.kubernetes.io/version: 1.0.0
     spec:
       containers:
@@ -78,10 +78,10 @@ spec:
               fieldPath: metadata.name
         envFrom:
         - configMapRef:
-            name: superai-config
+            name: eco-config
         - secretRef:
-            name: superai-secrets
-        image: ghcr.io/indestructibleautoops/superai-platform:v0.1.0
+            name: eco-secrets
+        image: ghcr.io/indestructibleautoops/eco-base:v0.1.0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -134,7 +134,7 @@ spec:
         runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
-      serviceAccountName: superai-app
+      serviceAccountName: eco-app
       terminationGracePeriodSeconds: 60
       volumes:
       - emptyDir:
@@ -149,9 +149,9 @@ kind: AnalysisTemplate
 metadata:
   labels:
     app.kubernetes.io/component: analysis
-    app.kubernetes.io/name: superai-platform
-  name: superai-canary-analysis
-  namespace: eco-superai
+    app.kubernetes.io/name: eco-base
+  name: eco-canary-analysis
+  namespace: eco-eco-base
 spec:
   args:
   - name: service-name
@@ -163,11 +163,11 @@ spec:
     provider:
       prometheus:
         address: http://prometheus.observability:9090
-        query: 'sum(rate(superai_http_requests_total{status=~"5..",service="{{args.service-name}}"}[2m]))
+        query: 'sum(rate(eco-base_http_requests_total{status=~"5..",service="{{args.service-name}}"}[2m]))
 
           /
 
-          sum(rate(superai_http_requests_total{service="{{args.service-name}}"}[2m]))
+          sum(rate(eco-base_http_requests_total{service="{{args.service-name}}"}[2m]))
 
           '
     successCondition: result[0] < 0.01
@@ -178,7 +178,7 @@ spec:
     provider:
       prometheus:
         address: http://prometheus.observability:9090
-        query: "histogram_quantile(0.95,\n  sum(rate(superai_http_request_duration_seconds_bucket{service=\"\
+        query: "histogram_quantile(0.95,\n  sum(rate(eco-base_http_request_duration_seconds_bucket{service=\"\
           {{args.service-name}}\"}[2m]))\n  by (le)\n)\n"
     successCondition: result[0] < 0.5
   - count: 5
@@ -188,7 +188,7 @@ spec:
     provider:
       web:
         jsonPath: '{$.status}'
-        url: http://{{args.service-name}}.superai/api/v1/health
+        url: http://{{args.service-name}}.eco-base/api/v1/health
     successCondition: result.status == 200
 ---
 apiVersion: v1
@@ -197,20 +197,20 @@ metadata:
   annotations:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
-    eco-base/uri: eco-base://k8s/core/service/superai-app-canary
-    eco-base/urn: urn:eco-base:k8s:core:service:superai-app-canary:sha256-67e21e4555a842473756eaafa44e8f6326c92ca2ac9f47cd69d18e45f46b8139
+    eco-base/uri: eco-base://k8s/core/service/eco-app-canary
+    eco-base/urn: urn:eco-base:k8s:core:service:eco-app-canary:sha256-67e21e4555a842473756eaafa44e8f6326c92ca2ac9f47cd69d18e45f46b8139
   labels:
     app.kubernetes.io/component: app
     app.kubernetes.io/instance: eco-instance
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/part-of: eco-base
     app.kubernetes.io/version: 1.0.0
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
     role: canary
-  name: superai-app-canary
-  namespace: eco-superai
+  name: eco-app-canary
+  namespace: eco-eco-base
 spec:
   ports:
   - name: http
@@ -219,5 +219,5 @@ spec:
     targetPort: http
   selector:
     app.kubernetes.io/component: app
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
   type: ClusterIP

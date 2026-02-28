@@ -23,8 +23,8 @@ logger = structlog.get_logger(__name__)
 
 ARTIFACT_JSON_SCHEMA: dict[str, Any] = {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://superai.dev/schemas/artifact.json",
-    "title": "SuperAI Artifact",
+    "$id": "https://eco-base.dev/schemas/artifact.json",
+    "title": "eco-base Artifact",
     "description": "Schema for converted artifact documents.",
     "type": "object",
     "required": ["artifact"],

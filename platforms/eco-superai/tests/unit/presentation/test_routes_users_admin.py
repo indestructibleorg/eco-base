@@ -239,7 +239,7 @@ class TestAdminRoutes:
     def test_list_deployments(self) -> None:
         mock_k8s = AsyncMock()
         mock_k8s.list_deployments.return_value = [
-            {"name": "superai", "replicas": {"desired": 3, "ready": 3}},
+            {"name": "eco-base", "replicas": {"desired": 3, "ready": 3}},
         ]
         with patch("src.infrastructure.external.k8s_client.K8sClient", return_value=mock_k8s):
             resp = self.client.get("/admin/deployments?namespace=default")
@@ -249,7 +249,7 @@ class TestAdminRoutes:
         mock_k8s = AsyncMock()
         mock_k8s.scale_deployment.return_value = {"status": "scaled", "replicas": 5}
         with patch("src.infrastructure.external.k8s_client.K8sClient", return_value=mock_k8s):
-            resp = self.client.post("/admin/deployments/superai/scale?replicas=5&namespace=default")
+            resp = self.client.post("/admin/deployments/eco-base/scale?replicas=5&namespace=default")
         assert resp.status_code in (200, 500)
 
     def test_k8s_health_check(self) -> None:

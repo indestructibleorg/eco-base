@@ -4,14 +4,14 @@ kind: RootIntegrityConfig
 metadata:
   annotations:
     machinenativeops.io/description: Root layer integrity verification and validation
-  rules configuration
-  machinenativeops.io/last-modified: '2025-12-20T22:00:00Z'
+      rules configuration
   labels:
     eco-base/governance: aligned
     eco-base/part-of: eco-base
     machinenativeops.io/component: integrity-configuration
     machinenativeops.io/tier: integrity
     machinenativeops.io/version: v1.0.0
+  machinenativeops.io/last-modified: '2025-12-20T22:00:00Z'
   name: integrity-baseline-config
   namespace: machinenativenops-integrity
 spec:
@@ -477,7 +477,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/configmap/integrity-schema
-    eco-base/urn: urn:eco-base:k8s:core:configmap:integrity-schema:sha256-5ece062b10fac3e894e11af682746e56661c3b0b657dc3ca1eb601a9920b268e
+    eco-base/urn: urn:eco-base:k8s:core:configmap:integrity-schema:sha256-815c4eb2364a8453831d71a49d8a3f00d1a174057989eabf67610beb05f515e5
   labels:
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance

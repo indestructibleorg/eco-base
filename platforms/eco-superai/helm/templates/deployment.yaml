@@ -1,8 +1,8 @@
-{{- $fullName := include "superai.fullname" . -}}
-{{- $labels := include "superai.labels" . -}}
-{{- $selectorLabels := include "superai.selectorLabels" . -}}
+{{- $fullName := include "eco-base.fullname" . -}}
+{{- $labels := include "eco-base.labels" . -}}
+{{- $selectorLabels := include "eco-base.selectorLabels" . -}}
 # ============================================================================
-# SuperAI Platform — API Deployment
+# eco-base Platform — API Deployment
 # ============================================================================
 apiVersion: apps/v1
 kind: Deployment
@@ -36,7 +36,7 @@ spec:
         prometheus.io/path: "/metrics"
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
-      serviceAccountName: {{ include "superai.serviceAccountName" . }}
+      serviceAccountName: {{ include "eco-base.serviceAccountName" . }}
       terminationGracePeriodSeconds: 60
       securityContext:
         runAsNonRoot: true
@@ -140,7 +140,7 @@ spec:
 {{- if .Values.worker.enabled }}
 ---
 # ============================================================================
-# SuperAI Platform — Worker Deployment (Celery)
+# eco-base Platform — Worker Deployment (Celery)
 # ============================================================================
 apiVersion: apps/v1
 kind: Deployment
@@ -169,7 +169,7 @@ spec:
         app.kubernetes.io/component: worker
         app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
     spec:
-      serviceAccountName: {{ include "superai.serviceAccountName" . }}
+      serviceAccountName: {{ include "eco-base.serviceAccountName" . }}
       terminationGracePeriodSeconds: 120
       securityContext:
         runAsNonRoot: true
@@ -245,7 +245,7 @@ spec:
 {{- if .Values.beat.enabled }}
 ---
 # ============================================================================
-# SuperAI Platform — Beat Deployment (Celery Beat Scheduler)
+# eco-base Platform — Beat Deployment (Celery Beat Scheduler)
 # ============================================================================
 apiVersion: apps/v1
 kind: Deployment
@@ -270,7 +270,7 @@ spec:
         app.kubernetes.io/component: beat
         app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
     spec:
-      serviceAccountName: {{ include "superai.serviceAccountName" . }}
+      serviceAccountName: {{ include "eco-base.serviceAccountName" . }}
       terminationGracePeriodSeconds: 30
       securityContext:
         runAsNonRoot: true

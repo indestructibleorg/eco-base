@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# SuperAI Platform - Quick Local Verification
+# eco-base Platform - Quick Local Verification
 # ============================================================================
 # Runs a fast battery of local checks: lint, type-check, unit tests,
 # Docker build validation, and K8s manifest validation.
@@ -151,7 +151,7 @@ check_docker_build() {
         --target "$(docker build --file "${dockerfile}" . --print 2>/dev/null || true)" \
         --no-cache \
         --progress=plain \
-        -t "superai-platform:verify-$(date +%s)" \
+        -t "eco-base:verify-$(date +%s)" \
         . 2>&1
 
     return $?
@@ -215,7 +215,7 @@ check_k8s_manifests() {
                 exit_code=1
             fi
 
-            if helm template superai ./helm/ >/dev/null 2>&1; then
+            if helm template eco-base ./helm/ >/dev/null 2>&1; then
                 echo "  [OK] Helm template render" 2>&1
             else
                 echo "  [FAIL] Helm template render" 2>&1
@@ -257,7 +257,7 @@ main() {
     overall_start="$(date +%s)"
 
     echo "============================================================================"
-    echo "  SuperAI Platform - Quick Verification"
+    echo "  eco-base Platform - Quick Verification"
     echo "============================================================================"
     echo ""
 

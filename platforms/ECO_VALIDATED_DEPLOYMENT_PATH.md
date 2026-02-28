@@ -31,14 +31,14 @@ Phase 1  platform-seccompops (eco-seccompops)
 Phase 2  platform-govops (eco-govops)
 Phase 3  platform-dataops (eco-dataops)
 Phase 4  platform-observops (eco-observops)
-Phase 5  platform-superai (eco-superai)
+Phase 5  platform-eco-base (eco-eco-base)
 ```
 
 **問題 1**: `platform-core` 缺失 — 所有平台依賴共享內核（Auth、Event Bus、Memory Hub、Policy & Audit、Infra Manager），必須最先部署。
 
 **問題 2**: `platform-observops` 排在第 4 位過晚 — 可觀測性應在安全基線之後、業務平台之前部署，以確保所有後續平台的指標、追蹤、日誌從第一天起即可收集。
 
-**問題 3**: `platform-superai` 缺少 `.platform/manifest.yaml` 和 ECO 命名空間對齊 — 已修正。
+**問題 3**: `platform-eco-base` 缺少 `.platform/manifest.yaml` 和 ECO 命名空間對齊 — 已修正。
 
 ---
 
@@ -62,7 +62,7 @@ Phase 4   platform-govops (eco-govops)
 Phase 5   platform-dataops (eco-dataops)
           資料管線、異常偵測、證據鏈、語意處理
           ↓ 資料平台就緒
-Phase 6   platform-superai (eco-superai)
+Phase 6   platform-eco-base (eco-eco-base)
           量子模擬、量子優化、量子 ML、FPGA 控制
 ```
 
@@ -104,8 +104,8 @@ Phase 6   platform-superai (eco-superai)
      └─────────────────┘    │    └────────────────────┘
                              │
                     ┌────────▼────────┐
-                    │ superai          │
-                    │ eco-superai      │
+                    │ eco-base          │
+                    │ eco-eco-base      │
                     │ Port: 8096       │
                     │ (Phase 6)        │
                     └─────────────────┘
@@ -123,7 +123,7 @@ Phase 6   platform-superai (eco-superai)
 | 3 | platform-observops | `eco-observops` | 8094 | 9094 | `eco-base://k8s/platform-observops/namespace/eco-observops` | `PLATFORM_OBSERVOPS_` |
 | 4 | platform-govops | `eco-govops` | 8091 | 9091 | `eco-base://k8s/platform-govops/namespace/eco-govops` | `PLATFORM_GOVOPS_` |
 | 5 | platform-dataops | `eco-dataops` | 8093 | 9093 | `eco-base://k8s/platform-dataops/namespace/eco-dataops` | `PLATFORM_DATAOPS_` |
-| 6 | platform-superai | `eco-superai` | 8096 | 9096 | `eco-base://k8s/platform-superai/namespace/eco-superai` | `PLATFORM_SUPERAI_` |
+| 6 | platform-eco-base | `eco-eco-base` | 8096 | 9096 | `eco-base://k8s/platform-eco-base/namespace/eco-eco-base` | `PLATFORM_ECO_` |
 
 ---
 
@@ -134,11 +134,11 @@ Phase 6   platform-superai (eco-superai)
 | 1 | `platform-core` 缺少 `.platform/manifest.yaml` | 已建立，含 eco_namespace | ✅ |
 | 2 | `platform-core` 缺少 `k8s/base/namespace.yaml` | 已建立，含 ECO 標籤/註解 | ✅ |
 | 3 | `platform-core` 缺少 `.platform/dependencies.yaml` | 已建立 | ✅ |
-| 4 | `platform-superai` 命名空間為 `superai`（非 `eco-superai`） | 已修正所有 k8s/argocd/security 檔案 | ✅ |
-| 5 | `platform-superai` 缺少 `.platform/manifest.yaml` | 已建立，含 eco_namespace | ✅ |
-| 6 | `platform-superai` 缺少 `.platform/dependencies.yaml` | 已建立 | ✅ |
-| 7 | `platform-superai` 標籤為 `indestructible-eco` | 已修正為 `eco-base` | ✅ |
-| 8 | `platform-superai` managed-by 為 `kustomize` | 已修正為 `argocd` | ✅ |
+| 4 | `platform-eco-base` 命名空間為 `eco-base`（非 `eco-eco-base`） | 已修正所有 k8s/argocd/security 檔案 | ✅ |
+| 5 | `platform-eco-base` 缺少 `.platform/manifest.yaml` | 已建立，含 eco_namespace | ✅ |
+| 6 | `platform-eco-base` 缺少 `.platform/dependencies.yaml` | 已建立 | ✅ |
+| 7 | `platform-eco-base` 標籤為 `indestructible-eco` | 已修正為 `eco-base` | ✅ |
+| 8 | `platform-eco-base` managed-by 為 `kustomize` | 已修正為 `argocd` | ✅ |
 | 9 | `platform-observops` 缺少 `eco_env_prefix` | 已補充 `PLATFORM_OBSERVOPS_` | ✅ |
 | 10 | `platform-observops` 缺少 mandatory_labels/annotations | 已補充 | ✅ |
 | 11 | 部署排序缺少 `platform-core` | 已加入 Phase 1 | ✅ |

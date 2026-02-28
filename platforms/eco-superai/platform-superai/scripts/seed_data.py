@@ -24,7 +24,7 @@ async def seed_users() -> None:
         {
             "id": str(uuid.uuid4()),
             "username": "admin",
-            "email": "admin@superai.local",
+            "email": "admin@eco-base.local",
             "hashed_password": pwd_ctx.hash("AdminP@ss123"),
             "full_name": "System Administrator",
             "role": "admin",
@@ -34,7 +34,7 @@ async def seed_users() -> None:
         {
             "id": str(uuid.uuid4()),
             "username": "scientist",
-            "email": "scientist@superai.local",
+            "email": "scientist@eco-base.local",
             "hashed_password": pwd_ctx.hash("ScienceP@ss123"),
             "full_name": "Lead Scientist",
             "role": "scientist",
@@ -44,7 +44,7 @@ async def seed_users() -> None:
         {
             "id": str(uuid.uuid4()),
             "username": "developer",
-            "email": "dev@superai.local",
+            "email": "dev@eco-base.local",
             "hashed_password": pwd_ctx.hash("DevP@ss123"),
             "full_name": "Platform Developer",
             "role": "developer",
@@ -54,7 +54,7 @@ async def seed_users() -> None:
         {
             "id": str(uuid.uuid4()),
             "username": "viewer",
-            "email": "viewer@superai.local",
+            "email": "viewer@eco-base.local",
             "hashed_password": pwd_ctx.hash("ViewP@ss123"),
             "full_name": "Read-Only User",
             "role": "viewer",

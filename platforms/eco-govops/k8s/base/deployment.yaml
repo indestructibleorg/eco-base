@@ -6,7 +6,7 @@ metadata:
     eco-base/audit-log-level: full
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/platform-govops/deployment/govops-engine
-    eco-base/urn: urn:eco-base:k8s:platform-govops:deployment:govops-engine:sha256-93bd3db5421282af2faa26448b8d33be247a4bcf7a5466c454524b09166d4e26
+    eco-base/urn: urn:eco-base:k8s:platform-govops:deployment:govops-engine:sha256-b5910530d230dfb32160d0fd1a0fc644013da0b224909e70dc2fb57f85d878d3
   labels:
     app.kubernetes.io/component: engine
     app.kubernetes.io/instance: govops-engine-prod

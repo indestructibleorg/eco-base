@@ -6,7 +6,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/service/dataops-engine
-    eco-base/urn: urn:eco-base:k8s:core:service:dataops-engine:sha256-cb4f98ba9355cd5e4b651c4de2a64cc64fc7cf4219f70d6c6b602ac8357d9e20
+    eco-base/urn: urn:eco-base:k8s:core:service:dataops-engine:sha256-d6285bed5e0aa03ef5d18b7bffb9e0cab1e55605180782658b1b301a362ab250
   labels:
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance

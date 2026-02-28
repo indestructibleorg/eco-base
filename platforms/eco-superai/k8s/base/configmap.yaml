@@ -1,19 +1,19 @@
 ---
 apiVersion: v1
 data:
-  AI_CHROMADB_HOST: chromadb.superai
+  AI_CHROMADB_HOST: chromadb.eco-base
   AI_CHROMADB_PORT: '8000'
   AI_EMBEDDING_MODEL: text-embedding-3-small
   AI_MAX_TOKENS: '4096'
-  APP_NAME: SuperAI Platform
+  APP_NAME: eco-base Platform
   APP_PORT: '8000'
   APP_VERSION: 1.0.0
   APP_WORKERS: '4'
   CORS_ALLOWED_METHODS: GET,POST,PUT,DELETE,PATCH,OPTIONS
-  CORS_ALLOWED_ORIGINS: https://app.superai.example.com
+  CORS_ALLOWED_ORIGINS: https://app.eco-base.example.com
   CORS_MAX_AGE: '600'
-  ELASTICSEARCH_INDEX_PREFIX: superai
-  ELASTICSEARCH_URL: http://elasticsearch.superai:9200
+  ELASTICSEARCH_INDEX_PREFIX: eco-base
+  ELASTICSEARCH_URL: http://elasticsearch.eco-base:9200
   LOG_LEVEL: info
   MONITORING_JAEGER_ENDPOINT: http://jaeger-collector.observability:4317
   MONITORING_TRACING_ENABLED: 'true'
@@ -27,16 +27,16 @@ metadata:
   annotations:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
-    eco-base/uri: eco-base://k8s/core/configmap/superai-config
-    eco-base/urn: urn:eco-base:k8s:core:configmap:superai-config:sha256-bc0fc2c6caaec62f7b2431cd884bd623d1213bdf669a7b079cb28bfdef7239f5
+    eco-base/uri: eco-base://k8s/core/configmap/eco-config
+    eco-base/urn: urn:eco-base:k8s:core:configmap:eco-config:sha256-c7b26c39a647f0cf14b1e591bf0912f5afcd86ee29ed3bd04056bf8c772f814e
   labels:
     app.kubernetes.io/component: config
     app.kubernetes.io/instance: eco-instance
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/part-of: eco-base
     app.kubernetes.io/version: 1.0.0
     eco-base/environment: development
     eco-base/owner: eco-system
     eco-base/platform: core
-  name: superai-config
-  namespace: eco-superai
+  name: eco-config
+  namespace: eco-eco-base

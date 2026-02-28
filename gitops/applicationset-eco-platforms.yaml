@@ -17,7 +17,7 @@ spec:
             namespace: platform-03
           - platform: eco-seccompops
             namespace: platform-01
-          - platform: eco-superai
+          - platform: eco-eco-base
             namespace: platform-02
   template:
     metadata:

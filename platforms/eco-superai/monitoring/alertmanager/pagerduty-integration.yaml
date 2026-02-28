@@ -8,7 +8,7 @@ metadata:
     eco-base/uri: eco-base://k8s/core/secret/alertmanager-pagerduty
     eco-base/urn: urn:eco-base:k8s:core:secret:alertmanager-pagerduty:sha256-22af890b6d7958c75fe03ccef4e4e4afd9397da3b8e4ad9b3e07c4cba8a06f68
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: alertmanager-pagerduty
@@ -28,7 +28,7 @@ type: Opaque
 apiVersion: v1
 data:
   alertmanager.yml: "global:\n  resolve_timeout: 5m\n  smtp_smarthost: 'smtp.example.com:587'\n\
-    \  smtp_from: 'alerts@superai.platform'\n  smtp_auth_username: 'alerts@superai.platform'\n\
+    \  smtp_from: 'alerts@eco-base.platform'\n  smtp_auth_username: 'alerts@eco-base.platform'\n\
     \  smtp_auth_password: '$SMTP_PASSWORD'\n\ntemplates:\n  - '/etc/alertmanager/templates/*.tmpl'\n\
     \nroute:\n  receiver: 'default-receiver'\n  group_by: ['alertname', 'cluster',\
     \ 'service']\n  group_wait: 10s\n  group_interval: 10s\n  repeat_interval: 12h\n\
@@ -42,7 +42,7 @@ data:
     \      receiver: 'pagerduty-security'\n      continue: true\n    \n    - match_re:\n\
     \        alertname: '(Security|Breach|Attack|Intrusion|Compromise)'\n      receiver:\
     \ 'slack-security'\n      continue: false\n\nreceivers:\n  - name: 'default-receiver'\n\
-    \    email_configs:\n      - to: 'team@superai.platform'\n        headers:\n \
+    \    email_configs:\n      - to: 'team@eco-base.platform'\n        headers:\n \
     \         Subject: '[{{ .Status | toUpper }}] {{ .GroupLabels.alertname }}'\n\n\
     \  - name: 'pagerduty-critical'\n    pagerduty_configs:\n      - service_key:\
     \ '$PAGERDUTY_INTEGRATION_KEY'\n        severity: 'critical'\n        description:\
@@ -69,7 +69,7 @@ data:
     \ .Annotations.description }}\n          *Summary:* {{ .Annotations.summary }}\n\
     \          {{ end }}\n        send_resolved: true\n        color: '{{ if eq .Status\
     \ \"firing\" }}danger{{ else }}good{{ end }}'\n\n  - name: 'email-info'\n    email_configs:\n\
-    \      - to: 'devops@superai.platform'\n        headers:\n          Subject: '[INFO]\
+    \      - to: 'devops@eco-base.platform'\n        headers:\n          Subject: '[INFO]\
     \ {{ .GroupLabels.alertname }}'\n\ninhibit_rules:\n  # Inhibit info alerts if\
     \ critical alert is firing for same instance\n  - source_match:\n      severity:\
     \ 'critical'\n    target_match:\n      severity: 'info'\n    equal: ['alertname',\
@@ -84,7 +84,7 @@ metadata:
     eco-base/uri: eco-base://k8s/core/configmap/alertmanager-config
     eco-base/urn: urn:eco-base:k8s:core:configmap:alertmanager-config:sha256-4909913e3f66ea933e5cca9a7bc2cd2b61d6aef382f1be8eac5d4a1265e8c220
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: alertmanager-config
@@ -106,7 +106,7 @@ metadata:
     eco-base/uri: eco-base://k8s/core/deployment/alertmanager
     eco-base/urn: urn:eco-base:k8s:core:deployment:alertmanager:sha256-460319379f7f39fad382c7b855c6a8298774d7665bbd8ea5a82f49b062284faa
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: alertmanager
@@ -122,7 +122,7 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: superai-platform
+      app: eco-base
       component: alertmanager
   template:
     metadata:
@@ -130,7 +130,7 @@ spec:
         prometheus.io/port: '9093'
         prometheus.io/scrape: 'true'
       labels:
-        app: superai-platform
+        app: eco-base
         component: alertmanager
     spec:
       containers:
@@ -173,7 +173,7 @@ spec:
           name: storage
         - mountPath: /etc/alertmanager/templates
           name: templates
-      serviceAccountName: superai-monitoring
+      serviceAccountName: eco-monitoring
       volumes:
       - configMap:
           name: alertmanager-config
@@ -193,7 +193,7 @@ metadata:
     eco-base/uri: eco-base://k8s/core/service/alertmanager
     eco-base/urn: urn:eco-base:k8s:core:service:alertmanager:sha256-61c0039e3deffd50eedc38ef45714d340cc5c77a0008f0fe0ef76d8cb72dd8a6
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: alertmanager
@@ -214,7 +214,7 @@ spec:
     port: 9094
     targetPort: cluster
   selector:
-    app: superai-platform
+    app: eco-base
     component: alertmanager
   type: ClusterIP
 ---
@@ -222,7 +222,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   labels:
-    app: superai-platform
+    app: eco-base
     component: alertmanager
   name: alertmanager
   namespace: default
@@ -233,7 +233,7 @@ spec:
     port: web
   selector:
     matchLabels:
-      app: superai-platform
+      app: eco-base
       component: alertmanager
 ---
 apiVersion: v1
@@ -243,7 +243,7 @@ data:
     5..\"}[5m]) > 0.1\n        for: 5m\n        labels:\n          severity: critical\n\
     \          team: platform\n        annotations:\n          summary: High error\
     \ rate detected\n          description: \"Error rate is {{ $value }} errors/sec\
-    \ (threshold: 0.1)\"\n          runbook: \"https://docs.superai.platform/runbooks/high-error-rate\"\
+    \ (threshold: 0.1)\"\n          runbook: \"https://docs.eco-base.platform/runbooks/high-error-rate\"\
     \n\n      - alert: HighLatency\n        expr: histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m]))\
     \ > 1\n        for: 10m\n        labels:\n          severity: warning\n      \
     \    team: platform\n        annotations:\n          summary: High latency detected\n\
@@ -258,7 +258,7 @@ data:
     \    team: dba\n        annotations:\n          summary: Database connection failure\n\
     \          description: \"Cannot connect to PostgreSQL database\"\n\n      - alert:\
     \ DatabaseSlowQueries\n        expr: rate(pg_stat_statements_calls_total{datname=\"\
-    superai\"}[5m]) > 100\n        for: 10m\n        labels:\n          severity:\
+    eco-base\"}[5m]) > 100\n        for: 10m\n        labels:\n          severity:\
     \ warning\n          team: dba\n        annotations:\n          summary: High\
     \ rate of slow database queries\n          description: \"Database query rate\
     \ is {{ $value }} queries/sec\"\n\n  # Security Alerts\n  - name: security\n \
@@ -267,7 +267,7 @@ data:
     \      labels:\n          severity: critical\n          team: security\n     \
     \   annotations:\n          summary: Critical security violation detected\n  \
     \        description: \"Falco detected {{ $value }} critical security events\"\
-    \n          runbook: \"https://docs.superai.platform/runbooks/security-incident\"\
+    \n          runbook: \"https://docs.eco-base.platform/runbooks/security-incident\"\
     \n\n      - alert: UnauthorizedAccessAttempt\n        expr: rate(http_requests_total{status=\"\
     401\"}[5m]) > 10\n        for: 5m\n        labels:\n          severity: warning\n\
     \          team: security\n        annotations:\n          summary: High rate\
@@ -305,7 +305,7 @@ metadata:
     eco-base/uri: eco-base://k8s/core/configmap/prometheus-alerts
     eco-base/urn: urn:eco-base:k8s:core:configmap:prometheus-alerts:sha256-512d77fdca04257492e8774e0c89ba42a14c327157ffc869f9669ab0cdd90bf4
   labels:
-    app: superai-platform
+    app: eco-base
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
     app.kubernetes.io/name: prometheus-alerts

@@ -1,8 +1,8 @@
-# SuperAI Platform
+# eco-base Platform
 
 > Production-grade Cloud-Native Platform with Quantum-AI Hybrid Capabilities
 
-[![CI/CD](https://github.com/your-org/superai-platform/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/your-org/superai-platform/actions)
+[![CI/CD](https://github.com/your-org/eco-base/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/your-org/eco-base/actions)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
@@ -10,7 +10,7 @@
 
 ## Overview
 
-SuperAI Platform is an enterprise-grade, cloud-native application that integrates quantum computing algorithms, AI/ML pipelines, scientific computing modules, and vector database capabilities into a unified, production-ready system. Built on Clean Architecture (Hexagonal / Ports & Adapters) principles, it delivers a modular, testable, and horizontally scalable platform suitable for research institutions, fintech, biotech, and advanced engineering organizations.
+eco-base Platform is an enterprise-grade, cloud-native application that integrates quantum computing algorithms, AI/ML pipelines, scientific computing modules, and vector database capabilities into a unified, production-ready system. Built on Clean Architecture (Hexagonal / Ports & Adapters) principles, it delivers a modular, testable, and horizontally scalable platform suitable for research institutions, fintech, biotech, and advanced engineering organizations.
 
 ### Key Capabilities
 
@@ -54,7 +54,7 @@ SuperAI Platform is an enterprise-grade, cloud-native application that integrate
 ## Directory Structure
 
 ```
-superai-platform/
+eco-base/
 ├── src/                          # Application source code
 │   ├── presentation/             # API layer (FastAPI)
 │   │   ├── api/
@@ -157,8 +157,8 @@ superai-platform/
 ### 1. Clone & Setup
 
 ```bash
-git clone https://github.com/your-org/superai-platform.git
-cd superai-platform
+git clone https://github.com/your-org/eco-base.git
+cd eco-base
 cp .env.example .env
 ```
 
@@ -239,8 +239,8 @@ python -m src.quantum.algorithms.qml
 ### Kubernetes (via Helm)
 
 ```bash
-helm install superai ./helm \
-  --namespace superai \
+helm install eco-base ./helm \
+  --namespace eco-base \
   --create-namespace \
   -f helm/values.yaml
 ```
@@ -268,7 +268,7 @@ All configuration is managed through environment variables. See `.env.example` f
 
 | Variable | Description | Default |
 |---|---|---|
-| `APP_NAME` | Application name | `superai-platform` |
+| `APP_NAME` | Application name | `eco-base` |
 | `APP_ENV` | Environment (dev/staging/prod) | `development` |
 | `DATABASE_URL` | PostgreSQL connection string | — |
 | `REDIS_URL` | Redis connection string | `redis://localhost:6379/0` |

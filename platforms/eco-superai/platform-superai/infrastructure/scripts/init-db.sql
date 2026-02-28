@@ -1,4 +1,4 @@
--- SuperAI Platform - Database Initialization
+-- eco-base Platform - Database Initialization
 -- Executed on first PostgreSQL container start
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -120,5 +120,5 @@ $$ language 'plpgsql';
 CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 -- Grant permissions
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO superai;
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO superai;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO eco-base;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO eco-base;

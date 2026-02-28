@@ -31,7 +31,7 @@ ECO Base (IndestructibleAutoOps) is an enterprise-grade Kubernetes-native platfo
 |-----------|---------|--------|
 | `infra` | Shared infrastructure services | Active |
 | `platform-01` | IndestructibleAutoOps (govops, seccompops) | Active |
-| `platform-02` | IAOps (dataops, superai) | Active |
+| `platform-02` | IAOps (dataops, eco-base) | Active |
 | `platform-03` | MachineNativeOps (observops) | Active |
 | `eco-production` | Production workloads | Active |
 
@@ -93,7 +93,7 @@ ECO Base (IndestructibleAutoOps) is an enterprise-grade Kubernetes-native platfo
 | eco-govops | platforms/eco-govops | platform-01 | Governance & compliance operations |
 | eco-seccompops | platforms/eco-seccompops | platform-01 | Security & compliance operations |
 | eco-dataops | platforms/eco-dataops | platform-02 | Data pipeline operations |
-| eco-superai | platforms/eco-superai | platform-02 | AI/ML operations |
+| eco-eco-base | platforms/eco-eco-base | platform-02 | AI/ML operations |
 | eco-observops | platforms/eco-observops | platform-03 | Observability operations |
 
 ---
@@ -151,7 +151,7 @@ indestructibleorg/eco-base/
 │   ├── eco-govops/
 │   ├── eco-seccompops/
 │   ├── eco-dataops/
-│   ├── eco-superai/
+│   ├── eco-eco-base/
 │   └── eco-observops/
 ├── infrastructure/
 │   └── terraform/          # GKE cluster, VPC, IAM
@@ -189,7 +189,7 @@ indestructibleorg/eco-base/
 
 ### Catalog Cross-Reference
 
-- ECO deployment modules (this doc): `platforms/eco-core`, `platforms/eco-govops`, `platforms/eco-seccompops`, `platforms/eco-dataops`, `platforms/eco-superai`, `platforms/eco-observops`
+- ECO deployment modules (this doc): `platforms/eco-core`, `platforms/eco-govops`, `platforms/eco-seccompops`, `platforms/eco-dataops`, `platforms/eco-eco-base`, `platforms/eco-observops`
 - GL marketplace catalog (platform index): `platforms/README.md`
 - Legacy NG-era archive path: `platforms/ng-era-platforms/README.md`
 

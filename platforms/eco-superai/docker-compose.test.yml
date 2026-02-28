@@ -1,5 +1,5 @@
-# eco-superai Integration Test Environment
-# URI: eco-base://eco-superai/docker-compose/test
+# eco-eco-base Integration Test Environment
+# URI: eco-base://eco-eco-base/docker-compose/test
 # Purpose: Provide real PostgreSQL and Redis instances for integration tests
 # Usage: docker-compose -f docker-compose.test.yml up -d
 version: "3.9"
@@ -8,13 +8,13 @@ services:
   postgres:
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: superai_test
-      POSTGRES_USER: superai_test
-      POSTGRES_PASSWORD: superai_test_secret
+      POSTGRES_DB: eco-base_test
+      POSTGRES_USER: eco-base_test
+      POSTGRES_PASSWORD: eco-base_test_secret
     ports:
       - "5433:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U superai_test -d superai_test"]
+      test: ["CMD-SHELL", "pg_isready -U eco-base_test -d eco-base_test"]
       interval: 5s
       timeout: 5s
       retries: 10

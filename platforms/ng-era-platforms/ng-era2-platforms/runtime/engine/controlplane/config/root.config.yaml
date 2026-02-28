@@ -4,14 +4,14 @@ kind: RootGlobalConfig
 metadata:
   annotations:
     machinenativeops.io/description: Root layer global configuration for MachineNativeOps
-  system
-  machinenativeops.io/last-modified: '2025-12-20T22:00:00Z'
+      system
   labels:
     eco-base/governance: aligned
     eco-base/part-of: eco-base
     machinenativeops.io/component: global-configuration
     machinenativeops.io/tier: baseline
     machinenativeops.io/version: v1.0.0
+  machinenativeops.io/last-modified: '2025-12-20T22:00:00Z'
   name: global-baseline-config
   namespace: machinenativeops-root
 spec:
@@ -202,7 +202,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/configmap/root-config-schema
-    eco-base/urn: urn:eco-base:k8s:core:configmap:root-config-schema:sha256-64c3d70d0159bb210ce3bcf8f1489245afa1648218f47e609e30d717ed0164c5
+    eco-base/urn: urn:eco-base:k8s:core:configmap:root-config-schema:sha256-3f509f15804e8b4065b3781b20a4557194414591cf9e3620ad1e6e064b150292
   labels:
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance

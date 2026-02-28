@@ -30,7 +30,7 @@ log_step() {
 # Configuration
 ARGOCD_NAMESPACE="${ARGOCD_NAMESPACE:-argocd}"
 APP_NAMESPACE="${APP_NAMESPACE:-default}"
-REPO_URL="${REPO_URL:-https://github.com/organization/superai-platform}"
+REPO_URL="${REPO_URL:-https://github.com/organization/eco-base}"
 TARGET_REVISION="${TARGET_REVISION:-main}"
 ARGOCD_VERSION="${ARGOCD_VERSION:-2.10.0}"
 
@@ -81,10 +81,10 @@ create_application() {
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: superai-platform
+  name: eco-base
   namespace: $ARGOCD_NAMESPACE
 spec:
-  description: SuperAI Platform Project
+  description: eco-base Platform Project
   sourceRepos:
   - $REPO_URL
   destinations:
@@ -106,12 +106,12 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: superai-platform
+  name: eco-base
   namespace: $ARGOCD_NAMESPACE
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  project: superai-platform
+  project: eco-base
   source:
     repoURL: $REPO_URL
     targetRevision: $TARGET_REVISION
@@ -146,12 +146,12 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: superai-monitoring
+  name: eco-monitoring
   namespace: $ARGOCD_NAMESPACE
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  project: superai-platform
+  project: eco-base
   source:
     repoURL: $REPO_URL
     targetRevision: $TARGET_REVISION
@@ -169,12 +169,12 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: superai-falco
+  name: eco-falco
   namespace: $ARGOCD_NAMESPACE
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  project: superai-platform
+  project: eco-base
   source:
     repoURL: $REPO_URL
     targetRevision: $TARGET_REVISION
@@ -207,11 +207,11 @@ metadata:
   name: auto-remediation-policies
   namespace: $APP_NAMESPACE
   labels:
-    app: superai-platform
+    app: eco-base
     component: auto-remediation
 data:
   policies.yaml: |
-    # Auto-Remediation Policies for SuperAI Platform
+    # Auto-Remediation Policies for eco-base Platform
     
     policies:
       # Pod Restart Remediation
@@ -335,7 +335,7 @@ metadata:
   name: health-check-remediator
   namespace: $APP_NAMESPACE
   labels:
-    app: superai-platform
+    app: eco-base
     component: event-response
 spec:
   schedule: "*/5 * * * *"
@@ -348,11 +348,11 @@ spec:
       activeDeadlineSeconds: 300
       template:
         spec:
-          serviceAccountName: superai-app
+          serviceAccountName: eco-app
           restartPolicy: OnFailure
           containers:
           - name: remediator
-            image: ghcr.io/superai-platform/auto-remediator:latest
+            image: ghcr.io/eco-base/auto-remediator:latest
             args:
             - --namespace=$APP_NAMESPACE
             - --config=/etc/remediation/policies.yaml
@@ -377,7 +377,7 @@ metadata:
   name: auto-remediator
   namespace: $APP_NAMESPACE
   labels:
-    app: superai-platform
+    app: eco-base
     component: event-response
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -385,7 +385,7 @@ kind: ClusterRole
 metadata:
   name: auto-remediator
   labels:
-    app: superai-platform
+    app: eco-base
     component: event-response
 rules:
   - apiGroups: [""]
@@ -409,7 +409,7 @@ kind: ClusterRoleBinding
 metadata:
   name: auto-remediator
   labels:
-    app: superai-platform
+    app: eco-base
     component: event-response
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -432,14 +432,14 @@ create_rollback_config() {
 apiVersion: argoproj.io/v1alpha1
 kind: RolloutManager
 metadata:
-  name: superai-platform
+  name: eco-base
   namespace: $APP_NAMESPACE
 spec:
   replicas: 3
   strategy:
     blueGreen:
-      activeService: superai-platform-active
-      previewService: superai-platform-preview
+      activeService: eco-base-active
+      previewService: eco-base-preview
       autoPromotionEnabled: false
       scaleDownDelaySeconds: 30
       prePromotionAnalysis:
@@ -447,13 +447,13 @@ spec:
         - templateName: success-rate
         args:
         - name: service-name
-          value: superai-platform-preview
+          value: eco-base-preview
       promotionAnalysis:
         templates:
         - templateName: success-rate
         args:
         - name: service-name
-          value: superai-platform-active
+          value: eco-base-active
 ---
 apiVersion: analysistemplate.argoproj.io/v1alpha1
 kind: AnalysisTemplate
@@ -480,7 +480,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: superai-platform
+  name: eco-base
   namespace: $APP_NAMESPACE
 spec:
   replicas: 3
@@ -494,7 +494,7 @@ spec:
           - templateName: success-rate
           args:
           - name: service-name
-            value: superai-platform-canary
+            value: eco-base-canary
       - setWeight: 40
       - pause: {duration: 5m}
       - setWeight: 60
@@ -506,49 +506,49 @@ spec:
           - templateName: success-rate
           args:
           - name: service-name
-            value: superai-platform-canary
+            value: eco-base-canary
       - setWeight: 100
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: superai-platform
+      app: eco-base
       component: api
   template:
     metadata:
       labels:
-        app: superai-platform
+        app: eco-base
         component: api
     spec:
       containers:
       - name: api
-        image: ghcr.io/superai-platform/superai-platform:latest
+        image: ghcr.io/eco-base/eco-base:latest
         ports:
         - containerPort: 8000
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: superai-platform-active
+  name: eco-base-active
   namespace: $APP_NAMESPACE
 spec:
   ports:
   - port: 80
     targetPort: 8000
   selector:
-    app: superai-platform
+    app: eco-base
     component: api
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: superai-platform-preview
+  name: eco-base-preview
   namespace: $APP_NAMESPACE
 spec:
   ports:
   - port: 80
     targetPort: 8000
   selector:
-    app: superai-platform
+    app: eco-base
     component: api
 EOF
     

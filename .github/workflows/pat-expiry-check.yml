@@ -72,7 +72,7 @@ jobs:
           TODAY="${{ steps.timing.outputs.today }}"
           EXPIRY="${{ steps.expiry.outputs.expiry }}"
 
-          DAYS_LEFT=$(python3 -c "
+          python3 << 'PYEOF'
           from datetime import date
           today = date.fromisoformat('$TODAY')
           expiry = date.fromisoformat('$EXPIRY')
@@ -81,7 +81,8 @@ jobs:
           ")
 
           echo "days_left=$DAYS_LEFT" >> $GITHUB_OUTPUT
-          echo "Days until PAT expiry: $DAYS_LEFT"
+          echo "Days until PAT expiry: $DAYS_LEFT
+          PYEOF
 
           # Determine alert level
           if [ "$DAYS_LEFT" -le 0 ]; then

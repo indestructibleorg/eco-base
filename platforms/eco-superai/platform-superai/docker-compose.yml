@@ -1,14 +1,14 @@
 # ============================================================================
-# SuperAI Platform - Full Service Orchestration
+# eco-base Platform - Full Service Orchestration
 # ============================================================================
 version: "3.9"
 
 x-common-env: &common-env
   APP_ENV: ${APP_ENV:-development}
-  DATABASE_URL: postgresql+asyncpg://superai:superai_secret@postgres:5432/superai_db
-  DATABASE_URL_SYNC: postgresql://superai:superai_secret@postgres:5432/superai_db
+  DATABASE_URL: postgresql+asyncpg://eco-base:eco-base_secret@postgres:5432/eco-base_db
+  DATABASE_URL_SYNC: postgresql://eco-base:eco-base_secret@postgres:5432/eco-base_db
   REDIS_URL: redis://redis:6379/0
-  CELERY_BROKER_URL: amqp://superai:superai_secret@rabbitmq:5672//
+  CELERY_BROKER_URL: amqp://eco-base:eco-base_secret@rabbitmq:5672//
   CELERY_RESULT_BACKEND: redis://redis:6379/1
   ELASTICSEARCH_URL: http://elasticsearch:9200
   SECRET_KEY: ${SECRET_KEY:-change-me-in-production-use-openssl-rand-hex-64}
@@ -26,7 +26,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    container_name: superai-app
+    container_name: eco-app
     ports:
       - "${APP_PORT:-8000}:8000"
     environment:
@@ -43,7 +43,7 @@ services:
       - app-logs:/app/logs
       - app-data:/app/data
     networks:
-      - superai-network
+      - eco-network
     restart: unless-stopped
     deploy:
       resources:
@@ -64,7 +64,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    container_name: superai-worker
+    container_name: eco-worker
     command: >
       celery -A src.infrastructure.tasks.worker:celery_app worker
       --loglevel=info --concurrency=4 --pool=prefork
@@ -81,7 +81,7 @@ services:
     volumes:
       - app-logs:/app/logs
     networks:
-      - superai-network
+      - eco-network
     restart: unless-stopped
     deploy:
       resources:
@@ -93,7 +93,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    container_name: superai-beat
+    container_name: eco-beat
     command: >
       celery -A src.infrastructure.tasks.worker:celery_app beat
       --loglevel=info --schedule=/app/tmp/celerybeat-schedule
@@ -104,7 +104,7 @@ services:
     volumes:
       - app-logs:/app/logs
     networks:
-      - superai-network
+      - eco-network
     restart: unless-stopped
 
   # ==========================================================================
@@ -112,11 +112,11 @@ services:
   # ==========================================================================
   postgres:
     image: postgres:16-alpine
-    container_name: superai-postgres
+    container_name: eco-postgres
     environment:
-      POSTGRES_DB: superai_db
-      POSTGRES_USER: superai
-      POSTGRES_PASSWORD: superai_secret
+      POSTGRES_DB: eco-base_db
+      POSTGRES_USER: eco-base
+      POSTGRES_PASSWORD: eco-base_secret
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
@@ -124,10 +124,10 @@ services:
       - postgres-data:/var/lib/postgresql/data
       - ./infrastructure/scripts/init-db.sql:/docker-entrypoint-initdb.d/01-init.sql
     networks:
-      - superai-network
+      - eco-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U superai -d superai_db"]
+      test: ["CMD-SHELL", "pg_isready -U eco-base -d eco-base_db"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -139,33 +139,33 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: superai-redis
+    container_name: eco-redis
     command: >
       redis-server
       --maxmemory 512mb
       --maxmemory-policy allkeys-lru
       --appendonly yes
       --appendfsync everysec
-      --requirepass superai_redis_secret
+      --requirepass eco-base_redis_secret
     ports:
       - "${REDIS_PORT:-6379}:6379"
     volumes:
       - redis-data:/data
     networks:
-      - superai-network
+      - eco-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "redis-cli", "-a", "superai_redis_secret", "ping"]
+      test: ["CMD", "redis-cli", "-a", "eco-base_redis_secret", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
 
   rabbitmq:
     image: rabbitmq:3.13-management-alpine
-    container_name: superai-rabbitmq
+    container_name: eco-rabbitmq
     environment:
-      RABBITMQ_DEFAULT_USER: superai
-      RABBITMQ_DEFAULT_PASS: superai_secret
+      RABBITMQ_DEFAULT_USER: eco-base
+      RABBITMQ_DEFAULT_PASS: eco-base_secret
       RABBITMQ_DEFAULT_VHOST: /
     ports:
       - "${RABBITMQ_PORT:-5672}:5672"
@@ -173,7 +173,7 @@ services:
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
     networks:
-      - superai-network
+      - eco-network
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
@@ -183,18 +183,18 @@ services:
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
-    container_name: superai-elasticsearch
+    container_name: eco-elasticsearch
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - cluster.name=superai-cluster
+      - cluster.name=eco-cluster
     ports:
       - "${ES_PORT:-9200}:9200"
     volumes:
       - es-data:/usr/share/elasticsearch/data
     networks:
-      - superai-network
+      - eco-network
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
@@ -212,7 +212,7 @@ services:
   # ==========================================================================
   prometheus:
     image: prom/prometheus:v2.49.1
-    container_name: superai-prometheus
+    container_name: eco-prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
@@ -225,15 +225,15 @@ services:
       - ./monitoring/prometheus/alerts.yml:/etc/prometheus/alerts.yml:ro
       - prometheus-data:/prometheus
     networks:
-      - superai-network
+      - eco-network
     restart: unless-stopped
 
   grafana:
     image: grafana/grafana:10.3.1
-    container_name: superai-grafana
+    container_name: eco-grafana
     environment:
       GF_SECURITY_ADMIN_USER: admin
-      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-superai_grafana}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-eco-base_grafana}
       GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource
     ports:
       - "${GRAFANA_PORT:-3000}:3000"
@@ -244,12 +244,12 @@ services:
     depends_on:
       - prometheus
     networks:
-      - superai-network
+      - eco-network
     restart: unless-stopped
 
   jaeger:
     image: jaegertracing/all-in-one:1.53
-    container_name: superai-jaeger
+    container_name: eco-jaeger
     environment:
       COLLECTOR_OTLP_ENABLED: "true"
     ports:
@@ -257,7 +257,7 @@ services:
       - "4317:4317"
       - "4318:4318"
     networks:
-      - superai-network
+      - eco-network
     restart: unless-stopped
 
   # ==========================================================================
@@ -265,13 +265,13 @@ services:
   # ==========================================================================
   chromadb:
     image: chromadb/chroma:0.4.22
-    container_name: superai-chromadb
+    container_name: eco-chromadb
     ports:
       - "${CHROMA_PORT:-8100}:8000"
     volumes:
       - chroma-data:/chroma/chroma
     networks:
-      - superai-network
+      - eco-network
     restart: unless-stopped
     environment:
       ANONYMIZED_TELEMETRY: "false"
@@ -280,7 +280,7 @@ services:
 # Networks
 # ==========================================================================
 networks:
-  superai-network:
+  eco-network:
     driver: bridge
     ipam:
       config:

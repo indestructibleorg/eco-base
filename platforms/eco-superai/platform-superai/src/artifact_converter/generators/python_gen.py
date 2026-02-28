@@ -60,7 +60,7 @@ class PythonGenerator(BaseGenerator):
         title = metadata.title or "Artifact"
         lines.append(f'"""Auto-generated artifact module: {title}.')
         lines.append("")
-        lines.append("This module was produced by the SuperAI Artifact Converter.")
+        lines.append("This module was produced by the eco-base Artifact Converter.")
         if metadata.source_path:
             lines.append(f"Source: {metadata.source_path}")
         lines.append('"""')

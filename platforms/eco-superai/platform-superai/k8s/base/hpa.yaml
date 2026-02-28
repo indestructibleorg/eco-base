@@ -1,16 +1,16 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: superai-app-hpa
-  namespace: eco-superai
+  name: eco-app-hpa
+  namespace: eco-eco-base
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: app
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: superai-app
+    name: eco-app
   minReplicas: 2
   maxReplicas: 10
   behavior:
@@ -47,7 +47,7 @@ spec:
     - type: Pods
       pods:
         metric:
-          name: superai_http_requests_per_second
+          name: eco-base_http_requests_per_second
         target:
           type: AverageValue
           averageValue: "100"
@@ -55,16 +55,16 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: superai-worker-hpa
-  namespace: eco-superai
+  name: eco-worker-hpa
+  namespace: eco-eco-base
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: worker
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: superai-worker
+    name: eco-worker
   minReplicas: 2
   maxReplicas: 8
   behavior:

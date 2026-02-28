@@ -1,4 +1,4 @@
-# SuperAI 平台量子計算整合架構 (Quantum Computing Integration Architecture)
+# eco-base 平台量子計算整合架構 (Quantum Computing Integration Architecture)
 
 **日期**: 2026-02-25  
 **版本**: 1.0  
@@ -6,17 +6,17 @@
 
 ---
 
-## 1. 量子計算在 SuperAI 中的角色 (Role of Quantum Computing in SuperAI)
+## 1. 量子計算在 eco-base 中的角色 (Role of Quantum Computing in eco-base)
 
 ### 1.1 架構位置
 
-量子計算在 SuperAI 平台中作為**補充層**（Platform-02 的子模塊），而非替代現有的 GKE 基礎設施。
+量子計算在 eco-base 平台中作為**補充層**（Platform-02 的子模塊），而非替代現有的 GKE 基礎設施。
 
 ```
 AutoEcoOps 架構
 ├── GKE 基礎設施 (Kubernetes)
 │   ├── Platform-01: IndestructibleAutoOps (ECO)
-│   ├── Platform-02: IAOps + SuperAI
+│   ├── Platform-02: IAOps + eco-base
 │   │   ├── AI 推理層 (LLM、Vision、Audio)
 │   │   ├── 量子計算層 (Qiskit、Cirq、ARTIQ)  ← 新增
 │   │   └── IaC 管理層 (Terraform、ArgoCD)
@@ -54,7 +54,7 @@ pip install qiskit qiskit-aer qiskit-ibmq qiskit-machine-learning
 
 **目錄結構**:
 ```
-platform-superai/
+platform-eco-base/
 ├── ai/
 │   ├── quantum/
 │   │   ├── __init__.py
@@ -75,19 +75,19 @@ platform-superai/
 
 ### 2.2 Kubernetes Job 配置
 
-**檔案**: `platform-superai/k8s/quantum-simulator-job.yaml`
+**檔案**: `platform-eco-base/k8s/quantum-simulator-job.yaml`
 
 ```yaml
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: k8s-job-superai-quantum-vqe-prod
+  name: k8s-job-eco-quantum-vqe-prod
   namespace: platform-02
   labels:
     app.kubernetes.io/name: quantum-simulator
     app.kubernetes.io/component: vqe
     eco-base/platform: platform-02
-    superai/quantum-circuit: vqe-optimization
+    eco-base/quantum-circuit: vqe-optimization
   annotations:
     eco-base/uri: "eco-base://job/platform-02/quantum/vqe-optimization"
     eco-base/urn: "urn:eco-base:job:platform-02:quantum:vqe-optimization:sha256-quantum-vqe-001"
@@ -97,21 +97,21 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: quantum-simulator
-        superai/quantum-circuit: vqe-optimization
+        eco-base/quantum-circuit: vqe-optimization
     spec:
-      serviceAccountName: superai-sa-quantum
+      serviceAccountName: eco-sa-quantum
       containers:
       - name: quantum-simulator
-        image: asia-east1-docker.pkg.dev/my-project-ops-1991/superai-models/quantum-simulator:latest
+        image: asia-east1-docker.pkg.dev/my-project-ops-1991/eco-models/quantum-simulator:latest
         imagePullPolicy: Always
         env:
-        - name: SUPERAI_QUANTUM_SIMULATOR
+        - name: ECO_QUANTUM_SIMULATOR
           value: "qiskit"
-        - name: SUPERAI_QUANTUM_BACKEND
+        - name: ECO_QUANTUM_BACKEND
           value: "qasm_simulator"
-        - name: SUPERAI_QUANTUM_SHOTS
+        - name: ECO_QUANTUM_SHOTS
           value: "1024"
-        - name: SUPERAI_QUANTUM_SEED
+        - name: ECO_QUANTUM_SEED
           value: "42"
         resources:
           requests:
@@ -237,11 +237,11 @@ jobs:
       
       - name: Build quantum simulator image
         run: |
-          docker build -f Dockerfile.quantum -t asia-east1-docker.pkg.dev/my-project-ops-1991/superai-models/quantum-simulator:latest .
+          docker build -f Dockerfile.quantum -t asia-east1-docker.pkg.dev/my-project-ops-1991/eco-models/quantum-simulator:latest .
       
       - name: Push image
         run: |
-          docker push asia-east1-docker.pkg.dev/my-project-ops-1991/superai-models/quantum-simulator:latest
+          docker push asia-east1-docker.pkg.dev/my-project-ops-1991/eco-models/quantum-simulator:latest
       
       - name: Deploy to GKE
         run: |
@@ -261,7 +261,7 @@ jobs:
 
 **使用場景**: 使用變分量子特徵求解器（VQE）優化 Kubernetes 資源分配
 
-**檔案**: `platform-superai/ai/quantum/vqe_iac_optimizer.py`
+**檔案**: `platform-eco-base/ai/quantum/vqe_iac_optimizer.py`
 
 ```python
 from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister
@@ -337,7 +337,7 @@ class VQEIaCOptimizer:
 
 **使用場景**: 使用量子近似優化算法（QAOA）優化 Kubernetes 節點拓撲
 
-**檔案**: `platform-superai/ai/quantum/qaoa_network_optimizer.py`
+**檔案**: `platform-eco-base/ai/quantum/qaoa_network_optimizer.py`
 
 ```python
 from qiskit import QuantumCircuit
@@ -410,7 +410,7 @@ class QAOANetworkOptimizer:
 
 ### 4.1 量子核方法
 
-**檔案**: `platform-superai/ai/quantum/quantum_kernel_ml.py`
+**檔案**: `platform-eco-base/ai/quantum/quantum_kernel_ml.py`
 
 ```python
 from qiskit_machine_learning.kernels import QuantumKernel
@@ -465,7 +465,7 @@ class QuantumKernelML:
 
 ### 5.1 ARTIQ 集成
 
-**檔案**: `platform-superai/infrastructure/artiq/artiq_controller.py`
+**檔案**: `platform-eco-base/infrastructure/artiq/artiq_controller.py`
 
 ```python
 from artiq.experiment import *
@@ -508,7 +508,7 @@ class QuantumController(EnvExperiment):
 
 ### 6.1 KLM 協議實現
 
-**檔案**: `platform-superai/infrastructure/hardware/klm_protocol.md`
+**檔案**: `platform-eco-base/infrastructure/hardware/klm_protocol.md`
 
 ```markdown
 # KLM 光子量子計算協議
@@ -558,7 +558,7 @@ Monitor & Validate
 
 ### 7.2 Terraform 生成器
 
-**檔案**: `platform-superai/ai/quantum/terraform_generator.py`
+**檔案**: `platform-eco-base/ai/quantum/terraform_generator.py`
 
 ```python
 class QuantumOptimizedTerraformGenerator:

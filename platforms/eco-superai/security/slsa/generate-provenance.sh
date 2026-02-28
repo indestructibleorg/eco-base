@@ -28,8 +28,8 @@ log_step() {
 }
 
 # Configuration
-IMAGE_REF="${IMAGE_REF:-ghcr.io/superai-platform/superai-platform:latest}"
-BUILDERS_REPO="${BUILDERS_REPO:-github.com/superai-platform/builders}"
+IMAGE_REF="${IMAGE_REF:-ghcr.io/eco-base/eco-base:latest}"
+BUILDERS_REPO="${BUILDERS_REPO:-github.com/eco-base/builders}"
 REKOR_URL="${REKOR_URL:-https://rekor.sigstore.dev}"
 FULCIO_URL="${FULCIO_URL:-https://fulcio.sigstore.dev}"
 COSIGN_EXPERIMENTAL="${COSIGN_EXPERIMENTAL:-1}"

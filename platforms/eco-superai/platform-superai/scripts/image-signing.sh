@@ -29,7 +29,7 @@ log_step() {
 
 # Configuration
 REGISTRY="${REGISTRY:-ghcr.io}"
-IMAGE_NAME="${IMAGE_NAME:-superai-platform}"
+IMAGE_NAME="${IMAGE_NAME:-eco-base}"
 IMAGE_TAG="${IMAGE_TAG:-$(git describe --tags --always --dirty 2>/dev/null || echo 'latest')}"
 FULL_IMAGE="${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
 COSIGN_EXPERIMENTAL="${COSIGN_EXPERIMENTAL:-1}"
@@ -150,7 +150,7 @@ generate_provenance() {
     "digest": {"sha256": "$(docker inspect --format='{{index .RepoDigests 0}}' $FULL_IMAGE | cut -d: -f2)"}
   }],
   "predicate": {
-    "buildType": "superai/ci-build@v1",
+    "buildType": "eco-base/ci-build@v1",
     "invocation": {
       "configSource": {
         "uri": "git+https://github.com/organization/repo@$git_commit",
@@ -163,7 +163,7 @@ generate_provenance() {
       }
     },
     "builder": {
-      "id": "github-actions/superai-platform"
+      "id": "github-actions/eco-base"
     },
     "materials": [
       {
@@ -201,7 +201,7 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from: default/cosign-webhook-cert
 webhooks:
-  - name: cosign.superai.io
+  - name: cosign.eco-base.io
     rules:
       - apiGroups: [""]
         apiVersions: ["v1"]

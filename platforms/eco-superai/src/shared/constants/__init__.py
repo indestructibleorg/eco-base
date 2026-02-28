@@ -7,7 +7,7 @@ class AppConstants:
 
     # API
     API_PREFIX = "/api/v1"
-    API_TITLE = "SuperAI Platform"
+    API_TITLE = "eco-base Platform"
     API_VERSION = "1.0.0"
 
     # Pagination

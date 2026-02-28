@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: eco-superai-staging
+namespace: eco-eco-staging
 
 namePrefix: staging-
 
@@ -12,7 +12,7 @@ patches:
   # --- App: 2 replicas, moderate resources ---
   - target:
       kind: Deployment
-      name: superai-app
+      name: eco-app
     patch: |
       - op: replace
         path: /spec/replicas
@@ -36,7 +36,7 @@ patches:
   # --- Worker: 2 replicas, moderate resources ---
   - target:
       kind: Deployment
-      name: superai-worker
+      name: eco-worker
     patch: |
       - op: replace
         path: /spec/replicas
@@ -57,7 +57,7 @@ patches:
   # --- HPA: moderate scaling ---
   - target:
       kind: HorizontalPodAutoscaler
-      name: superai-app-hpa
+      name: eco-app-hpa
     patch: |
       - op: replace
         path: /spec/minReplicas
@@ -68,7 +68,7 @@ patches:
 
   - target:
       kind: HorizontalPodAutoscaler
-      name: superai-worker-hpa
+      name: eco-worker-hpa
     patch: |
       - op: replace
         path: /spec/minReplicas
@@ -80,20 +80,20 @@ patches:
   # --- Ingress: staging host ---
   - target:
       kind: Ingress
-      name: superai-ingress
+      name: eco-ingress
     patch: |
       - op: replace
         path: /spec/rules/0/host
-        value: api-staging.superai.example.com
+        value: api-staging.eco-base.example.com
       - op: replace
         path: /spec/tls/0/hosts/0
-        value: api-staging.superai.example.com
+        value: api-staging.eco-base.example.com
       - op: replace
         path: /spec/tls/0/secretName
-        value: superai-staging-tls
+        value: eco-staging-tls
 
 configMapGenerator:
-  - name: superai-config
+  - name: eco-config
     behavior: merge
     literals:
       - APP_ENV=staging

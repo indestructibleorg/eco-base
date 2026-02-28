@@ -17,7 +17,6 @@ metadata:
     machinenativeops.io/version: ${ARTIFACT_VERSION}
   name: ${ARTIFACT_NAME}
   namespace: ${NAMESPACE}
-    version: ${ARTIFACT_VERSION}
 spec:
   artifact:
     author: ${AUTHOR}
@@ -267,7 +266,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/configmap/filex-template-schema
-    eco-base/urn: urn:eco-base:k8s:core:configmap:filex-template-schema:sha256-90e1f7fdb43ab54f9cc2d0d433b1685d2078f3f5daec4558c6b1584e39820af6
+    eco-base/urn: urn:eco-base:k8s:core:configmap:filex-template-schema:sha256-f60fc7d433747c62f7633cca90223ac81e7e927ad8a9026425219c0c09470564
   labels:
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance

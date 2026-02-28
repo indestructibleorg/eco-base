@@ -31,7 +31,7 @@ spec:
                 - eco-dataops
                 - eco-observops
                 - eco-seccompops
-                - eco-superai
+                - eco-eco-base
       verifyImages:
         - imageReferences:
             - "ghcr.io/indestructibleorg/*"
@@ -72,7 +72,7 @@ spec:
                 - eco-dataops
                 - eco-observops
                 - eco-seccompops
-                - eco-superai
+                - eco-eco-base
       validate:
         message: "Workloads in eco namespaces must have eco.platform/sbom-ref annotation"
         pattern:

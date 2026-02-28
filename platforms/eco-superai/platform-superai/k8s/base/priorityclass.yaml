@@ -1,32 +1,32 @@
 apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
 metadata:
-  name: superai-critical
+  name: eco-critical
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
 value: 1000000
 globalDefault: false
 preemptionPolicy: PreemptLowerPriority
-description: "Critical priority for SuperAI core application pods"
+description: "Critical priority for eco-base core application pods"
 ---
 apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
 metadata:
-  name: superai-high
+  name: eco-high
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
 value: 750000
 globalDefault: false
 preemptionPolicy: PreemptLowerPriority
-description: "High priority for SuperAI worker and beat pods"
+description: "High priority for eco-base worker and beat pods"
 ---
 apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
 metadata:
-  name: superai-batch
+  name: eco-batch
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
 value: 500000
 globalDefault: false
 preemptionPolicy: Never
-description: "Batch priority for SuperAI CronJobs and maintenance tasks"
+description: "Batch priority for eco-base CronJobs and maintenance tasks"

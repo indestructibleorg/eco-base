@@ -423,7 +423,6 @@ jobs:
 
       - name: Slack notification
         # Replaced slackapi/slack-github-action (not in allowed list) with direct curl webhook call.
-        continue-on-error: true
         run: |
           if [ -n "$SLACK_WEBHOOK" ]; then
             STATUS="${{ steps.status.outputs.status }}"

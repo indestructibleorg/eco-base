@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# SuperAI Platform — Database Backup Script
+# eco-base Platform — Database Backup Script
 # ============================================================================
 # Usage: ./scripts/backup-db.sh [--output-dir /path] [--compress] [--upload s3://bucket]
 # ============================================================================
@@ -9,13 +9,13 @@ set -euo pipefail
 # --- Defaults ---
 DB_HOST="${DB_HOST:-localhost}"
 DB_PORT="${DB_PORT:-5432}"
-DB_NAME="${DB_NAME:-superai_db}"
-DB_USER="${DB_USER:-superai}"
+DB_NAME="${DB_NAME:-eco-base_db}"
+DB_USER="${DB_USER:-eco-base}"
 OUTPUT_DIR="${OUTPUT_DIR:-./backups}"
 COMPRESS="${COMPRESS:-true}"
 RETENTION_DAYS="${RETENTION_DAYS:-30}"
 TIMESTAMP=$(date -u +%Y%m%d_%H%M%S)
-BACKUP_NAME="superai_db_${TIMESTAMP}"
+BACKUP_NAME="eco-base_db_${TIMESTAMP}"
 
 log_info()  { echo "[backup] $(date -u +%FT%TZ) INFO  $*"; }
 log_error() { echo "[backup] $(date -u +%FT%TZ) ERROR $*" >&2; }
@@ -88,7 +88,7 @@ fi
 
 # --- Prune old backups ---
 if [ "${RETENTION_DAYS}" -gt 0 ]; then
-    PRUNED=$(find "${OUTPUT_DIR}" -name "superai_db_*.sql*" -mtime +"${RETENTION_DAYS}" -delete -print | wc -l)
+    PRUNED=$(find "${OUTPUT_DIR}" -name "eco-base_db_*.sql*" -mtime +"${RETENTION_DAYS}" -delete -print | wc -l)
     log_info "Pruned ${PRUNED} backups older than ${RETENTION_DAYS} days"
 fi
 

@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 # ============================================================================
-# SuperAI Platform — TLS Certificate Generation
+# eco-base Platform — TLS Certificate Generation
 # ============================================================================
-# Usage: ./scripts/generate-certs.sh [--domain api.superai.example.com] [--output-dir ./certs]
+# Usage: ./scripts/generate-certs.sh [--domain api.eco-base.example.com] [--output-dir ./certs]
 # Generates self-signed CA + server certs for dev/staging, or creates
 # cert-manager ClusterIssuer for production Let's Encrypt.
 # ============================================================================
 set -euo pipefail
 
-DOMAIN="${DOMAIN:-api.superai.example.com}"
+DOMAIN="${DOMAIN:-api.eco-base.example.com}"
 OUTPUT_DIR="${OUTPUT_DIR:-./certs}"
 CERT_DAYS="${CERT_DAYS:-365}"
 CA_DAYS="${CA_DAYS:-3650}"
 KEY_SIZE="${KEY_SIZE:-4096}"
 ENV="${APP_ENV:-development}"
-NAMESPACE="${NAMESPACE:-superai}"
+NAMESPACE="${NAMESPACE:-eco-base}"
 
 log_info()  { echo "[certs] $(date -u +%FT%TZ) INFO  $*"; }
 log_error() { echo "[certs] $(date -u +%FT%TZ) ERROR $*" >&2; }
@@ -43,12 +43,12 @@ kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: tls
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: admin@superai.example.com
+    email: admin@eco-base.example.com
     privateKeySecretRef:
       name: letsencrypt-prod-account-key
     solvers:
@@ -63,7 +63,7 @@ metadata:
 spec:
   acme:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
-    email: admin@superai.example.com
+    email: admin@eco-base.example.com
     privateKeySecretRef:
       name: letsencrypt-staging-account-key
     solvers:
@@ -76,13 +76,13 @@ EOF
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: superai-tls
+  name: eco-tls
   namespace: ${NAMESPACE}
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: tls
 spec:
-  secretName: superai-prod-tls
+  secretName: eco-prod-tls
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
@@ -117,7 +117,7 @@ else
         -sha256 \
         -days "${CA_DAYS}" \
         -out "${OUTPUT_DIR}/ca.crt" \
-        -subj "/C=TW/ST=Taiwan/L=Taipei/O=SuperAI/OU=Platform/CN=SuperAI CA" \
+        -subj "/C=TW/ST=Taiwan/L=Taipei/O=eco-base/OU=Platform/CN=eco-base CA" \
         2>/dev/null
 
     log_info "CA certificate: ${OUTPUT_DIR}/ca.crt"
@@ -137,7 +137,7 @@ req_extensions = v3_req
 C = TW
 ST = Taiwan
 L = Taipei
-O = SuperAI
+O = eco-base
 OU = Platform
 CN = ${DOMAIN}
 
@@ -151,7 +151,7 @@ subjectAltName = @alt_names
 DNS.1 = ${DOMAIN}
 DNS.2 = *.${DOMAIN#*.}
 DNS.3 = localhost
-DNS.4 = superai-app.${NAMESPACE}.svc.cluster.local
+DNS.4 = eco-app.${NAMESPACE}.svc.cluster.local
 IP.1 = 127.0.0.1
 EOF
 
@@ -179,10 +179,10 @@ EOF
 apiVersion: v1
 kind: Secret
 metadata:
-  name: superai-dev-tls
+  name: eco-dev-tls
   namespace: ${NAMESPACE}
   labels:
-    app.kubernetes.io/name: superai-platform
+    app.kubernetes.io/name: eco-base
     app.kubernetes.io/component: tls
 type: kubernetes.io/tls
 data:

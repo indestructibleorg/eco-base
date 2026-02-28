@@ -1,4 +1,4 @@
-# SuperAI Platform — Security Policy
+# eco-base Platform — Security Policy
 
 > Version 1.0 | Classification: Internal
 
@@ -13,7 +13,7 @@
 | Algorithm | HS256 / RS256 | RS256 for production |
 | Access Token TTL | 30 minutes | Short-lived |
 | Refresh Token TTL | 7 days | Stored in HttpOnly cookie |
-| Issuer | `superai-platform` | Validated on every request |
+| Issuer | `eco-base` | Validated on every request |
 
 ### 1.2 Password Policy
 
@@ -60,7 +60,7 @@
 
 ### 3.2 CORS Policy
 ```python
-ALLOWED_ORIGINS = ["https://app.superai.example.com"]
+ALLOWED_ORIGINS = ["https://app.eco-base.example.com"]
 ALLOWED_METHODS = ["GET", "POST", "PUT", "DELETE"]
 ALLOWED_HEADERS = ["Authorization", "Content-Type"]
 ALLOW_CREDENTIALS = True
@@ -126,7 +126,7 @@ ALLOW_CREDENTIALS = True
 
 If you discover a security vulnerability, please report it responsibly:
 
-- **Email**: security@superai.example.com
+- **Email**: security@eco-base.example.com
 - **Do NOT** open a public GitHub issue
 - Include: description, reproduction steps, potential impact
 - Expected response: acknowledgment within 24 hours, fix timeline within 72 hours

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# SuperAI Platform - Rollback Script
+# eco-base Platform - Rollback Script
 # ============================================================================
 # Rolls back the deployed application to a specified version/tag.
 # Supports both Helm-based and Kustomize-based deployments.
@@ -10,8 +10,8 @@
 #   ./scripts/rollback.sh <target-version> [options]
 #
 # Options:
-#   --namespace <ns>     Kubernetes namespace (default: superai)
-#   --release <name>     Helm release name (default: superai)
+#   --namespace <ns>     Kubernetes namespace (default: eco-base)
+#   --release <name>     Helm release name (default: eco-base)
 #   --method <method>    Deployment method: helm | kustomize (default: helm)
 #   --overlay <name>     Kustomize overlay (default: prod)
 #   --timeout <seconds>  Rollout timeout (default: 300)
@@ -35,8 +35,8 @@ AUDIT_LOG="${PROJECT_ROOT}/logs/rollback-audit.log"
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 
 # Defaults
-NAMESPACE="superai"
-RELEASE_NAME="superai"
+NAMESPACE="eco-base"
+RELEASE_NAME="eco-base"
 METHOD="helm"
 OVERLAY="prod"
 TIMEOUT=300

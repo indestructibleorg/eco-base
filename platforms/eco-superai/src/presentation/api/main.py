@@ -1,5 +1,5 @@
 """
-SuperAI Platform - FastAPI Application Factory
+eco-base Platform - FastAPI Application Factory
 Production-grade entry point with full middleware stack.
 """
 from __future__ import annotations
@@ -32,15 +32,15 @@ def _safe_metric(metric_cls, name, doc, labels, **kwargs):
         return collector  # pragma: no cover
     return metric_cls(name, doc, labels, **kwargs)
 
-REQUEST_COUNT = _safe_metric(Counter, "superai_http_requests_total", "Total HTTP requests", ["method", "endpoint", "status"])
-REQUEST_LATENCY = _safe_metric(Histogram, "superai_http_request_duration_seconds", "HTTP request latency", ["method", "endpoint"], buckets=[0.01, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 10.0])
+REQUEST_COUNT = _safe_metric(Counter, "eco-base_http_requests_total", "Total HTTP requests", ["method", "endpoint", "status"])
+REQUEST_LATENCY = _safe_metric(Histogram, "eco-base_http_request_duration_seconds", "HTTP request latency", ["method", "endpoint"], buckets=[0.01, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 10.0])
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     """Application lifecycle: startup and shutdown."""
     settings = get_settings()
-    logger.info("superai_platform_starting", env=settings.app_env.value, version=settings.app_version)
+    logger.info("eco-base_platform_starting", env=settings.app_env.value, version=settings.app_version)
 
     # Startup: initialize connections
     from src.infrastructure.persistence.database import engine, init_db
@@ -52,7 +52,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     # Shutdown: cleanup
     from src.infrastructure.persistence.database import engine
     await engine.dispose()
-    logger.info("superai_platform_shutdown")
+    logger.info("eco-base_platform_shutdown")
 
 
 def create_app() -> FastAPI:

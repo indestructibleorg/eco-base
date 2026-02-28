@@ -1,16 +1,16 @@
-# Kubernetes NetworkPolicy — SuperAI Platform
+# Kubernetes NetworkPolicy — eco-base Platform
 # Restricts pod-to-pod communication to only necessary paths
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: superai-api-netpol
-  namespace: eco-superai
+  name: eco-api-netpol
+  namespace: eco-eco-base
   labels:
-    app: superai-platform
+    app: eco-base
 spec:
   podSelector:
     matchLabels:
-      app: superai-api
+      app: eco-api
   policyTypes:
     - Ingress
     - Egress

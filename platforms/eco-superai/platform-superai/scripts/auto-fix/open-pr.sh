@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# SuperAI Platform - Create Fix PR
+# eco-base Platform - Create Fix PR
 # ============================================================================
 # Creates a pull request with fixes for CI/CD issues. Handles branch
 # creation, staging, committing with conventional commit messages, pushing,

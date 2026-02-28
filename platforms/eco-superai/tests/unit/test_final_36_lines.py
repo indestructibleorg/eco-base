@@ -491,7 +491,7 @@ class TestMainSafeMetricReturnsExisting:
         from prometheus_client import Counter
         result = main_mod._safe_metric(
             Counter,
-            "superai_http_requests_total",
+            "eco-base_http_requests_total",
             "Total HTTP requests",
             ["method", "endpoint", "status"],
         )

@@ -1,176 +1,176 @@
 # ============================================================================
-# Falco Custom Rules — SuperAI Platform Runtime Security
+# Falco Custom Rules — eco-base Platform Runtime Security
 # ============================================================================
 
-- list: superai_containers
-  items: [superai-app, superai-worker, superai-beat]
+- list: eco-base_containers
+  items: [eco-app, eco-worker, eco-beat]
 
-- list: superai_namespaces
-  items: [superai, superai-staging, superai-dev]
+- list: eco-base_namespaces
+  items: [eco-base, eco-staging, eco-dev]
 
 - list: allowed_outbound_ports
   items: [53, 443, 5432, 6379, 5672, 9200, 8000, 4317]
 
 # =========================================================================
-# Rule: Detect shell spawned in SuperAI container
+# Rule: Detect shell spawned in eco-base container
 # =========================================================================
-- rule: Shell Spawned in SuperAI Container
-  desc: Detect any shell process started inside a SuperAI application container
+- rule: Shell Spawned in eco-base Container
+  desc: Detect any shell process started inside a eco-base application container
   condition: >
     spawned_process
     and container
-    and container.name in (superai_containers)
+    and container.name in (eco-base_containers)
     and proc.name in (bash, sh, dash, zsh, csh, ksh)
   output: >
-    Shell spawned in SuperAI container
+    Shell spawned in eco-base container
     (user=%user.name command=%proc.cmdline container=%container.name
      pod=%k8s.pod.name ns=%k8s.ns.name image=%container.image.repository)
   priority: WARNING
-  tags: [superai, shell, mitre_execution]
+  tags: [eco-base, shell, mitre_execution]
 
 # =========================================================================
-# Rule: Detect unauthorized process in SuperAI container
+# Rule: Detect unauthorized process in eco-base container
 # =========================================================================
-- rule: Unexpected Process in SuperAI App
-  desc: Only python, gunicorn, uvicorn, celery, tini should run in SuperAI containers
+- rule: Unexpected Process in eco-base App
+  desc: Only python, gunicorn, uvicorn, celery, tini should run in eco-base containers
   condition: >
     spawned_process
     and container
-    and container.name in (superai_containers)
+    and container.name in (eco-base_containers)
     and not proc.name in (python, python3, gunicorn, uvicorn, celery, tini, curl)
     and not proc.pname in (python, python3, gunicorn, uvicorn, celery, tini)
   output: >
-    Unexpected process in SuperAI container
+    Unexpected process in eco-base container
     (process=%proc.name cmdline=%proc.cmdline container=%container.name
      pod=%k8s.pod.name ns=%k8s.ns.name)
   priority: WARNING
-  tags: [superai, process, mitre_execution]
+  tags: [eco-base, process, mitre_execution]
 
 # =========================================================================
 # Rule: Detect file write to sensitive paths
 # =========================================================================
-- rule: Write to Sensitive Path in SuperAI
-  desc: Detect writes to /etc, /usr, /bin, /sbin inside SuperAI containers
+- rule: Write to Sensitive Path in eco-base
+  desc: Detect writes to /etc, /usr, /bin, /sbin inside eco-base containers
   condition: >
     open_write
     and container
-    and container.name in (superai_containers)
+    and container.name in (eco-base_containers)
     and (fd.name startswith /etc/ or fd.name startswith /usr/ or
          fd.name startswith /bin/ or fd.name startswith /sbin/)
   output: >
-    Sensitive file write in SuperAI container
+    Sensitive file write in eco-base container
     (file=%fd.name user=%user.name process=%proc.name container=%container.name
      pod=%k8s.pod.name ns=%k8s.ns.name)
   priority: ERROR
-  tags: [superai, filesystem, mitre_persistence]
+  tags: [eco-base, filesystem, mitre_persistence]
 
 # =========================================================================
 # Rule: Detect privilege escalation attempt
 # =========================================================================
-- rule: Privilege Escalation in SuperAI
-  desc: Detect setuid/setgid or capability changes in SuperAI containers
+- rule: Privilege Escalation in eco-base
+  desc: Detect setuid/setgid or capability changes in eco-base containers
   condition: >
     spawned_process
     and container
-    and container.name in (superai_containers)
+    and container.name in (eco-base_containers)
     and (proc.name in (su, sudo, chroot, nsenter) or
          proc.cmdline contains "chmod +s" or
          proc.cmdline contains "setcap")
   output: >
-    Privilege escalation attempt in SuperAI container
+    Privilege escalation attempt in eco-base container
     (command=%proc.cmdline user=%user.name container=%container.name
      pod=%k8s.pod.name ns=%k8s.ns.name)
   priority: CRITICAL
-  tags: [superai, privilege_escalation, mitre_privilege_escalation]
+  tags: [eco-base, privilege_escalation, mitre_privilege_escalation]
 
 # =========================================================================
 # Rule: Detect outbound connection to unexpected port
 # =========================================================================
-- rule: Unexpected Outbound Connection from SuperAI
+- rule: Unexpected Outbound Connection from eco-base
   desc: Detect outbound connections to ports not in the allowed list
   condition: >
     outbound
     and container
-    and container.name in (superai_containers)
+    and container.name in (eco-base_containers)
     and not fd.sport in (allowed_outbound_ports)
     and not fd.sip = "127.0.0.1"
   output: >
-    Unexpected outbound connection from SuperAI
+    Unexpected outbound connection from eco-base
     (connection=%fd.name port=%fd.sport process=%proc.name
      container=%container.name pod=%k8s.pod.name ns=%k8s.ns.name)
   priority: WARNING
-  tags: [superai, network, mitre_exfiltration]
+  tags: [eco-base, network, mitre_exfiltration]
 
 # =========================================================================
 # Rule: Detect secret access from unexpected process
 # =========================================================================
-- rule: Secret File Access in SuperAI
+- rule: Secret File Access in eco-base
   desc: Detect reads of Kubernetes secret mount paths by unexpected processes
   condition: >
     open_read
     and container
-    and container.name in (superai_containers)
+    and container.name in (eco-base_containers)
     and fd.name startswith /var/run/secrets/
     and not proc.name in (python, python3)
   output: >
-    Secret file accessed by unexpected process in SuperAI
+    Secret file accessed by unexpected process in eco-base
     (file=%fd.name process=%proc.name user=%user.name
      container=%container.name pod=%k8s.pod.name ns=%k8s.ns.name)
   priority: ERROR
-  tags: [superai, secrets, mitre_credential_access]
+  tags: [eco-base, secrets, mitre_credential_access]
 
 # =========================================================================
 # Rule: Detect package manager execution
 # =========================================================================
-- rule: Package Manager in SuperAI Container
+- rule: Package Manager in eco-base Container
   desc: Package managers should never run in production containers
   condition: >
     spawned_process
     and container
-    and container.name in (superai_containers)
+    and container.name in (eco-base_containers)
     and proc.name in (apt, apt-get, dpkg, yum, rpm, pip, pip3, npm, apk)
   output: >
-    Package manager executed in SuperAI container
+    Package manager executed in eco-base container
     (command=%proc.cmdline container=%container.name
      pod=%k8s.pod.name ns=%k8s.ns.name)
   priority: ERROR
-  tags: [superai, package_manager, mitre_execution]
+  tags: [eco-base, package_manager, mitre_execution]
 
 # =========================================================================
 # Rule: Detect database credential leak in logs
 # =========================================================================
-- rule: Potential Credential Leak in SuperAI Logs
+- rule: Potential Credential Leak in eco-base Logs
   desc: Detect potential credential strings written to log files
   condition: >
     open_write
     and container
-    and container.name in (superai_containers)
+    and container.name in (eco-base_containers)
     and fd.name startswith /app/logs/
     and (evt.arg.data contains "password=" or
          evt.arg.data contains "secret_key=" or
          evt.arg.data contains "api_key=" or
          evt.arg.data contains "token=")
   output: >
-    Potential credential leak in SuperAI logs
+    Potential credential leak in eco-base logs
     (file=%fd.name process=%proc.name container=%container.name
      pod=%k8s.pod.name ns=%k8s.ns.name)
   priority: CRITICAL
-  tags: [superai, credential_leak, mitre_credential_access]
+  tags: [eco-base, credential_leak, mitre_credential_access]
 
 # =========================================================================
 # Rule: Detect Kubernetes API access from worker
 # =========================================================================
-- rule: K8s API Access from SuperAI Worker
+- rule: K8s API Access from eco-base Worker
   desc: Worker pods should not access the Kubernetes API
   condition: >
     outbound
     and container
-    and container.name = "superai-worker"
+    and container.name = "eco-worker"
     and fd.sip = "10.96.0.1"
     and fd.sport = 443
   output: >
-    Kubernetes API accessed from SuperAI worker
+    Kubernetes API accessed from eco-base worker
     (process=%proc.name container=%container.name
      pod=%k8s.pod.name ns=%k8s.ns.name)
   priority: WARNING
-  tags: [superai, k8s_api, mitre_discovery]
+  tags: [eco-base, k8s_api, mitre_discovery]

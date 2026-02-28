@@ -15,7 +15,7 @@ class TestAppConstants:
     def test_api_constants(self) -> None:
         from src.shared.constants import AppConstants
         assert AppConstants.API_PREFIX == "/api/v1"
-        assert AppConstants.API_TITLE == "SuperAI Platform"
+        assert AppConstants.API_TITLE == "eco-base Platform"
         assert AppConstants.API_VERSION == "1.0.0"
 
     def test_pagination_constants(self) -> None:
@@ -286,7 +286,7 @@ class TestRedisClientRemainingPaths:
         """set() with TTL should call redis.set with ex parameter."""
         from src.infrastructure.cache.redis_client import RedisClient
         client = RedisClient.__new__(RedisClient)
-        client._prefix = "superai"
+        client._prefix = "eco-base"
         client._default_ttl = 3600
         mock_redis = self._make_mock_redis()
         mock_redis.set = AsyncMock(return_value=True)
@@ -299,7 +299,7 @@ class TestRedisClientRemainingPaths:
         """get_many() should return dict of key-value pairs."""
         from src.infrastructure.cache.redis_client import RedisClient
         client = RedisClient.__new__(RedisClient)
-        client._prefix = "superai"
+        client._prefix = "eco-base"
         client._default_ttl = 3600
         mock_redis = self._make_mock_redis()
         mock_redis.mget = AsyncMock(return_value=['"value1"', '"value2"'])
@@ -313,7 +313,7 @@ class TestRedisClientRemainingPaths:
         """get_many() should handle None values (missing keys)."""
         from src.infrastructure.cache.redis_client import RedisClient
         client = RedisClient.__new__(RedisClient)
-        client._prefix = "superai"
+        client._prefix = "eco-base"
         client._default_ttl = 3600
         mock_redis = self._make_mock_redis()
         mock_redis.mget = AsyncMock(return_value=['"value1"', None])
@@ -328,7 +328,7 @@ class TestRedisClientRemainingPaths:
         """set_many() should store multiple key-value pairs via pipeline."""
         from src.infrastructure.cache.redis_client import RedisClient
         client = RedisClient.__new__(RedisClient)
-        client._prefix = "superai"
+        client._prefix = "eco-base"
         client._default_ttl = 3600
         mock_redis = self._make_mock_redis()
         mock_pipe = AsyncMock()
@@ -344,7 +344,7 @@ class TestRedisClientRemainingPaths:
         """set_many() with empty mapping should return immediately."""
         from src.infrastructure.cache.redis_client import RedisClient
         client = RedisClient.__new__(RedisClient)
-        client._prefix = "superai"
+        client._prefix = "eco-base"
         client._default_ttl = 3600
         mock_redis = self._make_mock_redis()
         with patch("src.infrastructure.cache.redis_client.get_redis", return_value=mock_redis):
@@ -355,12 +355,12 @@ class TestRedisClientRemainingPaths:
         """flush_pattern() should delete all keys matching a pattern."""
         from src.infrastructure.cache.redis_client import RedisClient
         client = RedisClient.__new__(RedisClient)
-        client._prefix = "superai"
+        client._prefix = "eco-base"
         client._default_ttl = 3600
         mock_redis = self._make_mock_redis()
         # scan_iter is an async generator
         async def mock_scan_iter(match=None):
-            for key in [b"superai:test:1", b"superai:test:2"]:
+            for key in [b"eco-base:test:1", b"eco-base:test:2"]:
                 yield key
         mock_redis.scan_iter = mock_scan_iter
         mock_redis.delete = AsyncMock(return_value=1)
@@ -373,7 +373,7 @@ class TestRedisClientRemainingPaths:
         """flush_pattern() should return 0 when no keys match."""
         from src.infrastructure.cache.redis_client import RedisClient
         client = RedisClient.__new__(RedisClient)
-        client._prefix = "superai"
+        client._prefix = "eco-base"
         client._default_ttl = 3600
         mock_redis = self._make_mock_redis()
         async def mock_scan_iter_empty(match=None):
@@ -389,7 +389,7 @@ class TestRedisClientRemainingPaths:
         """get_or_set() should return cached value on cache hit."""
         from src.infrastructure.cache.redis_client import RedisClient
         client = RedisClient.__new__(RedisClient)
-        client._prefix = "superai"
+        client._prefix = "eco-base"
         client._default_ttl = 3600
         mock_redis = self._make_mock_redis()
         mock_redis.get = AsyncMock(return_value='"cached_value"')
@@ -404,7 +404,7 @@ class TestRedisClientRemainingPaths:
         """get_or_set() should call factory and store result on cache miss."""
         from src.infrastructure.cache.redis_client import RedisClient
         client = RedisClient.__new__(RedisClient)
-        client._prefix = "superai"
+        client._prefix = "eco-base"
         client._default_ttl = 3600
         mock_redis = self._make_mock_redis()
         mock_redis.get = AsyncMock(return_value=None)
@@ -421,7 +421,7 @@ class TestRedisClientRemainingPaths:
         from src.infrastructure.cache.redis_client import RedisClient
         from src.shared.exceptions import CacheConnectionError
         client = RedisClient.__new__(RedisClient)
-        client._prefix = "superai"
+        client._prefix = "eco-base"
         client._default_ttl = 3600
         with patch("src.infrastructure.cache.redis_client.get_redis", side_effect=CacheConnectionError("no redis")):
             with pytest.raises(CacheConnectionError):

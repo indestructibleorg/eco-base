@@ -1,5 +1,5 @@
 #!/bin/bash
-# Production Deployment Script for SuperAI Platform v1.0
+# Production Deployment Script for eco-base Platform v1.0
 # P0 Critical: Complete production deployment orchestration
 
 set -euo pipefail
@@ -29,12 +29,12 @@ log_step() {
 
 # Configuration
 NAMESPACE="${NAMESPACE:-production}"
-CLUSTER_NAME="${CLUSTER_NAME:-superai-production}"
+CLUSTER_NAME="${CLUSTER_NAME:-eco-production}"
 REGION="${REGION:-us-east-1}"
 REGISTRY="${REGISTRY:-ghcr.io}"
 IMAGE_TAG="${IMAGE_TAG:-v1.0.0}"
 
-log_info "Starting SuperAI Platform v1.0 Production Deployment"
+log_info "Starting eco-base Platform v1.0 Production Deployment"
 log_info "Namespace: $NAMESPACE"
 log_info "Cluster: $CLUSTER_NAME"
 log_info "Region: $REGION"
@@ -114,14 +114,14 @@ build_images() {
         --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') \
         --build-arg VCS_REF=$(git rev-parse HEAD 2>/dev/null || echo "unknown") \
         --build-arg VERSION=$IMAGE_TAG \
-        -t ${REGISTRY}/superai-platform/superai-platform:${IMAGE_TAG} \
-        -t ${REGISTRY}/superai-platform/superai-platform:latest \
+        -t ${REGISTRY}/eco-base/eco-base:${IMAGE_TAG} \
+        -t ${REGISTRY}/eco-base/eco-base:latest \
         .
     
     # Push images
     log_info "Pushing images to registry..."
-    docker push ${REGISTRY}/superai-platform/superai-platform:${IMAGE_TAG}
-    docker push ${REGISTRY}/superai-platform/superai-platform:latest
+    docker push ${REGISTRY}/eco-base/eco-base:${IMAGE_TAG}
+    docker push ${REGISTRY}/eco-base/eco-base:latest
     
     log_info "Images built and pushed successfully"
 }
@@ -146,7 +146,7 @@ scan_images() {
     if command -v trivy &> /dev/null; then
         trivy image --severity HIGH,CRITICAL \
             --exit-code 1 \
-            ${REGISTRY}/superai-platform/superai-platform:${IMAGE_TAG}
+            ${REGISTRY}/eco-base/eco-base:${IMAGE_TAG}
         
         log_info "Image security scan passed"
     else
@@ -185,7 +185,7 @@ apply_secrets() {
     fi
     
     # Create secrets from environment
-    kubectl create secret generic superai-secrets \
+    kubectl create secret generic eco-secrets \
         --from-literal=DATABASE_URL="${DATABASE_URL}" \
         --from-literal=REDIS_URL="${REDIS_URL}" \
         --from-literal=JWT_SECRET="${JWT_SECRET:-$(openssl rand -hex 32)}" \
@@ -252,12 +252,12 @@ deploy_security() {
 
 # Deploy application
 deploy_application() {
-    log_step "Deploying SuperAI Platform application..."
+    log_step "Deploying eco-base Platform application..."
     
     # Update image tag in values
-    helm upgrade --install superai-platform ./helm \
+    helm upgrade --install eco-base ./helm \
         --namespace $NAMESPACE \
-        --set image.repository=${REGISTRY}/superai-platform/superai-platform \
+        --set image.repository=${REGISTRY}/eco-base/eco-base \
         --set image.tag=$IMAGE_TAG \
         --set environment=production \
         --values helm/values.yaml \
@@ -286,7 +286,7 @@ smoke_tests() {
     log_step "Running smoke tests..."
     
     # Wait for deployment
-    kubectl wait --for=condition=available deployment/superai-platform -n "${NAMESPACE}" --timeout=300s
+    kubectl wait --for=condition=available deployment/eco-base -n "${NAMESPACE}" --timeout=300s
     
     # Check pods
     log_info "Checking pod status..."
@@ -298,7 +298,7 @@ smoke_tests() {
     
     # Health check
     log_info "Running health check..."
-    EXTERNAL_IP=$(kubectl get svc superai-platform -n "${NAMESPACE}" -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+    EXTERNAL_IP=$(kubectl get svc eco-base -n "${NAMESPACE}" -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
     
     if [ -n "$EXTERNAL_IP" ]; then
         if curl -f http://${EXTERNAL_IP}:80/health; then
@@ -316,7 +316,7 @@ generate_report() {
     log_step "Generating deployment report..."
     
     cat > deployment-report-$(date +%Y%m%d-%H%M%S).txt << EOF
-SuperAI Platform v1.0 Production Deployment Report
+eco-base Platform v1.0 Production Deployment Report
 ===================================================
 
 Deployment Date: $(date)
@@ -326,7 +326,7 @@ Region: $REGION
 Image Tag: $IMAGE_TAG
 
 Components Deployed:
-- SuperAI Platform API: $(kubectl get deployment superai-platform -n "${NAMESPACE}" -o jsonpath='{.status.readyReplicas}' 2>/dev/null || echo "N/A")/$(kubectl get deployment superai-platform -n "${NAMESPACE}" -o jsonpath='{.spec.replicas}' 2>/dev/null || echo "N/A") replicas ready
+- eco-base Platform API: $(kubectl get deployment eco-base -n "${NAMESPACE}" -o jsonpath='{.status.readyReplicas}' 2>/dev/null || echo "N/A")/$(kubectl get deployment eco-base -n "${NAMESPACE}" -o jsonpath='{.spec.replicas}' 2>/dev/null || echo "N/A") replicas ready
 - PostgreSQL: $(kubectl get statefulset postgres -n "${NAMESPACE}" -o jsonpath='{.status.readyReplicas}' 2>/dev/null || echo "N/A")/$(kubectl get statefulset postgres -n "${NAMESPACE}" -o jsonpath='{.spec.replicas}' 2>/dev/null || echo "N/A") replicas ready
 - Redis: $(kubectl get statefulset redis -n "${NAMESPACE}" -o jsonpath='{.status.readyReplicas}' 2>/dev/null || echo "N/A")/$(kubectl get statefulset redis -n "${NAMESPACE}" -o jsonpath='{.spec.replicas}' 2>/dev/null || echo "N/A") replicas ready
 - Prometheus: $(kubectl get deployment prometheus -n monitoring -o jsonpath='{.status.readyReplicas}' 2>/dev/null || echo "N/A")/$(kubectl get deployment prometheus -n monitoring -o jsonpath='{.spec.replicas}' 2>/dev/null || echo "N/A") replicas ready
@@ -377,7 +377,7 @@ EOF
 # Main deployment workflow
 main() {
     log_info "=========================================="
-    log_info "SuperAI Platform v1.0 Production Deployment"
+    log_info "eco-base Platform v1.0 Production Deployment"
     log_info "=========================================="
     echo ""
     

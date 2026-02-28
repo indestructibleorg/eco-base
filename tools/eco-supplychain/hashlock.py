@@ -55,6 +55,16 @@ def canonicalize_k8s(obj: dict) -> dict:
     for k in EXCLUDE_METADATA_FIELDS:
         meta.pop(k, None)
 
+    # remove eco-base/* annotations to avoid circular hash dependency
+    # (URN/URI annotations are derived from the hash, so including them
+    # in the hash would make the hash depend on itself)
+    ann = meta.get("annotations") or {}
+    ann = {k: v for k, v in ann.items() if not k.startswith("eco-base/")}
+    if ann:
+        meta["annotations"] = ann
+    elif "annotations" in meta:
+        del meta["annotations"]
+
     o["metadata"] = meta
     return o
 

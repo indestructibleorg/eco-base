@@ -9,12 +9,6 @@
 # This is a YAML-formatted file.
 
 version: "1.0.0"
-metadata:
-  name: ""
-  description: ""
-  labels:
-    eco-base/part-of: eco-base
-    eco-base/governance: aligned
 
 global:
   # Project and environment settings
@@ -76,7 +70,7 @@ ingress:
   enabled: true
   className: "nginx"
   annotations:
-      cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   hosts:

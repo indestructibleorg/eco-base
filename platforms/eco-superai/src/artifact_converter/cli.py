@@ -2,11 +2,11 @@
 
 Usage::
 
-    superai-artifact convert input.md --format yaml --output ./out
-    superai-artifact batch ./docs --format json --output ./artifacts
-    superai-artifact watch ./docs --format yaml --output ./artifacts
-    superai-artifact info input.md
-    superai-artifact formats
+    eco-artifact convert input.md --format yaml --output ./out
+    eco-artifact batch ./docs --format json --output ./artifacts
+    eco-artifact watch ./docs --format yaml --output ./artifacts
+    eco-artifact info input.md
+    eco-artifact formats
 """
 
 from __future__ import annotations
@@ -22,8 +22,8 @@ from .config import ConverterConfig, InputFormat, OutputFormat
 logger = structlog.get_logger(__name__)
 
 app = typer.Typer(
-    name="superai-artifact",
-    help="SuperAI Artifact Converter — transform documents between formats.",
+    name="eco-artifact",
+    help="eco-base Artifact Converter — transform documents between formats.",
     add_completion=False,
 )
 

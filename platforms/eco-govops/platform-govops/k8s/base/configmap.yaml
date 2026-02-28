@@ -20,7 +20,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/configmap/govops-engine-config
-    eco-base/urn: urn:eco-base:k8s:core:configmap:govops-engine-config:sha256-ff0a3d6803278a0bebfaccd82a5aa60c2ee996822d8e409115bb7c2a9d3ae2e7
+    eco-base/urn: urn:eco-base:k8s:core:configmap:govops-engine-config:sha256-ab90f8a41151ff81f039713a7bd3e442aab84885ce8dfc24ebd12ac19252e3e5
   labels:
     app.kubernetes.io/component: engine
     app.kubernetes.io/instance: eco-instance

@@ -36,7 +36,7 @@ jobs:
         run: |
           mkdir -p sbom-artifacts
           # Generate SBOM for each platform directory
-          for platform in platforms/eco-core platforms/eco-govops platforms/eco-dataops platforms/eco-observops platforms/eco-seccompops platforms/eco-superai; do
+          for platform in platforms/eco-core platforms/eco-govops platforms/eco-dataops platforms/eco-observops platforms/eco-seccompops platforms/eco-eco-base; do
             if [ -d "$platform" ]; then
               platform_name=$(basename "$platform")
               syft dir:"$platform" -o cyclonedx-json > "sbom-artifacts/${platform_name}-sbom.json"

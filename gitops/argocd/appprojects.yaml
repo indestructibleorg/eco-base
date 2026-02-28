@@ -84,7 +84,7 @@ spec:
 
 ---
 # AppProject: eco-platforms
-# Covers: eco-core, eco-govops, eco-dataops, eco-observops, eco-seccompops, eco-superai
+# Covers: eco-core, eco-govops, eco-dataops, eco-observops, eco-seccompops, eco-eco-base
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
@@ -108,7 +108,7 @@ spec:
       server: https://kubernetes.default.svc
     - namespace: eco-seccompops
       server: https://kubernetes.default.svc
-    - namespace: eco-superai
+    - namespace: eco-eco-base
       server: https://kubernetes.default.svc
     - namespace: platform-01
       server: https://kubernetes.default.svc

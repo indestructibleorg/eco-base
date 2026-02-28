@@ -1,12 +1,12 @@
 # =============================================================================
-# SuperAI Platform — Dependency Declaration
+# eco-base Platform — Dependency Declaration
 # ECO Namespace Specification v1.0 Compliant
 # =============================================================================
 apiVersion: gl.platform.v1
 kind: PlatformDependencies
 metadata:
-  name: superai-platform-deps
-  platform: superai-platform
+  name: eco-base-deps
+  platform: eco-base
 
 dependencies:
   required:

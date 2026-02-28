@@ -16,8 +16,8 @@ datasources:
     type: postgres
     access: proxy
     url: postgres:5432
-    database: superai
-    user: superai_readonly
+    database: eco-base
+    user: eco-base_readonly
     editable: false
     secureJsonData:
       password: "${GRAFANA_PG_PASSWORD}"

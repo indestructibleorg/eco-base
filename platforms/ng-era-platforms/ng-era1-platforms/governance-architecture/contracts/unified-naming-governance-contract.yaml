@@ -517,8 +517,10 @@ mandatory-labels:
   description: "強制標籤定義"
   
   labels:
-    eco-base/part-of: eco-base
-    eco-base/governance: aligned
+    required:
+      eco-base/part-of: eco-base
+      eco-base/governance: aligned
+    definitions:
     - key: baseline.component
       required: true
       regex: "^[a-z0-9-]+$"

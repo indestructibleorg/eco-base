@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# SuperAI Platform — Container Image Signing & Verification
+# eco-base Platform — Container Image Signing & Verification
 # ============================================================================
 # Usage:
 #   Sign:   ./scripts/image-sign.sh sign <image:tag>
@@ -51,7 +51,7 @@ cmd_sign() {
 
     # Resolve full image reference
     if [[ "${IMAGE}" != *"/"* ]]; then
-        IMAGE="${REGISTRY}/superai-platform:${IMAGE}"
+        IMAGE="${REGISTRY}/eco-base:${IMAGE}"
     fi
 
     log_info "Signing image: ${IMAGE}"
@@ -61,7 +61,7 @@ cmd_sign() {
         --key "${COSIGN_KEY}" \
         --annotations "repo=IndestructibleAutoOps/indestructibleautoops" \
         --annotations "build-date=$(date -u +%FT%TZ)" \
-        --annotations "signed-by=superai-ci" \
+        --annotations "signed-by=eco-ci" \
         "${IMAGE}"
 
     log_info "Image signed successfully: ${IMAGE}"
@@ -87,7 +87,7 @@ cmd_verify() {
     fi
 
     if [[ "${IMAGE}" != *"/"* ]]; then
-        IMAGE="${REGISTRY}/superai-platform:${IMAGE}"
+        IMAGE="${REGISTRY}/eco-base:${IMAGE}"
     fi
 
     log_info "Verifying image signature: ${IMAGE}"
@@ -115,7 +115,7 @@ cmd_scan() {
     local IMAGE="$1"
 
     if [[ "${IMAGE}" != *"/"* ]]; then
-        IMAGE="${REGISTRY}/superai-platform:${IMAGE}"
+        IMAGE="${REGISTRY}/eco-base:${IMAGE}"
     fi
 
     if command -v trivy &>/dev/null; then
@@ -158,7 +158,7 @@ case "${ACTION}" in
         cmd_generate_keys
         ;;
     *)
-        echo "SuperAI Platform — Image Signing & Verification"
+        echo "eco-base Platform — Image Signing & Verification"
         echo ""
         echo "Usage: $0 <command> [args]"
         echo ""

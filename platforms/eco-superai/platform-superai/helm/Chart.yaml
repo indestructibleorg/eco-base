@@ -1,6 +1,6 @@
 apiVersion: v2
-name: superai-platform
-description: SuperAI Cloud-Native Platform - Quantum-AI Hybrid Framework
+name: eco-base
+description: eco-base Cloud-Native Platform - Quantum-AI Hybrid Framework
 type: application
 version: 1.0.0
 appVersion: "1.0.0"
@@ -12,9 +12,9 @@ keywords:
   - kubernetes
 maintainers:
   - name: Enterprise Engineering Team
-home: https://github.com/superai/platform
+home: https://github.com/eco-base/platform
 sources:
-  - https://github.com/superai/platform
+  - https://github.com/eco-base/platform
 dependencies:
   - name: postgresql
     version: "14.x.x"

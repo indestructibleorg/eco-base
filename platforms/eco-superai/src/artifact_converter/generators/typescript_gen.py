@@ -67,7 +67,7 @@ class TypeScriptGenerator(BaseGenerator):
         lines.append("/**")
         lines.append(f" * Auto-generated artifact module: {title}")
         lines.append(" *")
-        lines.append(" * Produced by the SuperAI Artifact Converter.")
+        lines.append(" * Produced by the eco-base Artifact Converter.")
         if metadata.source_path:
             lines.append(f" * Source: {metadata.source_path}")
         lines.append(" */")

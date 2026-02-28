@@ -4,14 +4,14 @@ kind: RootGovernanceConfig
 metadata:
   annotations:
     machinenativeops.io/description: Root layer governance, permissions and policies
-  configuration
-  machinenativeops.io/last-modified: '2025-12-20T22:00:00Z'
+      configuration
   labels:
     eco-base/governance: aligned
     eco-base/part-of: eco-base
     machinenativeops.io/component: governance-configuration
     machinenativeops.io/tier: governance
     machinenativeops.io/version: v1.0.0
+  machinenativeops.io/last-modified: '2025-12-20T22:00:00Z'
   name: governance-framework-baseline-config
   namespace: machinenativenops-governance
 spec:
@@ -421,7 +421,7 @@ metadata:
     eco-base/audit-log-level: minimal
     eco-base/governance-policy: standard-v1
     eco-base/uri: eco-base://k8s/core/configmap/governance-schema
-    eco-base/urn: urn:eco-base:k8s:core:configmap:governance-schema:sha256-aefa1bd4fc990d187662e1bdd036dd6011abc4f610813c28b2b27fdfbe75cb3c
+    eco-base/urn: urn:eco-base:k8s:core:configmap:governance-schema:sha256-4ffb4e61cb27d654728c9d81f9957f38bd497a54cc421e03c9aec555b524b04e
   labels:
     app.kubernetes.io/component: eco-component
     app.kubernetes.io/instance: eco-instance
