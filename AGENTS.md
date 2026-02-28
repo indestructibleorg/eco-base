@@ -35,3 +35,11 @@ eco-base is an enterprise cloud-native AI platform monorepo with multi-engine in
 ### Docker
 
 Docker must be installed and configured with `fuse-overlayfs` storage driver and `iptables-legacy` for the Cloud Agent VM environment. Start Docker daemon with `sudo dockerd &` and ensure `/var/run/docker.sock` is accessible.
+
+### GitHub Actions — CURSOR environment
+
+The workflow `.github/workflows/cursor-cloud.yml` uses `environment: CURSOR` to access Cursor Cloud Agent secrets. To prevent deployment protection rules from blocking this workflow:
+
+1. **Settings → Environments → CURSOR → Deployment protection rules**: disable `Required reviewers` and `Wait timer`.
+2. **CURSOR environment secrets**: add `CURSOR_API` with your Cursor API token.
+3. **CURSOR environment variables** (optional): add `CURSOR_ENV=production`.
