@@ -26,7 +26,7 @@ eco-base is an enterprise cloud-native AI platform monorepo with multi-engine in
 
 ### Testing
 
-- **Python tests**: `PYTHONPATH=. pytest tests/ -v` (609 passing, 32 pre-existing failures from missing workflow/frontend files)
+- **Python tests**: `PYTHONPATH=. pytest tests/ -v` (some test failures are currently expected due to missing workflow/frontend files)
 - **CI validator**: `python3 tools/ci-validator/validate.py`
 - **Skill tests**: `pytest tools/skill-creator/skills/ -v`
 - **Python lint**: `ruff check src/ backend/ai/`
