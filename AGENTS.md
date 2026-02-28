@@ -34,7 +34,7 @@ eco-base is an enterprise cloud-native AI platform monorepo with multi-engine in
 
 ### Docker
 
-Docker must be installed and configured with `fuse-overlayfs` storage driver and `iptables-legacy` for the Cloud Agent VM environment. Start Docker daemon with `sudo dockerd &` and ensure `/var/run/docker.sock` is accessible.
+Docker must be installed and configured with `fuse-overlayfs` storage driver and `iptables-legacy` for the Cloud Agent VM environment. Start the Docker daemon with `sudo dockerd &`, and ensure your user can talk to `/var/run/docker.sock` safely (for example, by using `sudo` for Docker commands, adding your user to the `docker` group, or using rootless Docker where supported). Avoid making the Docker socket world-writable (e.g. via `chmod 666`), as this is effectively equivalent to granting root access.
 
 ### GitHub Actions — CURSOR environment
 
