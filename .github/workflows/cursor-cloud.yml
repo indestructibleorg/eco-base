@@ -64,4 +64,4 @@ jobs:
             pyyaml==6.0.2 \
             numpy==2.2.1
           set -o pipefail
-          PYTHONPATH=. pytest tests/ -q --tb=no 2>&1 | tail -5
+          PYTHONPATH=. pytest tests/ -q --tb=no
