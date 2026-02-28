@@ -3,7 +3,7 @@ target: "fix CI workflow guards"
 repo_context: "eco-base@main/.github/workflows"
 inputs:
   success_criteria: "artifacts/_internal/success.criteria.json"
-  constraints: "artifacts/_internal/constraints.json"
+  constraints: "scripts/autoops/constraints.json"
 artifacts:
   - path: "artifacts/NEED_INPUT.md"
   - path: "artifacts/_internal/baseline.facts.yaml"
