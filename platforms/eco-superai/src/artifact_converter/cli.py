@@ -212,7 +212,11 @@ def info(
     try:
         in_fmt = InputFormat.from_extension(source.suffix)
         parser = get_parser(in_fmt)
-        raw = source.read_bytes() if in_fmt == InputFormat.DOCX else source.read_text(encoding="utf-8")
+        raw = (
+            source.read_bytes()
+            if in_fmt in (InputFormat.DOCX, InputFormat.PDF)
+            else source.read_text(encoding="utf-8")
+        )
         result = parser.parse(raw, source_path=source)
         meta = extract_metadata(
             result.body,

@@ -144,3 +144,17 @@ class TestMetadataEdgeCases:
         assert result is not None
         assert result.date == dt.isoformat()
         assert result.title == "Test Document"
+
+    def test_metadata_from_dict_with_naive_datetime_normalises_to_utc(self):
+        """Naive datetime (no tzinfo) is normalised to UTC before serialisation."""
+        from src.artifact_converter.metadata import _metadata_from_dict
+        from datetime import datetime, timezone
+
+        naive_dt = datetime(2024, 6, 1, 9, 30, 0)
+        result = _metadata_from_dict({
+            "title": "Naive Date Doc",
+            "date": naive_dt,
+        })
+        assert result is not None
+        expected = naive_dt.replace(tzinfo=timezone.utc).isoformat()
+        assert result.date == expected

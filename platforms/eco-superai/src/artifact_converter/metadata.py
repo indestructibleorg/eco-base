@@ -157,6 +157,10 @@ def _metadata_from_dict(data: dict[str, Any]) -> ArtifactMetadata:
             if lower == "tags" and isinstance(value, str):
                 normalised["tags"] = [t.strip() for t in value.split(",") if t.strip()]
             elif lower == "date" and isinstance(value, datetime):
+                # Ensure date serialisation preserves or assigns timezone information.
+                # If the datetime is naive, normalise it to UTC for consistency.
+                if value.tzinfo is None:
+                    value = value.replace(tzinfo=timezone.utc)
                 normalised["date"] = value.isoformat()
             else:
                 normalised[lower] = value

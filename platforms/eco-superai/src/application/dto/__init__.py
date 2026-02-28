@@ -1,6 +1,7 @@
 """Data Transfer Objects — layer boundary crossing types."""
 from __future__ import annotations
 
+import math
 from datetime import datetime
 from typing import Any
 
@@ -64,7 +65,7 @@ class PaginatedDTO(BaseModel):
     def total_pages(self) -> int:
         if self.total == 0:
             return 0
-        return -(-self.total // self.limit) if self.limit > 0 else 1
+        return math.ceil(self.total / self.limit) if self.limit > 0 else 1
 
 
 class QuantumJobDTO(BaseModel):

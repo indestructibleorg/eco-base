@@ -126,6 +126,23 @@ class ExpertFactory:
 
     def clear_experts(self) -> None:
         _EXPERT_STORE.clear()
+
+
 def clear_experts() -> None:
-    """Clear all experts from the store. For testing purposes."""
-    _EXPERT_STORE.clear()
+    """Clear all registered experts from the global expert store.
+
+    This function is kept for backward compatibility with existing code and tests
+    that import `clear_experts` at the module level. Internally it delegates to
+    `ExpertFactory.clear_experts`.
+    """
+    ExpertFactory().clear_experts()
+
+
+def clear_experts() -> None:
+    """Clear all registered experts from the global expert store.
+
+    This function is kept for backward compatibility with existing code and tests
+    that import `clear_experts` at the module level. Internally it delegates to
+    `ExpertFactory.clear_experts`.
+    """
+    ExpertFactory().clear_experts()
