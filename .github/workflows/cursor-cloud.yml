@@ -45,10 +45,11 @@ jobs:
       - name: Run CI Validator
         run: |
           if [ -f "tools/ci-validator/validate.py" ]; then
-            python3 tools/ci-validator/validate.py || true
+            python3 tools/ci-validator/validate.py
           fi
 
       - name: Run core tests
         run: |
           pip install pydantic fastapi httpx pytest pytest-asyncio jsonschema pyyaml numpy
+          set -o pipefail
           PYTHONPATH=. pytest tests/ -q --tb=no 2>&1 | tail -5
