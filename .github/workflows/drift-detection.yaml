@@ -38,7 +38,7 @@ env:
   ARGOCD_APPS: "eco-production eco-staging eco-monitoring eco-core"
 
 concurrency:
-  group: drift-detection
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -61,6 +61,13 @@ jobs:
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+    - name: Debug GCP Environment Variables
+      run: |
+        echo "GKE_CLUSTER: ${{ env.GKE_CLUSTER }}"
+        echo "GKE_REGION: ${{ env.GKE_REGION }}"
+        echo "GCP_PROJECT: ${{ env.GCP_PROJECT }}"
+        echo "CLOUDSDK_CORE_PROJECT: ${{ env.CLOUDSDK_CORE_PROJECT }}"
 
     - name: Get GKE credentials
       uses: google-github-actions/get-gke-credentials@7a108e64ed8546fe38316b4086e91da13f4785e1  # v2.3.1
@@ -141,6 +148,13 @@ jobs:
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY }}
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+    - name: Debug GCP Environment Variables
+      run: |
+        echo "GKE_CLUSTER: ${{ env.GKE_CLUSTER }}"
+        echo "GKE_REGION: ${{ env.GKE_REGION }}"
+        echo "GCP_PROJECT: ${{ env.GCP_PROJECT }}"
+        echo "CLOUDSDK_CORE_PROJECT: ${{ env.CLOUDSDK_CORE_PROJECT }}"
 
     - name: Get GKE credentials
       uses: google-github-actions/get-gke-credentials@7a108e64ed8546fe38316b4086e91da13f4785e1  # v2.3.1
