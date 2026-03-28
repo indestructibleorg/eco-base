@@ -42,10 +42,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # 
-  # Job 1: Detect drift across all ArgoCD applications
-  # 
+  auth-gke:
+    uses: codevantaos/platform-ci-templates/.github/workflows/gcp-auth-gke-credentials.yml@main
+    with:
+      cluster_name: ${{ env.GKE_CLUSTER }}
+      location: ${{ env.GKE_REGION }}
+    secrets:
+      gcp_sa_key: ${{ secrets.GCP_SA_KEY }}
+      gcp_service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
   detect-drift:
+    needs: auth-gke
     runs-on: ubuntu-latest
     timeout-minutes: 15
     outputs:
@@ -55,18 +62,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
-
-    - name: Authenticate to GCP
-      uses: google-github-actions/auth@6fc4af4b145ae7821d527454aa9bd537d1f2dc5f  # v2.1.7
-      with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}
-        service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-
-    - name: Get GKE credentials
-      uses: google-github-actions/get-gke-credentials@7a108e64ed8546fe38316b4086e91da13f4785e1  # v2.3.1
-      with:
-        cluster_name: ${{ env.GKE_CLUSTER }}
-        location: ${{ env.GKE_REGION }}
 
     - name: Detect ArgoCD application drift
       id: detect
@@ -121,13 +116,10 @@ jobs:
           echo "No drift detected  all apps in sync"
         fi
 
-  # 
-  # Job 2: Auto-Sync drifted applications
-  # 
   auto-sync:
+    needs: [detect-drift, auth-gke]
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    needs: detect-drift
     if: needs.detect-drift.outputs.drift_detected == 'true' && (github.event.inputs.auto_sync != 'false')
     outputs:
       sync_success: ${{ steps.sync.outputs.sync_success }}
@@ -135,18 +127,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
-
-    - name: Authenticate to GCP
-      uses: google-github-actions/auth@6fc4af4b145ae7821d527454aa9bd537d1f2dc5f  # v2.1.7
-      with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}
-        service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-
-    - name: Get GKE credentials
-      uses: google-github-actions/get-gke-credentials@7a108e64ed8546fe38316b4086e91da13f4785e1  # v2.3.1
-      with:
-        cluster_name: ${{ env.GKE_CLUSTER }}
-        location: ${{ env.GKE_REGION }}
 
     - name: Sync drifted applications via ArgoCD
       id: sync
@@ -190,9 +170,6 @@ jobs:
         echo "sync_success=$SYNC_SUCCESS" >> "$GITHUB_OUTPUT"
         printf "sync_results=%s" "$(echo -e "$SYNC_RESULTS" | tr '\n' '|')" >> "$GITHUB_OUTPUT"
 
-  # 
-  # Job 3: Open/update drift incident issue
-  # 
   manage-drift-issue:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -275,9 +252,6 @@ jobs:
             console.log(`Opened drift issue #${issue.data.number}`);
           }
 
-  # 
-  # Job 4: Close stale drift issues when no drift detected
-  # 
   close-resolved-drift:
     runs-on: ubuntu-latest
     timeout-minutes: 5
