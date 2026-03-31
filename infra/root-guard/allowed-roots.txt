@@ -46,8 +46,6 @@ supplychain
 .pytest_cache
 .tmp
 artifacts
-inputs
-node_modules
 node_modules
 pnpm-lock.json
 pnpm-lock.yaml

@@ -17,3 +17,16 @@ zone_name = "autoecoops.io"
 binding = "WEBHOOK_KV"
 id = "b46d5cece6454657ba5aa633541053b9"
 preview_id = "66d0d5a1502640408414989935862f88"
+
+# ── Staging Environment ──────────────────────────────────────────────
+[env.staging]
+name = "eco-base-workers-staging"
+vars = { ENVIRONMENT = "staging", RATE_LIMIT_PER_MINUTE = "300", DEDUP_TTL_SECONDS = "60", DEAD_LETTER_TTL_SECONDS = "3600" }
+
+[[env.staging.routes]]
+pattern = "staging-api.autoecoops.io/webhook/*"
+zone_name = "autoecoops.io"
+
+[[env.staging.kv_namespaces]]
+binding = "WEBHOOK_KV"
+id = "66d0d5a1502640408414989935862f88"

@@ -1,0 +1,22 @@
+vercel:
+  enabled: true
+  app: apps/web
+
+cloudflare:
+  enabled: true
+  apps:
+    - apps/edge/worker-api
+
+supabase:
+  enabled: true
+  dir: supabase
+
+keycloak:
+  enabled: true
+  dir: ops/keycloak
+  mode: managed   # managed | selfhost
+
+n8n:
+  enabled: true
+  dir: ops/n8n
+  mode: selfhost  # selfhost | managed

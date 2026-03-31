@@ -1,0 +1,119 @@
+name: autoops
+
+on:
+  issue_comment:
+    types: [created]
+  workflow_run:
+    workflows: ["ci"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "TARGET: deliverable to complete"
+        required: true
+        type: string
+      repo_context:
+        description: "REPO_CONTEXT: repo/branch/path/related files"
+        required: false
+        type: string
+      success_criteria:
+        description: "SUCCESS_CRITERIA: verifiable acceptance conditions"
+        required: false
+        type: string
+      constraints:
+        description: "CONSTRAINTS: security red lines, network, tools"
+        required: false
+        type: string
+      priority:
+        description: "PRIORITY: P0/P1/P2"
+        required: false
+        default: "P0"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  gate-trigger:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.decide.outputs.should_run }}
+      trigger_target: ${{ steps.parse.outputs.target }}
+      trigger_context: ${{ steps.parse.outputs.context }}
+      trigger_criteria: ${{ steps.parse.outputs.criteria }}
+      trigger_constraints: ${{ steps.parse.outputs.constraints }}
+      trigger_priority: ${{ steps.parse.outputs.priority }}
+    steps:
+      - id: decide
+        run: |
+          SHOULD_RUN=false
+          if [[ "${{ github.event_name }}" == "issue_comment" ]]; then
+            body='${{ github.event.comment.body }}'
+            if echo "$body" | grep -q "^/autoops run"; then SHOULD_RUN=true; fi
+          elif [[ "${{ github.event_name }}" == "workflow_run" ]]; then
+            if [[ "${{ github.event.workflow_run.conclusion }}" == "failure" ]]; then SHOULD_RUN=true; fi
+          else
+            SHOULD_RUN=true
+          fi
+          echo "should_run=$SHOULD_RUN" >> "$GITHUB_OUTPUT"
+
+      - id: parse
+        if: steps.decide.outputs.should_run == 'true'
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "target=${{ github.event.inputs.target }}" >> "$GITHUB_OUTPUT"
+            echo "context=${{ github.event.inputs.repo_context }}" >> "$GITHUB_OUTPUT"
+            echo "criteria=${{ github.event.inputs.success_criteria }}" >> "$GITHUB_OUTPUT"
+            echo "constraints=${{ github.event.inputs.constraints }}" >> "$GITHUB_OUTPUT"
+            echo "priority=${{ github.event.inputs.priority }}" >> "$GITHUB_OUTPUT"
+          elif [[ "${{ github.event_name }}" == "workflow_run" ]]; then
+            echo "target=CI failure auto-diagnosis" >> "$GITHUB_OUTPUT"
+            echo "context=${{ github.repository }}@${{ github.event.workflow_run.head_branch }}" >> "$GITHUB_OUTPUT"
+            echo "criteria=identify failing step and root cause" >> "$GITHUB_OUTPUT"
+            echo "constraints=network=false" >> "$GITHUB_OUTPUT"
+            echo "priority=P0" >> "$GITHUB_OUTPUT"
+          elif [[ "${{ github.event_name }}" == "issue_comment" ]]; then
+            body='${{ github.event.comment.body }}'
+            target=$(echo "$body" | sed -n 's|^/autoops run *||p' | head -1)
+            echo "target=${target:-from comment}" >> "$GITHUB_OUTPUT"
+            echo "context=${{ github.repository }}" >> "$GITHUB_OUTPUT"
+            echo "criteria=" >> "$GITHUB_OUTPUT"
+            echo "constraints=network=false" >> "$GITHUB_OUTPUT"
+            echo "priority=P0" >> "$GITHUB_OUTPUT"
+          fi
+
+  run:
+    needs: [gate-trigger]
+    if: needs.gate-trigger.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+
+      - name: Build inputs/run.yaml
+        run: |
+          mkdir -p inputs artifacts/_tmp
+          cat > inputs/run.yaml <<EOF
+          TARGET: "${{ needs.gate-trigger.outputs.trigger_target }}"
+          REPO_CONTEXT: "${{ needs.gate-trigger.outputs.trigger_context }}"
+          SUCCESS_CRITERIA: "${{ needs.gate-trigger.outputs.trigger_criteria }}"
+          CONSTRAINTS: "${{ needs.gate-trigger.outputs.trigger_constraints }}"
+          PRIORITY: "${{ needs.gate-trigger.outputs.trigger_priority }}"
+          EOF
+
+      - name: Execute autoops (stages + artifactize)
+        run: python scripts/autoops/run.py inputs/run.yaml
+
+      - name: Guards (hard fail if violated)
+        run: bash scripts/autoops/guards.sh
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: autoops-artifacts
+          path: artifacts
