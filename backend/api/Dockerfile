@@ -1,11 +1,11 @@
-FROM node:22.13.0-alpine3.21 AS builder
+FROM node:25.2.1-alpine3.21 AS builder
 WORKDIR /app
 COPY package.json .npmrc ./
 RUN npm install --legacy-peer-deps
 COPY . .
 RUN npm run build
 
-FROM node:22.13.0-alpine3.21 AS runner
+FROM node:25.2.1-alpine3.21 AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 LABEL org.opencontainers.image.source="https://github.com/indestructibleorg/indestructibleeco"
