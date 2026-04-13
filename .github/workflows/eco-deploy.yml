@@ -62,7 +62,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Trivy vulnerability scan
-        uses: aquasecurity/trivy-action@1bd062560b422f5944df1de50abd05162bea079e  # master
+        uses: aquasecurity/trivy-action@f685ba721536b1ff19093eb4e1b1bf994c2bdbe2  # master
         with:
           scan-type: 'fs'
           scan-ref: '.'
