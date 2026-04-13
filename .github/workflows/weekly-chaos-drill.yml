@@ -212,7 +212,7 @@ jobs:
       # Issue deduplication: search for open issue with same drill+label within 7 days
       - name: Create or update GitHub issue on failure (deduplicated)
         if: steps.summary.outputs.degraded == 'true'
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3  # v7
         with:
           script: |
             const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();

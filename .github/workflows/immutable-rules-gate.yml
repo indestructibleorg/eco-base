@@ -83,7 +83,7 @@ jobs:
 
       - name: Post Rule-01 violation comment
         if: steps.zone-check.outputs.RULE01_FAIL == 'true' && github.event_name == 'pull_request'
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3  # v7
         with:
           script: |
             const violations = `${{ steps.zone-check.outputs.violations }}`;
@@ -182,7 +182,7 @@ jobs:
 
       - name: Post Rule-02 violation comment
         if: steps.pvc-check.outputs.RULE02_FAIL == 'true' && github.event_name == 'pull_request'
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3  # v7
         with:
           script: |
             const violations = `${{ steps.pvc-check.outputs.violations }}`;
@@ -330,7 +330,7 @@ jobs:
 
       - name: Post Rule-04 violation comment
         if: steps.sli-check.outputs.RULE04_FAIL == 'true' && github.event_name == 'pull_request'
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3  # v7
         with:
           script: |
             const violations = `${{ steps.sli-check.outputs.violations }}`;
@@ -440,7 +440,7 @@ jobs:
 
       - name: Post Rule-05 violation comment
         if: steps.cron-check.outputs.RULE05_FAIL == 'true' && github.event_name == 'pull_request'
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea  # v7
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3  # v7
         with:
           script: |
             const violations = `${{ steps.cron-check.outputs.violations }}`;
