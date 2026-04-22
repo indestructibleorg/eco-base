@@ -36,6 +36,6 @@
     "url": "https://github.com/indestructibleorg/eco-base/issues"
   },
   "devDependencies": {
-    "typescript": "~5.5.4"
+    "typescript": "~6.0.3"
   }
 }
